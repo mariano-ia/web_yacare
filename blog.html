@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Yacaré</title>
+    <meta name="description"
+        content="Insights on product design, UX strategy, and building digital products that move the needle.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <nav class="nav">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo"><svg viewBox="0 0 40 40" fill="none" width="32" height="32">
+                    <g stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
+                            fill="#7c9a72" opacity="0.9" />
+                        <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
+                        <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
+                        <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                        <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
+                        <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                    </g>
+                </svg> yacaré</a>
+            <div class="nav__links"><a href="/services.html" class="nav__link">Services</a><a href="/work.html"
+                    class="nav__link">Work</a><a href="/about.html" class="nav__link">About</a><a href="/blog.html"
+                    class="nav__link active">Blog</a><a href="/contact.html" class="btn btn--primary nav__cta">Get
+                    Started</a></div>
+            <button class="nav__toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <span class="label">Insights</span>
+                <h1 class="gradient-text">Ideas worth sharing.</h1>
+                <p>Thoughts on product design, UX strategy, and building things that matter.</p>
+            </div>
+        </section>
+
+        <section class="section section--compact">
+            <div class="container">
+                <div class="blog-grid reveal-stagger">
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+UX+Research&font=raleway"
+                            alt="UX Research" class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">UX Research</div>
+                            <h3 class="blog-card__title">Why most user research is useless (and how to fix it)</h3>
+                            <p class="blog-card__excerpt">The problem isn't that teams don't do research. It's that they
+                                do research nobody acts on.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+MVP&font=raleway"
+                            alt="MVP Strategy" class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">Product Strategy</div>
+                            <h3 class="blog-card__title">The MVP trap: why building less isn't always better</h3>
+                            <p class="blog-card__excerpt">Minimum viable doesn't mean minimum effort. Here's how to find
+                                the right balance.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+Design+Systems&font=raleway"
+                            alt="Design Systems" class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">Design</div>
+                            <h3 class="blog-card__title">Design systems for startups: start small, scale smart</h3>
+                            <p class="blog-card__excerpt">You don't need a 200-component library on day one. Here's what
+                                you actually need.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+Growth&font=raleway" alt="Growth"
+                            class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">Growth</div>
+                            <h3 class="blog-card__title">Product-led growth isn't a hack — it's a design philosophy</h3>
+                            <p class="blog-card__excerpt">How to bake growth into your product from day one, not bolt it
+                                on later.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+AI&font=raleway" alt="AI in Design"
+                            class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">AI</div>
+                            <h3 class="blog-card__title">AI won't replace designers — but designers who use AI will</h3>
+                            <p class="blog-card__excerpt">Practical ways to integrate AI into your design workflow
+                                without losing your craft.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="https://placehold.co/600x400/12121a/7c9a72?text=🍌+Process&font=raleway" alt="Process"
+                            class="blog-card__image" loading="lazy">
+                        <div class="blog-card__content">
+                            <div class="blog-card__tag">Process</div>
+                            <h3 class="blog-card__title">Discovery sprints: the 2-week shortcut to product clarity</h3>
+                            <p class="blog-card__excerpt">How a focused discovery phase saves months of building the
+                                wrong thing.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section">
+            <div class="container text-center reveal">
+                <h2 class="gradient-text">Want to stay in the loop?</h2>
+                <p style="max-width:500px;margin:var(--space-4) auto var(--space-6);">We share insights monthly. No
+                    spam, just useful thinking.</p>
+                <a href="/contact.html" class="btn btn--primary btn--lg">Subscribe</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand"><a href="/" class="nav__logo"
+                        style="display:inline-flex;margin-bottom:var(--space-3)"><svg viewBox="0 0 40 40" fill="none"
+                            width="28" height="28">
+                            <g stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
+                                    fill="#7c9a72" opacity="0.9" />
+                                <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
+                                <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
+                                <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                                <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
+                                <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                            </g>
+                        </svg> yacaré</a>
+                    <p>Boutique digital product agency.</p>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Services</h4><a href="/services/discovery-sprint.html"
+                        class="footer__link">Discovery Sprint</a><a href="/services/mvp-jumpstarter.html"
+                        class="footer__link">MVP Jumpstarter</a><a href="/services/product-growth.html"
+                        class="footer__link">Product Growth</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Company</h4><a href="/about.html" class="footer__link">About</a><a
+                        href="/work.html" class="footer__link">Work</a><a href="/blog.html"
+                        class="footer__link">Blog</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Connect</h4><a href="/contact.html" class="footer__link">Contact</a><a
+                        href="https://linkedin.com" class="footer__link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer__bottom"><span>© 2026 Yacaré.</span></div>
+        </div>
+    </footer>
+</body>
+
+</html>

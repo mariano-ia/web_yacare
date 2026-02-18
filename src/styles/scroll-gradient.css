@@ -1,0 +1,87 @@
+/* ============================================
+   YACARÉ — TYPEBOT-STYLE SCROLL REVEAL
+   ============================================ */
+
+/* 1. The main container that provides scroll height */
+.gradient-scroll-section {
+    position: relative;
+    min-height: 250vh;
+    z-index: 1;
+    background-color: var(--bg-primary);
+}
+
+/* 2. Sticky container that stays in view */
+.sticky-reveal-container {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+/* 3. The expanding frame that actually mask/clips the content */
+.reveal-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Starting shape: a centered rectangle/square */
+    /* Initial state hidden or small, JS will drive this */
+    clip-path: inset(35% 25% round 48px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    /* Base background for safety */
+    will-change: clip-path;
+}
+
+/* 4. The vibrant gradient background inside the frame */
+.reveal-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #8A63F2 0%, #D1249D 100%);
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* 5. The content wrapper inside the frame */
+.gradient-scroll-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Must NOT be auto/scroll — would capture wheel events */
+    pointer-events: none;
+    /* Let scroll events pass through to window */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Re-enable pointer events for actual interactive content inside */
+.gradient-scroll-content a,
+.gradient-scroll-content button,
+.gradient-scroll-content [role="button"] {
+    pointer-events: auto;
+}
+
+/* Content layout adjustments */
+.gradient-scroll-content .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) 0;
+}
+
+@media (max-width: 768px) {
+    .reveal-frame {
+        clip-path: inset(40% 10% round 32px);
+    }
+}

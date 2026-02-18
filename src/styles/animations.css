@@ -1,0 +1,361 @@
+/* ============================================
+   YACARÉ — ANIMATIONS
+   ============================================ */
+
+/* ── Scroll Reveal ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    /* Deeper reveal */
+    transition: opacity 1.2s var(--ease-out),
+        transform 1.2s var(--ease-out);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Staggered Reveal (for grid children) ── */
+.reveal-stagger>* {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--ease-out),
+        transform 1s var(--ease-out);
+}
+
+.reveal-stagger.visible>*:nth-child(1) {
+    transition-delay: 0ms;
+}
+
+.reveal-stagger.visible>*:nth-child(2) {
+    transition-delay: 100ms;
+}
+
+.reveal-stagger.visible>*:nth-child(3) {
+    transition-delay: 200ms;
+}
+
+.reveal-stagger.visible>*:nth-child(4) {
+    transition-delay: 300ms;
+}
+
+.reveal-stagger.visible>*:nth-child(5) {
+    transition-delay: 400ms;
+}
+
+.reveal-stagger.visible>*:nth-child(6) {
+    transition-delay: 500ms;
+}
+
+.reveal-stagger.visible>* {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Fade In From Left ── */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity var(--duration-reveal) var(--ease-out),
+        transform var(--duration-reveal) var(--ease-out);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ── Fade In From Right ── */
+.reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity var(--duration-reveal) var(--ease-out),
+        transform var(--duration-reveal) var(--ease-out);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ── Scale In ── */
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity var(--duration-reveal) var(--ease-out),
+        transform var(--duration-reveal) var(--ease-out);
+}
+
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ── Hero Specific ── */
+@keyframes hero-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hero-glow-pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.hero__content>* {
+    animation: hero-fade-in 0.8s var(--ease-out) forwards;
+    opacity: 0;
+}
+
+.hero__content>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.hero__content>*:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.hero__content>*:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+.hero__content>*:nth-child(4) {
+    animation-delay: 0.7s;
+}
+
+/* ── Hero Animation (WDesigna Mesh) ── */
+.hero {
+    position: relative;
+    min-height: 92vh;
+    /* Leave space for bottom details */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: var(--nav-height);
+    overflow: hidden;
+    background: var(--bg-primary);
+    border-radius: 0 0 48px 48px;
+    /* Large rounded bottom corners */
+    margin-bottom: var(--space-4);
+    /* Spacing before next section */
+}
+
+/* ── Hero Background (Video Simulation) ── */
+.hero__background {
+    position: absolute;
+    inset: -50%;
+    /* Massive overdraw for rotation */
+    width: 200%;
+    height: 200%;
+    background: #000;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    /* HW accel */
+}
+
+/* Layer 1: The fast fluid mesh */
+.hero__background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(from 0deg at 50% 50%,
+            #000000 0deg,
+            var(--accent-primary) 60deg,
+            var(--accent-secondary) 120deg,
+            #000000 180deg,
+            var(--accent-primary) 240deg,
+            var(--accent-secondary) 300deg,
+            #000000 360deg);
+    opacity: 0.6;
+    filter: blur(80px);
+    /* Seamless blend */
+    animation: mesh-spin 20s linear infinite;
+    mix-blend-mode: screen;
+}
+
+/* Layer 2: The slow deep pulse */
+.hero__background::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(138, 99, 242, 0.4) 0%, transparent 70%);
+    filter: blur(60px);
+    animation: mesh-move 15s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+}
+
+/* Video Grain/Noise Overlay */
+.hero__noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+@keyframes mesh-spin {
+    0% {
+        transform: rotate(0deg) scale(1.5);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1.5);
+    }
+}
+
+@keyframes mesh-move {
+    0% {
+        transform: translate(-10%, -10%) scale(1);
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(1.1);
+    }
+}
+
+.hero__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Perfect center */
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    gap: var(--space-6);
+}
+
+.hero h1 {
+    font-size: var(--fs-hero);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    max-width: 1400px;
+    /* Wider for massive text */
+    margin-bottom: var(--space-4);
+    /* Subtle text gradient if desired, or pure white for max contrast */
+    background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ── Grain Overlay ── */
+@keyframes grain {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -10%);
+    }
+
+    20% {
+        transform: translate(-15%, 5%);
+    }
+
+    30% {
+        transform: translate(7%, -25%);
+    }
+
+    40% {
+        transform: translate(-5%, 25%);
+    }
+
+    50% {
+        transform: translate(-15%, 10%);
+    }
+
+    60% {
+        transform: translate(15%, 0);
+    }
+
+    70% {
+        transform: translate(0, 15%);
+    }
+
+    80% {
+        transform: translate(3%, 35%);
+    }
+
+    90% {
+        transform: translate(-10%, 10%);
+    }
+}
+
+.grain-overlay {
+    position: fixed;
+    inset: -100%;
+    width: 300%;
+    height: 300%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+    animation: grain 8s steps(10) infinite;
+}
+
+/* ── Horizontal Scroll Section ── */
+.horizontal-scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.horizontal-scroll:active {
+    cursor: grabbing;
+}
+
+.horizontal-scroll__track {
+    display: flex;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--container-padding);
+    width: max-content;
+}

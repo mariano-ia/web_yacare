@@ -1,0 +1,23 @@
+<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- Yacaré (Caiman) minimal geometric mark -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- Head shape - angular geometric caiman -->
+    <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
+          fill="#7c9a72" opacity="0.9"/>
+    <!-- Jaw / bottom -->
+    <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z"
+          fill="#5a7a50"/>
+    <!-- Eye left -->
+    <circle cx="14" cy="13" r="2.5" fill="#0a0a0f"/>
+    <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7"/>
+    <!-- Eye right -->
+    <circle cx="26" cy="13" r="2.5" fill="#0a0a0f"/>
+    <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7"/>
+    <!-- Texture lines (scales hint) -->
+    <line x1="18" y1="12" x2="22" y2="12" stroke="#5a7a50" stroke-width="0.6"/>
+    <line x1="17" y1="15" x2="23" y2="15" stroke="#5a7a50" stroke-width="0.6"/>
+    <!-- Tail hint -->
+    <path d="M20 26 L20 30 L18 34 L22 32 L20 30"
+          fill="#7c9a72" opacity="0.7"/>
+  </g>
+</svg>

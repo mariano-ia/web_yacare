@@ -1,0 +1,162 @@
+/* ============================================
+   YACARÉ DESIGN SYSTEM — TOKENS
+   ============================================ */
+
+:root {
+   /* ── Colors: Background (Pure Black like WDesigna) ── */
+   --bg-primary: #000000;
+   --bg-secondary: #080808;
+   --bg-elevated: #101010;
+   --bg-surface: #141414;
+
+   /* ── Colors: Text (High Contrast) ── */
+   --text-primary: #ffffff;
+   --text-secondary: #888888;
+   --text-muted: #555555;
+   --text-inverse: #000000;
+
+   /* ── Colors: Accent (Neon Lime - WDesigna/Yacaré Hybrid) ── */
+   --accent-primary: #CCF381;
+   /* Neon Lime/WDesigna vibe */
+   --accent-light: #E2FFAA;
+   --accent-dark: #A8D158;
+   --accent-glow: rgba(204, 243, 129, 0.15);
+   --accent-glow-strong: rgba(204, 243, 129, 0.4);
+
+   /* ── Colors: State ── */
+   --color-success: #CCF381;
+   --color-warning: #fbbf24;
+   --color-error: #FF5555;
+
+   /* ── Gradients ── */
+   --gradient-headline: linear-gradient(135deg, #ffffff 40%, #D1249D 100%);
+   --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 100%);
+   --gradient-hero-glow: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(204, 243, 129, 0.1) 0%, transparent 80%);
+   --gradient-border: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+
+   /* ── Borders ── */
+   --border-subtle: rgba(255, 255, 255, 0.08);
+   --border-medium: rgba(255, 255, 255, 0.15);
+   --border-accent: rgba(204, 243, 129, 0.5);
+   --radius-sm: 8px;
+   --radius-md: 16px;
+   --radius-lg: 32px;
+   /* ── Typography ── */
+   /* ── Typography (Phosphate Match: Antonio is closest variable Solid) ── */
+   --font-display: 'Antonio', sans-serif;
+   --font-inline: 'Bungee Inline', display;
+   /* Backup if user wants lines */
+   --font-body: 'Figtree', sans-serif;
+
+   --fs-hero: clamp(5rem, 13vw, 10rem);
+   --fs-h1: clamp(3.5rem, 8vw, 6rem);
+   --fs-h2: clamp(2.5rem, 6vw, 4.5rem);
+   --fs-h3: 2rem;
+   --fs-h4: 1.5rem;
+   --fs-body: 1.125rem;
+   --fs-body-lg: 1.25rem;
+   --fs-caption: 0.9rem;
+   --fs-small: 0.75rem;
+   --fs-nav: 1rem;
+   --fs-cta: 1.25rem;
+
+   --fw-regular: 400;
+   --fw-medium: 500;
+   --fw-semibold: 600;
+   --fw-bold: 700;
+   --fw-black: 800;
+   /* Antonio goes up to 700, fallbacks might use 900 */
+
+   --lh-tight: 0.9;
+   --lh-snug: 1.1;
+   --lh-normal: 1.5;
+   --lh-relaxed: 1.7;
+
+   --ls-tight: -0.04em;
+   /* Tighter tracking for Antonio */
+   --ls-normal: 0.01em;
+   --ls-wide: 0.05em;
+   --ls-wider: 0.15em;
+
+   /* ── Colors: User Reference (Magenta & Violet) ── */
+   --accent-primary: #8A63F2;
+   /* Reference Purple (Primary) */
+   --accent-secondary: #D1249D;
+   /* Reference Magenta (Secondary) */
+
+   --accent-light: #E0D6FF;
+   --accent-dark: #6D28D9;
+
+   --accent-glow: rgba(138, 99, 242, 0.3);
+   --accent-glow-strong: rgba(138, 99, 242, 0.6);
+
+   /* ── Borders (Smoother / Modern) ── */
+   --border-subtle: rgba(255, 255, 255, 0.12);
+   --border-medium: rgba(255, 255, 255, 0.2);
+   --border-accent: rgba(138, 99, 242, 0.4);
+   --radius-sm: 4px;
+   --radius-md: 12px;
+   --radius-lg: 24px;
+   /* Standard Bento curve */
+   --radius-xl: 32px;
+   --radius-pill: 9999px;
+   --radius-round: 50%;
+
+   /* ── Animated Blobs (Magenta/Purple Mesh) ── */
+   --gradient-blob-1: radial-gradient(circle, #8A63F2 0%, transparent 70%);
+   --gradient-blob-2: radial-gradient(circle, #D1249D 0%, transparent 70%);
+   --gradient-blob-3: radial-gradient(circle, #4C1D95 0%, transparent 70%);
+   /* Deep purple depth */
+
+   /* ── Spacing (More breathing room) ── */
+   --space-1: 4px;
+   --space-2: 8px;
+   --space-3: 16px;
+   --space-4: 24px;
+   --space-5: 32px;
+   --space-6: 48px;
+   --space-7: 80px;
+   --space-8: 120px;
+   --space-9: 160px;
+   --space-10: 200px;
+   --space-11: 240px;
+
+   /* ── Layout ── */
+   --container-max: 1440px;
+   /* Wider container */
+   --container-narrow: 900px;
+   --container-wide: 1800px;
+   --container-padding: 32px;
+   --section-padding: var(--space-8);
+   --nav-height: 96px;
+
+   /* ── Shadows ── */
+   --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.5);
+   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.8);
+   --shadow-glow: 0 0 80px var(--accent-glow);
+   --shadow-card: 0 24px 48px rgba(0, 0, 0, 0.5);
+
+   /* ── Transitions ── */
+   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+   --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+   --duration-fast: 200ms;
+   --duration-normal: 400ms;
+   --duration-slow: 800ms;
+   --duration-reveal: 1200ms;
+
+   /* ── Z-Index Scale ── */
+   --z-behind: -1;
+   --z-base: 0;
+   --z-above: 10;
+   --z-nav: 900;
+   --z-modal: 1000;
+   --z-toast: 1100;
+}
+
+/* ── Breakpoint Reference (used in media queries) ──
+   Mobile:  < 640px
+   Tablet:  640px – 1023px
+   Desktop: 1024px+
+   Wide:    1440px+
+   ──────────────────────────────────────────────── */

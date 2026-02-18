@@ -1,0 +1,164 @@
+/* ============================================
+   YACARÉ — LAYOUT
+   ============================================ */
+
+/* ── Container ── */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.container--narrow {
+    max-width: var(--container-narrow);
+}
+
+.container--wide {
+    max-width: var(--container-wide);
+}
+
+/* ── Sections ── */
+.section {
+    padding: var(--section-padding) 0;
+    position: relative;
+}
+
+.section--compact {
+    padding: var(--space-8) 0;
+}
+
+.section--flush {
+    padding: 0;
+}
+
+.section__header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.section__header .label {
+    display: block;
+    margin-bottom: var(--space-3);
+}
+
+.section__header h2 {
+    margin-bottom: var(--space-4);
+}
+
+.section__header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+}
+
+/* ── Grid ── */
+.grid {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* ── Flex Utilities ── */
+.flex {
+    display: flex;
+}
+
+.flex--center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex--between {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex--column {
+    flex-direction: column;
+}
+
+.flex--wrap {
+    flex-wrap: wrap;
+}
+
+.flex--gap-sm {
+    gap: var(--space-3);
+}
+
+.flex--gap-md {
+    gap: var(--space-5);
+}
+
+.flex--gap-lg {
+    gap: var(--space-7);
+}
+
+/* ── Spacers ── */
+.spacer-sm {
+    height: var(--space-5);
+}
+
+.spacer-md {
+    height: var(--space-7);
+}
+
+.spacer-lg {
+    height: var(--space-9);
+}
+
+/* ── Text Alignment ── */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1023px) {
+    .grid--3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid--4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section {
+        padding: var(--space-8) 0;
+    }
+}
+
+@media (max-width: 639px) {
+    :root {
+        --container-padding: var(--space-4);
+        --section-padding: var(--space-7);
+    }
+
+    .grid--2,
+    .grid--3,
+    .grid--4 {
+        grid-template-columns: 1fr;
+    }
+
+    .section__header {
+        margin-bottom: var(--space-6);
+    }
+}

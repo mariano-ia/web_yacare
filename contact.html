@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — Yacaré</title>
+    <meta name="description" content="Ready to build something great? Get in touch with Yacaré.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <nav class="nav" role="navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo"><svg viewBox="0 0 40 40" fill="none" width="32" height="32">
+                    <g stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
+                            fill="#7c9a72" opacity="0.9" />
+                        <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
+                        <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
+                        <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                        <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
+                        <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                    </g>
+                </svg> yacaré</a>
+            <div class="nav__links"><a href="/services.html" class="nav__link">Services</a><a href="/work.html"
+                    class="nav__link">Work</a><a href="/about.html" class="nav__link">About</a><a href="/blog.html"
+                    class="nav__link">Blog</a><a href="/contact.html" class="btn btn--primary nav__cta">Get Started</a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <span class="label">Let's Talk</span>
+                <h1 class="gradient-text">Start a conversation.</h1>
+                <p>Tell us about your project and we'll get back within 24 hours.</p>
+            </div>
+        </section>
+
+        <section class="section section--compact">
+            <div class="container">
+                <div class="contact-grid reveal">
+                    <div class="contact-info">
+                        <h2>Let's build<br>something great.</h2>
+                        <p>Whether you have a clear idea or just a hunch — we're here to help.</p>
+                        <div class="contact-detail">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            <span>hello@yacare.io</span>
+                        </div>
+                        <div class="contact-detail">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>Buenos Aires, Argentina</span>
+                        </div>
+                        <div
+                            style="margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--border-subtle);">
+                            <p class="text-muted" style="font-size: var(--fs-caption);">Prefer a live conversation?</p>
+                            <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn--secondary"
+                                style="margin-top: var(--space-3);">Schedule a Call</a>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" id="contact-form">
+                        <div class="form__group">
+                            <label class="form__label">I'm interested in</label>
+                            <div class="pill-selector">
+                                <input type="checkbox" id="svc-d" name="services" value="discovery"
+                                    class="pill-selector__input"><label for="svc-d"
+                                    class="pill-selector__label">Discovery Sprint</label>
+                                <input type="checkbox" id="svc-m" name="services" value="mvp"
+                                    class="pill-selector__input"><label for="svc-m" class="pill-selector__label">MVP
+                                    Jumpstarter</label>
+                                <input type="checkbox" id="svc-g" name="services" value="growth"
+                                    class="pill-selector__input"><label for="svc-g" class="pill-selector__label">Product
+                                    Growth</label>
+                                <input type="checkbox" id="svc-o" name="services" value="other"
+                                    class="pill-selector__input"><label for="svc-o" class="pill-selector__label">Not
+                                    sure yet</label>
+                            </div>
+                        </div>
+                        <div class="grid grid--2">
+                            <div class="form__group"><label class="form__label" for="name">Name</label><input
+                                    type="text" id="name" class="form__input" placeholder="Your name" required></div>
+                            <div class="form__group"><label class="form__label" for="email">Email</label><input
+                                    type="email" id="email" class="form__input" placeholder="you@company.com" required>
+                            </div>
+                        </div>
+                        <div class="grid grid--2">
+                            <div class="form__group"><label class="form__label" for="company">Company</label><input
+                                    type="text" id="company" class="form__input" placeholder="Company name"></div>
+                            <div class="form__group"><label class="form__label" for="budget">Budget</label>
+                                <select id="budget" class="form__select">
+                                    <option value="" disabled selected>Select range</option>
+                                    <option>$10K–$25K</option>
+                                    <option>$25K–$50K</option>
+                                    <option>$50K–$100K</option>
+                                    <option>$100K+</option>
+                                    <option>Not sure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form__group"><label class="form__label" for="message">Your project</label><textarea
+                                id="message" class="form__textarea" placeholder="What are you building?"
+                                rows="5"></textarea></div>
+                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand"><a href="/" class="nav__logo"
+                        style="display:inline-flex;margin-bottom:var(--space-3)"><svg viewBox="0 0 40 40" fill="none"
+                            width="28" height="28">
+                            <g stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
+                                    fill="#7c9a72" opacity="0.9" />
+                                <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
+                                <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
+                                <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                                <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
+                                <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
+                            </g>
+                        </svg> yacaré</a>
+                    <p>Boutique digital product agency.</p>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Services</h4><a href="/services/discovery-sprint.html"
+                        class="footer__link">Discovery Sprint</a><a href="/services/mvp-jumpstarter.html"
+                        class="footer__link">MVP Jumpstarter</a><a href="/services/product-growth.html"
+                        class="footer__link">Product Growth</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Company</h4><a href="/about.html" class="footer__link">About</a><a
+                        href="/work.html" class="footer__link">Work</a><a href="/blog.html"
+                        class="footer__link">Blog</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Connect</h4><a href="/contact.html" class="footer__link">Contact</a><a
+                        href="https://linkedin.com" class="footer__link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer__bottom"><span>© 2026 Yacaré.</span></div>
+        </div>
+    </footer>
+</body>
+
+</html>
