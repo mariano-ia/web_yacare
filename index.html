@@ -31,8 +31,7 @@
 </head>
 
 <body>
-  <!-- Custom Cursor -->
-  <div id="custom-cursor" aria-hidden="true"></div>
+
 
   <!-- Grain Texture Overlay -->
   <div class="grain-overlay" aria-hidden="true"></div>
@@ -51,7 +50,7 @@
         <a href="/work.html" class="nav__link">Work</a>
         <a href="/about.html" class="nav__link">About</a>
         <a href="/blog.html" class="nav__link">Blog</a>
-        <a href="/contact.html" class="btn btn--primary nav__cta">Get Started</a>
+        <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
       </div>
 
       <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -73,15 +72,15 @@
         <div class="hero__blob hero__blob--3"></div>
       </div>
       <div class="container hero__content">
-        <span class="label">Digital Product Agency</span>
+
         <h1 class="gradient-text">We build digital<br>experiences.</h1>
         <p class="hero__subtitle text-lg">
           We design, build, and grow digital products that move the needle.
           No fluff. No bloated teams. Just sharp execution from people who obsess over outcomes.
         </p>
         <div class="hero__actions flex flex--gap-sm">
-          <a href="/contact.html" class="btn btn--primary btn--lg">Start a Project</a>
-          <a href="/work.html" class="btn btn--secondary btn--lg">See Our Work</a>
+          <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+          <a href="/work.html" class="btn btn--secondary btn--lg"><span>See Our Work</span></a>
         </div>
       </div>
     </section>
@@ -170,11 +169,11 @@
         <div class="section__header reveal"
           style="text-align:left; display:flex; justify-content:space-between; align-items:flex-end;">
           <div>
-            <span class="label">Selected Work</span>
+
             <h2 id="work-heading" class="text-hero-gradient">Products we've<br>brought to life.</h2>
           </div>
           <a href="/work.html" class="btn btn--ghost">
-            View All <i data-lucide="arrow-right" style="width: 1em; height: 1em; margin-left: 8px;"></i>
+            <span>View All</span> <i data-lucide="arrow-right" style="width: 1em; height: 1em; margin-left: 8px;"></i>
           </a>
         </div>
       </div>
@@ -272,7 +271,7 @@
 
 
 
-    
+
 
 
     <!-- ═══════════════════════════════════════════
@@ -284,7 +283,6 @@
 
           <!-- LEFT: sticky title panel -->
           <div class="methodology-sticky-left">
-            <span class="label">Our Process</span>
             <h2 id="method-heading" class="text-hero-gradient methodology-title">How we build.<br>How we think.
             </h2>
             <p class="methodology-subtitle">A proven methodology that balances speed with intentional design
@@ -396,150 +394,136 @@
     <!-- ═══════════════════════════════════════════
          GRADIENT SCROLL SECTION (Moved to Bottom)
          ═══════════════════════════════════════════ -->
-<div class="gradient-scroll-section">
-    <div class="sticky-reveal-container">
-        <div class="reveal-frame">
-            <div class="reveal-background"></div>
-            <div class="gradient-scroll-content">
 
-                <!-- SECTION 7: FAQ -->
-                <section class="section" id="faq" aria-labelledby="faq-heading">
-                    <div class="container container--narrow">
-                        <div class="section__header">
-                            <span class="label">FAQ</span>
-                            <h2 id="faq-heading" class="text-hero-gradient">Common questions.</h2>
-                        </div>
 
-                        <div class="accordion">
-                            <div class="accordion__item">
-                                <button class="accordion__trigger" aria-expanded="false">
-                                    How does an engagement typically start?
-                                    <span class="accordion__icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="accordion__content" role="region">
-                                    <div class="accordion__body">
-                                        It starts with a conversation. We'll hop on a 30-minute call to understand your
-                                        challenge, goals, and timeline. From there, we recommend the right engagement
-                                        model — whether that's a Discovery Sprint, MVP build, or ongoing partnership. No
-                                        pressure, no pitch decks.
-                                    </div>
-                                </div>
-                            </div>
+    <!-- SECTION 7: FAQ -->
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 id="faq-heading" class="text-hero-gradient">Common questions.</h2>
+        </div>
 
-                            <div class="accordion__item">
-                                <button class="accordion__trigger" aria-expanded="false">
-                                    What's your pricing model?
-                                    <span class="accordion__icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="accordion__content" role="region">
-                                    <div class="accordion__body">
-                                        We work with fixed-scope pricing for Discovery Sprints and MVPs, and
-                                        retainer-based pricing for ongoing Product Growth partnerships. Every project
-                                        gets a clear proposal with deliverables, timeline, and investment before we
-                                        start.
-                                    </div>
-                                </div>
-                            </div>
+        <div class="accordion">
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How does an engagement typically start?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                It starts with a conversation. We'll hop on a 30-minute call to understand your
+                challenge, goals, and timeline. From there, we recommend the right engagement
+                model — whether that's a Discovery Sprint, MVP build, or ongoing partnership. No
+                pressure, no pitch decks.
+              </div>
+            </div>
+          </div>
 
-                            <div class="accordion__item">
-                                <button class="accordion__trigger" aria-expanded="false">
-                                    How big is your team?
-                                    <span class="accordion__icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="accordion__content" role="region">
-                                    <div class="accordion__body">
-                                        We're a boutique agency by design. Our core team includes senior product
-                                        designers, full-stack developers, and strategists. We keep teams small and
-                                        focused — typically 2–4 people per project — because we believe great products
-                                        are built by small, skilled teams.
-                                    </div>
-                                </div>
-                            </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              What's your pricing model?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                We work with fixed-scope pricing for Discovery Sprints and MVPs, and
+                retainer-based pricing for ongoing Product Growth partnerships. Every project
+                gets a clear proposal with deliverables, timeline, and investment before we
+                start.
+              </div>
+            </div>
+          </div>
 
-                            <div class="accordion__item">
-                                <button class="accordion__trigger" aria-expanded="false">
-                                    What technologies do you work with?
-                                    <span class="accordion__icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="accordion__content" role="region">
-                                    <div class="accordion__body">
-                                        We're technology-agnostic but opinionated. We typically work with React, React
-                                        Native, Node.js, and modern cloud infrastructure. That said, we choose the stack
-                                        that best serves your product goals — not the other way around.
-                                    </div>
-                                </div>
-                            </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How big is your team?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                We're a boutique agency by design. Our core team includes senior product
+                designers, full-stack developers, and strategists. We keep teams small and
+                focused — typically 2–4 people per project — because we believe great products
+                are built by small, skilled teams.
+              </div>
+            </div>
+          </div>
 
-                            <div class="accordion__item">
-                                <button class="accordion__trigger" aria-expanded="false">
-                                    Do you work with startups or large companies?
-                                    <span class="accordion__icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="accordion__content" role="region">
-                                    <div class="accordion__body">
-                                        Both. We've helped early-stage startups go from idea to launch, and we've
-                                        partnered with established companies to redesign and scale existing products.
-                                        What unites our clients is a shared obsession with building products that
-                                        actually work.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              What technologies do you work with?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                We're technology-agnostic but opinionated. We typically work with React, React
+                Native, Node.js, and modern cloud infrastructure. That said, we choose the stack
+                that best serves your product goals — not the other way around.
+              </div>
+            </div>
+          </div>
 
-                <!-- SECTION 8: CTA -->
-                <section class="section cta-section" id="cta">
-                    <div class="container text-center">
-                        <span class="label">Let's Talk</span>
-                        <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
-                        <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
-                            Tell us about your project and we'll get back to you within 24 hours with a plan to make it
-                            happen.
-                        </p>
-                        <div class="flex flex--center flex--gap-sm">
-                            <a href="/contact.html" class="btn btn--primary btn--lg">Start a Project</a>
-                            <a href="https://calendly.com" target="_blank" rel="noopener"
-                                class="btn btn--ghost">Schedule a Call
-                            </a>
-                        </div>
-                    </div>
-                </section>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Do you work with startups or large companies?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                Both. We've helped early-stage startups go from idea to launch, and we've
+                partnered with established companies to redesign and scale existing products.
+                What unites our clients is a shared obsession with building products that
+                actually work.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            </div><!-- /.gradient-scroll-content -->
-        </div><!-- /.reveal-frame -->
-    </div><!-- /.sticky-reveal-container -->
-</div><!-- /.gradient-scroll-section -->
+    <!-- SECTION 8: CTA -->
+    <section class="section cta-section" id="cta">
+      <div class="container text-center">
+        <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
+        <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
+          Tell us about your project and we'll get back to you within 24 hours with a plan to make it
+          happen.
+        </p>
+        <div class="flex flex--center flex--gap-sm">
+          <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+          <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn--ghost"><span>Schedule a
+              Call</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
 
   </main>
 

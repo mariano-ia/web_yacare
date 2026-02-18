@@ -1,0 +1,158 @@
+{
+    "themeName": "Yacaré Design System",
+    "version": "1.0.0",
+    "tokens": {
+        "colors": {
+            "primitives": {
+                "black": "#000000",
+                "white": "#ffffff",
+                "gray": {
+                    "100": "#f5f5f5",
+                    "400": "#888888",
+                    "600": "#555555",
+                    "800": "#101010",
+                    "900": "#080808"
+                },
+                "violet": {
+                    "primary": "#8A5EFF",
+                    "light": "#BCA3FF",
+                    "dark": "#6D28D9",
+                    "glow": "rgba(138, 94, 255, 0.15)"
+                }
+            },
+            "functional": {
+                "background": {
+                    "primary": "var(--black)",
+                    "secondary": "var(--gray-900)",
+                    "elevated": "var(--gray-800)",
+                    "surface": "#141414"
+                },
+                "text": {
+                    "primary": "var(--white)",
+                    "secondary": "var(--gray-400)",
+                    "muted": "var(--gray-600)",
+                    "inverse": "var(--black)"
+                },
+                "accent": {
+                    "primary": "var(--violet-primary)",
+                    "light": "var(--violet-light)",
+                    "dark": "var(--violet-dark)",
+                    "glow": "var(--violet-glow)"
+                }
+            }
+        },
+        "typography": {
+            "families": {
+                "display": "'Antonio', sans-serif",
+                "body": "'Figtree', sans-serif",
+                "serif": "'IBM Plex Serif', serif"
+            },
+            "scale": {
+                "hero": "clamp(5rem, 13vw, 10rem)",
+                "h1": "clamp(3.5rem, 8vw, 6rem)",
+                "h2": "clamp(2.5rem, 6vw, 4.5rem)",
+                "h3": "2rem",
+                "h4": "1.5rem",
+                "body": "1.125rem",
+                "body-lg": "1.25rem",
+                "caption": "0.9rem",
+                "small": "0.75rem"
+            },
+            "weights": {
+                "regular": 400,
+                "medium": 500,
+                "semibold": 600,
+                "bold": 700,
+                "black": 800
+            }
+        },
+        "spacing": {
+            "unit": "px",
+            "scale": {
+                "1": 4,
+                "2": 8,
+                "3": 16,
+                "4": 24,
+                "5": 32,
+                "6": 48,
+                "7": 80,
+                "8": 120,
+                "9": 160,
+                "10": 200
+            }
+        },
+        "layout": {
+            "container": {
+                "max": "1440px",
+                "narrow": "900px",
+                "wide": "1800px",
+                "padding": "32px"
+            }
+        },
+        "borders": {
+            "radius": {
+                "sm": "4px",
+                "md": "12px",
+                "lg": "24px",
+                "xl": "32px",
+                "pill": "9999px",
+                "round": "50%"
+            }
+        }
+    },
+    "components": {
+        "button": {
+            "base": {
+                "padding": "16px 32px",
+                "radius": "var(--radius-pill)",
+                "fontSize": "1.1rem",
+                "fontWeight": "600",
+                "transition": "all 0.3s var(--ease-out)"
+            },
+            "primary": {
+                "background": "#ffffff",
+                "color": "#000000",
+                "border": "1px solid #ffffff",
+                "hover": {
+                    "background": "#000000",
+                    "color": "#ffffff",
+                    "border": "1px solid #ffffff"
+                }
+            },
+            "secondary": {
+                "background": "transparent",
+                "color": "#ffffff",
+                "border": "1px solid #ffffff",
+                "hover": {
+                    "background": "#ffffff",
+                    "color": "#000000",
+                    "border": "1px solid #ffffff"
+                }
+            }
+        },
+        "card": {
+            "bento": {
+                "background": "#0A0A0A",
+                "border": "1px solid rgba(255, 255, 255, 0.08)",
+                "radius": "var(--radius-xl)",
+                "padding": "48px",
+                "hover": {
+                    "borderColor": "rgba(255, 255, 255, 0.2)",
+                    "background": "#111111",
+                    "translateY": "-8px"
+                }
+            }
+        },
+        "forms": {
+            "input": {
+                "background": "var(--bg-secondary)",
+                "border": "1px solid var(--border-subtle)",
+                "radius": "var(--radius-md)",
+                "padding": "var(--space-3) var(--space-4)",
+                "focus": {
+                    "borderColor": "var(--accent-primary)"
+                }
+            }
+        }
+    }
+}

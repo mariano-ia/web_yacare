@@ -16,12 +16,11 @@
    --text-inverse: #000000;
 
    /* ── Colors: Accent (Neon Lime - WDesigna/Yacaré Hybrid) ── */
-   --accent-primary: #CCF381;
-   /* Neon Lime/WDesigna vibe */
-   --accent-light: #E2FFAA;
-   --accent-dark: #A8D158;
-   --accent-glow: rgba(204, 243, 129, 0.15);
-   --accent-glow-strong: rgba(204, 243, 129, 0.4);
+   --accent-primary: #8A5EFF;
+   --accent-light: #BCA3FF;
+   --accent-dark: #6D28D9;
+   --accent-glow: rgba(138, 94, 255, 0.15);
+   --accent-glow-strong: rgba(138, 94, 255, 0.4);
 
    /* ── Colors: State ── */
    --color-success: #CCF381;
@@ -50,6 +49,7 @@
 
    --fs-hero: clamp(5rem, 13vw, 10rem);
    --fs-h1: clamp(3.5rem, 8vw, 6rem);
+   --fs-h1-internal: clamp(2.8rem, 6.4vw, 4.8rem);
    --fs-h2: clamp(2.5rem, 6vw, 4.5rem);
    --fs-h3: 2rem;
    --fs-h4: 1.5rem;
@@ -79,16 +79,14 @@
    --ls-wider: 0.15em;
 
    /* ── Colors: User Reference (Magenta & Violet) ── */
-   --accent-primary: #8A63F2;
-   /* Reference Purple (Primary) */
-   --accent-secondary: #D1249D;
-   /* Reference Magenta (Secondary) */
+   --accent-primary: #8A5EFF;
+   --accent-secondary: #8A5EFF;
 
-   --accent-light: #E0D6FF;
+   --accent-light: #BCA3FF;
    --accent-dark: #6D28D9;
 
-   --accent-glow: rgba(138, 99, 242, 0.3);
-   --accent-glow-strong: rgba(138, 99, 242, 0.6);
+   --accent-glow: rgba(138, 94, 255, 0.15);
+   --accent-glow-strong: rgba(138, 94, 255, 0.4);
 
    /* ── Borders (Smoother / Modern) ── */
    --border-subtle: rgba(255, 255, 255, 0.12);
@@ -103,9 +101,9 @@
    --radius-round: 50%;
 
    /* ── Animated Blobs (Magenta/Purple Mesh) ── */
-   --gradient-blob-1: radial-gradient(circle, #8A63F2 0%, transparent 70%);
-   --gradient-blob-2: radial-gradient(circle, #D1249D 0%, transparent 70%);
-   --gradient-blob-3: radial-gradient(circle, #4C1D95 0%, transparent 70%);
+   --gradient-blob-1: radial-gradient(circle, rgba(138, 94, 255, 1) 0%, transparent 70%);
+   --gradient-blob-2: radial-gradient(circle, rgba(138, 94, 255, 0.9) 0%, transparent 70%);
+   --gradient-blob-3: radial-gradient(circle, rgba(138, 94, 255, 0.8) 0%, transparent 70%);
    /* Deep purple depth */
 
    /* ── Spacing (More breathing room) ── */

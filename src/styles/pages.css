@@ -26,41 +26,50 @@
 .hero__blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.6;
-    animation: blob-float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    filter: blur(180px);
+    opacity: 1;
+    /* Reset to full opacity as requested */
 }
 
 .hero__blob--1 {
-    width: 60vw;
-    height: 60vw;
+    width: 70vw;
+    height: 70vw;
     background: var(--gradient-blob-1);
-    top: -10%;
-    left: -10%;
+    top: -30%;
+    left: -20%;
     animation-delay: -5s;
-    animation-duration: 25s;
+    animation: blob-float-1 18s infinite alternate ease-in-out;
+    /* Faster (was 25s) */
+    opacity: 1;
 }
 
 .hero__blob--2 {
-    width: 50vw;
-    height: 50vw;
+    width: 55vw;
+    /* Even larger */
+    height: 55vw;
     background: var(--gradient-blob-2);
-    bottom: -10%;
-    right: -10%;
-    animation-delay: -10s;
-    animation-duration: 30s;
+    bottom: -5%;
+    /* Almost fully on screen */
+    right: -5%;
+    animation-delay: -2s;
+    animation: blob-float-2 22s infinite alternate ease-in-out;
+    /* Faster (was 28s) */
+    opacity: 1;
+    /* Full opacity */
 }
 
 .hero__blob--3 {
-    width: 40vw;
-    height: 40vw;
+    width: 20vw;
+    height: 20vw;
     background: var(--gradient-blob-3);
-    top: 30%;
-    left: 40%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     animation-delay: -2s;
     animation-duration: 18s;
-    opacity: 0.4;
+    opacity: 0.05;
+    display: none;
+    /* Removed as requested for more black */
 }
 
 .hero__content {
@@ -84,6 +93,10 @@
     -webkit-text-fill-color: transparent;
     padding-bottom: 0.1em;
     /* Prevent descender clipping */
+}
+
+.hero--internal h1 {
+    font-size: var(--fs-h1-internal);
 }
 
 .hero__subtitle {
@@ -175,6 +188,7 @@
 .page-header h1 {
     position: relative;
     margin-bottom: var(--space-4);
+    font-size: var(--fs-h1-internal);
 }
 
 .page-header p {
@@ -205,6 +219,10 @@
 /* ── Service Detail Page ── */
 .service-hero {
     padding: calc(var(--nav-height) + var(--space-8)) 0 var(--space-7);
+}
+
+.service-hero h1 {
+    font-size: var(--fs-h1-internal);
 }
 
 .service-features {

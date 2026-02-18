@@ -4,205 +4,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
     <title>Services — Yacaré</title>
     <meta name="description"
         content="Three engagement models designed to meet you wherever you are in your product journey. Discovery Sprint, MVP Jumpstarter, Product Growth.">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
         rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/js/main.ts"></script>
 </head>
 
 <body>
+    <!-- Grain Texture Overlay -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- NAV -->
+    <!-- ═══════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════ -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="/" class="nav__logo" aria-label="Yacaré Home">
-                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" width="32" height="32">
-                    <g stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
-                            fill="#7c9a72" opacity="0.9" />
-                        <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
-                        <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
-                        <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                        <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
-                        <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                        <path d="M20 26 L20 30 L18 34 L22 32 L20 30" fill="#7c9a72" opacity="0.7" />
-                    </g>
-                </svg>
-                yacaré
+                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" />
             </a>
+
             <div class="nav__links">
                 <a href="/services.html" class="nav__link active">Services</a>
                 <a href="/work.html" class="nav__link">Work</a>
                 <a href="/about.html" class="nav__link">About</a>
                 <a href="/blog.html" class="nav__link">Blog</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta">Get Started</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
             </div>
-            <button class="nav__toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
     <main>
-        <section class="page-header">
-            <div class="container">
-                <span class="label">What We Do</span>
+        <!-- ═══════════════════════════════════════════
+         SECTION 1: HERO
+         ═══════════════════════════════════════════ -->
+        <section class="hero hero--internal" id="hero">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+            </div>
+            <div class="container hero__content">
+
                 <h1 class="gradient-text">Services built for<br>real outcomes.</h1>
-                <p>We don't sell hours. We sell clarity, speed, and obsessive quality. Choose the engagement model that
-                    fits your stage.</p>
-            </div>
-        </section>
-
-        <!-- Discovery Sprint -->
-        <section class="section" id="discovery-sprint">
-            <div class="container">
-                <div class="grid grid--2 reveal" style="align-items: center; gap: var(--space-8);">
-                    <div>
-                        <span class="label">2-Week Sprint</span>
-                        <h2>Discovery Sprint</h2>
-                        <p class="text-lg" style="margin-top: var(--space-4);">Not sure where to start? We'll spend two
-                            weeks immersed in your problem space — researching users, mapping opportunities, and shaping
-                            a product strategy that's ready to build.</p>
-                        <div class="service-features" style="margin-top: var(--space-5); grid-template-columns: 1fr;">
-                            <div class="service-feature">
-                                <h3>What's Included</h3>
-                                <p class="card__text">User research & interviews, competitive analysis, problem framing,
-                                    wireframes & user flows, product strategy roadmap, and a go/no-go recommendation.
-                                </p>
-                            </div>
-                        </div>
-                        <a href="/services/discovery-sprint.html" class="btn btn--primary"
-                            style="margin-top: var(--space-5);">Learn More</a>
-                    </div>
-                    <div
-                        style="background: var(--bg-secondary); border-radius: var(--radius-xl); height: 360px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);">
-                        <span style="font-size: 4rem;">🔍</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MVP Jumpstarter -->
-        <section class="section" id="mvp-jumpstarter" style="background: var(--bg-secondary);">
-            <div class="container">
-                <div class="grid grid--2 reveal" style="align-items: center; gap: var(--space-8);">
-                    <div
-                        style="background: var(--bg-elevated); border-radius: var(--radius-xl); height: 360px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle); order: -1;">
-                        <span style="font-size: 4rem;">⚡</span>
-                    </div>
-                    <div>
-                        <span class="label">8–12 Weeks</span>
-                        <h2>MVP Jumpstarter</h2>
-                        <p class="text-lg" style="margin-top: var(--space-4);">From concept to working product. We
-                            design and develop your minimum viable product with laser focus on what matters to your
-                            users — and nothing they don't need yet.</p>
-                        <div class="service-features" style="margin-top: var(--space-5); grid-template-columns: 1fr;">
-                            <div class="service-feature" style="background: var(--bg-primary);">
-                                <h3>What's Included</h3>
-                                <p class="card__text">Product design (UX/UI), frontend & backend development, weekly
-                                    sprint demos, QA testing, launch support, and 30 days of post-launch bug fixes.</p>
-                            </div>
-                        </div>
-                        <a href="/services/mvp-jumpstarter.html" class="btn btn--primary"
-                            style="margin-top: var(--space-5);">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Product Growth -->
-        <section class="section" id="product-growth">
-            <div class="container">
-                <div class="grid grid--2 reveal" style="align-items: center; gap: var(--space-8);">
-                    <div>
-                        <span class="label">Ongoing Partnership</span>
-                        <h2>Product Growth</h2>
-                        <p class="text-lg" style="margin-top: var(--space-4);">Your product is live — now let's make it
-                            great. We embed into your team as a design and development partner, iterating and scaling
-                            based on real user data and business goals.</p>
-                        <div class="service-features" style="margin-top: var(--space-5); grid-template-columns: 1fr;">
-                            <div class="service-feature">
-                                <h3>What's Included</h3>
-                                <p class="card__text">Dedicated team (designer + developers), continuous UX
-                                    optimization, feature development, analytics & insights, and strategic product
-                                    roadmapping.</p>
-                            </div>
-                        </div>
-                        <a href="/services/product-growth.html" class="btn btn--primary"
-                            style="margin-top: var(--space-5);">Learn More</a>
-                    </div>
-                    <div
-                        style="background: var(--bg-secondary); border-radius: var(--radius-xl); height: 360px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);">
-                        <span style="font-size: 4rem;">📈</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="section cta-section">
-            <div class="container text-center reveal">
-                <span class="label">Let's Talk</span>
-                <h2 class="gradient-text">Not sure which is right?<br>Let's figure it out together.</h2>
-                <p style="max-width: 500px; margin: var(--space-4) auto var(--space-6);">Book a free 30-minute strategy
-                    call. We'll listen, ask smart questions, and point you in the right direction — even if it's not us.
+                <p class="hero__subtitle text-lg">
+                    We don't sell hours. We sell clarity, speed, and obsessive quality.
+                    Choose the stage of the journey that fits your current challenge.
                 </p>
-                <a href="/contact.html" class="btn btn--primary btn--lg">Get Started</a>
             </div>
         </section>
+
+        <!-- ═══════════════════════════════════════════
+         SECTION 2: SERVICES MAIN
+         ═══════════════════════════════════════════ -->
+        <section class="section" id="services-main">
+            <div class="container">
+                <div class="services-split">
+                    <!-- Left Column -->
+                    <div class="services-intro reveal">
+                        <h2 class="text-hero-gradient animated-gradient"
+                            style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; margin-bottom: var(--space-3);">
+                            OUR ENGAGEMENT MODELS</h2>
+                        <p class="text-lg" style="color: var(--text-secondary); max-width: 380px;">
+                            Flexible models designed to adapt to your project's maturity and speed requirements.
+                        </p>
+                    </div>
+
+                    <!-- Right Column (Cards) -->
+                    <div class="services-list reveal-stagger">
+
+                        <!-- Discovery Sprint -->
+                        <div class="card reveal" style="margin-bottom: var(--space-5);">
+
+                            <h3 class="card__title">Discovery Sprint</h3>
+                            <div class="chip-group">
+                                <span class="chip">2 Weeks</span>
+                                <span class="chip">Strategy & Validation</span>
+                            </div>
+                            <p class="card__text">
+                                Give shape to your idea. Explore user needs, tech possibilities and product-market fit
+                                through fast, focused early-stage sprints. We immersion ourselves in your world to
+                                provide a clear roadmap.
+                            </p>
+                            <ul
+                                style="list-style: none; padding: 0; margin: var(--space-5) 0; color: var(--text-secondary);">
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i> User
+                                    Research
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Technical Discovery
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Clickable Prototype
+                                </li>
+                            </ul>
+                            <a href="/contact.html" class="btn btn--secondary"><span>Start a Sprint</span></a>
+                        </div>
+
+                        <!-- MVP Jumpstarter -->
+                        <div class="card reveal" style="margin-bottom: var(--space-5);">
+
+                            <h3 class="card__title">MVP Jumpstarter</h3>
+                            <div class="chip-group">
+                                <span class="chip">8-12 Weeks</span>
+                                <span class="chip">Design & Development</span>
+                            </div>
+                            <p class="card__text">
+                                From concept to working product. We design and build your minimum viable product with
+                                laser focus on what matters to your users. Launch fast, gather feedback, and validate
+                                your business model.
+                            </p>
+                            <ul
+                                style="list-style: none; padding: 0; margin: var(--space-5) 0; color: var(--text-secondary);">
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i> UX/UI
+                                    Design
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Frontend/Backend
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Launch Support
+                                </li>
+                            </ul>
+                            <a href="/contact.html" class="btn btn--secondary"><span>Build MVP</span></a>
+                        </div>
+
+                        <!-- Product Growth -->
+                        <div class="card reveal">
+
+                            <h3 class="card__title">Product Growth</h3>
+                            <div class="chip-group">
+                                <span class="chip chip--accent">Monthly</span>
+                                <span class="chip">Continuous Iteration</span>
+                            </div>
+                            <p class="card__text">
+                                Already launched? We help you scale, redesign or evolve your product with ongoing design
+                                and development support. We embed into your team to drive meaningful outcomes based on
+                                data.
+                            </p>
+                            <ul
+                                style="list-style: none; padding: 0; margin: var(--space-5) 0; color: var(--text-secondary);">
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Feature Scaling
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Conversion Tuning
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); display: flex; align-items: center; gap: 12px;">
+                                    <i data-lucide="check" style="width: 16px; color: var(--text-primary);"></i>
+                                    Ongoing Support
+                                </li>
+                            </ul>
+                            <a href="/contact.html" class="btn btn--secondary"><span>Partner with Us</span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════
+         SECTION 3: CTA
+         ═══════════════════════════════════════════ -->
+        <section class="section cta-section" id="cta">
+            <div class="container text-center">
+                <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
+                <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
+                    Tell us about your project and we'll get back to you within 24 hours with a plan to make it
+                    happen.
+                </p>
+                <div class="flex flex--center flex--gap-sm">
+                    <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+                    <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn--ghost"><span>Schedule
+                            a Call</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- FOOTER -->
+    <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
     <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer__grid">
                 <div class="footer__brand">
                     <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
-                        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" width="28" height="28">
-                            <g stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
-                                    fill="#7c9a72" opacity="0.9" />
-                                <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
-                                <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
-                                <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                                <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
-                                <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                            </g>
-                        </svg>
-                        yacaré
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img footer__logo-img" />
                     </a>
                     <p>Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
                 </div>
+
                 <div>
-                    <h4 class="footer__heading">Services</h4><a href="/services/discovery-sprint.html"
-                        class="footer__link">Discovery Sprint</a><a href="/services/mvp-jumpstarter.html"
-                        class="footer__link">MVP Jumpstarter</a><a href="/services/product-growth.html"
-                        class="footer__link">Product Growth</a>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
                 </div>
+
                 <div>
-                    <h4 class="footer__heading">Company</h4><a href="/about.html" class="footer__link">About Us</a><a
-                        href="/work.html" class="footer__link">Our Work</a><a href="/blog.html"
-                        class="footer__link">Blog</a>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
                 </div>
+
                 <div>
-                    <h4 class="footer__heading">Connect</h4><a href="/contact.html" class="footer__link">Contact</a><a
-                        href="https://linkedin.com" class="footer__link">LinkedIn</a><a href="https://twitter.com"
-                        class="footer__link">Twitter</a>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" class="footer__link">Twitter</a>
                 </div>
             </div>
-            <div class="footer__bottom"><span>© 2026 Yacaré. All rights reserved.</span>
-                <div class="footer__social"><a href="https://linkedin.com" aria-label="LinkedIn"><svg width="20"
-                            height="20" viewBox="0 0 24 24" fill="currentColor">
+
+            <div class="footer__bottom">
+                <span>© 2026 Yacaré. All rights reserved.</span>
+                <div class="footer__social">
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg></a><a href="https://twitter.com" aria-label="Twitter"><svg width="20" height="20"
-                            viewBox="0 0 24 24" fill="currentColor">
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg></a></div>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>

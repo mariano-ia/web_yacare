@@ -4,48 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
     <title>Discovery Sprint — Yacaré</title>
     <meta name="description"
         content="Two weeks to product clarity. Our Discovery Sprint cuts through ambiguity to give you a research-backed strategy.">
+    <link rel="canonical" href="https://yacare.io/services/discovery-sprint.html">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
         rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/js/main.ts"></script>
 </head>
 
 <body>
+    <!-- Grain Texture Overlay -->
     <div class="grain-overlay" aria-hidden="true"></div>
-    <nav class="nav">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
-            <a href="/" class="nav__logo"><svg viewBox="0 0 40 40" fill="none" width="32" height="32">
-                    <g stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 18 L4 14 L8 10 L16 8 L24 8 L32 10 L36 14 L32 18 L28 20 L20 22 L12 20 Z"
-                            fill="#7c9a72" opacity="0.9" />
-                        <path d="M10 20 L14 24 L20 26 L26 24 L30 20 L28 20 L20 22 L12 20 Z" fill="#5a7a50" />
-                        <circle cx="14" cy="13" r="2.5" fill="#0a0a0f" />
-                        <circle cx="14.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                        <circle cx="26" cy="13" r="2.5" fill="#0a0a0f" />
-                        <circle cx="26.5" cy="12.5" r="0.8" fill="#f5f5f7" />
-                    </g>
-                </svg> yacaré</a>
-            <div class="nav__links"><a href="/services.html" class="nav__link active">Services</a><a href="/work.html"
-                    class="nav__link">Work</a><a href="/about.html" class="nav__link">About</a><a href="/blog.html"
-                    class="nav__link">Blog</a><a href="/contact.html" class="btn btn--primary nav__cta">Get Started</a>
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" />
+            </a>
+
+            <div class="nav__links">
+                <a href="/services.html" class="nav__link active">Services</a>
+                <a href="/work.html" class="nav__link">Work</a>
+                <a href="/about.html" class="nav__link">About</a>
+                <a href="/blog.html" class="nav__link">Blog</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
             </div>
-            <button class="nav__toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
     <main>
-        <section class="service-hero">
-            <div class="container">
-                <a href="/services.html" style="color:var(--text-muted);font-size:var(--fs-caption);">← Back to
-                    Services</a>
-                <span class="label" style="margin-top:var(--space-5);display:block;">2-Week Sprint</span>
-                <h1 class="gradient-text" style="margin-top:var(--space-3);">Discovery Sprint</h1>
-                <p class="text-lg" style="max-width:600px;margin-top:var(--space-4);">Not sure where to start? We
-                    immerse ourselves in your problem space and emerge with a strategy that's ready to build.</p>
+        <!-- ═══════════════════════════════════════════
+             HERO
+             ═══════════════════════════════════════════ -->
+        <section class="hero hero--internal service-hero" id="hero">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+                <div class="hero__glow"></div>
+            </div>
+
+            <div class="container hero__content">
+                <div class="hero__breadcrumbs" style="margin-bottom: var(--space-4);">
+                    <a href="/services.html"
+                        style="color:var(--text-muted);font-size:var(--fs-caption); display: inline-flex; align-items: center; gap: 8px;">
+                        <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+                        Back to Services
+                    </a>
+                </div>
+                <h1 class="gradient-text">Discovery Sprint</h1>
+                <p class="hero__subtitle">Not sure where to start? We immerse ourselves in your problem space and emerge
+                    with a strategy that's ready to build.</p>
             </div>
         </section>
 
@@ -56,21 +85,21 @@
                 </div>
                 <div class="service-features reveal-stagger">
                     <div class="service-feature">
-                        <h3>🔬 User Research</h3>
+                        <h3>User Research</h3>
                         <p class="card__text">5-8 user interviews, survey design, qualitative synthesis. We'll
                             understand who your users really are.</p>
                     </div>
                     <div class="service-feature">
-                        <h3>🗺️ Competitive Analysis</h3>
+                        <h3>Competitive Analysis</h3>
                         <p class="card__text">Deep dive into your competitive landscape. What works, what doesn't, and
                             where the gaps are.</p>
                     </div>
                     <div class="service-feature">
-                        <h3>📐 Wireframes & Flows</h3>
+                        <h3>Wireframes & Flows</h3>
                         <p class="card__text">Low-fidelity wireframes and user flow mapping for the core experience.</p>
                     </div>
                     <div class="service-feature">
-                        <h3>📋 Product Strategy</h3>
+                        <h3>Product Strategy</h3>
                         <p class="card__text">A clear roadmap with priorities, scope recommendations, and a go/no-go
                             decision framework.</p>
                     </div>
@@ -122,7 +151,55 @@
 
     <footer class="footer">
         <div class="container">
-            <div class="footer__bottom"><span>© 2026 Yacaré.</span></div>
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" style="height: 24px;" />
+                    </a>
+                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                        needle.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" class="footer__link">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <span>© 2026 Yacaré. All rights reserved.</span>
+                <div class="footer__social">
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 </body>

@@ -10,28 +10,10 @@ body {
     background-color: var(--bg-primary);
     line-height: var(--lh-normal);
     overflow-x: hidden;
-    cursor: none;
-    /* hide native cursor */
+    cursor: default;
 }
 
-/* ── Custom Cursor ── */
-#custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 99999;
-    transform: translate(-50%, -50%);
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    background-color: #ffffff;
-    /* default: white on dark bg */
-    mix-blend-mode: difference;
-    /* auto-contrast trick */
-    will-change: transform;
-}
+
 
 /* Make all interactive elements show pointer feel */
 a,
@@ -41,7 +23,7 @@ input,
 select,
 textarea,
 label {
-    cursor: none;
+    cursor: pointer;
 }
 
 
@@ -132,32 +114,7 @@ a:hover {
     -webkit-text-fill-color: transparent;
 }
 
-/* ── Labels & Tags ── */
-.label {
-    font-family: 'IBM Plex Serif', serif;
-    font-size: calc(var(--fs-body) * 1.25);
-    /* 2 sizes up */
-    font-weight: 500;
-    font-style: italic;
-    text-transform: none;
-    letter-spacing: normal;
-    color: #ffffff;
-    display: block;
-    margin-bottom: var(--space-2);
-    min-height: 1.5em;
-}
 
-/* ── Typewriter Cursor ── */
-.label.typing::after {
-    content: "▋";
-    display: inline-block;
-    vertical-align: baseline;
-    font-style: normal;
-    font-size: 0.9em;
-    margin-left: 4px;
-    color: var(--accent-primary);
-    animation: blink 1s step-end infinite;
-}
 
 @keyframes blink {
 

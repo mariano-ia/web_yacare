@@ -10,61 +10,43 @@
     justify-content: center;
     gap: var(--space-2);
     padding: 16px 32px;
-    /* Plumper buttons */
     font-family: var(--font-body);
     font-size: 1.1rem;
-    /* Slightly larger text */
     font-weight: 600;
     border-radius: 999px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s var(--ease-out);
     white-space: nowrap;
     cursor: pointer;
-    border: 1px solid transparent;
     text-decoration: none;
     line-height: 1;
     letter-spacing: -0.01em;
-}
-
-.label {
-    font-family: 'IBM Plex Serif', serif;
-    font-size: calc(var(--fs-body) * 1.25);
-    /* 2 sizes up */
-    font-weight: 500;
-    font-style: italic;
-    text-transform: none;
-    letter-spacing: normal;
-    color: #ffffff;
-    display: block;
-    margin-bottom: var(--space-2);
-    min-height: 1.5em;
+    position: relative;
+    z-index: 1;
 }
 
 .btn--primary {
     background: #ffffff;
-    /* Minimal Luxury White */
     color: #000000;
-    border-color: #ffffff;
+    border: 1px solid #ffffff;
 }
 
 .btn--primary:hover {
-    background: var(--accent-primary);
-    /* Neon Lime */
-    border-color: var(--accent-primary);
-    color: #000000;
+    background: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 0 30px var(--accent-glow-strong);
 }
 
 .btn--secondary {
     background: transparent;
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid #ffffff;
 }
 
 .btn--secondary:hover {
     background: #ffffff;
-    border-color: #ffffff;
     color: #000000;
+    border-color: #ffffff;
     transform: translateY(-2px);
 }
 
@@ -150,6 +132,8 @@
     text-decoration: none;
     z-index: 2;
     letter-spacing: -0.03em;
+    opacity: 0.7;
+    /* Reduced opacity as requested */
 }
 
 .nav__logo-img {
@@ -298,6 +282,14 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* Deshabilitar hover en cards de la lista de servicios */
+.services-list .card:hover {
+    transform: none;
+    background: #0A0A0A;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
 .card__icon {
     width: 64px;
     height: 64px;
@@ -325,6 +317,27 @@
     color: var(--text-secondary);
     font-size: var(--fs-caption);
     line-height: var(--lh-normal);
+}
+
+/* ── Chips ── */
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.chip {
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 999px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
 }
 
 /* ── Portfolio Card ── */
@@ -682,7 +695,7 @@
 }
 
 .footer__link:hover {
-    color: var(--accent-primary);
+    color: #ffffff;
 }
 
 .footer__bottom {
@@ -706,7 +719,7 @@
 }
 
 .footer__social a:hover {
-    color: var(--accent-primary);
+    color: #ffffff;
 }
 
 @media (max-width: 768px) {

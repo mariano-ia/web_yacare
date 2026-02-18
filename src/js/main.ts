@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initHorizontalScroll();
     initTypewriter();
     initScrollGradient();
-    initCursor();
     initWordReveal();
 
     // Initialize Lucide Icons (fallback to global if import fails)
@@ -32,49 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ── Custom Cursor ──
-function initCursor(): void {
-    const cursor = document.getElementById('custom-cursor');
-    if (!cursor) return;
 
-    // Use RAF for smooth tracking
-    let mouseX = -100, mouseY = -100;
-    let curX = -100, curY = -100;
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
 
-    // Hide when leaving window
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-    });
-
-    // Scale up on hover over interactive elements
-    document.addEventListener('mouseover', (e) => {
-        const target = e.target as HTMLElement;
-        if (target.closest('a, button, [role="button"]')) {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1.8)';
-        } else {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-    });
-
-    // Smooth follow loop
-    const loop = () => {
-        // Lerp for smooth lag
-        curX += (mouseX - curX) * 0.18;
-        curY += (mouseY - curY) * 0.18;
-        cursor.style.left = `${curX}px`;
-        cursor.style.top = `${curY}px`;
-        requestAnimationFrame(loop);
-    };
-    loop();
-}
 
 
 
