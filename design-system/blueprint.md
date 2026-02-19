@@ -37,8 +37,9 @@ Todos los botones deben ser `rounded-full` (píldora) y tener una transición su
 - Hover: Elevación sutil (`translateY: -8px`) y cambio de color de borde a blanco suave.
 
 ### Chips (`class="chip"`)
-Usar para metadatos, categorías o estados. Diseño minimalista monocromático para evitar distracciones.
-- **Estilo**: Texto blanco (`Functional.Text.Primary`), fondo sutil (transparencia 5%) y borde fino. 
+Usar para metadatos, categorías o estados.
+- **Estilo Base**: Texto blanco (`Functional.Text.Primary`), fondo sutil (transparencia 5%) y borde fino.
+- **Estilo Resaltado (Orange Outline)**: Usado para servicios y estados críticos. Texto y borde en `Color.Orange` (#FF8A00), fondo transparente.
 - **Uso**: Agrupar en `.chip-group` para metadatos múltiples.
 
 ### Inputs (`class="form__input"`)

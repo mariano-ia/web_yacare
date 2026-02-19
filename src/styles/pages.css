@@ -13,6 +13,7 @@
     padding-top: var(--nav-height);
     overflow: hidden;
     background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-medium);
 }
 
 .hero__background {
@@ -136,32 +137,9 @@
 }
 
 /* ── CTA Section ── */
-.cta-section {
-    padding: var(--space-10) 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.cta-section::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 400px;
-    background: var(--gradient-hero-glow);
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(80px);
-    opacity: 0.6;
-}
-
-.cta-section h2 {
-    font-size: var(--fs-h1);
-    margin-bottom: var(--space-2);
-    position: relative;
-}
+/* ── CTA Card ── */
+/* ── CTA Section ── */
+/* CTA Card styles have been moved to components.css for reusability */
 
 /* ── Page Headers (for sub-pages) ── */
 .page-header {
@@ -426,8 +404,7 @@
    ═══════════════════════════════════════════ */
 .about-statement {
     padding: var(--space-9) 0;
-    border-top: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-medium);
 }
 
 .about-statement__text {
@@ -514,7 +491,7 @@
     align-items: center;
     gap: var(--space-5);
     padding: var(--space-5) 0;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-medium);
     position: relative;
     overflow: hidden;
     transition: padding-left 0.45s cubic-bezier(0.25, 1, 0.5, 1);
@@ -528,7 +505,7 @@
     left: 0;
     height: 1px;
     width: 100%;
-    background: var(--border-subtle);
+    background: var(--border-medium);
     pointer-events: none;
 }
 

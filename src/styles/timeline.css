@@ -23,7 +23,7 @@
     left: 0;
     width: 0;
     /* Starts at 0 for animation */
-    height: 2px;
+    height: 1px;
     background: var(--border-medium);
     transform: translateY(-50%);
     transition: width 1.5s var(--ease-out);
@@ -51,7 +51,7 @@
     width: 16px;
     height: 16px;
     background: var(--bg-surface);
-    border: 2px solid var(--text-muted);
+    border: 1px solid var(--text-muted);
     border-radius: 50%;
     cursor: pointer;
     position: relative;
@@ -82,7 +82,7 @@
     text-transform: uppercase;
     letter-spacing: var(--ls-wide);
     font-weight: var(--fw-bold);
-    color: var(--text-muted);
+    color: var(--text-primary);
 
     opacity: 0;
     transform: translateX(-50%) translateY(10px);
@@ -96,14 +96,10 @@
 
 /* Active State */
 .timeline-dot.active {
-    border-color: #FFFFFF;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 4px var(--bg-surface), 0 0 20px rgba(255, 255, 255, 0.4);
+    border-color: var(--color-orange);
+    background: var(--color-orange);
+    box-shadow: 0 0 0 4px var(--bg-surface), 0 0 20px rgba(255, 138, 0, 0.4);
     transform: scale(1.2);
-}
-
-.timeline-dot.active::after {
-    color: #FFFFFF;
 }
 
 /* CARD DISPLAY AREA */
@@ -140,11 +136,12 @@
     z-index: 10;
 }
 
+
+
 .timeline-card h3 {
     font-family: var(--font-display);
     font-size: var(--fs-h3);
     color: #FFFFFF;
-    /* White title as requested */
     margin-bottom: var(--space-3);
     text-transform: uppercase;
     letter-spacing: var(--ls-wide);

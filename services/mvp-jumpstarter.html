@@ -65,20 +65,12 @@
             </div>
 
             <div class="container hero__content">
-                <div class="hero__breadcrumbs" style="margin-bottom: var(--space-4);">
-                    <a href="/services.html"
-                        style="color:var(--text-muted);font-size:var(--fs-caption); display: inline-flex; align-items: center; gap: 8px;">
-                        <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
-                        Back to Services
-                    </a>
-                </div>
-                <div class="label"
-                    style="text-transform: uppercase; color: var(--accent-primary); letter-spacing: var(--ls-wide); font-weight: 700;">
-                    8-12 Week Build</div>
-                <h1 class="gradient-text" style="font-size: var(--fs-h1-internal); margin-top: var(--space-2);">MVP
-                    Jumpstarter</h1>
-                <p class="hero__subtitle" style="max-width: 800px;">Go from 0 to 1 without the overhead. We build
-                    high-performance products that allow you to test your business model with real users in record time.
+                <h1 class="text-hero-gradient animated-gradient"
+                    style="font-size: var(--fs-h1-internal); line-height: 1.1;">
+                    FROM ZERO TO ONE<br>IN 8 WEEKS</h1>
+                <p class="hero__subtitle" style="max-width: 800px; margin-top: var(--space-4);">
+                    Go from concept to working product without the overhead. We build high-performance MVPs that allow
+                    you to test your business model with real users.
                 </p>
                 <div class="hero__actions" style="margin-top: var(--space-6);">
                     <a href="#get-started" class="btn btn--primary"><span>Start Your Project</span></a>
@@ -86,49 +78,18 @@
             </div>
         </section>
 
-        <!-- The Pain Section -->
-        <section class="section">
-            <div class="container container--narrow">
-                <div class="section__header reveal" style="text-align: center;">
-                    <h2 class="text-hero-gradient animated-gradient">Don't let development be your bottleneck.</h2>
-                    <p class="text-lg" style="margin-top: var(--space-4); opacity: 0.8;">Traditional agencies take
-                        months to ship basic features. We focus on the "Value Core" to get you into the market before
-                        your competitors do.</p>
-                </div>
-
-                <div class="grid grid--2 reveal-stagger" style="margin-top: var(--space-8); gap: var(--space-6);">
-                    <div class="card" style="padding: var(--space-6);">
-                        <i data-lucide="layers"
-                            style="color: var(--accent-primary); margin-bottom: var(--space-4);"></i>
-                        <h3 style="font-size: var(--fs-h4);">Bloated Scope</h3>
-                        <p class="text-muted">Avoid building features nobody wants. We help you identify the 20% of
-                            features that drive 80% of the value.</p>
-                    </div>
-                    <div class="card" style="padding: var(--space-6);">
-                        <i data-lucide="clock" style="color: var(--accent-primary); margin-bottom: var(--space-4);"></i>
-                        <h3 style="font-size: var(--fs-h4);">Slow Time-to-Market</h3>
-                        <p class="text-muted">Every day your product isn't live is a day of lost feedback. We ship your
-                            production-ready MVP in weeks.</p>
-                    </div>
-                    <div class="card" style="padding: var(--space-6);">
-                        <i data-lucide="code" style="color: var(--accent-primary); margin-bottom: var(--space-4);"></i>
-                        <h3 style="font-size: var(--fs-h4);">Technical Debt</h3>
-                        <p class="text-muted">"Fast" doesn't mean "Messy". We build with a scalable architecture that
-                            doesn't need a rewrite in 6 months.</p>
-                    </div>
-                    <div class="card" style="padding: var(--space-6);">
-                        <i data-lucide="shield-check"
-                            style="color: var(--accent-primary); margin-bottom: var(--space-4);"></i>
-                        <h3 style="font-size: var(--fs-h4);">Launch Anxiety</h3>
-                        <p class="text-muted">From cloud hosting to security audits, we handle the technical heavy
-                            lifting so you can focus on the business.</p>
-                    </div>
-                </div>
+        <!-- Problem Statement (About Style) -->
+        <section class="section about-statement" aria-label="MVP Summary">
+            <div class="container">
+                <p class="about-statement__text reveal-words" style="font-size: 2.5rem;">
+                    Traditional agencies take months to ship basic features. We focus on the "Value Core" to get you
+                    into the market before your competitors do, avoiding bloated scope and technical debt.
+                </p>
             </div>
         </section>
 
         <!-- Process Section -->
-        <section class="section" style="background:var(--bg-secondary);">
+        <section class="section">
             <div class="container reveal">
                 <div class="section__header" style="text-align: center;">
                     <h2 class="text-hero-gradient animated-gradient">The Fast Path to Launch</h2>
@@ -136,67 +97,122 @@
                         process.</p>
                 </div>
 
-                <div class="methodology-steps" style="margin-top:var(--space-8);">
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">01</div>
-                        <h3 class="methodology-step__title">Prototype</h3>
-                        <p class="methodology-step__desc">Week 1-2: High-fidelity UI design and interactive prototype.
-                            See your product before we write a single line of code.</p>
+                <!-- Full Width Timeline -->
+                <div class="timeline-container reveal"
+                    style="padding: 0 0 var(--space-8) 0; margin-top: var(--space-8);">
+
+                    <!-- Navigation Arrows (Centered above) -->
+                    <div class="container container--narrow"
+                        style="display: flex; justify-content: center; gap: var(--space-4); margin-bottom: 48px; position: relative; z-index: 20;">
+                        <button class="btn-icon timeline-prev" aria-label="Previous Step">
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+                        <button class="btn-icon timeline-next" aria-label="Next Step">
+                            <i data-lucide="arrow-right"></i>
+                        </button>
                     </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">02</div>
-                        <h3 class="methodology-step__title">Core Build</h3>
-                        <p class="methodology-step__desc">Week 3-8: Rapid development of the primary user journeys.
-                            Weekly demos keep you updated on progress.</p>
+
+                    <!-- Timeline Track Wrapper -->
+                    <div class="timeline-track-wrapper">
+                        <!-- The Full Width Line -->
+                        <div class="timeline-line"></div>
+
+                        <!-- The Centered Dots -->
+                        <div class="timeline-dots">
+                            <!-- Dot 1 -->
+                            <div class="timeline-dot" data-label="Prototype"></div>
+                            <!-- Dot 2 -->
+                            <div class="timeline-dot" data-label="Core Build"></div>
+                            <!-- Dot 3 -->
+                            <div class="timeline-dot" data-label="Integrate"></div>
+                            <!-- Dot 4 -->
+                            <div class="timeline-dot" data-label="Final Launch"></div>
+                        </div>
                     </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">03</div>
-                        <h3 class="methodology-step__title">Integrate</h3>
-                        <p class="methodology-step__desc">Week 9-10: Connecting third-party services (Stripe, Auth,
-                            APIs) and fine-tuning the experience.</p>
-                    </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">04</div>
-                        <div class="methodology-step__title">Final Launch</div>
-                        <p class="methodology-step__desc">Week 11-12: Rigorous QA testing, cloud deployment, and handing
-                            over the keys to your new product.</p>
+
+                    <div class="container container--narrow">
+                        <div class="timeline-content" style="margin-top: var(--space-8);">
+                            <!-- Card 1 -->
+                            <div class="timeline-card active">
+                                <h3>Prototype</h3>
+                                <p>Week 1-2: High-fidelity UI design and interactive prototype. See your product before
+                                    we write a single line of code.</p>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="timeline-card">
+                                <h3>Core Build</h3>
+                                <p>Week 3-8: Rapid development of the primary user journeys. Weekly demos keep you
+                                    updated on progress and velocity.</p>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="timeline-card">
+                                <h3>Integrate</h3>
+                                <p>Week 9-10: Connecting third-party services (Stripe, Auth, APIs) and fine-tuning the
+                                    experience for production.</p>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="timeline-card">
+                                <h3>Final Launch</h3>
+                                <p>Week 11-12: Rigorous QA testing, cloud deployment, and handing over the keys to your
+                                    new product.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Deliverables -->
+        <!-- Deliverables (Sticky Split Layout) -->
         <section class="section">
-            <div class="container container--narrow">
-                <div class="section__header reveal" style="text-align: center;">
-                    <h2 class="text-hero-gradient animated-gradient">What's in the box?</h2>
-                    <p class="text-lg" style="margin-top: var(--space-4);">A complete digital asset package ready for
-                        your first 1,000 users.</p>
-                </div>
-
-                <div class="grid grid--2 reveal-stagger" style="margin-top: var(--space-8); gap: var(--space-4);">
-                    <div
-                        style="padding: var(--space-6); border-left: 2px solid var(--accent-primary); background: rgba(255,255,255,0.02);">
-                        <h3 style="margin-bottom: var(--space-2);">Production-Ready Code</h3>
-                        <p class="text-muted">Clean, documented, and version-controlled codebase on GitHub/GitLab.</p>
-                    </div>
-                    <div
-                        style="padding: var(--space-6); border-left: 2px solid var(--accent-primary); background: rgba(255,255,255,0.02);">
-                        <h3 style="margin-bottom: var(--space-2);">Pro UX/UI Design</h3>
-                        <p class="text-muted">Complete Figma files with a component-based design system for future
-                            growth.</p>
-                    </div>
-                    <div
-                        style="padding: var(--space-6); border-left: 2px solid var(--accent-primary); background: rgba(255,255,255,0.02);">
-                        <h3 style="margin-bottom: var(--space-2);">Admin Dashboard</h3>
-                        <p class="text-muted">A customized back-office tool to manage your data, users, and content
-                            without code.</p>
-                    </div>
-                    <div
-                        style="padding: var(--space-6); border-left: 2px solid var(--accent-primary); background: rgba(255,255,255,0.02);">
-                        <h3 style="margin-bottom: var(--space-2);">Analytics & Hosting</h3>
-                        <p class="text-muted">Full setup on Vercel/AWS/GCP with tracking events configured for growth.
+            <div class="container">
+                <div class="services-split">
+                    <!-- Left Column (Sticky Title) -->
+                    <div class="services-intro reveal">
+                        <h2 class="text-hero-gradient animated-gradient"
+                            style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; margin-bottom: var(--space-3);">
+                            WHAT'S IN<br>THE BOX?</h2>
+                        <p class="text-lg" style="color: var(--text-secondary); max-width: 320px;">
+                            A complete digital asset package ready for your first 1,000 users.
                         </p>
+                    </div>
+
+                    <!-- Right Column (Scrolling List) -->
+                    <div class="services-list reveal-stagger">
+                        <!-- Item 1 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Production-Ready Code</h3>
+                                <p class="service-item__desc">Clean, documented, and version-controlled codebase on
+                                    GitHub/GitLab.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Pro UX/UI Design</h3>
+                                <p class="service-item__desc">Complete Figma files with a component-based design system
+                                    for future growth.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Admin Dashboard</h3>
+                                <p class="service-item__desc">A customized back-office tool to manage your data, users,
+                                    and content without code.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Analytics & Hosting</h3>
+                                <p class="service-item__desc">Full setup on Vercel/AWS/GCP with tracking events
+                                    configured for growth.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -204,16 +220,17 @@
 
         <!-- Final Form Section -->
         <section class="section cta-section" id="get-started">
-            <div class="container reveal">
-                <div class="contact-grid" style="align-items: center; gap: var(--space-8);">
-                    <div class="cta-content">
-                        <h2 class="text-hero-gradient animated-gradient">READY TO<br>GET STARTED?</h2>
-                        <p class="text-lg"
-                            style="color: var(--text-secondary); max-width: 420px; margin-top: var(--space-4);">
-                            Tell us about your product idea and let's launch it in record time.</p>
-                    </div>
-                    <div class="contact-card card">
-                        <form class="contact-form" style="margin: 0;">
+            <div class="container container--medium reveal">
+                <div class="cta-card">
+                    <div class="contact-grid" style="align-items: center; gap: var(--space-8); text-align: left;">
+                        <div class="cta-content">
+                            <h2 class="text-hero-gradient animated-gradient" style="margin-bottom: var(--space-4);">
+                                READY TO<br>START BUILDING?</h2>
+                            <p class="text-lg" style="color: var(--text-secondary); margin-bottom: 0;">
+                                Tell us about your product idea and let's launch it in record time.</p>
+                        </div>
+
+                        <form class="contact-form" style="margin: 0; width: 100%;">
                             <input type="hidden" name="service" value="MVP Jumpstarter">
                             <div class="grid grid--2">
                                 <div class="form__group">

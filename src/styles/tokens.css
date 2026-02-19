@@ -26,6 +26,7 @@
    --color-success: #CCF381;
    --color-warning: #fbbf24;
    --color-error: #FF5555;
+   --color-orange: #FF8A00;
 
    /* ── Gradients ── */
    --gradient-headline: linear-gradient(135deg, #ffffff 40%, #D1249D 100%);
