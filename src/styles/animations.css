@@ -350,10 +350,17 @@
 
 /* ── Horizontal Scroll Section ── */
 .horizontal-scroll {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     cursor: grab;
+    -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
@@ -367,6 +374,36 @@
 .horizontal-scroll__track {
     display: flex;
     gap: var(--space-5);
-    padding: var(--space-4) var(--container-padding);
+    padding: var(--space-4) 0;
     width: max-content;
+}
+
+/* ── Infinite Marquee ── */
+.marquee-loop {
+    animation: marquee-scroll 40s linear infinite;
+    display: flex;
+    gap: 0;
+    width: max-content;
+}
+
+.marquee-loop:hover {
+    animation-play-state: paused;
+}
+
+.marquee-group {
+    display: flex;
+    gap: var(--space-5);
+    padding-right: var(--space-5);
+    /* Ensures the gap between groups is identical to card gaps */
+    flex-shrink: 0;
+}
+
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }

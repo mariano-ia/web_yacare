@@ -407,6 +407,80 @@
     }
 }
 
+/* ── Minimal Portfolio Card (Service Item Style) ── */
+.portfolio-card--minimal {
+    min-width: 420px;
+    height: 480px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.portfolio-card--minimal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--border-subtle);
+    pointer-events: none;
+}
+
+.portfolio-card--minimal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), #D1249D);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.portfolio-card--minimal:hover::before {
+    transform: scaleX(1);
+}
+
+.portfolio-card--minimal:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-8px);
+}
+
+.portfolio-card--minimal .portfolio-card__title {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-4);
+}
+
+.portfolio-card--minimal .portfolio-card__desc {
+    font-size: var(--fs-body);
+    line-height: var(--lh-relaxed);
+    opacity: 0.7;
+}
+
+.portfolio-card--minimal .portfolio-card__icon {
+    position: absolute;
+    top: var(--space-8);
+    right: var(--space-8);
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.portfolio-card--minimal:hover .portfolio-card__icon {
+    transform: translate(4px, -4px);
+    color: #ffffff;
+}
+
 /* ── Testimonial Card ── */
 .testimonial-card {
     background: var(--bg-secondary);
@@ -942,6 +1016,7 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    transition: padding 0.55s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Static white top line (always visible) */
@@ -964,11 +1039,27 @@
     left: 0;
     height: 1px;
     width: 100%;
-    background: var(--accent-primary);
+    /* Default background will be overwritten by nth-child gradients */
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1;
+}
+
+.service-item:nth-child(1)::before {
+    background: linear-gradient(90deg, #8A63F2, #D1249D);
+}
+
+.service-item:nth-child(2)::before {
+    background: linear-gradient(90deg, #D1249D, #FF6B6B);
+}
+
+.service-item:nth-child(3)::before {
+    background: linear-gradient(90deg, #FF6B6B, #FFB347);
+}
+
+.service-item:nth-child(4)::before {
+    background: linear-gradient(90deg, #FFB347, #8A63F2);
 }
 
 .service-item:hover::before {
@@ -980,6 +1071,7 @@
 /* No background change, no border-color change on the item */
 .service-item:hover {
     background: transparent;
+    padding-left: var(--space-3);
 }
 
 /* Inner wrapper slides right smoothly via transform (GPU) */
@@ -1041,9 +1133,12 @@
 .growth-cycle-container {
     position: relative;
     width: 100%;
-    max-width: 1000px;
-    height: 740px;
-    margin: 60px auto;
+    max-width: 1200px;
+    /* Increased for wider oval */
+    height: 540px;
+    /* Slightly shorter to feel more compact */
+    margin: 0 auto 40px auto;
+    /* Reduced top margin to 0 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1086,38 +1181,38 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
+    /* Still using 50% but container/dimensions will make it look oval */
     pointer-events: none;
 }
 
 /* Track 1: inner dashed ellipse */
 .track-1 {
-    width: 440px;
+    width: 760px;
     height: 340px;
     border: 1px dashed rgba(255, 255, 255, 0.18);
-    transform: translate(-50%, -50%);
 }
 
 /* Track 2: medium solid ellipse */
 .track-2 {
-    width: 590px;
-    height: 450px;
+    width: 640px;
+    height: 280px;
     border: 1px solid rgba(255, 255, 255, 0.07);
-    transform: translate(-50%, -50%);
 }
 
 /* Track 3: outer solid ellipse, very faint */
 .track-3 {
-    width: 770px;
-    height: 590px;
+    width: 610px;
+    height: 470px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     transform: translate(-50%, -50%);
 }
 
 /* Track 4: extra dashed ellipse between 1 and 2 */
 .track-4 {
-    width: 510px;
-    height: 394px;
+    width: 410px;
+    height: 315px;
     border: 1px dashed rgba(255, 255, 255, 0.06);
     transform: translate(-50%, -50%);
 }
@@ -1161,40 +1256,115 @@
 
 /* Shared planet orbit - all 4 cards use the same path, offset 90° apart via animation-delay.
    This guarantees angular order is always maintained: cards can never overtake each other. */
-.growth-step--1 { animation: planet-orbit 360s linear infinite; }
-.growth-step--2 { animation: planet-orbit 360s linear infinite; animation-delay: -90s; }
-.growth-step--3 { animation: planet-orbit 360s linear infinite; animation-delay: -180s; }
-.growth-step--4 { animation: planet-orbit 360s linear infinite; animation-delay: -270s; }
+.growth-step--1 {
+    animation: planet-orbit 420s linear infinite;
+}
+
+.growth-step--2 {
+    animation: planet-orbit 420s linear infinite;
+    animation-delay: -105s;
+}
+
+.growth-step--3 {
+    animation: planet-orbit 420s linear infinite;
+    animation-delay: -210s;
+}
+
+.growth-step--4 {
+    animation: planet-orbit 420s linear infinite;
+    animation-delay: -315s;
+}
 
 /* Animations run continuously — no hover pause */
 
 /* Planet orbit – 12 stops (every 30°) for smooth circular path.
    Radius varies 222–308px to simulate gravitational pull/push. */
+/* Recalculated Elliptical Orbit (X: 380px, Y: 170px) */
 @keyframes planet-orbit {
-    0%     { transform: translate(calc(-50% +   0px), calc(-50% - 250px)); }
-    8.33%  { transform: translate(calc(-50% + 139px), calc(-50% - 241px)); }
-    16.67% { transform: translate(calc(-50% + 258px), calc(-50% - 149px)); }
-    25%    { transform: translate(calc(-50% + 308px), calc(-50% +   0px)); }
-    33.33% { transform: translate(calc(-50% + 247px), calc(-50% + 143px)); }
-    41.67% { transform: translate(calc(-50% + 129px), calc(-50% + 224px)); }
-    50%    { transform: translate(calc(-50% +   0px), calc(-50% + 222px)); }
-    58.33% { transform: translate(calc(-50% - 128px), calc(-50% + 221px)); }
-    66.67% { transform: translate(calc(-50% - 244px), calc(-50% + 141px)); }
-    75%    { transform: translate(calc(-50% - 302px), calc(-50% +   0px)); }
-    83.33% { transform: translate(calc(-50% - 236px), calc(-50% - 136px)); }
-    91.67% { transform: translate(calc(-50% - 127px), calc(-50% - 220px)); }
-    100%   { transform: translate(calc(-50% +   0px), calc(-50% - 250px)); }
+    0% {
+        transform: translate(calc(-50% + 0px), calc(-50% - 170px));
+    }
+
+    8.33% {
+        transform: translate(calc(-50% + 190px), calc(-50% - 147px));
+    }
+
+    16.67% {
+        transform: translate(calc(-50% + 329px), calc(-50% - 85px));
+    }
+
+    25% {
+        transform: translate(calc(-50% + 380px), calc(-50% + 0px));
+    }
+
+    33.33% {
+        transform: translate(calc(-50% + 329px), calc(-50% + 85px));
+    }
+
+    41.67% {
+        transform: translate(calc(-50% + 190px), calc(-50% + 147px));
+    }
+
+    50% {
+        transform: translate(calc(-50% + 0px), calc(-50% + 170px));
+    }
+
+    58.33% {
+        transform: translate(calc(-50% - 190px), calc(-50% + 147px));
+    }
+
+    66.67% {
+        transform: translate(calc(-50% - 329px), calc(-50% + 85px));
+    }
+
+    75% {
+        transform: translate(calc(-50% - 380px), calc(-50% + 0px));
+    }
+
+    83.33% {
+        transform: translate(calc(-50% - 329px), calc(-50% - 85px));
+    }
+
+    91.67% {
+        transform: translate(calc(-50% - 190px), calc(-50% - 147px));
+    }
+
+    100% {
+        transform: translate(calc(-50% + 0px), calc(-50% - 170px));
+    }
 }
 
 /* Core gravitational drift – barely perceptible, very slow */
 @keyframes core-wobble {
-    0%, 100% { transform: translate(-50%, -50%); }
-    12%       { transform: translate(calc(-50% + 3px),  calc(-50% - 2px)); }
-    27%       { transform: translate(calc(-50% - 2px),  calc(-50% + 4px)); }
-    43%       { transform: translate(calc(-50% + 2px),  calc(-50% + 3px)); }
-    58%       { transform: translate(calc(-50% - 4px),  calc(-50% - 2px)); }
-    73%       { transform: translate(calc(-50% + 3px),  calc(-50% - 3px)); }
-    87%       { transform: translate(calc(-50% - 2px),  calc(-50% + 2px)); }
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%);
+    }
+
+    12% {
+        transform: translate(calc(-50% + 3px), calc(-50% - 2px));
+    }
+
+    27% {
+        transform: translate(calc(-50% - 2px), calc(-50% + 4px));
+    }
+
+    43% {
+        transform: translate(calc(-50% + 2px), calc(-50% + 3px));
+    }
+
+    58% {
+        transform: translate(calc(-50% - 4px), calc(-50% - 2px));
+    }
+
+    73% {
+        transform: translate(calc(-50% + 3px), calc(-50% - 3px));
+    }
+
+    87% {
+        transform: translate(calc(-50% - 2px), calc(-50% + 2px));
+    }
 }
 
 /* SVG overlay */
@@ -1208,8 +1378,8 @@
     opacity: 0.08;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 900px) {
+/* Mobile Responsiveness - Breakpoint moved to 1100px for wider elliptical orbit */
+@media (max-width: 1100px) {
     .growth-cycle-container {
         width: 100%;
         height: auto;
@@ -1219,16 +1389,9 @@
     }
 
     .growth-cycle-track,
-    .growth-cycle-arrows {
-        display: none;
-    }
-
+    .growth-cycle-arrows,
     .growth-cycle-core {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin-bottom: 1rem;
+        display: none;
     }
 
     .growth-step {
@@ -1270,12 +1433,12 @@
     width: 48px;
     height: 48px;
     background: transparent;
-    border: 1px solid var(--color-orange);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-orange);
+    color: #ffffff;
     font-size: 1.25rem;
 }
 

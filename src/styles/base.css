@@ -99,6 +99,8 @@ p:last-child {
 
 /* ── Links ── */
 a {
+    text-decoration: none;
+    color: inherit;
     transition: color var(--duration-fast) var(--ease-out);
 }
 
