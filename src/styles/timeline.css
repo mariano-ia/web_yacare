@@ -1,0 +1,201 @@
+@import './tokens.css';
+
+.timeline-container {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: var(--space-4) 0 var(--space-8) 0;
+    /* Reduced top padding */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Full width track wrapper */
+.timeline-track-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: var(--space-8);
+}
+
+/* The actual line that draws */
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    /* Starts at 0 for animation */
+    height: 2px;
+    background: var(--border-medium);
+    transform: translateY(-50%);
+    transition: width 1.5s var(--ease-out);
+    z-index: 1;
+    /* Behind dots */
+}
+
+.timeline-line.visible {
+    width: 100%;
+}
+
+/* Container for dots to keep them centered */
+.timeline-dots {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4px;
+    /* Matches line height */
+}
+
+.timeline-dot {
+    width: 16px;
+    height: 16px;
+    background: var(--bg-surface);
+    border: 2px solid var(--text-muted);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    /* Above line */
+    opacity: 0;
+    /* Hidden initially */
+    transform: scale(0);
+    transition: transform 0.4s var(--ease-out), background-color 0.3s, border-color 0.3s;
+}
+
+.timeline-dot.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.timeline-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+
+    /* Typography matching Home Cards */
+    font-family: var(--font-display);
+    font-size: var(--fs-caption);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    font-weight: var(--fw-bold);
+    color: var(--text-muted);
+
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    transition: all 0.4s var(--ease-out);
+}
+
+.timeline-dot.visible::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Active State */
+.timeline-dot.active {
+    border-color: #FFFFFF;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px var(--bg-surface), 0 0 20px rgba(255, 255, 255, 0.4);
+    transform: scale(1.2);
+}
+
+.timeline-dot.active::after {
+    color: #FFFFFF;
+}
+
+/* CARD DISPLAY AREA */
+.timeline-content {
+    position: relative;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.timeline-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotateX(-20deg) scale(0.9);
+    opacity: 0;
+    width: 100%;
+    max-width: 500px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.5s var(--ease-out);
+    pointer-events: none;
+    box-shadow: var(--shadow-xl);
+}
+
+.timeline-card.active {
+    transform: translateX(-50%) rotateX(0) scale(1);
+    opacity: 1;
+    pointer-events: all;
+    z-index: 10;
+}
+
+.timeline-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    color: #FFFFFF;
+    /* White title as requested */
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+}
+
+.timeline-card p {
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+}
+
+/* Navigation Buttons */
+.btn-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-icon:hover {
+    background: var(--bg-surface);
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+}
+
+.btn-icon:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .timeline-dots {
+        max-width: 90%;
+    }
+
+    .timeline-content {
+        height: 400px;
+    }
+
+    .timeline-card {
+        width: 90%;
+    }
+
+    .btn-icon {
+        width: 40px;
+        height: 40px;
+    }
+}

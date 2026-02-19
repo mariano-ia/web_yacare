@@ -4,6 +4,7 @@
 
 import { initNav } from './nav';
 import { initAnimations } from './animations';
+import { initHorizontalTimeline } from './timeline';
 
 // CSS imports
 import '../styles/tokens.css';
@@ -14,6 +15,7 @@ import '../styles/components.css';
 import '../styles/animations.css';
 import '../styles/scroll-gradient.css';
 import '../styles/pages.css';
+import '../styles/timeline.css';
 
 // ── Initialize ──
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypewriter();
     initScrollGradient();
     initWordReveal();
+    initHorizontalTimeline();
 
     // Initialize Lucide Icons (fallback to global if import fails)
     if ((window as any).lucide) {

@@ -56,7 +56,8 @@
         <!-- ═══════════════════════════════════════════
              HERO
              ═══════════════════════════════════════════ -->
-        <section class="hero hero--internal service-hero" id="hero">
+        <section class="hero hero--internal service-hero" id="hero"
+            style="border-bottom: 1px solid var(--border-subtle);">
             <div class="hero__background" aria-hidden="true">
                 <div class="hero__blob hero__blob--1"></div>
                 <div class="hero__blob hero__blob--2"></div>
@@ -65,86 +66,197 @@
             </div>
 
             <div class="container hero__content">
-                <div class="hero__breadcrumbs" style="margin-bottom: var(--space-4);">
-                    <a href="/services.html"
-                        style="color:var(--text-muted);font-size:var(--fs-caption); display: inline-flex; align-items: center; gap: 8px;">
-                        <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
-                        Back to Services
-                    </a>
+                <h1 class="text-hero-gradient animated-gradient"
+                    style="font-size: var(--fs-h1-internal); line-height: 1.1;">
+                    ARE YOU BUILDING<br>THE RIGHT THING?</h1>
+                <p class="hero__subtitle" style="max-width: 800px; margin-top: var(--space-4);">Stop guessing, start
+                    building. We help you bridge the gap between a "big idea" and a research-backed product strategy
+                    ready for development.</p>
+                <div class="hero__actions" style="margin-top: var(--space-6);">
+                    <a href="#get-started" class="btn btn--primary"><span>Book a Discovery Sprint</span></a>
                 </div>
-                <h1 class="gradient-text">Discovery Sprint</h1>
-                <p class="hero__subtitle">Not sure where to start? We immerse ourselves in your problem space and emerge
-                    with a strategy that's ready to build.</p>
             </div>
         </section>
 
-        <section class="section">
+        <!-- Problem Statement (About Style) -->
+        <section class="section about-statement" aria-label="Discovery Sprint Summary"
+            style="border-top: none; border-bottom: 1px solid var(--border-subtle);">
             <div class="container">
-                <div class="section__header reveal">
-                    <h2>What you get.</h2>
+                <p class="about-statement__text reveal-words" style="font-size: 2.5rem;">
+                    Most product ideas fail not because of technology, but because they are vague. We help you cut
+                    through the noise, validate your assumptions with real users, and deliver a crystal-clear product
+                    roadmap in just two weeks—before writing a single line of could-be-wasted code.
+                </p>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="section" style="border-bottom: 1px solid var(--border-subtle);">
+            <div class="container reveal">
+                <div class="section__header" style="text-align: center;">
+                    <h2 class="text-hero-gradient animated-gradient">The 14-Day Roadmap</h2>
+                    <p class="text-lg" style="margin-top: var(--space-2);">A structured journey from chaos to clarity.
+                    </p>
                 </div>
-                <div class="service-features reveal-stagger">
-                    <div class="service-feature">
-                        <h3>User Research</h3>
-                        <p class="card__text">5-8 user interviews, survey design, qualitative synthesis. We'll
-                            understand who your users really are.</p>
+
+                <!-- Full Width Timeline -->
+                <!-- Full Width Timeline -->
+                <div class="timeline-container reveal"
+                    style="padding: 0 0 var(--space-8) 0; margin-top: var(--space-8);">
+
+                    <!-- Navigation Arrows (Centered above) -->
+                    <div class="container container--narrow"
+                        style="display: flex; justify-content: center; gap: var(--space-4); margin-bottom: 48px; position: relative; z-index: 20;">
+                        <button class="btn-icon timeline-prev" aria-label="Previous Step">
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+                        <button class="btn-icon timeline-next" aria-label="Next Step">
+                            <i data-lucide="arrow-right"></i>
+                        </button>
                     </div>
-                    <div class="service-feature">
-                        <h3>Competitive Analysis</h3>
-                        <p class="card__text">Deep dive into your competitive landscape. What works, what doesn't, and
-                            where the gaps are.</p>
+
+                    <!-- Timeline Track Wrapper -->
+                    <div class="timeline-track-wrapper">
+                        <!-- The Full Width Line -->
+                        <div class="timeline-line"></div>
+
+                        <!-- The Centered Dots -->
+                        <div class="timeline-dots">
+                            <!-- Dot 1 -->
+                            <div class="timeline-dot" data-label="Immersion"></div>
+                            <!-- Dot 2 -->
+                            <div class="timeline-dot" data-label="Validation"></div>
+                            <!-- Dot 3 -->
+                            <div class="timeline-dot" data-label="Visualizing"></div>
+                            <!-- Dot 4 -->
+                            <div class="timeline-dot" data-label="Deciding"></div>
+                        </div>
                     </div>
-                    <div class="service-feature">
-                        <h3>Wireframes & Flows</h3>
-                        <p class="card__text">Low-fidelity wireframes and user flow mapping for the core experience.</p>
-                    </div>
-                    <div class="service-feature">
-                        <h3>Product Strategy</h3>
-                        <p class="card__text">A clear roadmap with priorities, scope recommendations, and a go/no-go
-                            decision framework.</p>
+
+                    <div class="container container--narrow">
+                        <div class="timeline-content" style="margin-top: var(--space-8);">
+                            <!-- Card 1 -->
+                            <div class="timeline-card active">
+                                <h3>Immersion</h3>
+                                <p>We start by diving deep into your business domain. Through stakeholder workshops and
+                                    objective setting, we align on what success looks like.</p>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="timeline-card">
+                                <h3>Validation</h3>
+                                <p>We don't guess. We talk to users. Interviews, surveys, and competitive benchmarking
+                                    help us find the "truth" in the market.</p>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="timeline-card">
+                                <h3>Visualizing</h3>
+                                <p>Concepts become tangible. We sketch solutions, wireframe core flows, and map out the
+                                    technical architecture needed to support scale.</p>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="timeline-card">
+                                <h3>Deciding</h3>
+                                <p>No more distinct possibilities. We deliver a concrete product strategy, a validated
+                                    roadmap, and a high-fidelity estimate for development.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section" style="background:var(--bg-secondary);">
-            <div class="container container--narrow reveal">
-                <h2>How it works.</h2>
-                <div class="methodology-steps" style="margin-top:var(--space-6);">
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">01</div>
-                        <h3 class="methodology-step__title">Kick-off</h3>
-                        <p class="methodology-step__desc">Day 1: Align on goals, share context, define success metrics.
+        <!-- Deliverables -->
+        <!-- Deliverables (Sticky Split Layout) -->
+        <section class="section" style="border-bottom: 1px solid var(--border-subtle);">
+            <div class="container">
+                <div class="services-split">
+                    <!-- Left Column (Sticky Title) -->
+                    <div class="services-intro reveal">
+                        <h2 class="text-hero-gradient animated-gradient"
+                            style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; margin-bottom: var(--space-3);">
+                            WHAT YOU<br>WALK AWAY WITH</h2>
+                        <p class="text-lg" style="color: var(--text-secondary); max-width: 320px;">
+                            Tangible assets to guide your next 6 months of development.
                         </p>
                     </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">02</div>
-                        <h3 class="methodology-step__title">Research</h3>
-                        <p class="methodology-step__desc">Days 2-6: Interviews, surveys, competitive analysis, data
-                            review.</p>
-                    </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">03</div>
-                        <h3 class="methodology-step__title">Shape</h3>
-                        <p class="methodology-step__desc">Days 7-9: Synthesize findings, map opportunities, sketch
-                            solutions.</p>
-                    </div>
-                    <div class="methodology-step">
-                        <div class="methodology-step__number">04</div>
-                        <h3 class="methodology-step__title">Deliver</h3>
-                        <p class="methodology-step__desc">Day 10: Present strategy deck with wireframes, roadmap, and
-                            recommendations.</p>
+
+                    <!-- Right Column (Scrolling List) -->
+                    <div class="services-list reveal-stagger">
+                        <!-- Item 1 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Actionable Roadmap</h3>
+                                <p class="service-item__desc">A phased development plan with priorities and estimated
+                                    timelines.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Core Wireframes</h3>
+                                <p class="service-item__desc">Visual representation of your product's key user journeys.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Technical Stack</h3>
+                                <p class="service-item__desc">Recommended architecture and tools chosen for your
+                                    specific
+                                    scale.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="service-item group" style="cursor: default;">
+                            <div class="service-item__content">
+                                <h3 class="service-item__title">Research Insights</h3>
+                                <p class="service-item__desc">Direct quotes and data from potential users about their
+                                    actual
+                                    needs.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section cta-section">
-            <div class="container text-center reveal">
-                <h2 class="gradient-text">Ready for clarity?</h2>
-                <p style="max-width:500px;margin:var(--space-4) auto var(--space-6);">Book a Discovery Sprint and get a
-                    research-backed product strategy in 2 weeks.</p>
-                <a href="/contact.html" class="btn btn--primary btn--lg">Book a Sprint</a>
+        <!-- Final Form Section -->
+        <section class="section cta-section" id="get-started">
+            <div class="container reveal">
+                <div class="contact-grid" style="align-items: center; gap: var(--space-8);">
+                    <div class="cta-content">
+                        <h2 class="text-hero-gradient animated-gradient">READY TO<br>GET STARTED?</h2>
+                        <p class="text-lg"
+                            style="color: var(--text-secondary); max-width: 420px; margin-top: var(--space-4);">
+                            Book your Discovery Sprint today and get clarity on your product's future.</p>
+                    </div>
+                    <div class="contact-card card">
+                        <form class="contact-form" style="margin: 0;">
+                            <input type="hidden" name="service" value="Discovery Sprint">
+                            <div class="grid grid--2">
+                                <div class="form__group">
+                                    <label class="form__label">Name</label>
+                                    <input type="text" class="form__input" placeholder="Your name" required>
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Email</label>
+                                    <input type="email" class="form__input" placeholder="you@company.com" required>
+                                </div>
+                            </div>
+                            <div class="form__group" style="margin-bottom: var(--space-4);">
+                                <label class="form__label">Project Brief</label>
+                                <textarea class="form__textarea" placeholder="Describe your challenge..." rows="3"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary" style="width: 100%;"><span>Book a
+                                    Sprint</span></button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
