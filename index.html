@@ -46,10 +46,10 @@
       </a>
 
       <div class="nav__links">
+        <a href="/" class="nav__link">Home</a>
         <a href="/services.html" class="nav__link">Services</a>
         <a href="/work.html" class="nav__link">Work</a>
         <a href="/about.html" class="nav__link">About</a>
-        <a href="/blog.html" class="nav__link">Blog</a>
         <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
       </div>
 
@@ -69,16 +69,14 @@
       <div class="hero__background" aria-hidden="true">
         <div class="hero__blob hero__blob--1"></div>
         <div class="hero__blob hero__blob--2"></div>
-        <div class="hero__blob hero__blob--3"></div>
       </div>
       <div class="container hero__content">
-
         <h1 class="gradient-text">We build digital<br>experiences.</h1>
         <p class="hero__subtitle text-lg">
           We design, build, and grow digital products that move the needle.
           No fluff. No bloated teams. Just sharp execution from people who obsess over outcomes.
         </p>
-        <div class="hero__actions flex flex--gap-sm">
+        <div class="hero__actions">
           <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
           <a href="/work.html" class="btn btn--secondary btn--lg"><span>See Our Work</span></a>
         </div>
@@ -131,10 +129,10 @@
               </div>
             </a>
 
-            <!-- MVP Jam Starter -->
+            <!-- MVP Jumpstarter -->
             <a href="/services/mvp-jumpstarter.html" class="service-item group">
               <div class="service-item__content">
-                <h3 class="service-item__title">MVP Jam Starter</h3>
+                <h3 class="service-item__title">MVP Jumpstarter</h3>
                 <p class="service-item__desc">
                   We design and build your MVP fast. Ready for real users, real feedback and real validation. Launch in
                   weeks, not months.</p>
@@ -164,106 +162,131 @@
     <!-- ═══════════════════════════════════════════
          SECTION 4: SELECTED WORK (Horizontal Scroll)
          ═══════════════════════════════════════════ -->
-    <section class="section" id="work" aria-labelledby="work-heading">
-      <div class="container">
-        <div class="section__header reveal"
-          style="text-align:left; display:flex; justify-content:space-between; align-items:flex-end;">
-          <div>
-
-            <h2 id="work-heading" class="text-hero-gradient">Products we've<br>brought to life.</h2>
-          </div>
-          <a href="/work.html" class="btn btn--ghost">
-            <span>View All</span> <i data-lucide="arrow-right" style="width: 1em; height: 1em; margin-left: 8px;"></i>
-          </a>
+    <section class="section" id="work">
+      <div class="container reveal">
+        <div class="section-header" style="text-align: left; margin-bottom: var(--space-8);">
+          <h2
+            style="color: var(--text-primary); font-family: var(--font-display); font-size: 3rem; text-transform: uppercase; line-height: 1.1; margin-bottom: var(--space-4);">
+            Latest Projects
+          </h2>
+          <p class="text-lg" style="color: var(--text-secondary); max-width: 800px; text-transform: none;">
+            Due to confidentiality agreements and compliance protocols, this is a streamlined overview of our recent
+            digital ventures. For a detailed product breakdown, feel free to reach out.
+          </p>
         </div>
       </div>
 
       <div class="horizontal-scroll reveal-scale">
-        <div class="horizontal-scroll__track">
-          <!-- Product 1: E-Commerce -->
-          <article class="portfolio-card">
-            <img src="/assets/images/product-ecommerce.png" alt="E-Commerce Platform" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">E-Commerce</span>
-                <span class="portfolio-card__tag">UX Design</span>
+        <div class="horizontal-scroll__track marquee-loop">
+          <div class="marquee-group">
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-mobile.png" alt="Nawaiam" class="portfolio-card__image" loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">Gamification</span></div>
+                <h3 class="portfolio-card__title">Nawaiam</h3>
+                <p class="portfolio-card__desc">Assessment platform transforming the recruitment experience.</p>
               </div>
-              <h3 class="portfolio-card__title">Premium Store</h3>
-              <p class="portfolio-card__desc">Modern e-commerce platform with seamless checkout experience.</p>
-            </div>
-          </article>
-
-          <!-- Product 2: Healthcare -->
-          <article class="portfolio-card">
-            <img src="/assets/images/product-healthcare.png" alt="Healthcare Dashboard" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">Healthcare</span>
-                <span class="portfolio-card__tag">Mobile</span>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-healthcare.png" alt="Pharma Lab" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">Healthcare</span></div>
+                <h3 class="portfolio-card__title">Pharma Lab</h3>
+                <p class="portfolio-card__desc">Data analytics dashboard for clinical research optimization.</p>
               </div>
-              <h3 class="portfolio-card__title">Patient Dashboard</h3>
-              <p class="portfolio-card__desc">Comprehensive health tracking and appointment management system.</p>
-            </div>
-          </article>
-
-          <!-- Product 3: Social Media -->
-          <article class="portfolio-card">
-            <img src="/assets/images/product-social.png" alt="Social Platform" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">Social</span>
-                <span class="portfolio-card__tag">Mobile</span>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-dashboard.png" alt="FinTech App" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">FinTech</span></div>
+                <h3 class="portfolio-card__title">FinTech App</h3>
+                <p class="portfolio-card__desc">Mobile-first banking experience for the Latin American market.</p>
               </div>
-              <h3 class="portfolio-card__title">Social Connect</h3>
-              <p class="portfolio-card__desc">Engaging social platform with stories and real-time messaging.</p>
-            </div>
-          </article>
-
-          <!-- Product 4: Project Management -->
-          <article class="portfolio-card">
-            <img src="/assets/images/product-pm.png" alt="Project Management" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">SaaS</span>
-                <span class="portfolio-card__tag">Dashboard</span>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-edtech.png" alt="EdTech Hub" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">EdTech</span></div>
+                <h3 class="portfolio-card__title">EdTech Hub</h3>
+                <p class="portfolio-card__desc">Learning management system focused on skill-based education.</p>
               </div>
-              <h3 class="portfolio-card__title">AuraFlow</h3>
-              <p class="portfolio-card__desc">Professional project management with kanban boards and team collaboration.
-              </p>
-            </div>
-          </article>
-
-          <!-- Product 5: Fitness -->
-          <article class="portfolio-card">
-            <img src="/assets/images/product-fitness.png" alt="Fitness Tracker" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">Fitness</span>
-                <span class="portfolio-card__tag">Mobile</span>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-ecommerce.png" alt="ShopStream" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">E-commerce</span></div>
+                <h3 class="portfolio-card__title">ShopStream</h3>
+                <p class="portfolio-card__desc">AI-powered shopping assistant for retail ecosystems.</p>
               </div>
-              <h3 class="portfolio-card__title">FitTrack Pro</h3>
-              <p class="portfolio-card__desc">Complete fitness tracking with workout plans and progress analytics.</p>
-            </div>
-          </article>
-
-          <!-- Product 6: Placeholder for 6th product -->
-          <article class="portfolio-card">
-            <img src="/assets/images/portfolio-edtech.png" alt="EdTech Platform" class="portfolio-card__image"
-              loading="lazy">
-            <div class="portfolio-card__overlay">
-              <div class="portfolio-card__tags">
-                <span class="portfolio-card__tag">EdTech</span>
-                <span class="portfolio-card__tag">Learning</span>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-pm.png" alt="NeuroCloud" class="portfolio-card__image" loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">AI</span></div>
+                <h3 class="portfolio-card__title">NeuroCloud</h3>
+                <p class="portfolio-card__desc">Cloud infrastructure management with predictive analysis.</p>
               </div>
-              <h3 class="portfolio-card__title">LearnHub</h3>
-              <p class="portfolio-card__desc">Interactive learning platform for professional development.</p>
-            </div>
-          </article>
+            </article>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="marquee-group" aria-hidden="true">
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-mobile.png" alt="Nawaiam" class="portfolio-card__image" loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">Gamification</span></div>
+                <h3 class="portfolio-card__title">Nawaiam</h3>
+                <p class="portfolio-card__desc">Assessment platform transforming the recruitment experience.</p>
+              </div>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-healthcare.png" alt="Pharma Lab" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">Healthcare</span></div>
+                <h3 class="portfolio-card__title">Pharma Lab</h3>
+                <p class="portfolio-card__desc">Data analytics dashboard for clinical research optimization.</p>
+              </div>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-dashboard.png" alt="FinTech App" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">FinTech</span></div>
+                <h3 class="portfolio-card__title">FinTech App</h3>
+                <p class="portfolio-card__desc">Mobile-first banking experience for the Latin American market.</p>
+              </div>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/portfolio-edtech.png" alt="EdTech Hub" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">EdTech</span></div>
+                <h3 class="portfolio-card__title">EdTech Hub</h3>
+                <p class="portfolio-card__desc">Learning management system focused on skill-based education.</p>
+              </div>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-ecommerce.png" alt="ShopStream" class="portfolio-card__image"
+                loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">E-commerce</span></div>
+                <h3 class="portfolio-card__title">ShopStream</h3>
+                <p class="portfolio-card__desc">AI-powered shopping assistant for retail ecosystems.</p>
+              </div>
+            </article>
+            <article class="portfolio-card">
+              <img src="/assets/images/product-pm.png" alt="NeuroCloud" class="portfolio-card__image" loading="lazy">
+              <div class="portfolio-card__overlay">
+                <div class="portfolio-card__tags"><span class="chip">AI</span></div>
+                <h3 class="portfolio-card__title">NeuroCloud</h3>
+                <p class="portfolio-card__desc">Cloud infrastructure management with predictive analysis.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -580,6 +603,55 @@
       </div>
     </div>
   </footer>
+  <script>
+    // ── Manual Infinite Scroll for Projects ──
+    const initScroll = () => {
+      const scrollContainers = document.querySelectorAll('.horizontal-scroll');
+
+      scrollContainers.forEach(track => {
+        const trackInner = track.querySelector('.marquee-loop');
+        if (!track || !trackInner) return;
+
+        track.addEventListener('scroll', () => {
+          const halfWidth = trackInner.scrollWidth / 2;
+          if (track.scrollLeft >= halfWidth) {
+            track.scrollLeft -= halfWidth;
+          } else if (track.scrollLeft <= 0) {
+            track.scrollLeft = halfWidth;
+          }
+        });
+
+        // Drag to scroll
+        let isDown = false;
+        let startX;
+        let scrollL;
+
+        track.addEventListener('mousedown', (e) => {
+          isDown = true;
+          track.style.cursor = 'grabbing';
+          startX = e.pageX - track.offsetLeft;
+          scrollL = track.scrollLeft;
+        });
+        track.addEventListener('mouseleave', () => {
+          isDown = false;
+          track.style.cursor = 'grab';
+        });
+        track.addEventListener('mouseup', () => {
+          isDown = false;
+          track.style.cursor = 'grab';
+        });
+        track.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - track.offsetLeft;
+          const walk = (x - startX) * 2;
+          track.scrollLeft = scrollL - walk;
+        });
+      });
+    };
+
+    window.addEventListener('DOMContentLoaded', initScroll);
+  </script>
 </body>
 
 </html>
