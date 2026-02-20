@@ -17,6 +17,103 @@
       height: 28px;
       width: auto;
     }
+
+    /* ── SPLASH SCREEN CSS ── */
+    .splash-screen {
+      position: fixed;
+      inset: 0;
+      background-color: #08080c;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .splash-bar-container {
+      width: 200px;
+      height: 1px;
+      background-color: #333333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .splash-bar-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: #ffffff;
+      transition: width 0.05s linear;
+    }
+
+    html.is-loading {
+      overflow: hidden;
+    }
+
+    html.is-loading .splash-screen {
+      display: flex;
+    }
+
+    /* Base states for staggered elements */
+    html.splash-ready .nav,
+    html.splash-ready .hero__content h1,
+    html.splash-ready .hero__content p,
+    html.splash-ready .hero__content .hero__actions {
+      opacity: 0;
+      transform: translateY(-80vh);
+    }
+
+    html.splash-ready .hero__background {
+      opacity: 0;
+    }
+
+    /* Animations triggered when splash-done is added */
+    html.splash-done .nav {
+      animation: splashDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    html.splash-done .hero__content h1 {
+      animation: splashDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    html.splash-done .hero__content p {
+      animation: splashDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    html.splash-done .hero__content .hero__actions {
+      animation: splashDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    html.splash-done .hero__background {
+      animation: splashFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    @keyframes splashDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-80vh);
+      }
+
+      20% {
+        opacity: 0.8;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes splashFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,6 +122,7 @@
   <meta name="description"
     content="Yacaré is a boutique digital product agency. We design, build, and grow digital products that move the needle. Discovery Sprints, MVPs, and Product Growth.">
   <link rel="canonical" href="https://yacare.io/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Yacaré — Your Product Team, On Demand">
@@ -46,8 +144,19 @@
 </head>
 
 <body>
+  <!-- Logic before rendering body -->
+  <script>
+    if (!sessionStorage.getItem('yacare_splash_seen')) {
+      document.documentElement.classList.add('is-loading', 'splash-ready');
+    }
+  </script>
 
-
+  <!-- Initial Splash Screen -->
+  <div id="splash-screen" class="splash-screen" aria-hidden="true">
+    <div class="splash-bar-container">
+      <div class="splash-bar-progress" id="splash-progress"></div>
+    </div>
+  </div>
   <!-- Grain Texture Overlay -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
@@ -726,6 +835,39 @@
     };
 
     window.addEventListener('DOMContentLoaded', initScroll);
+
+    // ── Preloader Splash Screen Logic ──
+    const isFirstTime = !sessionStorage.getItem('yacare_splash_seen');
+    if (isFirstTime) {
+      window.scrollTo(0, 0); // Ensure at top for the drop effect
+      const splashScreen = document.getElementById('splash-screen');
+      const splashProgress = document.getElementById('splash-progress');
+
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 5 + 2;
+        if (progress > 100) progress = 100;
+        if (splashProgress) splashProgress.style.width = progress + '%';
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            // 1. Immediately trigger the drop animations CSS
+            document.documentElement.classList.add('splash-done');
+
+            // 2. Beautifully slide the splash screen up to reveal them
+            splashScreen.style.transition = 'transform 0.7s cubic-bezier(0.76, 0, 0.24, 1)';
+            splashScreen.style.transform = 'translateY(-100%)';
+
+            setTimeout(() => {
+              splashScreen.style.display = 'none';
+              document.documentElement.classList.remove('is-loading');
+              sessionStorage.setItem('yacare_splash_seen', 'true');
+            }, 700); // Remove after slide finishes
+          }, 200); // 200ms pause when bar is full
+        }
+      }, 25); // Faster, smoother tick
+    }
   </script>
 </body>
 

@@ -167,3 +167,27 @@
         margin-bottom: var(--space-6);
     }
 }
+
+/* ── Project Specific Layouts ── */
+.project-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: start;
+}
+
+.project-sidebar {
+    position: relative;
+}
+
+@media (min-width: 900px) {
+    .project-layout {
+        grid-template-columns: 1fr 272px;
+    }
+
+    .project-sidebar {
+        position: sticky;
+        top: calc(var(--nav-height) + var(--space-6));
+        align-self: start;
+    }
+}
