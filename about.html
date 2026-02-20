@@ -3,6 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO -->
@@ -33,7 +48,7 @@
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="/" class="nav__logo" aria-label="Yacaré Home">
-                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" />
+                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" style="height: 28px; width: auto;" />
             </a>
 
             <div class="nav__links">
@@ -41,7 +56,7 @@
                 <a href="/services.html" class="nav__link">Services</a>
                 <a href="/work.html" class="nav__link">Work</a>
                 <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
             </div>
 
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -66,8 +81,8 @@
 
             <div class="container hero__content">
                 <h1 class="gradient-text">Small team.<br>Big obsession.</h1>
-                <p class="hero__subtitle">We're a boutique product agency that believes the best digital products are
-                    built by small, opinionated teams who care deeply about outcomes.</p>
+                <p class="hero__subtitle">Most agencies sell billable hours. We sell outcomes. We're a specialized team
+                    that builds digital products designed to actually move your business metrics.</p>
             </div>
         </section>
 
@@ -75,12 +90,13 @@
         <section class="section">
             <div class="container container--narrow reveal">
                 <h2>Why Yacaré?</h2>
-                <p class="text-lg" style="margin-top: var(--space-5);">The yacaré is the South American caiman — small,
-                    sharp, and fiercely effective. It doesn't need to be the largest creature in the water to dominate
-                    its environment. That's us.</p>
+                <p class="text-lg" style="margin-top: var(--space-5);">The yacaré is the South American caiman — agile,
+                    sharp, and fiercely effective. It thrives not by being the biggest in the water, but by being the
+                    most adaptable.</p>
                 <p>We started Yacaré because we saw too many companies wasting time and money on bloated agency
-                    structures. We've optimized everything to focus on one thing: **the product**.</p>
-                <p>Every project we take on gets our full attention. We don't spread thin. We go deep.</p>
+                    structures. We've optimized everything to focus on one thing: <strong>the product</strong>.</p>
+                <p>We don't juggle fifty clients. When we partner with you, solving your product challenge becomes our
+                    sole obsession.</p>
             </div>
         </section>
 
@@ -88,35 +104,38 @@
         <section class="section" style="background: var(--bg-secondary);">
             <div class="container">
                 <div class="section__header reveal">
-
-                    <h2>What drives us.</h2>
+                    <h2>How we operate.</h2>
                 </div>
-                <div class="about-values reveal-stagger">
-                    <div class="about-value">
-                        <div class="about-value__icon">
+                <div class="talent-grid talent-grid--centered reveal-stagger">
+                    <div class="talent-card">
+                        <div class="talent-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                             </svg>
                         </div>
-                        <h3>Obsessive Quality</h3>
-                        <p class="card__text">Every pixel, every interaction, every line of code. We sweat the details
-                            because we know they compound into exceptional products.</p>
+                        <div class="talent-info">
+                            <h4>Obsessive Quality</h4>
+                            <p>We sweat the details across every pixel and line of code, because we know
+                                that poor execution kills even the best ideas.</p>
+                        </div>
                     </div>
-                    <div class="about-value">
-                        <div class="about-value__icon">
+                    <div class="talent-card">
+                        <div class="talent-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <polyline points="12 6 12 12 16 14" />
                             </svg>
                         </div>
-                        <h3>Speed with Intent</h3>
-                        <p class="card__text">We move fast, but not recklessly. Every decision is backed by strategy,
-                            research, and a clear understanding of what matters.</p>
+                        <div class="talent-info">
+                            <h4>Speed with Intent</h4>
+                            <p>Speed without strategy is just rushing to failure. We move fast, but every
+                                decision is anchored in market truth.</p>
+                        </div>
                     </div>
-                    <div class="about-value">
-                        <div class="about-value__icon">
+                    <div class="talent-card">
+                        <div class="talent-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -125,53 +144,86 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                             </svg>
                         </div>
-                        <h3>Radical Transparency</h3>
-                        <p class="card__text">No surprises. We communicate openly, share progress continuously, and
-                            speak up when something isn't working.</p>
+                        <div class="talent-info">
+                            <h4>Radical Transparency</h4>
+                            <p>Agencies hide behind buzzwords. We don't. We share progress continuously,
+                                flag risks early, and speak up if your idea needs a pivot.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Team -->
-        <section class="section">
+        <!-- Reviews -->
+        <section class="section" id="reviews" aria-labelledby="reviews-heading">
             <div class="container">
-                <div class="section__header reveal">
+                <h2 id="reviews-heading" class="reviews-heading reveal">Trusted by Global Brands</h2>
 
-                    <h2>Meet the people<br>behind the products.</h2>
-                </div>
-                <div class="team-grid reveal-stagger">
-                    <div class="team-member">
-                        <div class="team-member__avatar">🐊</div>
-                        <div class="team-member__name">Founder</div>
-                        <div class="team-member__role">Product Strategy & Design</div>
+                <div class="reviews-grid reveal-stagger">
+
+                    <div class="review-card">
+                        <div class="review-card__stars">★★★★★</div>
+                        <blockquote class="review-card__quote">
+                            "Yacaré didn't just build our product — they shaped how we think about our users. The
+                            Discovery
+                            Sprint alone saved us months of going in the wrong direction."
+                        </blockquote>
+                        <div class="review-card__author">
+                            <div class="review-card__avatar">MR</div>
+                            <div>
+                                <div class="review-card__name">Matías Rodríguez</div>
+                                <div class="review-card__role">CEO, Nawaiam</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="team-member">
-                        <div class="team-member__avatar">⚡</div>
-                        <div class="team-member__name">Tech Lead</div>
-                        <div class="team-member__role">Full-Stack Development</div>
+
+                    <div class="review-card">
+                        <div class="review-card__stars">★★★★★</div>
+                        <blockquote class="review-card__quote">
+                            "Working with Yacaré felt like having a senior product team embedded in our company. They
+                            challenged our assumptions and delivered beyond expectations."
+                        </blockquote>
+                        <div class="review-card__author">
+                            <div class="review-card__avatar">LC</div>
+                            <div>
+                                <div class="review-card__name">Laura Chen</div>
+                                <div class="review-card__role">Head of Product, HealthTech Startup</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="team-member">
-                        <div class="team-member__avatar">🎨</div>
-                        <div class="team-member__name">Design Lead</div>
-                        <div class="team-member__role">UX/UI Design</div>
+
+                    <div class="review-card">
+                        <div class="review-card__stars">★★★★★</div>
+                        <blockquote class="review-card__quote">
+                            "From day one, they understood our vision. The MVP they delivered became our production app
+                            — it
+                            was that polished. Incredible attention to detail."
+                        </blockquote>
+                        <div class="review-card__author">
+                            <div class="review-card__avatar">DP</div>
+                            <div>
+                                <div class="review-card__name">Diego Paredes</div>
+                                <div class="review-card__role">Founder, FinTech Ventures</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="team-member">
-                        <div class="team-member__avatar">🔬</div>
-                        <div class="team-member__name">Researcher</div>
-                        <div class="team-member__role">UX Research & Testing</div>
-                    </div>
+
                 </div>
             </div>
         </section>
 
         <!-- CTA -->
-        <section class="section cta-section">
-            <div class="container text-center reveal">
-                <h2 class="gradient-text">Want to work with us?</h2>
-                <p style="max-width: 500px; margin: var(--space-4) auto var(--space-6);">We're always looking for
-                    interesting problems to solve. If you have one, let's talk.</p>
-                <a href="/contact.html" class="btn btn--primary btn--lg">Get in Touch</a>
+        <section class="section" id="cta">
+            <div class="container container--medium">
+                <div class="cta-card reveal">
+                    <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
+                    <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
+                        Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.
+                    </p>
+                    <div class="flex flex--center flex--gap-sm">
+                        <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

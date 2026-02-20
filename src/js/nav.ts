@@ -55,9 +55,26 @@ export function initNav(): void {
 
 function highlightActiveLink(links: NodeListOf<Element>): void {
     const currentPath = window.location.pathname;
+
     links.forEach((link) => {
         const href = link.getAttribute('href');
-        if (href && (currentPath === href || currentPath.endsWith(href))) {
+        if (!href) return;
+
+        // Limpiamos clase por defecto
+        link.classList.remove('active');
+
+        let isActive = false;
+
+        // Exact match para Home
+        if (href === '/' && currentPath === '/') {
+            isActive = true;
+        }
+        // Partial match para el resto (ej. /work.html atrapa /work/algo también)
+        else if (href !== '/' && currentPath.includes(href.replace('.html', ''))) {
+            isActive = true;
+        }
+
+        if (isActive) {
             link.classList.add('active');
         }
     });

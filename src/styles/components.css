@@ -138,6 +138,7 @@
 
 .nav__logo-img {
     height: 28px;
+    max-height: 28px !important;
     width: auto;
     filter: invert(1);
     /* SVG is black → invert to white */
@@ -158,11 +159,32 @@
     text-decoration: none;
     transition: color 0.2s ease;
     position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #ffffff;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s var(--ease-out);
 }
 
 .nav__link:hover,
 .nav__link.active {
     color: #ffffff;
+}
+
+.nav__link.active::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* ── Hamburger Toggle Button ── */
@@ -1410,6 +1432,17 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
     margin-top: 48px;
+}
+
+.talent-grid--centered {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.talent-grid--centered .talent-card {
+    flex: 1 1 280px;
+    max-width: 320px;
 }
 
 .talent-card {

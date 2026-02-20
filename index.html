@@ -4,7 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="color-scheme" content="dark">
-  <style>html,body{background-color:#000;}</style>
+  <style>
+    html,
+    body {
+      background-color: #08080c;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav__logo-img {
+      height: 28px;
+      width: auto;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
@@ -44,16 +57,16 @@
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo" aria-label="Yacaré Home">
-        <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" />
+        <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" style="height: 28px; width: auto;" />
       </a>
 
       <div class="nav__links">
-                <a href="/" class="nav__link">Home</a>
-                <a href="/services.html" class="nav__link">Services</a>
-                <a href="/work.html" class="nav__link">Work</a>
-                <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
-            </div>
+        <a href="/" class="nav__link">Home</a>
+        <a href="/services.html" class="nav__link">Services</a>
+        <a href="/work.html" class="nav__link">Work</a>
+        <a href="/about.html" class="nav__link">About</a>
+        <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+      </div>
 
       <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
@@ -94,8 +107,8 @@
     <section class="section about-statement" aria-label="About Yacaré">
       <div class="container">
         <p class="about-statement__text reveal-words">
-          Yacaré is a boutique digital product agency that blends strategy with sharp execution to craft bold,
-          conversion-driven digital experiences for ambitious startups and businesses.
+          Yacaré is a boutique product agency. We blend rapid strategy with sharp execution to craft conversion-driven
+          software for ambitious teams.
         </p>
       </div>
     </section>
@@ -110,10 +123,10 @@
           <!-- Left Column -->
           <div class="services-intro reveal">
             <h2 class="text-hero-gradient animated-gradient"
-              style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; margin-bottom: var(--space-3);">
-              WHAT WE OFFER</h2>
+              style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; margin-bottom: var(--space-3);">
+              What We Offer</h2>
             <p class="text-lg" style="color: var(--text-secondary); max-width: 320px;">
-              All things design, we got you covered.
+              From concept to scale, we got you covered.
             </p>
           </div>
 
@@ -172,8 +185,8 @@
             Latest Projects
           </h2>
           <p class="text-lg" style="color: var(--text-secondary); max-width: 800px; text-transform: none;">
-            Due to confidentiality agreements and compliance protocols, this is a streamlined overview of our recent
-            digital ventures. For a detailed product breakdown, feel free to reach out.
+            A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach
+            out directly.
           </p>
         </div>
       </div>
@@ -363,7 +376,7 @@
                  ═══════════════════════════════════════════ -->
     <section class="section" id="reviews" aria-labelledby="reviews-heading">
       <div class="container">
-        <h2 id="reviews-heading" class="reviews-heading reveal">TRUSTED BY GLOBAL BRANDS</h2>
+        <h2 id="reviews-heading" class="reviews-heading reveal">Trusted by Global Brands</h2>
 
         <div class="reviews-grid reveal-stagger">
 
@@ -431,7 +444,7 @@
         <div class="accordion">
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
-              How does an engagement typically start?
+              Who do you work with?
               <span class="accordion__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -441,17 +454,15 @@
             </button>
             <div class="accordion__content" role="region">
               <div class="accordion__body">
-                It starts with a conversation. We'll hop on a 30-minute call to understand your
-                challenge, goals, and timeline. From there, we recommend the right engagement
-                model — whether that's a Discovery Sprint, MVP build, or ongoing partnership. No
-                pressure, no pitch decks.
+                Startups, product teams, and software studios that need sharper product thinking. We don’t operate as a
+                design factory—we get involved in real decisions.
               </div>
             </div>
           </div>
 
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
-              What's your pricing model?
+              When does it make sense to hire you?
               <span class="accordion__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -461,17 +472,15 @@
             </button>
             <div class="accordion__content" role="region">
               <div class="accordion__body">
-                We work with fixed-scope pricing for Discovery Sprints and MVPs, and
-                retainer-based pricing for ongoing Product Growth partnerships. Every project
-                gets a clear proposal with deliverables, timeline, and investment before we
-                start.
+                When the product exists — or is about to be built — but lacks clarity. Clarity about the problem, the
+                user, and the direction.
               </div>
             </div>
           </div>
 
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
-              How big is your team?
+              Are you just a design agency?
               <span class="accordion__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -481,17 +490,15 @@
             </button>
             <div class="accordion__content" role="region">
               <div class="accordion__body">
-                We're a boutique agency by design. Our core team includes senior product
-                designers, full-stack developers, and strategists. We keep teams small and
-                focused — typically 2–4 people per project — because we believe great products
-                are built by small, skilled teams.
+                No. Design is part of the work, but we focus on product definition, validation, structure, and strategic
+                decisions. The interface is the result, not the starting point.
               </div>
             </div>
           </div>
 
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
-              What technologies do you work with?
+              How does an engagement work?
               <span class="accordion__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -501,16 +508,15 @@
             </button>
             <div class="accordion__content" role="region">
               <div class="accordion__body">
-                We're technology-agnostic but opinionated. We typically work with React, React
-                Native, Node.js, and modern cloud infrastructure. That said, we choose the stack
-                that best serves your product goals — not the other way around.
+                We work in clear, focused stages. We define objectives, map the problem, and move forward with concrete
+                deliverables. No endless projects without direction.
               </div>
             </div>
           </div>
 
           <div class="accordion__item">
             <button class="accordion__trigger" aria-expanded="false">
-              Do you work with startups or large companies?
+              Can you work with our internal team?
               <span class="accordion__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -520,10 +526,78 @@
             </button>
             <div class="accordion__content" role="region">
               <div class="accordion__body">
-                Both. We've helped early-stage startups go from idea to launch, and we've
-                partnered with established companies to redesign and scale existing products.
-                What unites our clients is a shared obsession with building products that
-                actually work.
+                Yes. We integrate directly with founders, developers, and marketing teams. We don’t replace teams — we
+                empower them.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How are you different from a traditional agency?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                We don’t sell design hours. We bring product judgment.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Our product is "finished." Can you still help?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                Yes. Most “finished” products still have room to improve clarity, positioning, or conversion. That’s
+                often where we add the most value.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Who is not a good fit?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                Pure execution with no room for product thinking. If you only need someone to “design screens,” we’re
+                probably not the right partner.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How do we get started?
+              <span class="accordion__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </span>
+            </button>
+            <div class="accordion__content" role="region">
+              <div class="accordion__body">
+                With a short conversation. If there’s alignment, we define a focused first stage with clear outcomes.
               </div>
             </div>
           </div>
@@ -537,8 +611,7 @@
         <div class="cta-card reveal">
           <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
           <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
-            Tell us about your project and we'll get back to you within 24 hours with a plan to make it
-            happen.
+            Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.
           </p>
           <div class="flex flex--center flex--gap-sm">
             <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>

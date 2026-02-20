@@ -6,7 +6,7 @@ standard_nav = """<div class="nav__links">
                 <a href="/services.html" class="nav__link">Services</a>
                 <a href="/work.html" class="nav__link">Work</a>
                 <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
             </div>"""
 
 def process_file(filepath):

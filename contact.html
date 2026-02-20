@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <style>
+        html, body { background-color: #08080c; color: #ffffff; margin: 0; padding: 0; }
+        .nav__logo-img { height: 28px; width: auto; }
+    </style>
 
     <!-- SEO -->
     <title>Contact — Yacaré</title>
@@ -32,7 +37,7 @@
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="/" class="nav__logo" aria-label="Yacaré Home">
-                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" />
+                <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" style="height: 28px; width: auto;" />
             </a>
 
             <div class="nav__links">
@@ -40,7 +45,7 @@
                 <a href="/services.html" class="nav__link">Services</a>
                 <a href="/work.html" class="nav__link">Work</a>
                 <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Get Started</span></a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
             </div>
 
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -73,45 +78,28 @@
             <div class="container">
                 <div class="contact-grid reveal">
                     <div class="contact-info">
-                        <h2>Let's build<br>something great.</h2>
+                        <h2 class="text-hero-gradient">Let's build<br>something great.</h2>
                         <p>Whether you have a clear idea or just a hunch — we're here to help.</p>
                         <div class="contact-detail">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
                                 stroke-width="2">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                 <polyline points="22,6 12,13 2,6" />
                             </svg>
-                            <span>hello@yacare.io</span>
+                            <span>contact@yacare.io</span>
                         </div>
                         <div class="contact-detail">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
                                 stroke-width="2">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
-                            <span>Buenos Aires, Argentina</span>
+                            <span>New York, US<br>Buenos Aires, Argentina</span>
                         </div>
                     </div>
 
                     <form class="contact-form" id="contact-form">
-                        <div class="form__group">
-                            <label class="form__label">I'm interested in</label>
-                            <div class="pill-selector">
-                                <input type="checkbox" id="svc-d" name="services" value="discovery"
-                                    class="pill-selector__input"><label for="svc-d"
-                                    class="pill-selector__label">Discovery
-                                    Sprint</label>
-                                <input type="checkbox" id="svc-m" name="services" value="mvp"
-                                    class="pill-selector__input"><label for="svc-m" class="pill-selector__label">MVP
-                                    Jumpstarter</label>
-                                <input type="checkbox" id="svc-g" name="services" value="growth"
-                                    class="pill-selector__input"><label for="svc-g" class="pill-selector__label">Product
-                                    Growth</label>
-                                <input type="checkbox" id="svc-o" name="services" value="other"
-                                    class="pill-selector__input"><label for="svc-o" class="pill-selector__label">Not
-                                    sure yet</label>
-                            </div>
-                        </div>
+
                         <div class="grid grid--2">
                             <div class="form__group"><label class="form__label" for="name">Name</label><input
                                     type="text" id="name" class="form__input" placeholder="Your name" required></div>
@@ -136,7 +124,7 @@
                         <div class="form__group"><label class="form__label" for="message">Your project</label><textarea
                                 id="message" class="form__textarea" placeholder="What are you building?"
                                 rows="5"></textarea></div>
-                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Send Message</button>
+                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Send Proposal</button>
                     </form>
                 </div>
             </div>

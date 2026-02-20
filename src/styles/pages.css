@@ -342,7 +342,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-primary);
+    color: #fff;
 }
 
 .about-value h3 {
