@@ -118,9 +118,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <title>Yacaré — Your Product Team, On Demand</title>
+  <title>Yacaré | B2B Digital Product Design Agency & UX Factory</title>
   <meta name="description"
-    content="Yacaré is a boutique digital product agency. We design, build, and grow digital products that move the needle. Discovery Sprints, MVPs, and Product Growth.">
+    content="Boutique UX Factory and Product Design Agency. We design, build, and scale SaaS, digital products, and MVPs that actually impact your bottom line.">
   <link rel="canonical" href="https://yacare.io/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
@@ -141,6 +141,32 @@
   <!-- App -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script type="module" src="/src/js/main.ts"></script>
+
+  <!-- JSON-LD for Search Engines & LLMs (GEO/AIO) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Yacaré",
+      "url": "https://yacare.design",
+      "description": "Boutique UX Factory and Product Design Agency specializing in B2B SaaS, MVPs, and digital product growth.",
+      "keywords": "UX Design, UI Design, Product Design, B2B SaaS, MVP Development, Product Growth, UX Research",
+      "knowsAbout": [
+        "User Experience Design",
+        "User Interface Design",
+        "B2B SaaS Product Design",
+        "MVP Jumpstarter",
+        "Product Growth Engineering",
+        "Discovery Sprints"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/company/yacare-design"
+      ],
+      "areaServed": "Worldwide",
+      "slogan": "We design, build, and scale SaaS, digital products, and MVPs that actually impact your bottom line."
+    }
+    </script>
+
 </head>
 
 <body>
@@ -168,6 +194,22 @@
       <a href="/" class="nav__logo" aria-label="Yacaré Home">
         <img src="/logo_yacare.svg" alt="Yacaré" class="nav__logo-img" style="height: 28px; width: auto;" />
       </a>
+
+      <!-- Client Reviews Marquee (Top Bar) -->
+      <div class="nav__reviews-card">
+        <div class="nav__reviews-marquee">
+          <div class="nav__reviews-track">
+            <span class="nav__reviews-text">"The Discovery Sprint alone saved us months."</span>
+            <span class="nav__reviews-text">"They challenged our assumptions and delivered beyond expectations."</span>
+            <span class="nav__reviews-text">"The MVP they delivered became our production app."</span>
+            <!-- Duplicated for seamless scrolling -->
+            <span class="nav__reviews-text">"The Discovery Sprint alone saved us months."</span>
+            <span class="nav__reviews-text">"They challenged our assumptions and delivered beyond expectations."</span>
+            <span class="nav__reviews-text">"The MVP they delivered became our production app."</span>
+          </div>
+        </div>
+        <a href="#reviews" class="nav__reviews-action">See all +</a>
+      </div>
 
       <div class="nav__links">
         <a href="/" class="nav__link">Home</a>
