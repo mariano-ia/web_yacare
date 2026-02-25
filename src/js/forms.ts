@@ -6,22 +6,29 @@ export function initForms(): void {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(form);
+            // Loading state
             const submitButton = form.querySelector('button[type="submit"]');
             const originalButtonText = submitButton?.innerHTML || '';
             const action = form.getAttribute('action') || '';
 
-            // Loading state
             if (submitButton) {
                 submitButton.setAttribute('disabled', 'true');
                 submitButton.innerHTML = '<span>Sending...</span>';
             }
 
+            // Convert FormData to JSON
+            const formData = new FormData(form);
+            const data: Record<string, any> = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
             try {
                 const response = await fetch(action, {
                     method: 'POST',
-                    body: formData,
+                    body: JSON.stringify(data),
                     headers: {
+                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     }
                 });
@@ -29,15 +36,15 @@ export function initForms(): void {
                 if (response.ok) {
                     showSuccess(form);
                 } else {
-                    const data = await response.json();
-                    if (data.errors) {
-                        alert(data.errors.map((error: any) => error.message).join(", "));
+                    const result = await response.json();
+                    if (result.errors) {
+                        alert(result.errors.map((error: any) => error.message).join(", "));
                     } else {
-                        throw new Error('Form submission failed');
+                        throw new Error('Submission failed');
                     }
                 }
             } catch (error) {
-                console.error(error);
+                console.error('Form submission error:', error);
                 alert('Hubo un error al enviar el mensaje. Por favor intenta de nuevo.');
             } finally {
                 if (submitButton) {
@@ -55,35 +62,50 @@ function showSuccess(form: HTMLFormElement): void {
 
     // Create success message element
     const successMsg = document.createElement('div');
-    successMsg.className = 'form-success-message reveal';
-    successMsg.style.textAlign = 'center';
-    successMsg.style.padding = 'var(--space-8) 0';
+    successMsg.className = 'form-success-message';
+    successMsg.style.cssText = `
+        text-align: center;
+        padding: var(--space-12) var(--space-6);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-medium);
+        border-radius: var(--radius-lg);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    `;
+
     successMsg.innerHTML = `
-        <div class="success-icon" style="margin-bottom: var(--space-4); color: var(--accent-primary);">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
+        <div class="success-icon" style="margin-bottom: var(--space-6); color: var(--accent-primary); display: flex; justify-content: center;">
+            <div style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="check" style="width: 40px; height: 40px;"></i>
+            </div>
         </div>
-        <h3 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: var(--space-2);">¡Gracias!</h3>
-        <p class="text-lg" style="color: var(--text-secondary); max-width: 400px; margin: 0 auto;">
+        <h3 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: 0.05em;">¡Gracias!</h3>
+        <p class="text-lg" style="color: var(--text-secondary); max-width: 450px; margin: 0 auto; line-height: 1.6;">
             Recibimos tu mensaje. Ya te vamos a responder. Gracias.
         </p>
     `;
 
-    // Animation out
-    form.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    // Animation out the form
+    form.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
     form.style.opacity = '0';
-    form.style.transform = 'translateY(10px)';
+    form.style.transform = 'translateY(-20px)';
 
     setTimeout(() => {
         form.style.display = 'none';
         parent.appendChild(successMsg);
 
-        // Staggered reveal of success message
+        // Init icons
+        if ((window as any).lucide) {
+            (window as any).lucide.createIcons();
+        }
+
+        // Animation in success message
         requestAnimationFrame(() => {
-            successMsg.style.opacity = '1';
-            successMsg.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                successMsg.style.opacity = '1';
+                successMsg.style.transform = 'translateY(0)';
+            }, 50);
         });
     }, 400);
 }

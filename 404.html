@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>404 - Page Not Found — Yacaré</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:wght@300..900&display=swap"
+        rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+
+    <style>
+        :root {
+            --bg-primary: #08080c;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-primary: #ffffff;
+            --border-medium: rgba(255, 255, 255, 0.1);
+            --space-4: 1rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --font-display: 'Antonio', 'sans-serif';
+            --font-body: 'Figtree', 'sans-serif';
+        }
+
+        html,
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-8);
+            position: relative;
+        }
+
+        .hero__blob {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        .hero__blob--1 {
+            top: -10%;
+            right: -10%;
+        }
+
+        .hero__blob--2 {
+            bottom: -10%;
+            left: -10%;
+        }
+
+        .error-code {
+            font-family: var(--font-display);
+            font-size: clamp(8rem, 20vw, 15rem);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            margin: 0;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.1) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.8;
+        }
+
+        .error-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-transform: uppercase;
+            margin: var(--space-4) 0;
+            letter-spacing: 0.05em;
+        }
+
+        .error-desc {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: var(--space-8);
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grain-overlay"></div>
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
+
+    <main class="error-page">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Deep Water.</h2>
+        <p class="error-desc">
+            The page you are looking for has drifted away. Let's get you back to the surface.
+        </p>
+        <a href="/" class="btn">Return Home</a>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
