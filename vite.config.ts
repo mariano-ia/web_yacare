@@ -38,8 +38,6 @@ export default defineConfig({
                 'work/vintage-app': resolve(__dirname, 'work/vintage-app.html'),
                 about: resolve(__dirname, 'about.html'),
                 contact: resolve(__dirname, 'contact.html'),
-                blog: resolve(__dirname, 'blog.html'),
-                'blog/why-most-user-research-is-useless': resolve(__dirname, 'blog/why-most-user-research-is-useless.html'),
                 'privacy-policy': resolve(__dirname, 'privacy-policy.html'),
                 'terms-and-conditions': resolve(__dirname, 'terms-and-conditions.html'),
                 'elpantano/index': resolve(__dirname, 'elpantano/index.html'),
