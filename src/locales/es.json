@@ -462,5 +462,31 @@
         "outcomes_li4": "Asistente conversacional IA integrado",
         "team_heading": "Equipo",
         "team_roles": "Estratega de Producto<br>\n                                    Diseñador UX/UI"
+    },
+    "work_nawaiam_website": {
+        "chip1": "Rediseño de Producto",
+        "chip2": "Arquitectura UX",
+        "chip3": "Visualización de Datos",
+        "statement": "Rediseño de una plataforma compleja de evaluación conductual para hacer que los insights sean más claros, procesables y fáciles de entender.",
+        "context_heading": "Contexto",
+        "context_p1": "A medida que Nawaiam evolucionaba, su plataforma se volvía más poderosa y más compleja. Nuevas variables, datos de comportamiento más ricos y capacidades de reporte ampliadas incrementaron el valor del producto. Pero también introdujeron fricción.",
+        "context_p2": "Los dashboards eran densos. Los insights eran técnicamente correctos, pero difíciles de interpretar rápidamente. Para los equipos de RRHH y quienes toman decisiones, la claridad no es opcional. Necesitan entender patrones, fortalezas y riesgos sin navegar por capas innecesarias de carga cognitiva.",
+        "context_p3": "El desafío no era simplificar el modelo. Era simplificar la experiencia sin perder profundidad. Necesitábamos preservar la sofisticación analítica de la plataforma mientras hacíamos que la interfaz fuera más intuitiva, estructurada y accionable.",
+        "solution_heading": "Nuestra Solución",
+        "solution_p1": "Abordamos el rediseño como un problema de claridad, no como una renovación visual. Primero, reestructuramos la arquitectura de la información. En lugar de presentar todos los datos a la vez, priorizamos la jerarquía, agrupando insights relacionados y creando patrones de revelación progresiva.",
+        "solution_p2": "Segundo, rediseñamos el sistema de reportes con un fuerte enfoque en los flujos de toma de decisiones. Cada pantalla fue evaluada basándonos en una pregunta simple: <em>¿Qué acción permite esto?</em>",
+        "solution_p3": "Introdujimos:",
+        "solution_li1": "<strong>Segmentación clara</strong> de dimensiones de comportamiento.",
+        "solution_li2": "<strong>Patrones visuales</strong> que reducen la sobrecarga cognitiva.",
+        "solution_li3": "<strong>Resúmenes estructurados</strong> antes que vistas analíticas profundas.",
+        "solution_li4": "<strong>Lógica narrativa mejorada</strong> en los reportes generados.",
+        "solution_p4": "El resultado fue una plataforma que se siente más ligera sin perder poder. La complejidad se mantuvo por debajo, mientras que la claridad afloró para el usuario.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "Carga cognitiva reducida en flujos de reportes",
+        "outcomes_li2": "Jerarquía de paneles mejorada",
+        "outcomes_li3": "Segmentación de comportamiento más clara",
+        "outcomes_li4": "Insights más procesables para equipos de RRHH",
+        "team_heading": "Equipo",
+        "team_roles": "Líder de Producto<br>\n                                    Diseñador UX/UI<br>\n                                    Especialista en Visualización de Datos<br>\n                                    Desarrollador Frontend"
     }
 }

@@ -462,5 +462,31 @@
         "outcomes_li4": "Integrated AI conversational assistant",
         "team_heading": "Team",
         "team_roles": "Product Strategist<br>\n                                    UX/UI Designer"
+    },
+    "work_nawaiam_website": {
+        "chip1": "Product Redesign",
+        "chip2": "UX Architecture",
+        "chip3": "Data Visualization",
+        "statement": "Redesigning a complex behavioral assessment platform to make insights clearer, more actionable, and easier to understand.",
+        "context_heading": "Context",
+        "context_p1": "As Nawaiam evolved, its platform became more powerful — and more complex. New variables, richer behavioral data, and expanded reporting capabilities increased the value of the product. But they also introduced friction.",
+        "context_p2": "The dashboards were dense. The insights were technically correct, yet harder to interpret quickly. For HR teams and decision-makers, clarity is not optional. They need to understand patterns, strengths, and risks without navigating layers of cognitive load.",
+        "context_p3": "The challenge was not to simplify the model. It was to simplify the experience without losing depth. We needed to preserve the analytical sophistication of the platform while making the interface more intuitive, structured, and actionable.",
+        "solution_heading": "Our Solution",
+        "solution_p1": "We approached the redesign as a clarity problem, not a visual refresh. First, we restructured the information architecture. Instead of presenting all data at once, we prioritized hierarchy, grouping related insights and creating progressive disclosure patterns.",
+        "solution_p2": "Second, we redesigned the reporting system with a strong focus on decision-making flows. Each screen was evaluated based on a simple question: <em>What action does this enable?</em>",
+        "solution_p3": "We introduced:",
+        "solution_li1": "<strong>Clear segmentation</strong> of behavioral dimensions.",
+        "solution_li2": "<strong>Visual patterns</strong> that reduce cognitive overload.",
+        "solution_li3": "<strong>Structured summaries</strong> before deep analytical views.",
+        "solution_li4": "<strong>Improved narrative logic</strong> in generated reports.",
+        "solution_p4": "The result was a platform that feels lighter without being less powerful. Complexity remained under the hood — clarity surfaced to the user.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "Reduced cognitive load in reporting flows",
+        "outcomes_li2": "Improved dashboard hierarchy",
+        "outcomes_li3": "Clearer behavioral segmentation",
+        "outcomes_li4": "More actionable insights for HR teams",
+        "team_heading": "Team",
+        "team_roles": "Product Lead<br>\n                                    UX/UI Designer<br>\n                                    Data Visualization Specialist<br>\n                                    Frontend Developer"
     }
 }
