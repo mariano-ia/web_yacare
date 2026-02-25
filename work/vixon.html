@@ -3,29 +3,387 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vixon - Case Study — Yacaré</title>
-    <script type="module" src="/src/js/main.ts"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
     <style>
         html,
         body {
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: sans-serif;
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>Vixon: Cognitive Training for High-Performance Athletes — Yacaré</title>
+    <meta name="description"
+        content="Designing a cognitive training platform that transforms neuroscience-based theory into a usable, measurable tool for real-world coaches and athletes.">
+    <link rel="canonical" href="https://yacare.io/work/vixon.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
 </head>
 
 <body>
-    <div style="text-align: center;">
-        <h1 style="font-size: 3rem;">Vixon</h1>
-        <p>Case study coming soon.</p>
-        <a href="/work.html" style="color: #fff; text-decoration: underline;">Back to Work</a>
-    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
+            </a>
+            <div class="nav__links">
+                <a href="/" class="nav__link">Home</a>
+                <a href="/services.html" class="nav__link">Services</a>
+                <a href="/work.html" class="nav__link">Work</a>
+                <a href="/about.html" class="nav__link">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero hero--internal" id="hero" style="min-height: 65vh;">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+            </div>
+            <div class="container hero__content">
+                <div style="display:flex; flex-direction:column; align-items:center; gap: 15px;">
+                    <div class="chip-group" style="justify-content: center;">
+                        <span class="chip">Product Strategy</span>
+                        <span class="chip">Cognitive UX Design</span>
+                        <span class="chip">AI Assistant</span>
+                    </div>
+                    <h1 class="gradient-text">VIXON</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATEMENT -->
+        <section class="section about-statement" aria-label="Short Summary">
+            <div class="container">
+                <p class="about-statement__text reveal-words">
+                    Designing a cognitive training platform that transforms neuroscience-based theory into a usable,
+                    measurable tool for real-world coaches and athletes.
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTENT + SIDEBAR -->
+        <section class="section" style="border-top: 1px solid var(--border-medium);">
+            <div class="container">
+                <div class="project-layout">
+
+                    <!-- Left -->
+                    <div>
+
+                        <!-- Image Showcase -->
+                        <div
+                            style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: var(--space-8); background: var(--bg-secondary);">
+                            <img src="/assets/images/portfolio-mobile.png" alt="Vixon Project Showcase"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Context -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Context
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Some projects start with an idea. Others start with a team.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                With VIXON, we encountered something less common: a deeply committed team with a strong
+                                scientific foundation and a clear long-term vision.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                VIXON Pro is a cognitive training system that uses wearable light-based devices and
+                                on-field dynamics to train what cannot be seen directly: reaction speed, decision-making
+                                under pressure, attention, and visual perception.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                This is not “playing with lights.” It is structured stimulus-response training grounded
+                                in applied neuroscience.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                While the theoretical foundation was solid, the challenge was translation. Because what
+                                is scientifically accurate is not automatically usable. The real users were not
+                                researchers; they were coaches operating under pressure, with little tolerance for
+                                unnecessary complexity.
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr
+                            style="border: none; height: 1px; background: var(--border-medium); margin: var(--space-10) 0;">
+
+                        <!-- Our Solution -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Our Solution
+                            </h2>
+                            <h3 style="font-size: 1.4rem; color: var(--text-primary); margin-bottom: var(--space-4);">
+                                Translating Science into Experience</h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                We were not designing screens — we were translating academic language into operational
+                                clarity. Through workshops, we identified that coaches want data without complexity,
+                                while athletes respond to clear, tangible metrics.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                This led to a key product decision: <strong>Radical simplicity</strong>. We designed
+                                clean interfaces with immediate clarity, ensuring that any metric could be understood
+                                within seconds.
+                            </p>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                Measuring the Invisible</h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Physical performance is easy to measure; cognitive performance is not. We designed a
+                                metric system that translates training sessions into understandable variables:
+                                consistency, variability, challenge level, and overall cognitive state.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Crucially, we did not want to replace the coach’s intuition. We created a system where
+                                objective data coexists with professional perception, supporting intuition rather than
+                                invalid it.
+                            </p>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                Lowering the Technical Barrier with AI</h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Talking about neural networks, executive functions, or plasticity may be correct — but
+                                not necessarily helpful in daily practice. We designed VIXON’s AI assistant as an
+                                integrated conversational layer that allows coaches to ask simple questions like "Who
+                                reacted fastest today?" or "How has this player evolved in the past weeks?"
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85;">
+                                Instead of navigating complex dashboards, users interact through natural language.
+                                The complexity remains under the hood, while the experience becomes accessible.
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr
+                            style="border: none; height: 1px; background: var(--border-medium); margin: var(--space-10) 0;">
+
+                        <!-- What We Built -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                What We Built
+                            </h2>
+                            <ul
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5); list-style-type: none; padding-left: 0;">
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    A structured cognitive training system
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    A clear and interpretable metric model
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    A bridge between intuition and data
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    A usable tool for non-technical professionals
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    A way to justify performance decisions with measurable insights
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Current Stage -->
+                        <div class="reveal">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Current Stage
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                VIXON Pro is now entering the market. During pilot testing, early signals have been
+                                strong: positive acceptance among coaches, high engagement from athletes, sustained use
+                                when simplicity is preserved, and genuine interest in measuring previously intangible
+                                aspects of performance.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                The product is field-validated. The team is consistent. The theoretical foundation is
+                                robust. Now comes the most demanding phase: market reality.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Expectations are high.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: sticky sidebar -->
+                    <aside class="project-sidebar">
+                        <div class="project-info-box" style="padding: var(--space-5);">
+
+                            <!-- Outcomes -->
+                            <div
+                                style="margin-bottom: var(--space-5); padding-bottom: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-4);">Outcomes
+                                    (Pilot Phase)</span>
+                                <ul
+                                    style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; list-style: none; padding-left: 0; margin: 0;">
+                                    <li style="margin-bottom: 12px;">• Validated cognitive metric framework</li>
+                                    <li style="margin-bottom: 12px;">• High coach adoption in pilot programs</li>
+                                    <li style="margin-bottom: 12px;">• Strong athlete engagement</li>
+                                    <li style="margin-bottom: 12px;">• Integrated AI conversational assistant</li>
+                                    <li style="margin-bottom: 0;">• Field-tested usability with non-technical users</li>
+                                </ul>
+                            </div>
+
+                            <!-- Team -->
+                            <div>
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-3);">Team</span>
+                                <p
+                                    style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                    Product Strategist<br>
+                                    UX/UI Designer<br>
+                                    Cognitive Modeling Consultant<br>
+                                    AI Workflow Designer<br>
+                                    Frontend & Backend Developers
+                                </p>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré - Expert B2B Digital Product Designers"
+                            class="nav__logo-img footer__logo-img" />
+                    </a>
+                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                        needle.</p>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>

@@ -3,29 +3,319 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sameco - Case Study — Yacaré</title>
-    <script type="module" src="/src/js/main.ts"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
     <style>
         html,
         body {
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: sans-serif;
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>SAMECO: AI-Powered Inquiry Automation — Yacaré</title>
+    <meta name="description"
+        content="Designing and deploying an AI agent to centralize inquiries, automate responses, and bring operational visibility to SAMECO.">
+    <link rel="canonical" href="https://yacare.io/work/sameco.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
 </head>
 
 <body>
-    <div style="text-align: center;">
-        <h1 style="font-size: 3rem;">Sameco</h1>
-        <p>Case study coming soon.</p>
-        <a href="/work.html" style="color: #fff; text-decoration: underline;">Back to Work</a>
-    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
+            </a>
+            <div class="nav__links">
+                <a href="/" class="nav__link">Home</a>
+                <a href="/services.html" class="nav__link">Services</a>
+                <a href="/work.html" class="nav__link">Work</a>
+                <a href="/about.html" class="nav__link">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero hero--internal" id="hero" style="min-height: 65vh;">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+            </div>
+            <div class="container hero__content">
+                <div style="display:flex; flex-direction:column; align-items:center; gap: 15px;">
+                    <div class="chip-group" style="justify-content: center;">
+                        <span class="chip">AI Agent</span>
+                        <span class="chip">Process Automation</span>
+                        <span class="chip">CRM Integration</span>
+                    </div>
+                    <h1 class="gradient-text">SAMECO</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATEMENT -->
+        <section class="section about-statement" aria-label="Short Summary">
+            <div class="container">
+                <p class="about-statement__text reveal-words">
+                    Designing and deploying an AI agent to centralize inquiries, automate responses, and bring
+                    operational visibility to a nonprofit education organization.
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTEXT + SOLUTION + SIDEBAR -->
+        <section class="section" style="border-top: 1px solid var(--border-medium);">
+            <div class="container">
+                <div class="project-layout">
+
+                    <!-- Left -->
+                    <div>
+
+                        <!-- Image Showcase -->
+                        <div
+                            style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: var(--space-8); background: var(--bg-secondary);">
+                            <img src="/assets/images/product-pm.png" alt="SAMECO Project Showcase"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Context -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Context
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                SAMECO is a nonprofit association focused on promoting continuous improvement across
+                                organizations.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                One of their primary revenue streams comes from training programs and professional
+                                certifications. As interest grew, so did the number of inquiries — arriving through
+                                multiple channels: email, WhatsApp, and other informal touchpoints.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                The problem was not demand. It was dispersion.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Messages were fragmented across platforms. Some were answered with delays. Others lacked
+                                traceability. There was no unified system to measure response time, conversion rates, or
+                                even total inquiry volume.
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85;">
+                                Operationally, it created friction. Strategically, it created blind spots. SAMECO needed
+                                more than faster replies. They needed structure, visibility, and control.
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr
+                            style="border: none; height: 1px; background: var(--border-medium); margin: var(--space-10) 0;">
+
+                        <!-- Our Solution -->
+                        <div class="reveal">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Our Solution
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                We approached the challenge as a systems design problem. First, we analyzed stakeholder
+                                workflows to understand how inquiries were handled, who responded, and how information
+                                was recorded. The objective was to centralize without increasing operational burden.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                We designed and implemented <strong>Sami</strong>, an AI-powered agent built on N8N.
+                            </p>
+                            <ul
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5); list-style-type: none; padding-left: 0;">
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Receives inquiries via email and WhatsApp
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Responds in natural language
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Maintains conversational continuity
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Automatically logs every interaction in HubSpot
+                                </li>
+                            </ul>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                This architecture transformed a fragmented communication flow into a measurable
+                                pipeline. Instead of scattered conversations, SAMECO now has centralized inquiry
+                                management, structured CRM records, automated first-level responses, and real-time
+                                visibility into demand patterns.
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85;">
+                                Sami was not introduced as a chatbot experiment. It was deployed as an operational layer
+                                integrated into the organization’s revenue model. Adoption was immediate, and
+                                performance has been consistent.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: sticky sidebar -->
+                    <aside class="project-sidebar">
+                        <div class="project-info-box" style="padding: var(--space-5);">
+
+                            <!-- Outcomes -->
+                            <div
+                                style="margin-bottom: var(--space-5); padding-bottom: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-4);">Outcomes</span>
+                                <ul
+                                    style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; list-style: none; padding-left: 0; margin: 0;">
+                                    <li style="margin-bottom: 12px;">• 100+ inquiries handled in the first phase</li>
+                                    <li style="margin-bottom: 12px;">• 90%+ conversational continuity without
+                                        intervention</li>
+                                    <li style="margin-bottom: 12px;">• 100% inquiry logging into HubSpot</li>
+                                    <li style="margin-bottom: 12px;">• Response time from hours to minutes</li>
+                                    <li style="margin-bottom: 0;">• Increased visibility into conversion rates</li>
+                                </ul>
+                            </div>
+
+                            <!-- Team -->
+                            <div>
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-3);">Team</span>
+                                <p
+                                    style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                    Product Strategist<br>
+                                    Automation Architect<br>
+                                    AI Workflow Designer<br>
+                                    CRM Integration Specialist
+                                </p>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré - Expert B2B Digital Product Designers"
+                            class="nav__logo-img footer__logo-img" />
+                    </a>
+                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                        needle.</p>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>
