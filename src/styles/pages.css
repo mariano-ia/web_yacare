@@ -1011,12 +1011,12 @@
 }
 
 .review-card:hover {
-    border-color: var(--accent-primary);
+    border-color: #ffffff;
     transform: translateY(-4px);
 }
 
 .review-card__stars {
-    color: #FFB347;
+    color: #FFD700;
     font-size: 1.1rem;
     letter-spacing: 2px;
 }

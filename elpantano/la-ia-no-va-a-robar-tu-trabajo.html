@@ -3,18 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-TKZE3QCB9L');
-  </script>
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
     <meta name="color-scheme" content="dark">
     <style>
-        html, body { background-color: #000; margin: 0; padding: 0; }
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -106,14 +111,17 @@
         <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
         <div class="ep-search-bar">
             <span class="ep-search-bar__icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </span>
-            <input type="search" class="ep-search-bar__input" placeholder="Buscar en El Pantano…" id="epSearchInput" autocomplete="off" aria-label="Buscar">
+            <input type="search" class="ep-search-bar__input" placeholder="Buscar en El Pantano…" id="epSearchInput"
+                autocomplete="off" aria-label="Buscar">
             <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Cerrar búsqueda">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
@@ -122,16 +130,16 @@
         <span class="ep-search-hint">ESC para cerrar</span>
     </div>
     <script>
-    (function () {
-        var overlay = document.getElementById('epSearch');
-        var input   = document.getElementById('epSearchInput');
-        function open()  { overlay.classList.add('active'); setTimeout(function(){ input.focus(); }, 60); }
-        function close() { overlay.classList.remove('active'); input.value = ''; }
-        document.querySelector('.ep-nav__search').addEventListener('click', open);
-        document.getElementById('epSearchClose').addEventListener('click', close);
-        document.getElementById('epSearchCloseBtn').addEventListener('click', close);
-        document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
-    }());
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
     </script>
 
     <main>
@@ -155,11 +163,12 @@
             </div>
 
             <!-- WP: post.title.rendered -->
-            <h1 class="ep-article-head__title">La IA no va a robar tu trabajo. Va a hacer invisible el de tu jefe.</h1>
+            <h1 class="ep-article-head__title">La IA no va a robar tu trabajo. Va a hacer invisible el de tu jefe</h1>
 
             <!-- WP: post.excerpt.rendered (standfirst / lede) -->
             <p class="ep-article-head__standfirst">
-                Cuatro años de automatización y la pirámide corporativa sigue intacta. El problema no es la tecnología. Es a quién le conviene que no cambie nada.
+                Cuatro años de automatización y la pirámide corporativa sigue intacta. El problema no es la tecnología.
+                Es a quién le conviene que no cambie nada.
             </p>
 
             <!-- WP: post._embedded['author'][0] + post.date -->
@@ -179,12 +188,14 @@
                 <div class="ep-article-head__share" aria-label="Compartir artículo">
                     <a href="#" class="ep-share-btn" aria-label="Compartir en Twitter/X">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                         </svg>
                     </a>
                     <a href="#" class="ep-share-btn" aria-label="Compartir en LinkedIn">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                     </a>
                     <button class="ep-share-btn" aria-label="Copiar enlace">
@@ -203,11 +214,8 @@
              ═══════════════════════════════════════════ -->
         <div class="ep-article-hero">
             <!-- WP: featuredmedia.source_url -->
-            <img
-                src="https://picsum.photos/seed/iawork5/1440/580"
-                alt="La IA no va a robar tu trabajo"
-                class="ep-article-hero__img"
-                loading="eager">
+            <img src="https://picsum.photos/seed/iawork5/1440/580" alt="La IA no va a robar tu trabajo"
+                class="ep-article-hero__img" loading="eager">
             <!-- WP: featuredmedia.caption.rendered -->
             <p class="ep-article-hero__caption">
                 Ilustración: El Pantano / Yacaré
@@ -238,7 +246,10 @@
                 <div class="ep-prose">
 
                     <p>
-                        En 2022 todos hablábamos de cómo el trabajo iba a cambiar para siempre. Los titulares prometían desempleo masivo, reconversión profesional y una nueva era pos-laboral. Cuatro años después, la mayoría de los trabajadores hace exactamente lo mismo que antes, solo que con más reuniones para discutir si usar o no una herramienta de IA.
+                        En 2022 todos hablábamos de cómo el trabajo iba a cambiar para siempre. Los titulares prometían
+                        desempleo masivo, reconversión profesional y una nueva era pos-laboral. Cuatro años después, la
+                        mayoría de los trabajadores hace exactamente lo mismo que antes, solo que con más reuniones para
+                        discutir si usar o no una herramienta de IA.
                     </p>
 
                     <p>
@@ -248,11 +259,16 @@
                     <h2 id="quien-decide">¿Quién decide qué se automatiza?</h2>
 
                     <p>
-                        Cuando una empresa adopta IA, no automatiza de forma neutra. Automatiza lo que a alguien le conviene automatizar. Y en la estructura corporativa tradicional, esa decisión la toman las personas cuyo trabajo <em>no</em> se va a automatizar.
+                        Cuando una empresa adopta IA, no automatiza de forma neutra. Automatiza lo que a alguien le
+                        conviene automatizar. Y en la estructura corporativa tradicional, esa decisión la toman las
+                        personas cuyo trabajo <em>no</em> se va a automatizar.
                     </p>
 
                     <p>
-                        El analista de datos que produce los informes que nadie lee: candidato a desaparecer. El director que recibe esos informes, los descarta, y toma decisiones basadas en su intuición: intocable. No porque su trabajo sea más valioso. Sino porque él contrata, evalúa, y aprueba los presupuestos.
+                        El analista de datos que produce los informes que nadie lee: candidato a desaparecer. El
+                        director que recibe esos informes, los descarta, y toma decisiones basadas en su intuición:
+                        intocable. No porque su trabajo sea más valioso. Sino porque él contrata, evalúa, y aprueba los
+                        presupuestos.
                     </p>
 
                     <p>
@@ -260,45 +276,61 @@
                     </p>
 
                     <div class="ep-pullquote">
-                        <p>La IA no tiene agenda política. Pero quienes la implementan sí. Y la primera decisión de implementación es, siempre, quién queda afuera del recorte.</p>
+                        <p>La IA no tiene agenda política. Pero quienes la implementan sí. Y la primera decisión de
+                            implementación es, siempre, quién queda afuera del recorte.</p>
                     </div>
 
                     <h2 id="el-patron">El patrón que nadie nombra</h2>
 
                     <p>
-                        Mirá los casos más sonados de adopción de IA en empresas grandes. BT Group anunció que eliminaría 10.000 empleos con ayuda de IA. Goldman Sachs, IBM, Chegg. La lista crece. ¿Qué tienen en común todos estos casos?
+                        Mirá los casos más sonados de adopción de IA en empresas grandes. BT Group anunció que
+                        eliminaría 10.000 empleos con ayuda de IA. Goldman Sachs, IBM, Chegg. La lista crece. ¿Qué
+                        tienen en común todos estos casos?
                     </p>
 
                     <p>
-                        Los puestos eliminados son casi siempre de ejecución. Los de decisión, estrategia y representación se mantienen o crecen. Las capas intermedias —las que traducen entre la dirección y la operación— son las primeras en caer.
+                        Los puestos eliminados son casi siempre de ejecución. Los de decisión, estrategia y
+                        representación se mantienen o crecen. Las capas intermedias —las que traducen entre la dirección
+                        y la operación— son las primeras en caer.
                     </p>
 
                     <p>
-                        Lo paradójico es que muchos de esos puestos intermedios existían precisamente para compensar la falta de criterio de la capa superior. Cuando la IA los reemplaza, el problema de fondo no desaparece: ahora simplemente no hay nadie que lo intercepte.
+                        Lo paradójico es que muchos de esos puestos intermedios existían precisamente para compensar la
+                        falta de criterio de la capa superior. Cuando la IA los reemplaza, el problema de fondo no
+                        desaparece: ahora simplemente no hay nadie que lo intercepte.
                     </p>
 
                     <h2 id="el-jefe-invisible">El jefe invisible</h2>
 
                     <p>
-                        Hay algo más sutil que vale la pena nombrar. En muchas organizaciones, la IA está haciendo visible —por primera vez— cuánto trabajo silencioso existía.
+                        Hay algo más sutil que vale la pena nombrar. En muchas organizaciones, la IA está haciendo
+                        visible —por primera vez— cuánto trabajo silencioso existía.
                     </p>
 
                     <p>
-                        El trabajo de coordinación informal. Las conversaciones que destrababan problemas antes de que llegaran al sistema de tickets. Los ajustes que alguien hacía porque conocía el contexto sin que nadie lo pidiera. Ese trabajo no estaba en ningún organigrama. Y cuando la empresa lo elimina junto con el rol que lo ejecutaba, se da cuenta de golpe de que algo dejó de funcionar.
+                        El trabajo de coordinación informal. Las conversaciones que destrababan problemas antes de que
+                        llegaran al sistema de tickets. Los ajustes que alguien hacía porque conocía el contexto sin que
+                        nadie lo pidiera. Ese trabajo no estaba en ningún organigrama. Y cuando la empresa lo elimina
+                        junto con el rol que lo ejecutaba, se da cuenta de golpe de que algo dejó de funcionar.
                     </p>
 
                     <p>
-                        <strong>El jefe invisible no es el que manda. Es el que arregla lo que el que manda rompió.</strong>
+                        <strong>El jefe invisible no es el que manda. Es el que arregla lo que el que manda
+                            rompió.</strong>
                     </p>
 
                     <h2 id="que-hacer">¿Y entonces qué?</h2>
 
                     <p>
-                        No tengo una respuesta prolija. Lo que sí noto es que el debate público está mal planteado. La pregunta no es "¿va a haber trabajo en el futuro?" La pregunta es "¿quién va a capturar el valor que la IA libera?"
+                        No tengo una respuesta prolija. Lo que sí noto es que el debate público está mal planteado. La
+                        pregunta no es "¿va a haber trabajo en el futuro?" La pregunta es "¿quién va a capturar el valor
+                        que la IA libera?"
                     </p>
 
                     <p>
-                        Si el modelo actual se mantiene, la respuesta es conocida: los accionistas, los directivos, y los que ya estaban bien. No porque sean malos. Sino porque son los que tienen el poder de decisión sobre cómo se distribuye.
+                        Si el modelo actual se mantiene, la respuesta es conocida: los accionistas, los directivos, y
+                        los que ya estaban bien. No porque sean malos. Sino porque son los que tienen el poder de
+                        decisión sobre cómo se distribuye.
                     </p>
 
                     <p>
@@ -308,7 +340,8 @@
                     <hr>
 
                     <p style="font-size: 0.95rem; color: rgba(255,255,255,0.35); font-style: italic;">
-                        <strong style="color: rgba(255,255,255,0.5);">Valentina Cruz</strong> escribe sobre tecnología, trabajo y poder. Colabora con El Pantano desde su fundación.
+                        <strong style="color: rgba(255,255,255,0.5);">Valentina Cruz</strong> escribe sobre tecnología,
+                        trabajo y poder. Colabora con El Pantano desde su fundación.
                     </p>
 
                 </div>
@@ -332,7 +365,8 @@
                         </div>
                     </div>
                     <!-- WP: author.description -->
-                    <p class="ep-author-mini__bio">Escribe sobre tecnología, trabajo y las estructuras de poder que la IA no va a cambiar sola.</p>
+                    <p class="ep-author-mini__bio">Escribe sobre tecnología, trabajo y las estructuras de poder que la
+                        IA no va a cambiar sola.</p>
                 </div>
 
                 <!-- Ad 300×250 -->
@@ -379,7 +413,9 @@
                     <div class="ep-author-card__name">Valentina Cruz</div>
                     <div class="ep-author-card__role">Columnista · Opinión &amp; Cultura</div>
                     <p class="ep-author-card__bio">
-                        Valentina Cruz escribe sobre tecnología, trabajo y las estructuras de poder que la IA no va a cambiar sola. Periodista con 12 años de experiencia en medios digitales. Antes en El País Tech y MIT Technology Review en Español. Vive en Buenos Aires, piensa en varios idiomas a la vez.
+                        Valentina Cruz escribe sobre tecnología, trabajo y las estructuras de poder que la IA no va a
+                        cambiar sola. Periodista con 12 años de experiencia en medios digitales. Antes en El País Tech y
+                        MIT Technology Review en Español. Vive en Buenos Aires, piensa en varios idiomas a la vez.
                     </p>
                 </div>
             </div>
@@ -398,8 +434,8 @@
                 <!-- WP: related posts query -->
                 <a href="#" class="ep-card ep-card--standard">
                     <div class="ep-card__thumb">
-                        <img src="https://picsum.photos/seed/analisis8/600/338"
-                            alt="Open source" class="ep-card__img" loading="lazy">
+                        <img src="https://picsum.photos/seed/analisis8/600/338" alt="Open source" class="ep-card__img"
+                            loading="lazy">
                     </div>
                     <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Análisis</span></div>
                     <h3 class="ep-card__title">El modelo open source ganó. Ahora nadie sabe qué hacer con eso.</h3>
@@ -415,8 +451,8 @@
 
                 <a href="#" class="ep-card ep-card--standard">
                     <div class="ep-card__thumb">
-                        <img src="https://picsum.photos/seed/vibecode9/600/338"
-                            alt="Vibe coding" class="ep-card__img" loading="lazy">
+                        <img src="https://picsum.photos/seed/vibecode9/600/338" alt="Vibe coding" class="ep-card__img"
+                            loading="lazy">
                     </div>
                     <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
                     <h3 class="ep-card__title">El prompt engineer murió. Bienvenidos a la era del vibe coding.</h3>
@@ -432,8 +468,8 @@
 
                 <a href="#" class="ep-card ep-card--standard">
                     <div class="ep-card__thumb">
-                        <img src="https://picsum.photos/seed/tiktok11/600/338"
-                            alt="TikTok" class="ep-card__img" loading="lazy">
+                        <img src="https://picsum.photos/seed/tiktok11/600/338" alt="TikTok" class="ep-card__img"
+                            loading="lazy">
                     </div>
                     <div class="ep-card__cat"><span class="ep-cat ep-cat--cultura">Cultura</span></div>
                     <h3 class="ep-card__title">TikTok, algoritmos, y el derecho humano a aburrirse.</h3>
@@ -459,7 +495,8 @@
             <div class="ep-footer__top">
                 <div class="ep-footer__brand">
                     <a href="/elpantano/" class="ep-footer__logo">El Pantano</a>
-                    <p class="ep-footer__tagline">Muchas voces. Un solo charco.<br>Tecnología, cultura, IA y opinión sin filtro corporativo.</p>
+                    <p class="ep-footer__tagline">Muchas voces. Un solo charco.<br>Tecnología, cultura, IA y opinión sin
+                        filtro corporativo.</p>
                 </div>
                 <div>
                     <div class="ep-footer__col-head">Secciones</div>
@@ -489,8 +526,10 @@
             <div class="ep-footer__bottom">
                 <div class="ep-footer__legal">
                     <span>© 2026 El Pantano</span>
-                    <a href="/privacy-policy.html" class="ep-footer__link" style="opacity: 0.6; margin: 0;">Privacidad</a>
-                    <a href="/terms-and-conditions.html" class="ep-footer__link" style="opacity: 0.6; margin: 0;">Términos</a>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacidad</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Términos</a>
                 </div>
                 <div class="ep-footer__yacare">
                     <span class="ep-footer__yacare-text">Un editorial de</span>
@@ -521,4 +560,5 @@
     </footer>
 
 </body>
+
 </html>

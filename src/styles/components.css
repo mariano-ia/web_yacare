@@ -236,12 +236,11 @@
 
 .nav__reviews-score i,
 .nav__reviews-score svg {
-    color: #ffffff !important;
+    color: #FFD700 !important;
     width: 18px !important;
     height: 18px !important;
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
-    opacity: 0.6;
+    fill: #FFD700 !important;
+    stroke: #FFD700 !important;
 }
 
 #nav-score-value {
