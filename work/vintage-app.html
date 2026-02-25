@@ -52,11 +52,11 @@
             </a>
 
             <div class="nav__links">
-                <a href="/" class="nav__link">Home</a>
-                <a href="/services.html" class="nav__link">Services</a>
-                <a href="/work.html" class="nav__link">Work</a>
-                <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+                <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
+                <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
+                <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
+                <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's Talk</span></a>
             </div>
 
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -252,22 +252,22 @@
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Services</h4>
+                    <h4 class="footer__heading" data-i18n="footer.col_services">Services</h4>
                     <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
                     <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
                     <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Company</h4>
-                    <a href="/about.html" class="footer__link">About Us</a>
-                    <a href="/work.html" class="footer__link">Our Work</a>
-                    <a href="/blog.html" class="footer__link">Blog</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_company">Company</h4>
+                    <a href="/about.html" class="footer__link" data-i18n="footer.link_about">About Us</a>
+                    <a href="/work.html" class="footer__link" data-i18n="footer.link_work">Our Work</a>
+                    <a href="/blog.html" class="footer__link" data-i18n="footer.link_blog">Blog</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Connect</h4>
-                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_connect">Connect</h4>
+                    <a href="/contact.html" class="footer__link" data-i18n="footer.link_contact">Contact</a>
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
                     <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
                 </div>
@@ -275,10 +275,14 @@
 
             <div class="footer__bottom">
                 <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-          <span>© 2026 Yacaré. All rights reserved.</span>
-          <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
-          <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+          <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
+          <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_privacy">Privacy Policy</a>
+          <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_terms">Terms &amp; Conditions</a>
         </div>
+                                <div class="lang-toggle" id="lang-toggle">
+                    <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.getElementById('lang-btn-en').classList.add('active');document.getElementById('lang-btn-es').classList.remove('active')})">EN</button>
+                    <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.getElementById('lang-btn-es').classList.add('active');document.getElementById('lang-btn-en').classList.remove('active')})">ES</button>
+                </div>
                 <div class="footer__social">
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" aria-label="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
