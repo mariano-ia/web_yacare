@@ -1,0 +1,161 @@
+{
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "work": "Work",
+        "about": "About",
+        "cta": "Let's Talk",
+        "reviews_label": "reviews"
+    },
+    "hero": {
+        "sr_title": "We design, build, and scale B2B SaaS & digital products",
+        "title_1": "We build digital",
+        "title_2": "experiences",
+        "subtitle": "We design, build, and grow digital products that move the needle. No fluff. No bloated teams. Just sharp execution from people who obsess over outcomes.",
+        "btn_start": "Start a Project",
+        "btn_work": "See Our Work"
+    },
+    "about_statement": {
+        "text": "Yacaré is a boutique product agency. We blend rapid strategy with sharp execution to craft conversion-driven software for ambitious teams."
+    },
+    "services": {
+        "heading": "What We Offer",
+        "subheading": "From concept to scale, we got you covered.",
+        "discovery_title": "Discovery Sprint",
+        "discovery_desc": "Give shape to your idea. Explore user needs, tech possibilities and product-market fit through fast, focused early-stage sprints.",
+        "mvp_title": "MVP Jumpstarter",
+        "mvp_desc": "We design and build your MVP fast. Ready for real users, real feedback and real validation. Launch in weeks, not months.",
+        "growth_title": "Product Growth",
+        "growth_desc": "Already launched? We help you scale, redesign or evolve your product with ongoing design and development support."
+    },
+    "work": {
+        "heading": "Latest Projects",
+        "subheading": "A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach out directly.",
+        "vixon_desc": "AI-driven cognitive training platform optimizing high-performance athlete decision-making.",
+        "sameco_desc": "Intelligent inquiry automation streamlining complex B2B support with AI efficiency.",
+        "brandtrack_desc": "Strategic UX evolution and interface optimization for enterprise background music.",
+        "nawaiam_dashboard_desc": "Gamified HR platform transforming complex behavioral data into actionable insights.",
+        "pharma_desc": "Enterprise healthcare platform streamlining global logistics and complex regulatory compliance.",
+        "nawaiam_website_desc": "Immersive gaming experience redefining recruitment through science and conversion design."
+    },
+    "methodology": {
+        "title_1": "How we build.",
+        "title_2": "How we think.",
+        "subtitle": "A proven methodology that balances speed with intentional design decisions.",
+        "step1_title": "Understand",
+        "step1_desc": "We immerse ourselves in your world — users, market, constraints. No assumptions, just clarity.",
+        "step2_title": "Shape",
+        "step2_desc": "Define the solution scope, create wireframes, and validate concepts before writing a single line of code.",
+        "step3_title": "Build",
+        "step3_desc": "Sprint-based development with weekly demos. You see progress, give feedback, and stay in control.",
+        "step4_title": "Learn & Grow",
+        "step4_desc": "Launch, measure, iterate. We use real data to evolve the product and drive meaningful outcomes."
+    },
+    "reviews": {
+        "heading": "Trusted by Global Brands",
+        "review1_quote": "\"Yacaré didn't just build our product — they shaped how we think about our users. The Discovery Sprint alone saved us months of going in the wrong direction.\"",
+        "review1_name": "Matías Rodríguez",
+        "review1_role": "CEO, Nawaiam",
+        "review2_quote": "\"Working with Yacaré felt like having a senior product team embedded in our company. They challenged our assumptions and delivered beyond expectations.\"",
+        "review2_name": "Laura Chen",
+        "review2_role": "Head of Product, HealthTech Startup",
+        "review3_quote": "\"From day one, they understood our vision. The MVP they delivered became our production app — it was that polished. Incredible attention to detail.\"",
+        "review3_name": "Diego Paredes",
+        "review3_role": "Founder, FinTech Ventures"
+    },
+    "faq": {
+        "heading": "Common questions",
+        "q1": "Who do you work with?",
+        "a1": "Startups, product teams, and software studios that need sharper product thinking. We don't operate as a design factory—we get involved in real decisions.",
+        "q2": "When does it make sense to hire you?",
+        "a2": "When the product exists — or is about to be built — but lacks clarity. Clarity about the problem, the user, and the direction.",
+        "q3": "Are you just a design agency?",
+        "a3": "No. Design is part of the work, but we focus on product definition, validation, structure, and strategic decisions. The interface is the result, not the starting point.",
+        "q4": "How does an engagement work?",
+        "a4": "We work in clear, focused stages. We define objectives, map the problem, and move forward with concrete deliverables. No endless projects without direction.",
+        "q5": "Can you work with our internal team?",
+        "a5": "Yes. We integrate directly with founders, developers, and marketing teams. We don't replace teams — we empower them.",
+        "q6": "How are you different from a traditional agency?",
+        "a6": "We don't sell design hours. We bring product judgment.",
+        "q7": "Our product is \"finished.\" Can you still help?",
+        "a7": "Yes. Most \"finished\" products still have room to improve clarity, positioning, or conversion. That's often where we add the most value.",
+        "q8": "Who is not a good fit?",
+        "a8": "Pure execution with no room for product thinking. If you only need someone to \"design screens,\" we're probably not the right partner.",
+        "q9": "How do we get started?",
+        "a9": "With a short conversation. If there's alignment, we define a focused first stage with clear outcomes."
+    },
+    "cta": {
+        "title_1": "Ready to build",
+        "title_2": "something great?",
+        "subtitle": "Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.",
+        "btn": "Start a Project"
+    },
+    "footer": {
+        "tagline": "Boutique digital product agency.\nWe build. We obsess. We move the needle.",
+        "col_services": "Services",
+        "col_company": "Company",
+        "col_connect": "Connect",
+        "link_discovery": "Discovery Sprint",
+        "link_mvp": "MVP Jumpstarter",
+        "link_growth": "Product Growth",
+        "link_about": "About Us",
+        "link_work": "Our Work",
+        "link_blog": "Blog",
+        "link_contact": "Contact",
+        "legal": "© 2026 Yacaré. All rights reserved.",
+        "link_privacy": "Privacy Policy",
+        "link_terms": "Terms & Conditions"
+    },
+    "pages": {
+        "work": {
+            "hero_title_1": "Built for",
+            "hero_title_2": "impact",
+            "hero_subtitle": "We don't just write code, we build businesses. A curated selection of digital products we've helped launch, optimize, and scale.",
+            "projects_heading": "Latest Projects",
+            "projects_subheading": "A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach out directly."
+        },
+        "about": {
+            "hero_title_1": "Small team",
+            "hero_title_2": "Big obsession",
+            "hero_subtitle": "Most agencies sell billable hours. We sell outcomes. We're a specialized team that builds digital products designed to actually move your business metrics.",
+            "story_heading": "Why Yacaré?",
+            "story_p1": "The yacaré is the South American caiman — agile, sharp, and fiercely effective. It thrives not by being the biggest in the water, but by being the most adaptable.",
+            "story_p2": "We started Yacaré because we saw too many companies wasting time and money on bloated agency structures. We've optimized everything to focus on one thing: the product.",
+            "story_p2_strong": "the product",
+            "story_p3": "We don't juggle fifty clients. When we partner with you, solving your product challenge becomes our sole obsession.",
+            "values_heading": "How we operate",
+            "value1_title": "Obsessive Quality",
+            "value1_desc": "We sweat the details across every pixel and line of code, because we know that poor execution kills even the best ideas.",
+            "value2_title": "Speed with Intent",
+            "value2_desc": "Speed without strategy is just rushing to failure. We move fast, but every decision is anchored in market truth.",
+            "value3_title": "Radical Transparency",
+            "value3_desc": "Agencies hide behind buzzwords. We don't. We share progress continuously, flag risks early, and speak up if your idea needs a pivot."
+        },
+        "services": {
+            "hero_title_1": "Services built for",
+            "hero_title_2": "real outcomes",
+            "hero_subtitle": "We don't sell hours. We sell clarity, speed, and obsessive quality."
+        },
+        "contact": {
+            "hero_title_1": "Let's build",
+            "hero_title_2": "something great",
+            "label_name": "Your name",
+            "label_email": "Your email",
+            "label_message": "Tell us about your project",
+            "btn_submit": "Send Message",
+            "sending": "Sending...",
+            "success_msg": "Message sent successfully!",
+            "error_msg": "Something went wrong. Please try again."
+        },
+        "blog": {
+            "hero_title_1": "Ideas worth",
+            "hero_title_2": "sharing",
+            "hero_subtitle": "Insights on product strategy, design, and building digital products that actually work."
+        },
+        "not_found": {
+            "title": "Deep Water",
+            "subtitle": "The page you're looking for doesn't exist or has been moved.",
+            "btn": "Back to Home"
+        }
+    }
+}

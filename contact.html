@@ -63,11 +63,12 @@
             </a>
 
             <div class="nav__links">
-                <a href="/" class="nav__link">Home</a>
-                <a href="/services.html" class="nav__link">Services</a>
-                <a href="/work.html" class="nav__link">Work</a>
-                <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+                <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
+                <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
+                <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
+                <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's
+                        Talk</span></a>
             </div>
 
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -86,7 +87,8 @@
             <div class="container">
                 <div class="contact-grid reveal">
                     <div class="contact-info">
-                        <h2 class="text-hero-gradient">Let's build<br>something great</h2>
+                        <h2 class="text-hero-gradient"><span data-i18n="pages.contact.hero_title_1">Let's
+                                build</span><br><span data-i18n="pages.contact.hero_title_2">something great</span></h2>
                         <p>Whether you have a clear idea or just a hunch — we're here to help.</p>
                         <div class="contact-detail">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
@@ -114,9 +116,9 @@
 
                         <div class="grid grid--2">
                             <div class="form__group">
-                                <label class="form__label" for="name">Name</label>
+                                <label class="form__label" for="name" data-i18n="pages.contact.label_name">Name</label>
                                 <input type="text" id="name" name="name" class="form__input" placeholder="Your name"
-                                    required>
+                                    data-i18n-attr="placeholder" data-i18n="pages.contact.label_name" required>
                             </div>
                             <div class="form__group">
                                 <label class="form__label" for="email">Email</label>
@@ -150,7 +152,8 @@
                                 placeholder="What are you building?" rows="5" required></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;"><span>Send
+                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;"><span
+                                data-i18n="pages.contact.btn_submit">Send
                                 Proposal</span></button>
                     </form>
                 </div>
@@ -195,7 +198,7 @@
 
             <div class="footer__bottom">
                 <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
                     <a href="/privacy-policy.html" class="footer__link"
                         style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
                     <a href="/terms-and-conditions.html" class="footer__link"

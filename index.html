@@ -298,11 +298,11 @@
       </div>
 
       <div class="nav__links">
-        <a href="/" class="nav__link">Home</a>
-        <a href="/services.html" class="nav__link">Services</a>
-        <a href="/work.html" class="nav__link">Work</a>
-        <a href="/about.html" class="nav__link">About</a>
-        <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+        <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
+        <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
+        <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
+        <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+        <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's Talk</span></a>
       </div>
 
       <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -325,17 +325,21 @@
       <div class="container hero__content">
         <h1 class="gradient-text">
           <span
-            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">We
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;"
+            data-i18n="hero.sr_title">We
             design, build, and scale B2B SaaS & digital products</span>
-          <span aria-hidden="true">We build digital<br>experiences</span>
+          <span aria-hidden="true" data-i18n="hero.title_1">We build digital</span><br><span aria-hidden="true"
+            data-i18n="hero.title_2">experiences</span>
         </h1>
-        <p class="hero__subtitle text-lg">
+        <p class="hero__subtitle text-lg" data-i18n="hero.subtitle">
           We design, build, and grow digital products that move the needle.
           No fluff. No bloated teams. Just sharp execution from people who obsess over outcomes.
         </p>
         <div class="hero__actions">
-          <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
-          <a href="/work.html" class="btn btn--secondary btn--lg"><span>See Our Work</span></a>
+          <a href="/contact.html" class="btn btn--primary btn--lg"><span data-i18n="hero.btn_start">Start a
+              Project</span></a>
+          <a href="/work.html" class="btn btn--secondary btn--lg"><span data-i18n="hero.btn_work">See Our
+              Work</span></a>
         </div>
       </div>
     </section>
@@ -348,7 +352,7 @@
          ═══════════════════════════════════════════ -->
     <section class="section about-statement" aria-label="About Yacaré">
       <div class="container">
-        <p class="about-statement__text reveal-words">
+        <p class="about-statement__text reveal-words" data-i18n="about_statement.text">
           Yacaré is a boutique product agency. We blend rapid strategy with sharp execution to craft conversion-driven
           software for ambitious teams.
         </p>
@@ -365,9 +369,10 @@
           <!-- Left Column -->
           <div class="services-intro reveal">
             <h2 class="text-hero-gradient animated-gradient"
-              style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; margin-bottom: var(--space-3);">
+              style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; margin-bottom: var(--space-3);"
+              data-i18n="services.heading">
               What We Offer</h2>
-            <p class="text-lg" style="color: var(--text-secondary); max-width: 320px;">
+            <p class="text-lg" style="color: var(--text-secondary); max-width: 320px;" data-i18n="services.subheading">
               From concept to scale, we got you covered.
             </p>
           </div>
@@ -377,8 +382,9 @@
             <!-- Discovery Sprint -->
             <a href="/services/discovery-sprint.html" class="service-item group">
               <div class="service-item__content">
-                <h3 class="service-item__title">Discovery Sprint</h3>
-                <p class="service-item__desc">Give shape to your idea. Explore user needs, tech possibilities and
+                <h3 class="service-item__title" data-i18n="services.discovery_title">Discovery Sprint</h3>
+                <p class="service-item__desc" data-i18n="services.discovery_desc">Give shape to your idea. Explore user
+                  needs, tech possibilities and
                   product-market fit through fast, focused early-stage sprints.</p>
               </div>
               <div class="service-item__icon">
@@ -389,8 +395,8 @@
             <!-- MVP Jumpstarter -->
             <a href="/services/mvp-jumpstarter.html" class="service-item group">
               <div class="service-item__content">
-                <h3 class="service-item__title">MVP Jumpstarter</h3>
-                <p class="service-item__desc">
+                <h3 class="service-item__title" data-i18n="services.mvp_title">MVP Jumpstarter</h3>
+                <p class="service-item__desc" data-i18n="services.mvp_desc">
                   We design and build your MVP fast. Ready for real users, real feedback and real validation. Launch in
                   weeks, not months.</p>
               </div>
@@ -402,8 +408,8 @@
             <!-- Product Growth -->
             <a href="/services/product-growth.html" class="service-item group">
               <div class="service-item__content">
-                <h3 class="service-item__title">Product Growth</h3>
-                <p class="service-item__desc">
+                <h3 class="service-item__title" data-i18n="services.growth_title">Product Growth</h3>
+                <p class="service-item__desc" data-i18n="services.growth_desc">
                   Already launched? We help you scale, redesign or evolve your product with ongoing design and
                   development support.</p>
               </div>
@@ -423,10 +429,12 @@
       <div class="container reveal">
         <div class="section-header" style="text-align: left; margin-bottom: var(--space-8);">
           <h2
-            style="color: var(--text-primary); font-family: var(--font-display); font-size: 3rem; text-transform: uppercase; line-height: 1.1; margin-bottom: var(--space-4);">
+            style="color: var(--text-primary); font-family: var(--font-display); font-size: 3rem; text-transform: uppercase; line-height: 1.1; margin-bottom: var(--space-4);"
+            data-i18n="work.heading">
             Latest Projects
           </h2>
-          <p class="text-lg" style="color: var(--text-secondary); max-width: 800px; text-transform: none;">
+          <p class="text-lg" style="color: var(--text-secondary); max-width: 800px; text-transform: none;"
+            data-i18n="work.subheading">
             A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach
             out directly.
           </p>
@@ -563,9 +571,12 @@
 
           <!-- LEFT: sticky title panel -->
           <div class="methodology-sticky-left">
-            <h2 id="method-heading" class="text-hero-gradient methodology-title">How we build.<br>How we think.
+            <h2 id="method-heading" class="text-hero-gradient methodology-title"><span
+                data-i18n="methodology.title_1">How we build.</span><br><span data-i18n="methodology.title_2">How we
+                think.</span>
             </h2>
-            <p class="methodology-subtitle">A proven methodology that balances speed with intentional design
+            <p class="methodology-subtitle" data-i18n="methodology.subtitle">A proven methodology that balances speed
+              with intentional design
               decisions.</p>
           </div>
 
@@ -575,8 +586,9 @@
             <div class="mstep-row">
               <div class="mstep__num mstep__num--1">1</div>
               <div class="mstep__body">
-                <h3 class="mstep__title">Understand</h3>
-                <p class="mstep__desc">We immerse ourselves in your world — users, market, constraints. No
+                <h3 class="mstep__title" data-i18n="methodology.step1_title">Understand</h3>
+                <p class="mstep__desc" data-i18n="methodology.step1_desc">We immerse ourselves in your world — users,
+                  market, constraints. No
                   assumptions, just clarity.</p>
               </div>
             </div>
@@ -584,8 +596,9 @@
             <div class="mstep-row">
               <div class="mstep__num mstep__num--2">2</div>
               <div class="mstep__body">
-                <h3 class="mstep__title">Shape</h3>
-                <p class="mstep__desc">Define the solution scope, create wireframes, and validate concepts
+                <h3 class="mstep__title" data-i18n="methodology.step2_title">Shape</h3>
+                <p class="mstep__desc" data-i18n="methodology.step2_desc">Define the solution scope, create wireframes,
+                  and validate concepts
                   before writing a single line of code.</p>
               </div>
             </div>
@@ -593,8 +606,9 @@
             <div class="mstep-row">
               <div class="mstep__num mstep__num--3">3</div>
               <div class="mstep__body">
-                <h3 class="mstep__title">Build</h3>
-                <p class="mstep__desc">Sprint-based development with weekly demos. You see progress, give
+                <h3 class="mstep__title" data-i18n="methodology.step3_title">Build</h3>
+                <p class="mstep__desc" data-i18n="methodology.step3_desc">Sprint-based development with weekly demos.
+                  You see progress, give
                   feedback, and stay in control.</p>
               </div>
             </div>
@@ -602,8 +616,9 @@
             <div class="mstep-row">
               <div class="mstep__num mstep__num--4">4</div>
               <div class="mstep__body">
-                <h3 class="mstep__title">Learn & Grow</h3>
-                <p class="mstep__desc">Launch, measure, iterate. We use real data to evolve the product and
+                <h3 class="mstep__title" data-i18n="methodology.step4_title">Learn & Grow</h3>
+                <p class="mstep__desc" data-i18n="methodology.step4_desc">Launch, measure, iterate. We use real data to
+                  evolve the product and
                   drive meaningful outcomes.</p>
               </div>
             </div>
@@ -618,7 +633,8 @@
                  ═══════════════════════════════════════════ -->
     <section class="section" id="reviews" aria-labelledby="reviews-heading">
       <div class="container">
-        <h2 id="reviews-heading" class="reviews-heading reveal">Trusted by Global Brands</h2>
+        <h2 id="reviews-heading" class="reviews-heading reveal" data-i18n="reviews.heading">Trusted by Global Brands
+        </h2>
 
         <div class="reviews-grid reveal-stagger">
 
@@ -698,7 +714,7 @@
     <section class="section" id="faq" aria-labelledby="faq-heading">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 id="faq-heading" class="text-hero-gradient">Common questions</h2>
+          <h2 id="faq-heading" class="text-hero-gradient" data-i18n="faq.heading">Common questions</h2>
         </div>
 
         <div class="accordion">
@@ -869,12 +885,15 @@
     <section class="section" id="cta">
       <div class="container container--medium">
         <div class="cta-card reveal">
-          <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
-          <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
+          <h2 class="text-hero-gradient"><span data-i18n="cta.title_1">Ready to build</span><br><span
+              data-i18n="cta.title_2">something great?</span></h2>
+          <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);"
+            data-i18n="cta.subtitle">
             Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.
           </p>
           <div class="flex flex--center flex--gap-sm">
-            <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+            <a href="/contact.html" class="btn btn--primary btn--lg"><span data-i18n="cta.btn">Start a
+                Project</span></a>
           </div>
         </div>
       </div>
@@ -895,26 +914,27 @@
             <img src="/logo_yacare.svg" alt="Yacaré Agency - Expert B2B Digital Product Designers"
               class="nav__logo-img footer__logo-img" />
           </a>
-          <p>Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
+          <p data-i18n="footer.tagline">Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
         </div>
 
         <div>
-          <h4 class="footer__heading">Services</h4>
-          <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
-          <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
-          <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+          <h4 class="footer__heading" data-i18n="footer.col_services">Services</h4>
+          <a href="/services/discovery-sprint.html" class="footer__link" data-i18n="footer.link_discovery">Discovery
+            Sprint</a>
+          <a href="/services/mvp-jumpstarter.html" class="footer__link" data-i18n="footer.link_mvp">MVP Jumpstarter</a>
+          <a href="/services/product-growth.html" class="footer__link" data-i18n="footer.link_growth">Product Growth</a>
         </div>
 
         <div>
-          <h4 class="footer__heading">Company</h4>
-          <a href="/about.html" class="footer__link">About Us</a>
-          <a href="/work.html" class="footer__link">Our Work</a>
-          <a href="/blog.html" class="footer__link">Blog</a>
+          <h4 class="footer__heading" data-i18n="footer.col_company">Company</h4>
+          <a href="/about.html" class="footer__link" data-i18n="footer.link_about">About Us</a>
+          <a href="/work.html" class="footer__link" data-i18n="footer.link_work">Our Work</a>
+          <a href="/blog.html" class="footer__link" data-i18n="footer.link_blog">Blog</a>
         </div>
 
         <div>
-          <h4 class="footer__heading">Connect</h4>
-          <a href="/contact.html" class="footer__link">Contact</a>
+          <h4 class="footer__heading" data-i18n="footer.col_connect">Connect</h4>
+          <a href="/contact.html" class="footer__link" data-i18n="footer.link_contact">Contact</a>
           <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
             class="footer__link">LinkedIn</a>
           <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
@@ -924,7 +944,7 @@
 
       <div class="footer__bottom">
         <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-          <span>© 2026 Yacaré. All rights reserved.</span>
+          <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
           <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy
             Policy</a>
           <a href="/terms-and-conditions.html" class="footer__link"

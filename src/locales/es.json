@@ -1,0 +1,161 @@
+{
+    "nav": {
+        "home": "Inicio",
+        "services": "Servicios",
+        "work": "Proyectos",
+        "about": "Nosotros",
+        "cta": "Hablemos",
+        "reviews_label": "reseñas"
+    },
+    "hero": {
+        "sr_title": "Diseñamos, construimos y escalamos productos digitales B2B SaaS",
+        "title_1": "Construimos",
+        "title_2": "experiencias digitales",
+        "subtitle": "Diseñamos, construimos y hacemos crecer productos digitales que generan resultados reales. Sin relleno. Sin equipos inflados. Solo ejecución precisa de personas obsesionadas con los resultados.",
+        "btn_start": "Iniciar un Proyecto",
+        "btn_work": "Ver Nuestro Trabajo"
+    },
+    "about_statement": {
+        "text": "Yacaré es una agencia boutique de producto. Combinamos estrategia rápida con ejecución precisa para crear software orientado a la conversión para equipos ambiciosos."
+    },
+    "services": {
+        "heading": "Lo Que Ofrecemos",
+        "subheading": "Desde el concepto hasta la escala, te tenemos cubierto.",
+        "discovery_title": "Discovery Sprint",
+        "discovery_desc": "Dale forma a tu idea. Explorá las necesidades del usuario, las posibilidades tecnológicas y el product-market fit mediante sprints tempranos, rápidos y enfocados.",
+        "mvp_title": "MVP Jumpstarter",
+        "mvp_desc": "Diseñamos y construimos tu MVP rápido. Listo para usuarios reales, feedback real y validación real. Lanzá en semanas, no meses.",
+        "growth_title": "Product Growth",
+        "growth_desc": "¿Ya lanzaste? Te ayudamos a escalar, rediseñar o evolucionar tu producto con soporte continuo de diseño y desarrollo."
+    },
+    "work": {
+        "heading": "Proyectos Recientes",
+        "subheading": "Una selección curada de nuestros trabajos recientes. Para análisis completos y casos de estudio confidenciales, contáctanos directamente.",
+        "vixon_desc": "Plataforma de entrenamiento cognitivo basada en IA para optimizar la toma de decisiones en atletas de alto rendimiento.",
+        "sameco_desc": "Automatización inteligente de consultas para simplificar el soporte B2B complejo con eficiencia de IA.",
+        "brandtrack_desc": "Evolución estratégica de UX y optimización de interfaz para música ambiental corporativa.",
+        "nawaiam_dashboard_desc": "Plataforma de RRHH gamificada que transforma datos conductuales complejos en insights accionables.",
+        "pharma_desc": "Plataforma de salud empresarial que optimiza la logística global y el cumplimiento normativo complejo.",
+        "nawaiam_website_desc": "Experiencia de juego inmersiva que redefine el reclutamiento a través de la ciencia y el diseño de conversión."
+    },
+    "methodology": {
+        "title_1": "Cómo construimos.",
+        "title_2": "Cómo pensamos.",
+        "subtitle": "Una metodología probada que equilibra la velocidad con decisiones de diseño intencionales.",
+        "step1_title": "Entender",
+        "step1_desc": "Nos sumergimos en tu mundo — usuarios, mercado, restricciones. Sin suposiciones, solo claridad.",
+        "step2_title": "Definir",
+        "step2_desc": "Definimos el alcance de la solución, creamos wireframes y validamos conceptos antes de escribir una sola línea de código.",
+        "step3_title": "Construir",
+        "step3_desc": "Desarrollo basado en sprints con demos semanales. Vés el progreso, das feedback y mantenés el control.",
+        "step4_title": "Aprender y Crecer",
+        "step4_desc": "Lanzar, medir, iterar. Usamos datos reales para evolucionar el producto y generar resultados significativos."
+    },
+    "reviews": {
+        "heading": "La Confianza de Marcas Globales",
+        "review1_quote": "\"Yacaré no solo construyó nuestro producto — moldeó cómo pensamos en nuestros usuarios. El Discovery Sprint solo nos ahorró meses de ir en la dirección equivocada.\"",
+        "review1_name": "Matías Rodríguez",
+        "review1_role": "CEO, Nawaiam",
+        "review2_quote": "\"Trabajar con Yacaré se sintió como tener un equipo senior de producto integrado en nuestra empresa. Desafiaron nuestros supuestos y entregaron más allá de las expectativas.\"",
+        "review2_name": "Laura Chen",
+        "review2_role": "Head of Product, HealthTech Startup",
+        "review3_quote": "\"Desde el primer día, entendieron nuestra visión. El MVP que entregaron se convirtió en nuestra app de producción — así de pulido estaba. Increíble atención al detalle.\"",
+        "review3_name": "Diego Paredes",
+        "review3_role": "Fundador, FinTech Ventures"
+    },
+    "faq": {
+        "heading": "Preguntas frecuentes",
+        "q1": "¿Con quién trabajan?",
+        "a1": "Startups, equipos de producto y estudios de software que necesitan un pensamiento de producto más agudo. No operamos como una fábrica de diseño—nos involucramos en decisiones reales.",
+        "q2": "¿Cuándo tiene sentido contratarlos?",
+        "a2": "Cuando el producto existe — o está a punto de construirse — pero le falta claridad. Claridad sobre el problema, el usuario y la dirección.",
+        "q3": "¿Son solo una agencia de diseño?",
+        "a3": "No. El diseño es parte del trabajo, pero nos enfocamos en la definición del producto, la validación, la estructura y las decisiones estratégicas. La interfaz es el resultado, no el punto de partida.",
+        "q4": "¿Cómo funciona un engagement?",
+        "a4": "Trabajamos en etapas claras y enfocadas. Definimos objetivos, mapeamos el problema y avanzamos con entregables concretos. Sin proyectos interminables sin dirección.",
+        "q5": "¿Pueden trabajar con nuestro equipo interno?",
+        "a5": "Sí. Nos integramos directamente con fundadores, desarrolladores y equipos de marketing. No reemplazamos equipos — los potenciamos.",
+        "q6": "¿En qué se diferencian de una agencia tradicional?",
+        "a6": "No vendemos horas de diseño. Aportamos criterio de producto.",
+        "q7": "Nuestro producto está \"terminado\". ¿Pueden ayudarnos igual?",
+        "a7": "Sí. La mayoría de los productos \"terminados\" aún tienen espacio para mejorar la claridad, el posicionamiento o la conversión. Ahí es donde solemos agregar más valor.",
+        "q8": "¿Quiénes no son un buen fit?",
+        "a8": "Ejecución pura sin espacio para el pensamiento de producto. Si solo necesitás a alguien para \"hacer pantallas\", probablemente no somos el socio adecuado.",
+        "q9": "¿Cómo empezamos?",
+        "a9": "Con una conversación corta. Si hay alineación, definimos una primera etapa enfocada con resultados claros."
+    },
+    "cta": {
+        "title_1": "Listo para construir",
+        "title_2": "algo grande?",
+        "subtitle": "Compartí tu desafío. Te respondemos en 24 horas con un roadmap claro para hacerlo realidad.",
+        "btn": "Iniciar un Proyecto"
+    },
+    "footer": {
+        "tagline": "Agencia boutique de producto digital.\nConstruimos. Obsesionamos. Movemos la aguja.",
+        "col_services": "Servicios",
+        "col_company": "Empresa",
+        "col_connect": "Conectar",
+        "link_discovery": "Discovery Sprint",
+        "link_mvp": "MVP Jumpstarter",
+        "link_growth": "Product Growth",
+        "link_about": "Quiénes Somos",
+        "link_work": "Nuestro Trabajo",
+        "link_blog": "Blog",
+        "link_contact": "Contacto",
+        "legal": "© 2026 Yacaré. Todos los derechos reservados.",
+        "link_privacy": "Política de Privacidad",
+        "link_terms": "Términos y Condiciones"
+    },
+    "pages": {
+        "work": {
+            "hero_title_1": "Hecho para",
+            "hero_title_2": "generar impacto",
+            "hero_subtitle": "No solo escribimos código, construimos negocios. Una selección curada de productos digitales que ayudamos a lanzar, optimizar y escalar.",
+            "projects_heading": "Proyectos Recientes",
+            "projects_subheading": "Una selección curada de nuestros trabajos recientes. Para análisis completos y casos de estudio confidenciales, contáctanos directamente."
+        },
+        "about": {
+            "hero_title_1": "Equipo pequeño",
+            "hero_title_2": "Gran obsesión",
+            "hero_subtitle": "La mayoría de las agencias venden horas facturables. Nosotros vendemos resultados. Somos un equipo especializado que construye productos digitales diseñados para mover realmente las métricas de tu negocio.",
+            "story_heading": "¿Por qué Yacaré?",
+            "story_p1": "El yacaré es el caimán sudamericano — ágil, agudo y ferozmente efectivo. Prospera no por ser el más grande del agua, sino por ser el más adaptable.",
+            "story_p2": "Creamos Yacaré porque vimos a demasiadas empresas desperdiciar tiempo y dinero en estructuras de agencias infladas. Hemos optimizado todo para enfocarnos en una sola cosa:",
+            "story_p2_strong": "el producto",
+            "story_p3": "No malabareamos con cincuenta clientes. Cuando nos asociamos con vos, resolver tu desafío de producto se convierte en nuestra única obsesión.",
+            "values_heading": "Cómo operamos",
+            "value1_title": "Calidad Obsesiva",
+            "value1_desc": "Sudamos los detalles en cada píxel y línea de código, porque sabemos que una ejecución deficiente mata incluso las mejores ideas.",
+            "value2_title": "Velocidad con Intención",
+            "value2_desc": "La velocidad sin estrategia es solo apresurarse hacia el fracaso. Nos movemos rápido, pero cada decisión está anclada en la verdad del mercado.",
+            "value3_title": "Transparencia Radical",
+            "value3_desc": "Las agencias se esconden detrás de buzzwords. Nosotros no. Compartimos el progreso continuamente, señalamos los riesgos temprano y hablamos si tu idea necesita un pivot."
+        },
+        "services": {
+            "hero_title_1": "Servicios diseñados para",
+            "hero_title_2": "resultados reales",
+            "hero_subtitle": "No vendemos horas. Vendemos claridad, velocidad y calidad obsesiva."
+        },
+        "contact": {
+            "hero_title_1": "Construyamos",
+            "hero_title_2": "algo grande juntos",
+            "label_name": "Tu nombre",
+            "label_email": "Tu email",
+            "label_message": "Contanos sobre tu proyecto",
+            "btn_submit": "Enviar Mensaje",
+            "sending": "Enviando...",
+            "success_msg": "¡Mensaje enviado con éxito!",
+            "error_msg": "Algo salió mal. Por favor, intentá de nuevo."
+        },
+        "blog": {
+            "hero_title_1": "Ideas que vale",
+            "hero_title_2": "la pena compartir",
+            "hero_subtitle": "Perspectivas sobre estrategia de producto, diseño y construcción de productos digitales que realmente funcionan."
+        },
+        "not_found": {
+            "title": "Aguas Profundas",
+            "subtitle": "La página que buscás no existe o fue movida.",
+            "btn": "Volver al Inicio"
+        }
+    }
+}

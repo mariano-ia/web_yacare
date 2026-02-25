@@ -89,11 +89,12 @@
             </a>
 
             <div class="nav__links">
-                <a href="/" class="nav__link">Home</a>
-                <a href="/services.html" class="nav__link">Services</a>
-                <a href="/work.html" class="nav__link">Work</a>
-                <a href="/about.html" class="nav__link">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+                <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
+                <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
+                <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
+                <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's
+                        Talk</span></a>
             </div>
 
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -117,8 +118,10 @@
             </div>
 
             <div class="container hero__content">
-                <h1 class="gradient-text">Small team<br>Big obsession</h1>
-                <p class="hero__subtitle">Most agencies sell billable hours. We sell outcomes. We're a specialized team
+                <h1 class="gradient-text"><span data-i18n="pages.about.hero_title_1">Small team</span><br><span
+                        data-i18n="pages.about.hero_title_2">Big obsession</span></h1>
+                <p class="hero__subtitle" data-i18n="pages.about.hero_subtitle">Most agencies sell billable hours. We
+                    sell outcomes. We're a specialized team
                     that builds digital products designed to actually move your business metrics.</p>
             </div>
         </section>
@@ -126,13 +129,17 @@
         <!-- Story -->
         <section class="section">
             <div class="container container--narrow reveal">
-                <h2>Why Yacaré?</h2>
-                <p class="text-lg" style="margin-top: var(--space-5);">The yacaré is the South American caiman — agile,
+                <h2 data-i18n="pages.about.story_heading">Why Yacaré?</h2>
+                <p class="text-lg" style="margin-top: var(--space-5);" data-i18n="pages.about.story_p1">The yacaré is
+                    the South American caiman — agile,
                     sharp, and fiercely effective. It thrives not by being the biggest in the water, but by being the
                     most adaptable.</p>
-                <p>We started Yacaré because we saw too many companies wasting time and money on bloated agency
-                    structures. We've optimized everything to focus on one thing: <strong>the product</strong>.</p>
-                <p>We don't juggle fifty clients. When we partner with you, solving your product challenge becomes our
+                <p data-i18n="pages.about.story_p2">We started Yacaré because we saw too many companies wasting time and
+                    money on bloated agency
+                    structures. We've optimized everything to focus on one thing: <strong
+                        data-i18n="pages.about.story_p2_strong">the product</strong>.</p>
+                <p data-i18n="pages.about.story_p3">We don't juggle fifty clients. When we partner with you, solving
+                    your product challenge becomes our
                     sole obsession.</p>
             </div>
         </section>
@@ -141,7 +148,7 @@
         <section class="section" style="background: var(--bg-secondary);">
             <div class="container">
                 <div class="section__header reveal">
-                    <h2>How we operate</h2>
+                    <h2 data-i18n="pages.about.values_heading">How we operate</h2>
                 </div>
                 <div class="talent-grid talent-grid--centered reveal-stagger">
                     <div class="talent-card">
@@ -152,8 +159,9 @@
                             </svg>
                         </div>
                         <div class="talent-info">
-                            <h4>Obsessive Quality</h4>
-                            <p>We sweat the details across every pixel and line of code, because we know
+                            <h4 data-i18n="pages.about.value1_title">Obsessive Quality</h4>
+                            <p data-i18n="pages.about.value1_desc">We sweat the details across every pixel and line of
+                                code, because we know
                                 that poor execution kills even the best ideas.</p>
                         </div>
                     </div>
@@ -166,8 +174,9 @@
                             </svg>
                         </div>
                         <div class="talent-info">
-                            <h4>Speed with Intent</h4>
-                            <p>Speed without strategy is just rushing to failure. We move fast, but every
+                            <h4 data-i18n="pages.about.value2_title">Speed with Intent</h4>
+                            <p data-i18n="pages.about.value2_desc">Speed without strategy is just rushing to failure. We
+                                move fast, but every
                                 decision is anchored in market truth.</p>
                         </div>
                     </div>
@@ -182,8 +191,9 @@
                             </svg>
                         </div>
                         <div class="talent-info">
-                            <h4>Radical Transparency</h4>
-                            <p>Agencies hide behind buzzwords. We don't. We share progress continuously,
+                            <h4 data-i18n="pages.about.value3_title">Radical Transparency</h4>
+                            <p data-i18n="pages.about.value3_desc">Agencies hide behind buzzwords. We don't. We share
+                                progress continuously,
                                 flag risks early, and speak up if your idea needs a pivot.</p>
                         </div>
                     </div>
@@ -194,7 +204,8 @@
         <!-- Reviews -->
         <section class="section" id="reviews" aria-labelledby="reviews-heading">
             <div class="container">
-                <h2 id="reviews-heading" class="reviews-heading reveal">Trusted by Global Brands</h2>
+                <h2 id="reviews-heading" class="reviews-heading reveal" data-i18n="reviews.heading">Trusted by Global
+                    Brands</h2>
 
                 <div class="reviews-grid reveal-stagger">
 
@@ -271,12 +282,15 @@
         <section class="section" id="cta">
             <div class="container container--medium">
                 <div class="cta-card reveal">
-                    <h2 class="text-hero-gradient">Ready to build<br>something great?</h2>
-                    <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);">
+                    <h2 class="text-hero-gradient"><span data-i18n="cta.title_1">Ready to build</span><br><span
+                            data-i18n="cta.title_2">something great?</span></h2>
+                    <p class="text-lg" style="max-width: 520px; margin: var(--space-4) auto var(--space-6);"
+                        data-i18n="cta.subtitle">
                         Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.
                     </p>
                     <div class="flex flex--center flex--gap-sm">
-                        <a href="/contact.html" class="btn btn--primary btn--lg"><span>Start a Project</span></a>
+                        <a href="/contact.html" class="btn btn--primary btn--lg"><span data-i18n="cta.btn">Start a
+                                Project</span></a>
                     </div>
                 </div>
             </div>
@@ -291,28 +305,32 @@
                         <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo"
                             class="nav__logo-img" style="height: 24px;" />
                     </a>
-                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                    <p data-i18n="footer.tagline">Boutique digital product agency.<br>We design, build, and grow digital
+                        products that move the
                         needle.
                     </p>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Services</h4>
-                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
-                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
-                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_services">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link"
+                        data-i18n="footer.link_discovery">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link" data-i18n="footer.link_mvp">MVP
+                        Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link" data-i18n="footer.link_growth">Product
+                        Growth</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Company</h4>
-                    <a href="/about.html" class="footer__link">About Us</a>
-                    <a href="/work.html" class="footer__link">Our Work</a>
-                    <a href="/blog.html" class="footer__link">Blog</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_company">Company</h4>
+                    <a href="/about.html" class="footer__link" data-i18n="footer.link_about">About Us</a>
+                    <a href="/work.html" class="footer__link" data-i18n="footer.link_work">Our Work</a>
+                    <a href="/blog.html" class="footer__link" data-i18n="footer.link_blog">Blog</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Connect</h4>
-                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_connect">Connect</h4>
+                    <a href="/contact.html" class="footer__link" data-i18n="footer.link_contact">Contact</a>
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
                         class="footer__link">LinkedIn</a>
                     <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"

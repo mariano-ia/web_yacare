@@ -6,6 +6,7 @@ import { initNav } from './nav';
 import { initAnimations } from './animations';
 import { initHorizontalTimeline } from './timeline';
 import { initForms } from './forms';
+import { initI18n } from './i18n';
 
 // CSS imports
 import '../styles/tokens.css';
@@ -20,7 +21,10 @@ import '../styles/timeline.css';
 import '../styles/elpantano.css';
 
 // ── Initialize ──
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // i18n must run first so translated text is in place before other modules run
+    await initI18n();
+
     initNav();
     initAnimations();
     initAccordion();
