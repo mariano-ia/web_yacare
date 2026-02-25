@@ -397,5 +397,31 @@
         "outcomes_li4": "Claro posicionamiento dentro del ecosistema HR-tech",
         "team_heading": "Equipo",
         "team_roles": "Estratega de Producto<br>\n                                    Diseñador UX/UI<br>\n                                    Consultor en Modelado Conductual<br>\n                                    Desarrolladores Frontend y Backend"
+    },
+    "work_pharma": {
+        "chip1": "Optimización de Flujos de Trabajo",
+        "chip2": "UX Enterprise",
+        "chip3": "Eficiencia Operativa",
+        "statement": "Rediseño de flujos de trabajo de producción internos para mejorar la trazabilidad, reducir la fricción y aumentar la eficiencia operativa en un entorno farmacéutico.",
+        "context_heading": "Contexto",
+        "context_p1": "La producción farmacéutica se basa en la precisión. Cada tarea, paso de validación y aprobación debe seguir protocolos estrictos. Sin embargo, con el tiempo, los sistemas internos tienden a crecer orgánicamente: se agregan nuevas funciones, los procesos se superponen y la complejidad se acumula.",
+        "context_p2": "La organización enfrentaba un desafío común: los flujos operativos eran técnicamente funcionales, pero ineficientes. Los usuarios debían navegar por múltiples pantallas, cruzar información manualmente e interpretar datos fragmentados.",
+        "context_p3": "En una industria donde el cumplimiento (compliance) y la trazabilidad son críticos, la ineficiencia no es solo un inconveniente: genera riesgo. El desafío era rediseñar la estructura del flujo de trabajo sin interrumpir las operaciones en curso ni los requisitos reglamentarios.",
+        "context_note": "*(Nota: Debido a protocolos de cumplimiento, la identidad del cliente se mantiene confidencial).*",
+        "solution_heading": "Nuestra Solución",
+        "solution_p1": "Abordamos el proyecto desde una perspectiva de sistemas. Primero, mapeamos el ciclo de vida completo de producción, identificando cuellos de botella, pasos duplicados y puntos de fricción. En lugar de centrarnos solo en mejoras de la interfaz, analizamos la lógica subyacente del proceso.",
+        "solution_p2": "Luego, reestructuramos la arquitectura del flujo de trabajo en torno a tres principios básicos:",
+        "solution_li1": "<strong>Claridad de estado</strong> – Cada pedido, tarea y paso de validación tiene un estado visible e inequívoco.",
+        "solution_li2": "<strong>Menor fricción de navegación</strong> – Los usuarios acceden a la información relevante sin cambios de contexto innecesarios.",
+        "solution_li3": "<strong>Trazabilidad por diseño</strong> – Los requisitos de cumplimiento se integran en el flujo de trabajo, no se tratan como un complemento.",
+        "solution_p3": "Rediseñamos los tableros y las vistas de tareas para reflejar las prioridades operativas, haciendo que el progreso, los riesgos y los retrasos sean inmediatamente visibles. El resultado no fue solo una interfaz más limpia, sino un sistema operativo más estructurado y alineado con la dinámica de producción real.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "Flujos de tareas productivas optimizados",
+        "outcomes_li2": "Mejora de la visibilidad operativa",
+        "outcomes_li3": "Reducción de cruces de información manuales",
+        "outcomes_li4": "Mayor trazabilidad y apoyo en el cumplimiento",
+        "team_heading": "Equipo",
+        "team_roles": "Estratega de Producto<br>\n                                    Investigador UX<br>\n                                    Diseñador UX<br>\n                                    Analista de Sistemas<br>\n                                    Desarrolladores Frontend y Backend",
+        "compliance_note": "* Por acuerdos de cumplimiento y confidencialidad, el nombre del cliente no puede ser revelado."
     }
 }

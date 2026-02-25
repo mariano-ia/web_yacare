@@ -397,5 +397,31 @@
         "outcomes_li4": "Clear positioning within the HR-tech ecosystem",
         "team_heading": "Team",
         "team_roles": "Product Strategist<br>\n                                    UX/UI Designer<br>\n                                    Behavioral Model Consultant<br>\n                                    Frontend & Backend Developers"
+    },
+    "work_pharma": {
+        "chip1": "Workflow Optimization",
+        "chip2": "Enterprise UX",
+        "chip3": "Operational Efficiency",
+        "statement": "Redesigning internal production workflows to improve traceability, reduce friction, and increase operational efficiency in a pharmaceutical environment.",
+        "context_heading": "Context",
+        "context_p1": "Pharmaceutical production is built on precision. Every task, validation step, and approval must follow strict protocols. However, over time, internal systems tend to grow organically — new features are added, processes overlap, and complexity accumulates.",
+        "context_p2": "The organization was facing a familiar challenge: operational workflows were technically functional, but inefficient. Users had to navigate multiple screens, manually cross-check information, and interpret fragmented data.",
+        "context_p3": "In an industry where compliance and traceability are critical, inefficiency is not just inconvenient — it creates risk. The challenge was to redesign the workflow structure without disrupting ongoing operations or regulatory requirements.",
+        "context_note": "*(Note: Due to compliance protocols, the client's identity remains confidential).*",
+        "solution_heading": "Our Solution",
+        "solution_p1": "We approached the project from a systems perspective. First, we mapped the complete production lifecycle, identifying bottlenecks, duplicated steps, and friction points. Instead of focusing only on interface improvements, we analyzed the underlying process logic.",
+        "solution_p2": "Then we restructured the workflow architecture around three core principles:",
+        "solution_li1": "<strong>Clarity of status</strong> – Every order, task, and validation step has a visible and unambiguous state.",
+        "solution_li2": "<strong>Reduced navigation friction</strong> – Users access relevant information without unnecessary context switching.",
+        "solution_li3": "<strong>Traceability by design</strong> – Compliance requirements are embedded into the workflow, not treated as an add-on.",
+        "solution_p3": "We redesigned dashboards and task views to reflect operational priorities, making progress, risks, and delays immediately visible. The result was not just a cleaner interface — it was a more structured operational system aligned with real production dynamics.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "Streamlined production task flows",
+        "outcomes_li2": "Improved operational visibility",
+        "outcomes_li3": "Reduced manual cross-checking",
+        "outcomes_li4": "Enhanced traceability and compliance support",
+        "team_heading": "Team",
+        "team_roles": "Product Strategist<br>\n                                    UX Researcher<br>\n                                    UX Designer<br>\n                                    Systems Analyst<br>\n                                    Frontend & Backend Developers",
+        "compliance_note": "* Due to compliance and confidentiality agreements, the name of the client cannot be disclosed."
     }
 }
