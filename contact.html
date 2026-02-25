@@ -89,14 +89,14 @@
                     <div class="contact-info">
                         <h2 class="text-hero-gradient"><span data-i18n="pages.contact.hero_title_1">Let's
                                 build</span><br><span data-i18n="pages.contact.hero_title_2">something great</span></h2>
-                        <p>Whether you have a clear idea or just a hunch — we're here to help.</p>
+                        <p data-i18n="pages.contact.hero_subtitle">Whether you have a clear idea or just a hunch — we're here to help.</p>
                         <div class="contact-detail">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                 <polyline points="22,6 12,13 2,6" />
                             </svg>
-                            <span>contact@yacare.io</span>
+                            <span data-i18n="pages.contact.email">contact@yacare.io</span>
                         </div>
                         <div class="contact-detail">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
@@ -104,7 +104,7 @@
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
-                            <span>New York, US<br>Buenos Aires, Argentina</span>
+                            <span data-i18n="pages.contact.location">New York, US<br>Buenos Aires, Argentina</span>
                         </div>
                     </div>
 
@@ -121,35 +121,35 @@
                                     data-i18n-attr="placeholder" data-i18n="pages.contact.label_name" required>
                             </div>
                             <div class="form__group">
-                                <label class="form__label" for="email">Email</label>
+                                <label class="form__label" for="email" data-i18n="pages.contact.label_email">Email</label>
                                 <input type="email" id="email" name="email" class="form__input"
-                                    placeholder="you@company.com" required>
+                                    placeholder="you@company.com" data-i18n-attr="placeholder" data-i18n="pages.contact.placeholder_email" required>
                             </div>
                         </div>
 
                         <div class="grid grid--2">
                             <div class="form__group">
-                                <label class="form__label" for="company">Company</label>
+                                <label class="form__label" for="company" data-i18n="pages.contact.label_company">Company</label>
                                 <input type="text" id="company" name="company" class="form__input"
-                                    placeholder="Company name">
+                                    placeholder="Company name" data-i18n-attr="placeholder" data-i18n="pages.contact.placeholder_company">
                             </div>
                             <div class="form__group">
-                                <label class="form__label" for="budget">Budget</label>
+                                <label class="form__label" for="budget" data-i18n="pages.contact.label_budget">Budget</label>
                                 <select id="budget" name="budget" class="form__select">
-                                    <option value="" disabled selected>Select range</option>
+                                    <option value="" disabled selected data-i18n="pages.contact.budget_option_default">Select range</option>
                                     <option value="10k-25k">$10K–$25K</option>
                                     <option value="25k-50k">$25K–$50K</option>
                                     <option value="50k-100k">$50K–$100K</option>
                                     <option value="100k+">$100K+</option>
-                                    <option value="not-sure">Not sure</option>
+                                    <option value="not-sure" data-i18n="pages.contact.budget_option_notsure">Not sure</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form__group">
-                            <label class="form__label" for="message">Your project</label>
+                            <label class="form__label" for="message" data-i18n="pages.contact.label_message">Your project</label>
                             <textarea id="message" name="message" class="form__textarea"
-                                placeholder="What are you building?" rows="5" required></textarea>
+                                placeholder="What are you building?" data-i18n-attr="placeholder" data-i18n="pages.contact.placeholder_message" rows="5" required></textarea>
                         </div>
 
                         <button type="submit" class="btn btn--primary btn--lg" style="width:100%;"><span
@@ -169,26 +169,26 @@
                         <img src="/logo_yacare.svg" alt="Yacaré Agency Logo" class="nav__logo-img"
                             style="height: 24px;" />
                     </a>
-                    <p>Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
+                    <p data-i18n="footer.tagline">Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Services</h4>
-                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
-                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
-                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_services">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link" data-i18n="footer.link_discovery">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link" data-i18n="footer.link_mvp">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link" data-i18n="footer.link_growth">Product Growth</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Company</h4>
-                    <a href="/about.html" class="footer__link">About Us</a>
-                    <a href="/work.html" class="footer__link">Our Work</a>
-                    <a href="/blog.html" class="footer__link">Blog</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_company">Company</h4>
+                    <a href="/about.html" class="footer__link" data-i18n="footer.link_about">About Us</a>
+                    <a href="/work.html" class="footer__link" data-i18n="footer.link_work">Our Work</a>
+                    <a href="/blog.html" class="footer__link" data-i18n="footer.link_blog">Blog</a>
                 </div>
 
                 <div>
-                    <h4 class="footer__heading">Connect</h4>
-                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <h4 class="footer__heading" data-i18n="footer.col_connect">Connect</h4>
+                    <a href="/contact.html" class="footer__link" data-i18n="footer.link_contact">Contact</a>
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
                         class="footer__link">LinkedIn</a>
                     <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
