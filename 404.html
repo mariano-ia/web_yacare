@@ -3,152 +3,172 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
     <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
     <title>404 - Page Not Found — Yacaré</title>
+    <meta name="description"
+        content="The page you are looking for does not exist. Return to Yacaré to explore our B2B SaaS product design services.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:wght@300..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
         rel="stylesheet">
 
     <!-- App -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/js/main.ts"></script>
-
-    <style>
-        :root {
-            --bg-primary: #08080c;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --accent-primary: #ffffff;
-            --border-medium: rgba(255, 255, 255, 0.1);
-            --space-4: 1rem;
-            --space-8: 2rem;
-            --space-12: 3rem;
-            --font-display: 'Antonio', 'sans-serif';
-            --font-body: 'Figtree', 'sans-serif';
-        }
-
-        html,
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-body);
-            overflow-x: hidden;
-        }
-
-        .error-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: var(--space-8);
-            position: relative;
-        }
-
-        .hero__blob {
-            position: fixed;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-        }
-
-        .hero__blob--1 {
-            top: -10%;
-            right: -10%;
-        }
-
-        .hero__blob--2 {
-            bottom: -10%;
-            left: -10%;
-        }
-
-        .error-code {
-            font-family: var(--font-display);
-            font-size: clamp(8rem, 20vw, 15rem);
-            line-height: 0.8;
-            letter-spacing: -0.05em;
-            margin: 0;
-            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.1) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0.8;
-        }
-
-        .error-title {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 4rem);
-            text-transform: uppercase;
-            margin: var(--space-4) 0;
-            letter-spacing: 0.05em;
-        }
-
-        .error-desc {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin-bottom: var(--space-8);
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: #fff;
-            color: #000;
-            text-decoration: none;
-            border-radius: 100px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .grain-overlay {
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 1000;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="grain-overlay"></div>
-    <div class="hero__blob hero__blob--1"></div>
-    <div class="hero__blob hero__blob--2"></div>
+    <!-- Grain Texture Overlay -->
+    <div class="grain-overlay" aria-hidden="true"></div>
 
-    <main class="error-page">
-        <h1 class="error-code">404</h1>
-        <h2 class="error-title">Deep Water.</h2>
-        <p class="error-desc">
-            The page you are looking for has drifted away. Let's get you back to the surface.
-        </p>
-        <a href="/" class="btn">Return Home</a>
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
+            </a>
+
+            <div class="nav__links">
+                <a href="/" class="nav__link">Home</a>
+                <a href="/services.html" class="nav__link">Services</a>
+                <a href="/work.html" class="nav__link">Work</a>
+                <a href="/about.html" class="nav__link">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ═══════════════════════════════════════════
+             ERROR CONTENT
+             ═══════════════════════════════════════════ -->
+        <section class="hero hero--internal" id="hero" style="min-height: 85vh; display: flex; align-items: center;">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+            </div>
+
+            <div class="container hero__content" style="text-align: center;">
+                <h1 class="gradient-text"
+                    style="font-size: clamp(8rem, 25vw, 15rem); line-height: 0.8; margin-bottom: var(--space-4);">404
+                </h1>
+                <h2
+                    style="font-family: var(--font-display); font-size: clamp(2rem, 6vw, 4rem); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-6);">
+                    Deep Water.</h2>
+                <p class="hero__subtitle" style="margin: 0 auto var(--space-10); max-width: 500px;">The page you are
+                    looking for has drifted away. Let's get you back to the surface.</p>
+                <div class="hero__actions" style="justify-content: center;">
+                    <a href="/" class="btn btn--primary btn--lg"><span>Return Home</span></a>
+                    <a href="/work.html" class="btn btn--secondary btn--lg"><span>See Our Work</span></a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré Agency Logo" class="nav__logo-img"
+                            style="height: 24px;" />
+                    </a>
+                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                        needle.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

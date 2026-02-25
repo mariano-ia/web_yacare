@@ -502,26 +502,11 @@
 .portfolio-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 15, 0.9) 100%);
+    background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 15, 0.95) 100%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: var(--space-6);
-}
-
-.portfolio-card__tags {
-    display: flex;
-    gap: var(--space-2);
-    margin-bottom: var(--space-3);
-}
-
-.portfolio-card__tag {
-    font-size: var(--fs-small);
-    font-weight: var(--fw-medium);
-    color: var(--accent-primary);
-    background: var(--accent-glow);
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-pill);
 }
 
 .portfolio-card__title {
@@ -530,11 +515,28 @@
     font-weight: var(--fw-semibold);
     color: var(--text-primary);
     margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    display: block;
+    /* Ensure title height is consistent */
+    height: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .portfolio-card__desc {
     font-size: var(--fs-caption);
     color: var(--text-secondary);
+    line-height: 1.5;
+    /* Standardize description height for alignment */
+    height: 3em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
 }
 
 @media (max-width: 639px) {

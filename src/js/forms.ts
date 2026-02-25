@@ -45,7 +45,7 @@ export function initForms(): void {
                 }
             } catch (error) {
                 console.error('Form submission error:', error);
-                alert('Hubo un error al enviar el mensaje. Por favor intenta de nuevo.');
+                alert('Something went wrong. Please try again or email us directly at contact@yacare.io');
             } finally {
                 if (submitButton) {
                     submitButton.removeAttribute('disabled');
@@ -80,9 +80,9 @@ function showSuccess(form: HTMLFormElement): void {
                 <i data-lucide="check" style="width: 40px; height: 40px;"></i>
             </div>
         </div>
-        <h3 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: 0.05em;">¡Gracias!</h3>
+        <h3 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: 0.05em;">Message Sent</h3>
         <p class="text-lg" style="color: var(--text-secondary); max-width: 450px; margin: 0 auto; line-height: 1.6;">
-            Recibimos tu mensaje. Ya te vamos a responder. Gracias.
+            We've received your inquiry. A member of our team will get back to you within 24 hours.
         </p>
     `;
 

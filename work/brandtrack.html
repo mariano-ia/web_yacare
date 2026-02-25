@@ -3,29 +3,347 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brandtrack - Case Study — Yacaré</title>
-    <script type="module" src="/src/js/main.ts"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
     <style>
         html,
         body {
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: sans-serif;
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>Brandtrack: From Conversion Landing to Embedded Product Partnership — Yacaré</title>
+    <meta name="description"
+        content="How we evolved a high-impact inbound landing page project into a long-term product design partnership for Brandtrack, focusing on structural simplification and measurable growth.">
+    <link rel="canonical" href="https://yacare.io/work/brandtrack.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
 </head>
 
 <body>
-    <div style="text-align: center;">
-        <h1 style="font-size: 3rem;">Brandtrack</h1>
-        <p>Case study coming soon.</p>
-        <a href="/work.html" style="color: #fff; text-decoration: underline;">Back to Work</a>
-    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
+            </a>
+            <div class="nav__links">
+                <a href="/" class="nav__link">Home</a>
+                <a href="/services.html" class="nav__link">Services</a>
+                <a href="/work.html" class="nav__link">Work</a>
+                <a href="/about.html" class="nav__link">About</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span>Let's Talk</span></a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero hero--internal" id="hero" style="min-height: 65vh;">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+            </div>
+            <div class="container hero__content">
+                <div style="display:flex; flex-direction:column; align-items:center; gap: 15px;">
+                    <div class="chip-group" style="justify-content: center;">
+                        <span class="chip">UX Optimization</span>
+                        <span class="chip">Product Evolution</span>
+                        <span class="chip">Ongoing Design Partnership</span>
+                    </div>
+                    <h1 class="gradient-text">BRANDTRACK</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATEMENT -->
+        <section class="section about-statement" aria-label="Short Summary">
+            <div class="container">
+                <p class="about-statement__text reveal-words">
+                    Starting with a high-impact inbound landing and evolving into a long-term product design partnership
+                    focused on measurable growth.
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTENT + SIDEBAR -->
+        <section class="section" style="border-top: 1px solid var(--border-medium);">
+            <div class="container">
+                <div class="project-layout">
+
+                    <!-- Left -->
+                    <div>
+
+                        <!-- Image Showcase -->
+                        <div
+                            style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: var(--space-8); background: var(--bg-secondary);">
+                            <img src="/assets/images/product-healthcare.png" alt="Brandtrack Project Showcase"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Context -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Context
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                We first joined Brandtrack to solve a specific problem: an inbound landing page.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                The objective was clear. Improve conversion and bring structure to the onboarding
+                                experience. It was a defined, contained project with a measurable goal.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                The landing performed well.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                But what happened next was more interesting.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Instead of treating the engagement as a one-off delivery, we started looking beyond the
+                                isolated piece. The product had strong foundations, yet some components felt
+                                disconnected. Decisions had been made over time, but not always as part of a cohesive UX
+                                system.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                There was an opportunity — not for a dramatic redesign, but for structured evolution.
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85;">
+                                The relationship with the team played a crucial role. Collaboration was fluid.
+                                Conversations were honest. We were not positioned as an external vendor delivering
+                                screens, but as a team bringing criteria, method, and speed. That shift changed the
+                                scope of the work.
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr
+                            style="border: none; height: 1px; background: var(--border-medium); margin: var(--space-10) 0;">
+
+                        <!-- Our Solution -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                Our Solution
+                            </h2>
+                            <h3 style="font-size: 1.4rem; color: var(--text-primary); margin-bottom: var(--space-4);">
+                                From Project to Milestones
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Rather than proposing a large, abstract redesign, we introduced a milestone-based UX
+                                framework focusing on:
+                            </p>
+                            <ul
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5); list-style-type: none; padding-left: 0;">
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Adapting and refining existing components
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Bringing consistency to interface decisions
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Connecting previously isolated touchpoints
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-3); padding-left: var(--space-6); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--accent-primary); font-weight: bold;">•</span>
+                                    Asking structural product questions
+                                </li>
+                            </ul>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                Structural Simplification
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                As the collaboration matured, a larger opportunity emerged: developing a full
+                                application experience that unified two separate touchpoints within the product
+                                ecosystem.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Previously, these lived independently. By consolidating them into a cohesive experience,
+                                we reduced friction and simplified the product narrative. This was not cosmetic
+                                refinement. It was structural simplification.
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                In parallel, we continued optimizing inbound landing flows. Conversion metrics improved
+                                as friction was reduced and onboarding clarity increased.
+                            </p>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                Embedded Design Team
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: var(--space-5);">
+                                Over time, without a formal “announcement,” something shifted. We became Brandtrack’s
+                                design team.
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.85;">
+                                Today, we operate with a living roadmap, continuous conversations, and dedicated design
+                                ownership. We no longer intervene in isolated pieces. We contribute to the ongoing
+                                evolution of the product.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: sticky sidebar -->
+                    <aside class="project-sidebar">
+                        <div class="project-info-box" style="padding: var(--space-5);">
+
+                            <!-- Outcomes -->
+                            <div
+                                style="margin-bottom: var(--space-5); padding-bottom: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-4);">Outcomes</span>
+                                <ul
+                                    style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; list-style: none; padding-left: 0; margin: 0;">
+                                    <li style="margin-bottom: 12px;">• Improved inbound conversion rates</li>
+                                    <li style="margin-bottom: 12px;">• Structured onboarding flows</li>
+                                    <li style="margin-bottom: 12px;">• Unified product touchpoints</li>
+                                    <li style="margin-bottom: 12px;">• Increased interface coherence</li>
+                                    <li style="margin-bottom: 0;">• Long-term embedded design partnership</li>
+                                </ul>
+                            </div>
+
+                            <!-- Team -->
+                            <div>
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-3);">Team</span>
+                                <p
+                                    style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                    UX/UI Designer<br>
+                                    Design Lead
+                                </p>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré - Expert B2B Digital Product Designers"
+                            class="nav__logo-img footer__logo-img" />
+                    </a>
+                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
+                        needle.</p>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link">MVP Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link">Product Growth</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Company</h4>
+                    <a href="/about.html" class="footer__link">About Us</a>
+                    <a href="/work.html" class="footer__link">Our Work</a>
+                    <a href="/blog.html" class="footer__link">Blog</a>
+                </div>
+                <div>
+                    <h4 class="footer__heading">Connect</h4>
+                    <a href="/contact.html" class="footer__link">Contact</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>
