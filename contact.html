@@ -204,6 +204,10 @@
                     <a href="/terms-and-conditions.html" class="footer__link"
                         style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
                 </div>
+                <div class="lang-toggle" id="lang-toggle">
+                    <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.getElementById('lang-btn-en').classList.add('active');document.getElementById('lang-btn-es').classList.remove('active')})">EN</button>
+                    <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.getElementById('lang-btn-es').classList.add('active');document.getElementById('lang-btn-en').classList.remove('active')})">ES</button>
+                </div>
                 <div class="footer__social">
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
                         aria-label="LinkedIn">

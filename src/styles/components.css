@@ -937,6 +937,41 @@
     color: #ffffff;
 }
 
+/* ── Language Toggle (Footer) ── */
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    padding: 3px 4px;
+    cursor: pointer;
+}
+
+.lang-toggle__btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 3px 8px;
+    border-radius: 999px;
+    transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.lang-toggle__btn:hover {
+    color: var(--text-primary);
+}
+
+.lang-toggle__btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
 /* ── CTA Card (Global Component) ── */
 .cta-card {
     background: var(--bg-surface);

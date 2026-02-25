@@ -56,6 +56,23 @@ function applyTranslations(): void {
 
     // Also update HTML lang attribute for accessibility / SEO
     document.documentElement.lang = currentLang;
+
+    // Sync footer lang toggle buttons
+    updateLangToggle();
+}
+
+// ── Sync the footer EN/ES toggle pill to the active language ──
+function updateLangToggle(): void {
+    const btnEn = document.getElementById('lang-btn-en');
+    const btnEs = document.getElementById('lang-btn-es');
+    if (!btnEn || !btnEs) return;
+    if (currentLang === 'es') {
+        btnEs.classList.add('active');
+        btnEn.classList.remove('active');
+    } else {
+        btnEn.classList.add('active');
+        btnEs.classList.remove('active');
+    }
 }
 
 // ── Load JSON for the given language ──
@@ -111,4 +128,8 @@ export async function initI18n(): Promise<void> {
     currentLang = detectLang();
     await loadTranslations(currentLang);
     applyTranslations();
+
+    // Expose on window so inline footer toggle can call without module imports
+    (window as any).i18n = { setLanguage, getCurrentLang };
 }
+
