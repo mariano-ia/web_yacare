@@ -116,7 +116,17 @@
             "hero_title_2": "generar impacto",
             "hero_subtitle": "No solo escribimos código, construimos negocios. Una selección curada de productos digitales que ayudamos a lanzar, optimizar y escalar.",
             "projects_heading": "Proyectos Recientes",
-            "projects_subheading": "Una selección curada de nuestros trabajos recientes. Para análisis completos y casos de estudio confidenciales, contáctanos directamente."
+            "projects_subheading": "Una selección curada de nuestros trabajos recientes. Para análisis completos y casos de estudio confidenciales, contáctanos directamente.",
+            "card_vixon_desc": "Plataforma de entrenamiento cognitivo impulsada por IA que optimiza la toma de decisiones en atletas de alto rendimiento.",
+            "card_sameco_desc": "Automatización inteligente de consultas que simplifica el soporte B2B complejo con la eficiencia de la IA.",
+            "card_brandtrack_desc": "Evolución estratégica de UX y optimización de interfaces para música ambiental corporativa.",
+            "card_nawaiam_dash_desc": "Plataforma de RRHH ludificada que transforma datos de comportamiento complejos en insights procesables.",
+            "card_pharma_title": "FARMACÉUTICA",
+            "card_pharma_desc": "Plataforma de salud empresarial que simplifica la logística global y el cumplimiento normativo complejo.",
+            "card_nawaiam_web_desc": "Experiencia de inmersión en juegos que redefine el reclutamiento a través de la ciencia y el diseño de conversión.",
+            "cta_title": "¿Listo para construir<br>algo grandioso?",
+            "cta_desc": "Compartinos tu desafío. Te responderemos en 24 horas con una hoja de ruta clara para hacerlo realidad.",
+            "cta_btn": "Iniciar un Proyecto"
         },
         "about": {
             "hero_title_1": "Equipo pequeño",

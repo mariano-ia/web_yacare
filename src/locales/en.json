@@ -116,7 +116,17 @@
             "hero_title_2": "impact",
             "hero_subtitle": "We don't just write code, we build businesses. A curated selection of digital products we've helped launch, optimize, and scale.",
             "projects_heading": "Latest Projects",
-            "projects_subheading": "A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach out directly."
+            "projects_subheading": "A curated glimpse into our recent ventures. For full product tear-downs and confidential case studies, reach out directly.",
+            "card_vixon_desc": "AI-driven cognitive training platform optimizing high-performance athlete decision-making.",
+            "card_sameco_desc": "Intelligent inquiry automation streamlining complex B2B support with AI efficiency.",
+            "card_brandtrack_desc": "Strategic UX evolution and interface optimization for enterprise background music.",
+            "card_nawaiam_dash_desc": "Gamified HR platform transforming complex behavioral data into actionable insights.",
+            "card_pharma_title": "PHARMACEUTICAL",
+            "card_pharma_desc": "Enterprise healthcare platform streamlining global logistics and complex regulatory compliance.",
+            "card_nawaiam_web_desc": "Immersive gaming experience redefining recruitment through science and conversion design.",
+            "cta_title": "Ready to build<br>something great?",
+            "cta_desc": "Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.",
+            "cta_btn": "Start a Project"
         },
         "about": {
             "hero_title_1": "Small team",
