@@ -1016,9 +1016,18 @@
 }
 
 .review-card__stars {
+    display: flex;
+    gap: 4px;
     color: #FFD700;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
+    margin-bottom: var(--space-3);
+}
+
+.review-card__stars i,
+.review-card__stars svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: #FFD700 !important;
+    stroke: #FFD700 !important;
 }
 
 .review-card__quote {
