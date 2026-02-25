@@ -371,5 +371,31 @@
         "outcomes_li5": "Long-term embedded design partnership",
         "team_heading": "Team",
         "team_roles": "UX/UI Designer<br>\n                                    Design Lead"
+    },
+    "work_nawaiam": {
+        "chip1": "Product Strategy",
+        "chip2": "UX & Game Design",
+        "chip3": "AI-Driven Assessment",
+        "statement": "Designing a gamified emotional intelligence assessment that turns behavioral data into actionable insights for organizations.",
+        "context_heading": "Context",
+        "context_p1": "Nawaiam was building a different kind of assessment tool. Instead of traditional questionnaires, the goal was to evaluate emotional intelligence and behavioral traits through an interactive experience. The challenge was not only technological — it was conceptual.",
+        "context_p2": "How do you transform psychological frameworks into a digital product that feels engaging, credible, and measurable at the same time? The platform needed to speak to two very different audiences:",
+        "context_li1": "<strong>Candidates</strong>, who should feel immersed rather than evaluated.",
+        "context_li2": "<strong>Organizations</strong>, who required structured, reliable data to support decision-making.",
+        "context_p3": "At the same time, the product had to position itself in a competitive HR-tech landscape, where credibility and clarity are critical.",
+        "solution_heading": "Our Solution",
+        "solution_p1": "We worked at the intersection of product strategy, UX design, and behavioral modeling. First, we translated psychological models into a playable narrative structure. The experience was designed as an interactive journey where each decision generates behavioral signals.",
+        "solution_p2": "We structured the product around three key principles:",
+        "solution_li1": "<strong>Immersive interaction</strong> – The assessment feels like a game, not a test.",
+        "solution_li2": "<strong>Data integrity</strong> – Every interaction maps to measurable behavioral variables.",
+        "solution_li3": "<strong>Clarity for organizations</strong> – Results are presented through structured dashboards designed for HR teams and decision-makers.",
+        "solution_p3": "From information architecture to interaction flows, we ensured that gameplay and data collection were aligned. The result is a platform that balances engagement with analytical rigor — transforming soft skills into structured insights.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "Gamified assessment replacing traditional forms",
+        "outcomes_li2": "Structured behavioral data model",
+        "outcomes_li3": "Dual interface: candidate experience + HR dashboard",
+        "outcomes_li4": "Clear positioning within the HR-tech ecosystem",
+        "team_heading": "Team",
+        "team_roles": "Product Strategist<br>\n                                    UX/UI Designer<br>\n                                    Behavioral Model Consultant<br>\n                                    Frontend & Backend Developers"
     }
 }

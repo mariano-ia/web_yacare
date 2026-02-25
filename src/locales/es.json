@@ -371,5 +371,31 @@
         "outcomes_li5": "Partnership de diseño a largo plazo",
         "team_heading": "Equipo",
         "team_roles": "Diseñador UX/UI<br>\n                                    Design Lead"
+    },
+    "work_nawaiam": {
+        "chip1": "Estrategia de Producto",
+        "chip2": "UX y Diseño de Juegos",
+        "chip3": "Evaluación impulsada por IA",
+        "statement": "Diseño de una evaluación gamificada de inteligencia emocional que transforma el comportamiento en insights procesables para las organizaciones.",
+        "context_heading": "Contexto",
+        "context_p1": "Nawaiam estaba creando un tipo diferente de herramienta de evaluación. En lugar de los cuestionarios tradicionales, el objetivo era evaluar la inteligencia emocional y los rasgos de comportamiento a través de una experiencia interactiva. El desafío no era solo tecnológico: era conceptual.",
+        "context_p2": "¿Cómo transformar marcos psicológicos en un producto digital que se sienta atractivo, creíble y medible al mismo tiempo? La plataforma necesitaba hablar con dos audiencias muy distintas:",
+        "context_li1": "<strong>Candidatos</strong>, que deben sentirse inmersos en lugar de evaluados.",
+        "context_li2": "<strong>Organizaciones</strong>, que requieren datos estructurados y confiables para respaldar la toma de decisiones.",
+        "context_p3": "Al mismo tiempo, el producto debía posicionarse en un ecosistema competitivo del HR-tech, donde la credibilidad y la claridad son fundamentales.",
+        "solution_heading": "Nuestra Solución",
+        "solution_p1": "Trabajamos en la intersección entre estrategia de producto, diseño UX y modelado conductual. Primero, tradujimos modelos psicológicos a una estructura narrativa jugable. La experiencia fue diseñada como un viaje interactivo donde cada decisión genera señales de comportamiento.",
+        "solution_p2": "Estructuramos el producto en torno a tres principios clave:",
+        "solution_li1": "<strong>Interacción inmersiva</strong> – La evaluación se percibe como un juego, no como un test.",
+        "solution_li2": "<strong>Integridad de datos</strong> – Cada interacción se mapea a variables de comportamiento medibles.",
+        "solution_li3": "<strong>Claridad para las organizaciones</strong> – Los resultados se presentan a través de dashboards estructurados diseñados para equipos de RRHH y tomadores de decisiones.",
+        "solution_p3": "Desde la arquitectura de información hasta los flujos de interacción, nos aseguramos de que el gameplay y la recopilación de datos estuvieran alineados. El resultado es una plataforma que balancea el engagement con el rigor analítico, transformando habilidades blandas en insights estructurados.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "Evaluación gamificada en reemplazo de formularios tradicionales",
+        "outcomes_li2": "Modelo de datos de comportamiento estructurado",
+        "outcomes_li3": "Interfaz dual: experiencia del candidato + dashboard para RRHH",
+        "outcomes_li4": "Claro posicionamiento dentro del ecosistema HR-tech",
+        "team_heading": "Equipo",
+        "team_roles": "Estratega de Producto<br>\n                                    Diseñador UX/UI<br>\n                                    Consultor en Modelado Conductual<br>\n                                    Desarrolladores Frontend y Backend"
     }
 }
