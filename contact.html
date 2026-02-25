@@ -63,6 +63,11 @@
             </a>
 
             <div class="nav__links">
+        <div class="lang-toggle" id="lang-toggle">
+          <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.remove('active'))})">EN</button>
+          <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.remove('active'))})">ES</button>
+        </div>
+
                 <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
                 <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
                 <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
