@@ -308,6 +308,12 @@
         <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
         <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
         <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+        
+        
+        <div class="lang-toggle" id="lang-toggle">
+          <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.remove('active'))})">EN</button>
+          <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.remove('active'))})">ES</button>
+        </div>
         <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's Talk</span></a>
       </div>
 
@@ -450,113 +456,189 @@
       <div class="horizontal-scroll reveal-scale">
         <div class="horizontal-scroll__track marquee-loop">
           <div class="marquee-group">
-            <a href="/work/vixon.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-mobile.png" alt="VIXON" class="portfolio-card__image" loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">VIXON</h3>
-                <p class="portfolio-card__desc" data-i18n="work.vixon_desc">AI-driven cognitive training platform optimizing high-performance
+            <a href="/work/vixon.html"  class="portfolio-card" style="--card-glow: #2B4EDB;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-mobile.png" alt="VIXON" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">VIXON</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.vixon_desc">AI-driven cognitive training platform optimizing high-performance
                   athlete decision-making.</p>
-              </div>
-            </a>
-            <a href="/work/sameco.html" class="portfolio-card">
-              <img src="/assets/images/product-pm.png" alt="SAMECO" class="portfolio-card__image" loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">SAMECO</h3>
-                <p class="portfolio-card__desc" data-i18n="work.sameco_desc">Intelligent inquiry automation streamlining complex B2B support with AI
+                                </div>
+                            </a>
+            <a href="/work/sameco.html"  class="portfolio-card" style="--card-glow: #5E7CE2;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-pm.png" alt="SAMECO" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">SAMECO</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.sameco_desc">Intelligent inquiry automation streamlining complex B2B support with AI
                   efficiency.</p>
-              </div>
-            </a>
-            <a href="/work/brandtrack.html" class="portfolio-card">
-              <img src="/assets/images/product-healthcare.png" alt="BRANDTRACK" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">BRANDTRACK</h3>
-                <p class="portfolio-card__desc" data-i18n="work.brandtrack_desc">Strategic UX evolution and interface optimization for enterprise
+                                </div>
+                            </a>
+            <a href="/work/brandtrack.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-healthcare.png" alt="BRANDTRACK" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">BRANDTRACK</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.brandtrack_desc">Strategic UX evolution and interface optimization for enterprise
                   background music.</p>
-              </div>
-            </a>
-            <a href="/work/nawaiam-dashboard.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-dashboard.png" alt="NAWAIAM" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">NAWAIAM</h3>
-                <p class="portfolio-card__desc" data-i18n="work.nawaiam_dashboard_desc">Gamified HR platform transforming complex behavioral data into
+                                </div>
+                            </a>
+            <a href="/work/nawaiam-dashboard.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-dashboard.png" alt="NAWAIAM" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">NAWAIAM</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.nawaiam_dashboard_desc">Gamified HR platform transforming complex behavioral data into
                   actionable insights.</p>
-              </div>
-            </a>
-            <a href="/work/pharma-platform.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-edtech.png" alt="PHARMACEUTICAL" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">PHARMACEUTICAL</h3>
-                <p class="portfolio-card__desc" data-i18n="work.pharma_desc">Enterprise healthcare platform streamlining global logistics and complex
+                                </div>
+                            </a>
+            <a href="/work/pharma-platform.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-edtech.png" alt="PHARMACEUTICAL" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">PHARMACEUTICAL</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.pharma_desc">Enterprise healthcare platform streamlining global logistics and complex
                   regulatory compliance.</p>
-              </div>
-            </a>
-            <a href="/work/nawaiam-website.html" class="portfolio-card">
-              <img src="/assets/images/product-ecommerce.png" alt="NAWAIAM" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">NAWAIAM</h3>
-                <p class="portfolio-card__desc" data-i18n="work.nawaiam_website_desc">Immersive gaming experience redefining recruitment through science and
+                                </div>
+                            </a>
+            <a href="/work/nawaiam-website.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-ecommerce.png" alt="NAWAIAM" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">NAWAIAM</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.nawaiam_website_desc">Immersive gaming experience redefining recruitment through science and
                   conversion design.</p>
-              </div>
-            </a>
+                                </div>
+                            </a>
           </div>
           <!-- Duplicate for seamless loop -->
           <div class="marquee-group" aria-hidden="true">
-            <a href="/work/vixon.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-mobile.png" alt="VIXON" class="portfolio-card__image" loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">VIXON</h3>
-                <p class="portfolio-card__desc" data-i18n="work.vixon_desc">AI-driven cognitive training platform optimizing high-performance
+            <a href="/work/vixon.html"  class="portfolio-card" style="--card-glow: #2B4EDB;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-mobile.png" alt="VIXON" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">VIXON</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.vixon_desc">AI-driven cognitive training platform optimizing high-performance
                   athlete decision-making.</p>
-              </div>
-            </a>
-            <a href="/work/sameco.html" class="portfolio-card">
-              <img src="/assets/images/product-pm.png" alt="SAMECO" class="portfolio-card__image" loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">SAMECO</h3>
-                <p class="portfolio-card__desc" data-i18n="work.sameco_desc">Intelligent inquiry automation streamlining complex B2B support with AI
+                                </div>
+                            </a>
+            <a href="/work/sameco.html"  class="portfolio-card" style="--card-glow: #5E7CE2;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-pm.png" alt="SAMECO" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">SAMECO</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.sameco_desc">Intelligent inquiry automation streamlining complex B2B support with AI
                   efficiency.</p>
-              </div>
-            </a>
-            <a href="/work/brandtrack.html" class="portfolio-card">
-              <img src="/assets/images/product-healthcare.png" alt="BRANDTRACK" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">BRANDTRACK</h3>
-                <p class="portfolio-card__desc" data-i18n="work.brandtrack_desc">Strategic UX evolution and interface optimization for enterprise
+                                </div>
+                            </a>
+            <a href="/work/brandtrack.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-healthcare.png" alt="BRANDTRACK" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">BRANDTRACK</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.brandtrack_desc">Strategic UX evolution and interface optimization for enterprise
                   background music.</p>
-              </div>
-            </a>
-            <a href="/work/nawaiam-dashboard.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-dashboard.png" alt="NAWAIAM" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">NAWAIAM</h3>
-                <p class="portfolio-card__desc" data-i18n="work.nawaiam_dashboard_desc">Gamified HR platform transforming complex behavioral data into
+                                </div>
+                            </a>
+            <a href="/work/nawaiam-dashboard.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-dashboard.png" alt="NAWAIAM" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">NAWAIAM</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.nawaiam_dashboard_desc">Gamified HR platform transforming complex behavioral data into
                   actionable insights.</p>
-              </div>
-            </a>
-            <a href="/work/pharma-platform.html" class="portfolio-card">
-              <img src="/assets/images/portfolio-edtech.png" alt="PHARMACEUTICAL" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">PHARMACEUTICAL</h3>
-                <p class="portfolio-card__desc" data-i18n="work.pharma_desc">Enterprise healthcare platform streamlining global logistics and complex
+                                </div>
+                            </a>
+            <a href="/work/pharma-platform.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/portfolio-edtech.png" alt="PHARMACEUTICAL" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">PHARMACEUTICAL</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.pharma_desc">Enterprise healthcare platform streamlining global logistics and complex
                   regulatory compliance.</p>
-              </div>
-            </a>
-            <a href="/work/nawaiam-website.html" class="portfolio-card">
-              <img src="/assets/images/product-ecommerce.png" alt="NAWAIAM" class="portfolio-card__image"
-                loading="lazy">
-              <div class="portfolio-card__overlay">
-                <h3 class="portfolio-card__title">NAWAIAM</h3>
-                <p class="portfolio-card__desc" data-i18n="work.nawaiam_website_desc">Immersive gaming experience redefining recruitment through science and
+                                </div>
+                            </a>
+            <a href="/work/nawaiam-website.html"  class="portfolio-card" style="--card-glow: #7455FC;">
+                                <div class="portfolio-card__center-layer">
+                                    <div class="portfolio-card__glow"></div>
+                                    <div class="portfolio-card__img-container">
+                                        <img src="/assets/images/product-ecommerce.png" alt="NAWAIAM" class="portfolio-card__image" loading="lazy">
+                                        <div class="portfolio-card__img-gradient"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-card__outer-gradient"></div>
+                                <div class="portfolio-card__content">
+                                    <h3 class="portfolio-card__title">NAWAIAM</h3>
+                                    <p class="portfolio-card__desc" data-i18n="work.nawaiam_website_desc">Immersive gaming experience redefining recruitment through science and
                   conversion design.</p>
-              </div>
-            </a>
+                                </div>
+                            </a>
           </div>
         </div>
       </div>
@@ -950,10 +1032,6 @@
                     <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
                     <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_privacy">Privacy Policy</a>
                     <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_terms">Terms &amp; Conditions</a>
-                </div>
-                <div class="lang-toggle" id="lang-toggle">
-                    <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.getElementById('lang-btn-en').classList.add('active');document.getElementById('lang-btn-es').classList.remove('active')})">EN</button>
-                    <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.getElementById('lang-btn-es').classList.add('active');document.getElementById('lang-btn-en').classList.remove('active')})">ES</button>
                 </div>
                 <div class="footer__social">
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" aria-label="LinkedIn">

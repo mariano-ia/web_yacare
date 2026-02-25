@@ -62,7 +62,13 @@
                 <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
                 <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
                 <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
-                <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's Talk</span></a>
+                
+        
+        <div class="lang-toggle" id="lang-toggle">
+          <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.remove('active'))})">EN</button>
+          <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.remove('active'))})">ES</button>
+        </div>
+        <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's Talk</span></a>
             </div>
             <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span><span></span><span></span>
@@ -330,10 +336,6 @@
                     <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
                     <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_privacy">Privacy Policy</a>
                     <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_terms">Terms &amp; Conditions</a>
-                </div>
-                <div class="lang-toggle" id="lang-toggle">
-                    <button class="lang-toggle__btn active" id="lang-btn-en" onclick="window.i18n?.setLanguage('en').then(()=>{document.getElementById('lang-btn-en').classList.add('active');document.getElementById('lang-btn-es').classList.remove('active')})">EN</button>
-                    <button class="lang-toggle__btn" id="lang-btn-es" onclick="window.i18n?.setLanguage('es').then(()=>{document.getElementById('lang-btn-es').classList.add('active');document.getElementById('lang-btn-en').classList.remove('active')})">ES</button>
                 </div>
                 <div class="footer__social">
                     <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" aria-label="LinkedIn">
