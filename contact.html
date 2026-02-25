@@ -3,19 +3,38 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
     <meta name="color-scheme" content="dark">
     <style>
-        html, body { background-color: #08080c; color: #ffffff; margin: 0; padding: 0; }
-        .nav__logo-img { height: 28px; width: auto; }
+        html,
+        body {
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
+        }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO -->
-    <title>Contact Yacaré: Hire Expert UX/UI Product Designers</title>
+    <title>Contact Us — Yacaré</title>
     <meta name="description"
-    content="Ready to scale your B2B SaaS or launch an MVP? Contact Yacaré's design team today. We build digital products that impact your bottom line.">
-    <link rel=\"canonical\" href="https://yacare.io/contact.html">
-    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\">
+        content="Get in touch with Yacaré. Start your journey from vision to venture with our expert digital product design services.">
+    <link rel="canonical" href="https://yacare.io/contact.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +58,8 @@
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="/" class="nav__logo" aria-label="Yacaré Home">
-                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img" style="height: 28px; width: auto;" />
+                <img src="/logo_yacare.svg" alt="Yacaré Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
             </a>
 
             <div class="nav__links">
@@ -60,23 +80,9 @@
 
     <main>
         <!-- ═══════════════════════════════════════════
-             HERO
+             CONTACT HERO
              ═══════════════════════════════════════════ -->
-        <section class="hero hero--internal" id="hero">
-            <div class="hero__background" aria-hidden="true">
-                <div class="hero__blob hero__blob--1"></div>
-                <div class="hero__blob hero__blob--2"></div>
-                <div class="hero__blob hero__blob--3"></div>
-                <div class="hero__glow"></div>
-            </div>
-
-            <div class="container hero__content">
-                <h1 class="gradient-text">Start a conversation.</h1>
-                <p class="hero__subtitle">Tell us about your project and we'll get back within 24 hours.</p>
-            </div>
-        </section>
-
-        <section class="section">
+        <section class="section" style="padding-top: calc(var(--nav-height) + 80px);">
             <div class="container">
                 <div class="contact-grid reveal">
                     <div class="contact-info">
@@ -84,7 +90,7 @@
                         <p>Whether you have a clear idea or just a hunch — we're here to help.</p>
                         <div class="contact-detail">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
-                                stroke-width="2">
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                 <polyline points="22,6 12,13 2,6" />
                             </svg>
@@ -92,7 +98,7 @@
                         </div>
                         <div class="contact-detail">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff"
-                                stroke-width="2">
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
@@ -100,33 +106,52 @@
                         </div>
                     </div>
 
-                    <form class="contact-form" id="contact-form">
+                    <form class="contact-form" id="contact-form" action="https://formspree.io/f/mqaeveje" method="POST"
+                        style="margin: 0; width: 100%;">
+                        <input type="text" name="_gotcha" style="display:none" />
+                        <input type="hidden" name="_subject" value="Contacto del sitio web" />
+                        <input type="hidden" name="_cc" value="contact@yacare.io" />
 
                         <div class="grid grid--2">
-                            <div class="form__group"><label class="form__label" for="name">Name</label><input
-                                    type="text" id="name" class="form__input" placeholder="Your name" required></div>
-                            <div class="form__group"><label class="form__label" for="email">Email</label><input
-                                    type="email" id="email" class="form__input" placeholder="you@company.com" required>
+                            <div class="form__group">
+                                <label class="form__label" for="name">Name</label>
+                                <input type="text" id="name" name="name" class="form__input" placeholder="Your name"
+                                    required>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label" for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form__input"
+                                    placeholder="you@company.com" required>
                             </div>
                         </div>
+
                         <div class="grid grid--2">
-                            <div class="form__group"><label class="form__label" for="company">Company</label><input
-                                    type="text" id="company" class="form__input" placeholder="Company name"></div>
-                            <div class="form__group"><label class="form__label" for="budget">Budget</label>
-                                <select id="budget" class="form__select">
+                            <div class="form__group">
+                                <label class="form__label" for="company">Company</label>
+                                <input type="text" id="company" name="company" class="form__input"
+                                    placeholder="Company name">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label" for="budget">Budget</label>
+                                <select id="budget" name="budget" class="form__select">
                                     <option value="" disabled selected>Select range</option>
-                                    <option>$10K–$25K</option>
-                                    <option>$25K–$50K</option>
-                                    <option>$50K–$100K</option>
-                                    <option>$100K+</option>
-                                    <option>Not sure</option>
+                                    <option value="10k-25k">$10K–$25K</option>
+                                    <option value="25k-50k">$25K–$50K</option>
+                                    <option value="50k-100k">$50K–$100K</option>
+                                    <option value="100k+">$100K+</option>
+                                    <option value="not-sure">Not sure</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form__group"><label class="form__label" for="message">Your project</label><textarea
-                                id="message" class="form__textarea" placeholder="What are you building?"
-                                rows="5"></textarea></div>
-                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;">Send Proposal</button>
+
+                        <div class="form__group">
+                            <label class="form__label" for="message">Your project</label>
+                            <textarea id="message" name="message" class="form__textarea"
+                                placeholder="What are you building?" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--lg" style="width:100%;"><span>Send
+                                Proposal</span></button>
                     </form>
                 </div>
             </div>
@@ -138,11 +163,10 @@
             <div class="footer__grid">
                 <div class="footer__brand">
                     <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
-                        <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img" style="height: 24px;" />
+                        <img src="/logo_yacare.svg" alt="Yacaré Agency Logo" class="nav__logo-img"
+                            style="height: 24px;" />
                     </a>
-                    <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
-                        needle.
-                    </p>
+                    <p>Boutique digital product agency.<br>We build. We obsess. We move the needle.</p>
                 </div>
 
                 <div>
@@ -162,31 +186,38 @@
                 <div>
                     <h4 class="footer__heading">Connect</h4>
                     <a href="/contact.html" class="footer__link">Contact</a>
-                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
-                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
                 </div>
             </div>
 
             <div class="footer__bottom">
                 <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-          <span>© 2026 Yacaré. All rights reserved.</span>
-          <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
-          <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
-        </div>
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
                 <div class="footer__social">
-                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>

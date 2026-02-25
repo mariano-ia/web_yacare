@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TKZE3QCB9L');
+  </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html, body { background-color: #000; margin: 0; padding: 0; }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>El Pantano — Tecnología, Cultura y Opinión</title>
+    <meta name="description"
+        content="El Pantano es una publicación digital de múltiples voces. Tecnología, cultura, IA, análisis y opinión sin filtro.">
+    <link rel="canonical" href="https://yacare.io/elpantano/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="El Pantano">
+    <meta property="og:description" content="Muchas voces. Un solo charco.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+
+    <!-- App (loads all CSS + JS) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="El Pantano navigation">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/" class="ep-nav__logo">El Pantano</a>
+
+            <div class="ep-nav__cats">
+                <a href="#" class="ep-nav__cat ep-nav__cat--tecnologia">Tecnología</a>
+                <a href="#" class="ep-nav__cat ep-nav__cat--cultura">Cultura</a>
+                <a href="#" class="ep-nav__cat ep-nav__cat--opinion">Opinión</a>
+                <a href="#" class="ep-nav__cat ep-nav__cat--ia">IA</a>
+                <a href="#" class="ep-nav__cat ep-nav__cat--analisis">Análisis</a>
+                <a href="#" class="ep-nav__cat ep-nav__cat--negocios">Negocios</a>
+            </div>
+
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Buscar">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menú">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Buscar en El Pantano">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Buscar en El Pantano…" id="epSearchInput" autocomplete="off" aria-label="Buscar">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Cerrar búsqueda">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC para cerrar</span>
+    </div>
+    <script>
+    (function () {
+        var overlay = document.getElementById('epSearch');
+        var input   = document.getElementById('epSearchInput');
+        function open()  { overlay.classList.add('active'); setTimeout(function(){ input.focus(); }, 60); }
+        function close() { overlay.classList.remove('active'); input.value = ''; }
+        document.querySelector('.ep-nav__search').addEventListener('click', open);
+        document.getElementById('epSearchClose').addEventListener('click', close);
+        document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+    }());
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         HERO — Featured article
+         WP: {{ posts[0] }}
+         ═══════════════════════════════════════════ -->
+    <a href="/elpantano/la-ia-no-va-a-robar-tu-trabajo.html" class="ep-hero">
+        <img
+            src="https://picsum.photos/seed/pantano1/1600/780"
+            alt="La IA no va a robar tu trabajo. Va a hacer invisible el de tu jefe."
+            class="ep-hero__img"
+            loading="eager">
+        <div class="ep-hero__overlay" aria-hidden="true"></div>
+        <div class="ep-hero__content">
+            <!-- WP: post._embedded['wp:term'][0][0] -->
+            <div class="ep-hero__cat">
+                <span class="ep-cat ep-cat--opinion">Opinión</span>
+            </div>
+            <!-- WP: post.title.rendered -->
+            <h1 class="ep-hero__title">La IA no va a robar tu trabajo.<br>Va a hacer invisible el de tu jefe.</h1>
+            <!-- WP: post.excerpt.rendered -->
+            <p class="ep-hero__standfirst">Cuatro años de automatización y la pirámide corporativa sigue igual. El problema no es la tecnología. Es a quién le conviene que no cambie nada.</p>
+            <!-- WP: post._embedded['author'][0] -->
+            <div class="ep-hero__byline">
+                <div class="ep-hero__author-img" aria-hidden="true">V</div>
+                <span class="ep-hero__author-name">Valentina Cruz</span>
+                <span class="ep-hero__dot" aria-hidden="true"></span>
+                <span class="ep-hero__date">23 feb 2026</span>
+                <span class="ep-hero__dot" aria-hidden="true"></span>
+                <span class="ep-hero__date">9 min de lectura</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- ═══════════════════════════════════════════
+         AD — Leaderboard 728×90
+         Replace .ep-ad__slot with <ins class="adsbygoogle">
+         ═══════════════════════════════════════════ -->
+    <div class="ep-ad ep-ad--leaderboard" role="complementary">
+        <span class="ep-ad__label">Publicidad</span>
+        <div class="ep-ad__slot">728 × 90</div>
+        <!-- PRODUCTION:
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MAIN EDITORIAL GRID
+         ═══════════════════════════════════════════ -->
+    <div class="ep-main">
+        <div class="ep-layout">
+
+            <!-- Left: main feed -->
+            <div>
+                <!-- ── Featured pair ── -->
+                <div class="ep-section-head">
+                    <span class="ep-section-head__bar ep-section-head__bar--white"></span>
+                    <span class="ep-section-head__label">Destacados</span>
+                </div>
+
+                <div class="ep-featured-pair">
+                    <!-- WP: posts[1] -->
+                    <a href="#" class="ep-card ep-card--featured">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/fintech2026/700/525"
+                                alt="Por qué todas las apps de fintech se ven igual" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--tecnologia">Tecnología</span></div>
+                        <h2 class="ep-card__title">Por qué todas las apps de fintech se ven igual (y eso es un
+                            problema)</h2>
+                        <p class="ep-card__excerpt">El design system se convirtió en la excusa para no pensar. Cuándo la
+                            coherencia visual mató la diferenciación de producto.</p>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">T</div>
+                                <span class="ep-card__author-name">Tomás Mendez</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">20 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <!-- WP: posts[2] -->
+                    <a href="#" class="ep-card ep-card--featured">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/opensource7/700/525"
+                                alt="El modelo open source ganó" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Análisis</span></div>
+                        <h2 class="ep-card__title">El modelo open source ganó. Ahora nadie sabe qué hacer con eso.</h2>
+                        <p class="ep-card__excerpt">Meta liberó LLaMA. Mistral existe. DeepSeek llegó y rompió todo.
+                            ¿Por qué nadie en el ecosistema parece contento?</p>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                                <span class="ep-card__author-name">Rafa Guerrero</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">18 feb 2026</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ── Card grid: Lo último ── -->
+                <div class="ep-section-head">
+                    <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                    <span class="ep-section-head__label">Lo último</span>
+                    <a href="#" class="ep-section-head__more">Ver todo →</a>
+                </div>
+
+                <div class="ep-card-grid" style="margin-bottom: var(--space-6);">
+                    <!-- WP: posts[3..5] -->
+                    <a href="#" class="ep-card ep-card--standard">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/vibecode4/600/338"
+                                alt="El prompt engineer murió" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
+                        <h3 class="ep-card__title">El prompt engineer murió. Bienvenidos a la era del vibe coding.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                                <span class="ep-card__author-name">Mia Torres</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">17 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/tiktok99/600/338"
+                                alt="TikTok y el derecho a aburrirse" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--cultura">Cultura</span></div>
+                        <h3 class="ep-card__title">TikTok, algoritmos, y el derecho humano a aburrirse.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">V</div>
+                                <span class="ep-card__author-name">Valentina Cruz</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">15 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/onboard3/600/338"
+                                alt="El onboarding que triplicó retención" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Negocios</span></div>
+                        <h3 class="ep-card__title">Cómo un rediseño de onboarding triplicó la retención en 8 semanas.
+                        </h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                                <span class="ep-card__author-name">Rafa Guerrero</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">12 feb 2026</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ── IN-FEED AD ── -->
+                <div class="ep-ad ep-ad--infeed" role="complementary">
+                    <span class="ep-ad__label">Publicidad</span>
+                    <div class="ep-ad__slot">In-feed · Responsive</div>
+                    <!-- PRODUCTION:
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                         data-ad-slot="XXXXXXXXXX" data-ad-format="fluid" data-ad-layout-key="-6t+ed+2i-1n-4w"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    -->
+                </div>
+
+                <!-- ── Second card grid with category filter ── -->
+                <div class="ep-section-head" style="margin-top: var(--space-5);">
+                    <span class="ep-section-head__bar ep-section-head__bar--purple"></span>
+                    <span class="ep-section-head__label">Explorar</span>
+                    <a href="#" class="ep-section-head__more">Ver todo →</a>
+                </div>
+
+                <!-- Category filter pills -->
+                <div class="ep-cat-filter" id="epCatFilter" role="group" aria-label="Filtrar por categoría">
+                    <button class="ep-cat-filter__btn active" data-filter="all">Todo</button>
+                    <button class="ep-cat-filter__btn" data-filter="tecnologia">Tecnología</button>
+                    <button class="ep-cat-filter__btn" data-filter="ia">IA</button>
+                    <button class="ep-cat-filter__btn" data-filter="analisis">Análisis</button>
+                    <button class="ep-cat-filter__btn" data-filter="cultura">Cultura</button>
+                    <button class="ep-cat-filter__btn" data-filter="negocios">Negocios</button>
+                    <button class="ep-cat-filter__btn" data-filter="opinion">Opinión</button>
+                </div>
+
+                <div class="ep-card-grid ep-filterable-grid" id="epFilterGrid">
+                    <!-- WP: posts[6..8] -->
+                    <a href="#" class="ep-card ep-card--standard" data-cat="tecnologia">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/visionpro1/600/338"
+                                alt="Apple Vision Pro" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--tecnologia">Tecnología</span></div>
+                        <h3 class="ep-card__title">Seis meses con Apple Vision Pro: lo que nadie te contó.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                                <span class="ep-card__author-name">Mia Torres</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">10 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard" data-cat="tecnologia">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/cursor60/600/338"
+                                alt="Diseño de interfaces" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--tecnologia">Tecnología</span></div>
+                        <h3 class="ep-card__title">El cursor de texto parpadeante cumple 60 años. Todavía no tenemos
+                            algo mejor.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">T</div>
+                                <span class="ep-card__author-name">Tomás Mendez</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">8 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard" data-cat="ia">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/startup22/600/338"
+                                alt="Startups IA" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
+                        <h3 class="ep-card__title">Cada startup de IA tiene el mismo pitch. Eso debería preocuparnos.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                                <span class="ep-card__author-name">Rafa Guerrero</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">5 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <!-- Extra cards for other categories (hidden initially when filter active) -->
+                    <a href="#" class="ep-card ep-card--standard" data-cat="cultura">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/tiktok99/600/338"
+                                alt="TikTok" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--cultura">Cultura</span></div>
+                        <h3 class="ep-card__title">TikTok, algoritmos, y el derecho humano a aburrirse.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">V</div>
+                                <span class="ep-card__author-name">Valentina Cruz</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">15 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard" data-cat="analisis">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/opensource7/600/338"
+                                alt="Open source" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Análisis</span></div>
+                        <h3 class="ep-card__title">El modelo open source ganó. Ahora nadie sabe qué hacer con eso.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                                <span class="ep-card__author-name">Rafa Guerrero</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">18 feb 2026</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="ep-card ep-card--standard" data-cat="opinion">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/onboard3/600/338"
+                                alt="Opinión" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div class="ep-card__cat"><span class="ep-cat ep-cat--opinion">Opinión</span></div>
+                        <h3 class="ep-card__title">La IA no va a robar tu trabajo. Va a hacer invisible el de tu jefe.</h3>
+                        <div class="ep-card__meta">
+                            <div class="ep-card__author-row">
+                                <div class="ep-card__author-thumb" aria-hidden="true">V</div>
+                                <span class="ep-card__author-name">Valentina Cruz</span>
+                            </div>
+                            <span class="ep-card__dot" aria-hidden="true"></span>
+                            <span class="ep-card__date">23 feb 2026</span>
+                        </div>
+                    </a>
+                </div>
+
+                <script>
+                (function () {
+                    var filter = document.getElementById('epCatFilter');
+                    var grid   = document.getElementById('epFilterGrid');
+                    if (!filter || !grid) return;
+                    var cards = grid.querySelectorAll('.ep-card[data-cat]');
+
+                    filter.addEventListener('click', function (e) {
+                        var btn = e.target.closest('.ep-cat-filter__btn');
+                        if (!btn) return;
+                        filter.querySelectorAll('.ep-cat-filter__btn').forEach(function (b) {
+                            b.classList.remove('active');
+                        });
+                        btn.classList.add('active');
+                        var sel = btn.dataset.filter;
+                        cards.forEach(function (card) {
+                            card.style.display = (sel === 'all' || card.dataset.cat === sel) ? '' : 'none';
+                        });
+                    });
+                }());
+                </script>
+            </div>
+
+            <!-- Right: sidebar -->
+            <aside class="ep-sidebar">
+
+                <!-- Newsletter — al tope para captar suscriptores -->
+                <div class="ep-sidebar__box">
+                    <div class="ep-newsletter__eyebrow">Newsletter</div>
+                    <h3 class="ep-newsletter__title">El Pantano directo<br>a tu casilla.</h3>
+                    <p class="ep-newsletter__desc">Una vez por semana. Lo más leído, lo más debatido, sin algoritmo de por medio.</p>
+                    <form class="ep-newsletter__form" onsubmit="return false;">
+                        <input type="email" class="ep-newsletter__input" placeholder="tu@email.com"
+                            aria-label="Email para newsletter">
+                        <button type="submit" class="ep-newsletter__btn">Suscribirme</button>
+                    </form>
+                </div>
+
+                <!-- Trending -->
+                <div class="ep-sidebar__box">
+                    <div class="ep-section-head" style="margin-bottom: var(--space-4); padding-bottom: var(--space-3);">
+                        <span class="ep-section-head__bar ep-section-head__bar--amber"></span>
+                        <span class="ep-section-head__label" style="font-size: 0.85rem;">Más leídos</span>
+                    </div>
+                    <nav class="ep-trending" aria-label="Artículos más leídos">
+                        <a href="#" class="ep-trending__item">
+                            <span class="ep-trending__num">1</span>
+                            <div class="ep-trending__body">
+                                <div class="ep-trending__cat"><span class="ep-cat ep-cat--opinion" style="font-size: 0.6rem; padding: 2px 8px;">Opinión</span></div>
+                                <div class="ep-trending__title">La IA no va a robar tu trabajo. Va a hacer invisible el de tu jefe.</div>
+                            </div>
+                        </a>
+                        <a href="#" class="ep-trending__item">
+                            <span class="ep-trending__num">2</span>
+                            <div class="ep-trending__body">
+                                <div class="ep-trending__cat"><span class="ep-cat ep-cat--ia" style="font-size: 0.6rem; padding: 2px 8px;">IA</span></div>
+                                <div class="ep-trending__title">El prompt engineer murió. Bienvenidos al vibe coding.</div>
+                            </div>
+                        </a>
+                        <a href="#" class="ep-trending__item">
+                            <span class="ep-trending__num">3</span>
+                            <div class="ep-trending__body">
+                                <div class="ep-trending__cat"><span class="ep-cat ep-cat--analisis" style="font-size: 0.6rem; padding: 2px 8px;">Análisis</span></div>
+                                <div class="ep-trending__title">El modelo open source ganó. Ahora nadie sabe qué hacer con eso.</div>
+                            </div>
+                        </a>
+                        <a href="#" class="ep-trending__item">
+                            <span class="ep-trending__num">4</span>
+                            <div class="ep-trending__body">
+                                <div class="ep-trending__cat"><span class="ep-cat ep-cat--cultura" style="font-size: 0.6rem; padding: 2px 8px;">Cultura</span></div>
+                                <div class="ep-trending__title">TikTok, algoritmos, y el derecho humano a aburrirse.</div>
+                            </div>
+                        </a>
+                        <a href="#" class="ep-trending__item">
+                            <span class="ep-trending__num">5</span>
+                            <div class="ep-trending__body">
+                                <div class="ep-trending__cat"><span class="ep-cat ep-cat--tecnologia" style="font-size: 0.6rem; padding: 2px 8px;">Tecnología</span></div>
+                                <div class="ep-trending__title">Por qué todas las apps de fintech se ven igual.</div>
+                            </div>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Ad 300×250 -->
+                <div class="ep-ad ep-ad--mrect" role="complementary">
+                    <span class="ep-ad__label">Publicidad</span>
+                    <div class="ep-ad__slot">300 × 250</div>
+                    <!-- PRODUCTION:
+                    <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px"
+                         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    -->
+                </div>
+
+                <!-- Compact recent posts -->
+                <div class="ep-sidebar__box">
+                    <div class="ep-section-head" style="margin-bottom: var(--space-4); padding-bottom: var(--space-3);">
+                        <span class="ep-section-head__bar ep-section-head__bar--coral"></span>
+                        <span class="ep-section-head__label" style="font-size: 0.85rem;">Cultura</span>
+                    </div>
+                    <a href="#" class="ep-card ep-card--compact">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/cine11/76/56"
+                                alt="Cine y IA" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="ep-card__title">El cine que predijo la IA mal, y el que la predijo bien.</h4>
+                            <div class="ep-card__meta" style="margin-top: 4px;">
+                                <span class="ep-card__date">3 feb 2026</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="ep-card ep-card--compact">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/spotify22/76/56"
+                                alt="Spotify y la música" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="ep-card__title">Spotify mató la era del álbum. ¿Quién la va a rescatar?</h4>
+                            <div class="ep-card__meta" style="margin-top: 4px;">
+                                <span class="ep-card__date">29 ene 2026</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="ep-card ep-card--compact">
+                        <div class="ep-card__thumb">
+                            <img src="https://picsum.photos/seed/games33/76/56"
+                                alt="Videojuegos" class="ep-card__img" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="ep-card__title">Los videojuegos indie ganaron. La industria todavía no lo sabe.</h4>
+                            <div class="ep-card__meta" style="margin-top: 4px;">
+                                <span class="ep-card__date">25 ene 2026</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/" class="ep-footer__logo">El Pantano</a>
+                    <p class="ep-footer__tagline">Muchas voces. Un solo charco.<br>Tecnología, cultura, IA y opinión sin filtro corporativo.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Secciones</div>
+                    <a href="#" class="ep-footer__link">Tecnología</a>
+                    <a href="#" class="ep-footer__link">Cultura</a>
+                    <a href="#" class="ep-footer__link">Opinión</a>
+                    <a href="#" class="ep-footer__link">IA</a>
+                    <a href="#" class="ep-footer__link">Análisis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">El Pantano</div>
+                    <a href="#" class="ep-footer__link">Quiénes somos</a>
+                    <a href="#" class="ep-footer__link">Colaboradores</a>
+                    <a href="#" class="ep-footer__link">Escribir para El Pantano</a>
+                    <a href="#" class="ep-footer__link">Newsletter</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Conectar</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="#" class="ep-footer__link">RSS</a>
+                    <a href="/contact.html" class="ep-footer__link">Contacto</a>
+                </div>
+            </div>
+
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 El Pantano</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link" style="opacity: 0.6; margin: 0;">Privacidad</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link" style="opacity: 0.6; margin: 0;">Términos</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">Un editorial de</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré — Boutique Digital Product Agency">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

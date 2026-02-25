@@ -5,6 +5,7 @@
 import { initNav } from './nav';
 import { initAnimations } from './animations';
 import { initHorizontalTimeline } from './timeline';
+import { initForms } from './forms';
 
 // CSS imports
 import '../styles/tokens.css';
@@ -16,6 +17,7 @@ import '../styles/animations.css';
 import '../styles/scroll-gradient.css';
 import '../styles/pages.css';
 import '../styles/timeline.css';
+import '../styles/elpantano.css';
 
 // ── Initialize ──
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollGradient();
     initWordReveal();
     initHorizontalTimeline();
+    initForms();
 
     // Initialize Lucide Icons (fallback to global if import fails)
     if ((window as any).lucide) {

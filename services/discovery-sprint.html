@@ -3,6 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
     <meta name="color-scheme" content="dark">
     <style>
         html,
@@ -23,7 +32,7 @@
     <!-- SEO -->
     <title>UX Discovery Sprint: Validate Your B2B Digital Product — Yacaré</title>
     <meta name="description"
-    content="Validate your startup idea fast with Yacaré's UX Discovery Sprints. We reduce risks through user research, fast prototyping, and strategic product thinking.">
+        content="Validate your startup idea fast with Yacaré's UX Discovery Sprints. We reduce risks through user research, fast prototyping, and strategic product thinking.">
     <link rel=\"canonical\" href="https://yacare.io/services/discovery-sprint.html">
     <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\">
 
@@ -49,7 +58,8 @@
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="/" class="nav__logo" aria-label="Yacaré Home">
-                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img" style="height: 28px; width: auto;" />
+                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
             </a>
 
             <div class="nav__links">
@@ -249,22 +259,28 @@
                                 Book your Discovery Sprint today and get clarity on your product's future.</p>
                         </div>
 
-                        <form class="contact-form" style="margin: 0; width: 100%;">
+                        <form class="contact-form" action="https://formspree.io/f/mqaeveje" method="POST"
+                            style="margin: 0; width: 100%;">
+                            <input type="text" name="_gotcha" style="display:none" />
+                            <input type="hidden" name="_subject" value="Contacto del sitio web - Discovery Sprint" />
+                            <input type="hidden" name="_cc" value="contact@yacare.io" />
                             <input type="hidden" name="service" value="Discovery Sprint">
+
                             <div class="grid grid--2">
                                 <div class="form__group">
                                     <label class="form__label">Name</label>
-                                    <input type="text" class="form__input" placeholder="Your name" required>
+                                    <input type="text" name="name" class="form__input" placeholder="Your name" required>
                                 </div>
                                 <div class="form__group">
                                     <label class="form__label">Email</label>
-                                    <input type="email" class="form__input" placeholder="you@company.com" required>
+                                    <input type="email" name="email" class="form__input" placeholder="you@company.com"
+                                        required>
                                 </div>
                             </div>
                             <div class="form__group" style="margin-bottom: var(--space-4);">
                                 <label class="form__label">Project Brief</label>
-                                <textarea class="form__textarea" placeholder="Describe your challenge..." rows="3"
-                                    required></textarea>
+                                <textarea name="message" class="form__textarea" placeholder="Describe your challenge..."
+                                    rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn--primary" style="width: 100%;"><span>Book a
                                     Sprint</span></button>
@@ -280,7 +296,8 @@
             <div class="footer__grid">
                 <div class="footer__brand">
                     <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
-                        <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img" style="height: 24px;" />
+                        <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo"
+                            class="nav__logo-img" style="height: 24px;" />
                     </a>
                     <p>Boutique digital product agency.<br>We design, build, and grow digital products that move the
                         needle.
@@ -304,31 +321,38 @@
                 <div>
                     <h4 class="footer__heading">Connect</h4>
                     <a href="/contact.html" class="footer__link">Contact</a>
-                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
-                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" class="footer__link">Instagram</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
                 </div>
             </div>
 
             <div class="footer__bottom">
                 <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-          <span>© 2026 Yacaré. All rights reserved.</span>
-          <a href="/privacy-policy.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
-          <a href="/terms-and-conditions.html" class="footer__link" style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
-        </div>
+                    <span>© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Privacy Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;">Terms & Conditions</a>
+                </div>
                 <div class="footer__social">
-                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                     </a>
-                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
