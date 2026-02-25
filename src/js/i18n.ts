@@ -37,17 +37,22 @@ function applyTranslations(): void {
         if (attr) {
             el.setAttribute(attr, value);
         } else {
-            // Preserve child elements (e.g., <br>, <strong>, icons)
-            // Only replace text if the element has no element children, else update first text node
-            const hasChildElements = Array.from(el.childNodes).some(n => n.nodeType === Node.ELEMENT_NODE);
-            if (!hasChildElements) {
-                el.textContent = value;
+            // If the translation value contains HTML, use innerHTML
+            if (value.includes('<') && value.includes('>')) {
+                el.innerHTML = value;
             } else {
-                // Find and replace the first text node
-                for (const node of Array.from(el.childNodes)) {
-                    if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-                        node.textContent = value;
-                        break;
+                // Preserve child elements (e.g., <br>, <strong>, icons)
+                // Only replace text if the element has no element children, else update first text node
+                const hasChildElements = Array.from(el.childNodes).some(n => n.nodeType === Node.ELEMENT_NODE);
+                if (!hasChildElements) {
+                    el.textContent = value;
+                } else {
+                    // Find and replace the first text node
+                    for (const node of Array.from(el.childNodes)) {
+                        if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+                            node.textContent = value;
+                            break;
+                        }
                     }
                 }
             }
