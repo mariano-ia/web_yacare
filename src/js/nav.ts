@@ -51,6 +51,35 @@ export function initNav(): void {
 
     // Active link highlighting
     highlightActiveLink(navLinks);
+
+    // Dynamic Review Score
+    updateReviewScore();
+}
+
+/**
+ * Fetches reviews from the API and updates the score in the nav bar.
+ */
+async function updateReviewScore(): Promise<void> {
+    const scoreElement = document.getElementById('nav-score-value');
+    if (!scoreElement) return;
+
+    try {
+        const response = await fetch('https://reviews-yacare.vercel.app/api/reviews');
+        if (!response.ok) throw new Error('API request failed');
+
+        const reviews = await response.json();
+
+        if (Array.isArray(reviews) && reviews.length > 0) {
+            const totalScore = reviews.reduce((acc, curr) => acc + Number(curr.rating), 0);
+            const avgScore = (totalScore / reviews.length).toFixed(1);
+            scoreElement.textContent = avgScore;
+        } else {
+            scoreElement.textContent = '5.0'; // Fallback if no reviews
+        }
+    } catch (error) {
+        console.error('Error fetching review score:', error);
+        scoreElement.textContent = '5.0'; // Fallback value
+    }
 }
 
 function highlightActiveLink(links: NodeListOf<Element>): void {

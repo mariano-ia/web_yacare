@@ -155,7 +155,8 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 999px;
-    padding: 5px 5px 5px 20px;
+    padding: 4px 4px 4px 12px;
+    /* Adjusted padding to accommodate score at left */
     margin: 0 40px;
     max-width: 500px;
     overflow: hidden;
@@ -215,6 +216,38 @@
 .nav__reviews-action:hover {
     background: #ffffff;
     color: #000000;
+}
+
+/* ── Dynamic Review Score ── */
+.nav__reviews-score {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    padding: 4px 10px;
+    margin-right: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 0.65rem;
+    /* User requested 0.65rem */
+    font-weight: 700;
+}
+
+.nav__reviews-score i,
+.nav__reviews-score svg {
+    color: #ffffff !important;
+    width: 18px !important;
+    height: 18px !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+    opacity: 0.6;
+}
+
+#nav-score-value {
+    letter-spacing: -0.01em;
+    line-height: 1;
+    font-size: 0.65rem;
 }
 
 @keyframes scrollNavReviews {
@@ -1599,8 +1632,15 @@
 }
 
 @keyframes successPop {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .form-success-message h3 {
