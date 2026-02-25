@@ -306,5 +306,34 @@
             "form_placeholder_brief": "How can we help?",
             "form_btn": "Let's Partner Up"
         }
+    },
+    "work_sameco": {
+        "chip1": "AI Agent",
+        "chip2": "Process Automation",
+        "chip3": "CRM Integration",
+        "statement": "Designing and deploying an AI agent to centralize inquiries, automate responses, and bring operational visibility to a nonprofit education organization.",
+        "context_heading": "Context",
+        "context_p1": "SAMECO is a nonprofit association focused on promoting continuous improvement across organizations.",
+        "context_p2": "One of their primary revenue streams comes from training programs and professional certifications. As interest grew, so did the number of inquiries — arriving through multiple channels: email, WhatsApp, and other informal touchpoints.",
+        "context_p3": "The problem was not demand. It was dispersion.",
+        "context_p4": "Messages were fragmented across platforms. Some were answered with delays. Others lacked traceability. There was no unified system to measure response time, conversion rates, or even total inquiry volume.",
+        "context_p5": "Operationally, it created friction. Strategically, it created blind spots. SAMECO needed more than faster replies. They needed structure, visibility, and control.",
+        "solution_heading": "Our Solution",
+        "solution_p1": "We approached the challenge as a systems design problem. First, we analyzed stakeholder workflows to understand how inquiries were handled, who responded, and how information was recorded. The objective was to centralize without increasing operational burden.",
+        "solution_p2": "We designed and implemented <strong>Sami</strong>, an AI-powered agent built on N8N.",
+        "solution_li1": "Receives inquiries via email and WhatsApp",
+        "solution_li2": "Responds in natural language",
+        "solution_li3": "Maintains conversational continuity",
+        "solution_li4": "Automatically logs every interaction in HubSpot",
+        "solution_p3": "This architecture transformed a fragmented communication flow into a measurable pipeline. Instead of scattered conversations, SAMECO now has centralized inquiry management, structured CRM records, automated first-level responses, and real-time visibility into demand patterns.",
+        "solution_p4": "Sami was not introduced as a chatbot experiment. It was deployed as an operational layer integrated into the organization’s revenue model. Adoption was immediate, and performance has been consistent.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "100+ inquiries handled in the first phase",
+        "outcomes_li2": "90%+ conversational continuity without intervention",
+        "outcomes_li3": "100% inquiry logging into HubSpot",
+        "outcomes_li4": "Response time from hours to minutes",
+        "outcomes_li5": "Increased visibility into conversion rates",
+        "team_heading": "Team",
+        "team_roles": "Product Strategist<br>\n                                    Automation Architect<br>\n                                    AI Workflow Designer<br>\n                                    CRM Integration Specialist"
     }
 }

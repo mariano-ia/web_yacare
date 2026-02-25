@@ -156,7 +156,7 @@
             "mvp_li3": "Deploy y Soporte",
             "pg_chip1": "Partnership Mensual",
             "pg_chip2": "Escala y Optimización",
-            "pg_desc": "\u00bfYa lanzaste? Te ayudamos a escalar, rediseñar o evolucionar tu producto con soporte continuo de diseño y desarrollo. Nos embebemos como tu socio para mejorar la activación, retención y rendimiento.",
+            "pg_desc": "¿Ya lanzaste? Te ayudamos a escalar, rediseñar o evolucionar tu producto con soporte continuo de diseño y desarrollo. Nos embebemos como tu socio para mejorar la activación, retención y rendimiento.",
             "pg_li1": "Mejoras Continuas",
             "pg_li2": "Design Systems",
             "pg_li3": "Iteraciones Basadas en Datos"
@@ -306,5 +306,34 @@
             "form_placeholder_brief": "¿Cómo podemos ayudarte?",
             "form_btn": "Asociémonos"
         }
+    },
+    "work_sameco": {
+        "chip1": "Agente de IA",
+        "chip2": "Automatización de Procesos",
+        "chip3": "Integración CRM",
+        "statement": "Diseño e implementación de un agente de IA para centralizar consultas, automatizar respuestas y brindar visibilidad operativa a una organización educativa sin fines de lucro.",
+        "context_heading": "Contexto",
+        "context_p1": "SAMECO es una asociación sin fines de lucro enfocada en promover la mejora continua en las organizaciones.",
+        "context_p2": "Una de sus principales fuentes de ingresos proviene de programas de capacitación y certificaciones profesionales. A medida que creció el interés, también lo hizo el número de consultas, llegando a través de múltiples canales: correo electrónico, WhatsApp y otros puntos de contacto informales.",
+        "context_p3": "El problema no era la demanda. Era la dispersión.",
+        "context_p4": "Los mensajes estaban fragmentados en diversas plataformas. Algunos se respondían con demoras. Otros carecían de trazabilidad. No había un sistema unificado para medir el tiempo de respuesta, las tasas de conversión o incluso el volumen total de consultas.",
+        "context_p5": "A nivel operativo, generaba fricción. A nivel estratégico, creaba puntos ciegos. SAMECO necesitaba algo más que respuestas más rápidas. Necesitaban estructura, visibilidad y control.",
+        "solution_heading": "Nuestra Solución",
+        "solution_p1": "Abordamos el desafío como un problema de diseño de sistemas. Primero, analizamos los flujos de trabajo de los stakeholders para comprender cómo se manejaban las consultas, quién respondía y cómo se registraba la información. El objetivo era centralizar sin aumentar la carga operativa.",
+        "solution_p2": "Diseñamos e implementamos <strong>Sami</strong>, un agente impulsado por IA construido en N8N.",
+        "solution_li1": "Recibe consultas vía email y WhatsApp",
+        "solution_li2": "Responde en lenguaje natural",
+        "solution_li3": "Mantiene la continuidad conversacional",
+        "solution_li4": "Registra automáticamente cada interacción en HubSpot",
+        "solution_p3": "Esta arquitectura transformó un flujo de comunicación fragmentado en un pipeline medible. En lugar de conversaciones dispersas, SAMECO ahora tiene una gestión de consultas centralizada, registros estructurados en el CRM, respuestas automatizadas de primer nivel y visibilidad en tiempo real de los patrones de demanda.",
+        "solution_p4": "Sami no se introdujo como un experimento de chatbot. Se implementó como una capa operativa integrada en el modelo de ingresos de la organización. La adopción fue inmediata y el rendimiento ha sido consistente.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "Más de 100 consultas gestionadas en la primera fase",
+        "outcomes_li2": "Más del 90% de continuidad conversacional sin intervención",
+        "outcomes_li3": "100% de registro de consultas en HubSpot",
+        "outcomes_li4": "Tiempo de respuesta de horas a minutos",
+        "outcomes_li5": "Mayor visibilidad en las tasas de conversión",
+        "team_heading": "Equipo",
+        "team_roles": "Estratega de Producto<br>\n                                    Arquitecto de Automatización<br>\n                                    Diseñador de Flujos de IA<br>\n                                    Especialista en Integración CRM"
     }
 }
