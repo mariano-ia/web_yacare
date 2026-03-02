@@ -9,7 +9,8 @@
         "reviews_see_all": "See all +",
         "reviews_q1": "\"The Discovery Sprint alone saved us months.\"",
         "reviews_q2": "\"They challenged our assumptions and delivered beyond expectations.\"",
-        "reviews_q3": "\"The MVP they delivered became our production app.\""
+        "reviews_q3": "\"The MVP they delivered became our production app.\"",
+        "reviews_q4": "\"Organized, clear and creative. They pleasantly surprised us.\""
     },
     "hero": {
         "sr_title": "We design, build, and scale B2B SaaS & digital products",
@@ -65,7 +66,10 @@
         "review2_role": "Head of Product, HealthTech Startup",
         "review3_quote": "\"From day one, they understood our vision. The MVP they delivered became our production app — it was that polished. Incredible attention to detail.\"",
         "review3_name": "Diego Paredes",
-        "review3_role": "Founder, FinTech Ventures"
+        "review3_role": "Founder, FinTech Ventures",
+        "review4_quote": "\"They delivered everything they promised and more. Organized, clear, creative, and with an ability to anticipate our needs that surprised us more than once...\"",
+        "review4_name": "Agostina Galimberti",
+        "review4_role": "CEO of Vixon"
     },
     "faq": {
         "heading": "Common questions",
