@@ -83,7 +83,7 @@ function updateLangToggle(): void {
 // ── Load JSON for the given language ──
 async function loadTranslations(lang: Lang): Promise<void> {
     try {
-        const res = await fetch(`/src/locales/${lang}.json`);
+        const res = await fetch(`/locales/${lang}.json`);
         if (!res.ok) throw new Error(`Failed to load ${lang}.json`);
         translations = await res.json();
     } catch (err) {
