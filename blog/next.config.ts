@@ -7,6 +7,7 @@ const nextConfig = {
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "placehold.co" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "image.pollinations.ai" },
       // Add your CDN / image host here
     ],
   },

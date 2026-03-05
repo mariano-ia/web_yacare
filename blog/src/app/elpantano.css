@@ -76,6 +76,12 @@
     /* Tecnología */
     --ep-orange: #FB923C;
     /* Negocios */
+    --ep-teal: #2DD4BF;
+    /* Fintech */
+    --ep-lime: #A3E635;
+    /* Open Source */
+    --ep-pink: #F472B6;
+    /* Cultura Digital */
 
     --ep-bg: #000000;
     --ep-bg-raised: #0A0A0A;
@@ -203,6 +209,18 @@ body {
     background: var(--ep-orange);
 }
 
+.ep-nav__cat--fintech::after {
+    background: var(--ep-teal);
+}
+
+.ep-nav__cat--open-source::after {
+    background: var(--ep-lime);
+}
+
+.ep-nav__cat--cultura-digital::after {
+    background: var(--ep-pink);
+}
+
 .ep-nav__cat:hover.ep-nav__cat--tecnologia {
     color: var(--ep-purple);
 }
@@ -225,6 +243,18 @@ body {
 
 .ep-nav__cat:hover.ep-nav__cat--negocios {
     color: var(--ep-orange);
+}
+
+.ep-nav__cat:hover.ep-nav__cat--fintech {
+    color: var(--ep-teal);
+}
+
+.ep-nav__cat:hover.ep-nav__cat--open-source {
+    color: var(--ep-lime);
+}
+
+.ep-nav__cat:hover.ep-nav__cat--cultura-digital {
+    color: var(--ep-pink);
 }
 
 .ep-nav__actions {
@@ -394,6 +424,18 @@ body {
 
 .ep-cat--negocios {
     color: var(--ep-orange);
+}
+
+.ep-cat--fintech {
+    color: var(--ep-teal);
+}
+
+.ep-cat--open-source {
+    color: var(--ep-lime);
+}
+
+.ep-cat--cultura-digital {
+    color: var(--ep-pink);
 }
 
 /* ═══════════════════════════════════════════

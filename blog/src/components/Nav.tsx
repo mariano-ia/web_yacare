@@ -10,6 +10,9 @@ const CATEGORIES = [
     { name: "IA", slug: "ia" },
     { name: "Análisis", slug: "analisis" },
     { name: "Negocios", slug: "negocios" },
+    { name: "Fintech", slug: "fintech" },
+    { name: "Open Source", slug: "open-source" },
+    { name: "Cultura Digital", slug: "cultura-digital" },
 ];
 
 interface SearchResult {
