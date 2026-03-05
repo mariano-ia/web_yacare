@@ -1,10 +1,11 @@
+import Link from "next/link";
 import type { ArticleWithRelations } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
 
 export function HeroCard({ article }: { article: ArticleWithRelations }) {
     return (
-        <a href={`/${article.slug}`} className="ep-hero">
+        <Link href={`/${article.slug}`} className="ep-hero">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
                 src={article.featured_image}
@@ -32,6 +33,6 @@ export function HeroCard({ article }: { article: ArticleWithRelations }) {
                     <span className="ep-hero__date">{article.reading_time} min de lectura</span>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }

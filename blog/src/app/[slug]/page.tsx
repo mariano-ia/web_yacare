@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
@@ -119,9 +120,9 @@ export default async function ArticlePage({
             <main>
                 {/* Breadcrumb */}
                 <nav className="ep-breadcrumb" aria-label="Ubicación">
-                    <a href="/">El Pantano</a>
+                    <Link href="/">El Pantano</Link>
                     <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
-                    <a href={`/categoria/${article.category.slug}`}>{article.category.name}</a>
+                    <Link href={`/categoria/${article.category.slug}`}>{article.category.name}</Link>
                     <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
                     <span>{article.title}</span>
                 </nav>
@@ -129,12 +130,12 @@ export default async function ArticlePage({
                 {/* Article Header */}
                 <header className="ep-article-head">
                     <div className="ep-article-head__cat">
-                        <a
+                        <Link
                             href={`/categoria/${article.category.slug}`}
                             className={`ep-cat ep-cat--${article.category.color}`}
                         >
                             {article.category.name}
-                        </a>
+                        </Link>
                     </div>
                     <h1 className="ep-article-head__title">{article.title}</h1>
                     <p className="ep-article-head__standfirst">{article.excerpt}</p>

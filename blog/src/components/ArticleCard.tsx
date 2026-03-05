@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ArticleWithRelations } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
@@ -12,7 +13,7 @@ export function ArticleCard({
 }) {
     if (variant === "compact") {
         return (
-            <a href={`/${article.slug}`} className="ep-card ep-card--compact">
+            <Link href={`/${article.slug}`} className="ep-card ep-card--compact">
                 <div className="ep-card__thumb">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -28,12 +29,12 @@ export function ArticleCard({
                         <span className="ep-card__date">{formatDate(article.published_at)}</span>
                     </div>
                 </div>
-            </a>
+            </Link>
         );
     }
 
     return (
-        <a
+        <Link
             href={`/${article.slug}`}
             className={`ep-card ep-card--${variant}`}
             data-cat={article.category.color}
@@ -70,6 +71,6 @@ export function ArticleCard({
                 <span className="ep-card__dot" aria-hidden="true" />
                 <span className="ep-card__date">{formatDate(article.published_at)}</span>
             </div>
-        </a>
+        </Link>
     );
 }

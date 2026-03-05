@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export function Footer() {
     return (
         <footer className="ep-footer">
             <div className="ep-footer__inner">
                 <div className="ep-footer__top">
                     <div className="ep-footer__brand">
-                        <a href="/" className="ep-footer__logo">El Pantano</a>
+                        <Link href="/" className="ep-footer__logo">El Pantano</Link>
                         <p className="ep-footer__tagline">
                             Muchas voces. Un solo charco.<br />
                             Tecnología, cultura, IA y opinión sin filtro corporativo.
@@ -12,18 +14,18 @@ export function Footer() {
                     </div>
                     <div>
                         <div className="ep-footer__col-head">Secciones</div>
-                        <a href="/categoria/tecnologia" className="ep-footer__link">Tecnología</a>
-                        <a href="/categoria/cultura" className="ep-footer__link">Cultura</a>
-                        <a href="/categoria/opinion" className="ep-footer__link">Opinión</a>
-                        <a href="/categoria/ia" className="ep-footer__link">IA</a>
-                        <a href="/categoria/analisis" className="ep-footer__link">Análisis</a>
+                        <Link href="/categoria/tecnologia" className="ep-footer__link">Tecnología</Link>
+                        <Link href="/categoria/cultura" className="ep-footer__link">Cultura</Link>
+                        <Link href="/categoria/opinion" className="ep-footer__link">Opinión</Link>
+                        <Link href="/categoria/ia" className="ep-footer__link">IA</Link>
+                        <Link href="/categoria/analisis" className="ep-footer__link">Análisis</Link>
                     </div>
                     <div>
                         <div className="ep-footer__col-head">El Pantano</div>
-                        <a href="#" className="ep-footer__link">Quiénes somos</a>
-                        <a href="#" className="ep-footer__link">Colaboradores</a>
-                        <a href="#" className="ep-footer__link">Escribir para El Pantano</a>
-                        <a href="#" className="ep-footer__link">Newsletter</a>
+                        <Link href="#" className="ep-footer__link">Quiénes somos</Link>
+                        <Link href="#" className="ep-footer__link">Colaboradores</Link>
+                        <Link href="#" className="ep-footer__link">Escribir para El Pantano</Link>
+                        <Link href="#" className="ep-footer__link">Newsletter</Link>
                     </div>
                     <div>
                         <div className="ep-footer__col-head">Conectar</div>

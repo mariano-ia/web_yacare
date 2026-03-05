@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { ArticleWithRelations } from "@/lib/types";
 
@@ -90,7 +91,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
                 </div>
                 <nav className="ep-trending" aria-label="Artículos más leídos">
                     {trending.slice(0, 5).map((article, i) => (
-                        <a key={article.id} href={`/${article.slug}`} className="ep-trending__item">
+                        <Link key={article.id} href={`/${article.slug}`} className="ep-trending__item">
                             <span className="ep-trending__num">{i + 1}</span>
                             <div className="ep-trending__body">
                                 <div className="ep-trending__cat">
@@ -100,7 +101,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
                                 </div>
                                 <div className="ep-trending__title">{article.title}</div>
                             </div>
-                        </a>
+                        </Link>
                     ))}
                 </nav>
             </div>

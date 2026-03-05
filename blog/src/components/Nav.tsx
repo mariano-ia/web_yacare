@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const CATEGORIES = [
@@ -80,12 +81,12 @@ export function Nav() {
         <>
             <nav className="ep-nav" role="navigation" aria-label="El Pantano navigation">
                 <div className="ep-nav__inner">
-                    <a href="/" className="ep-nav__logo">El Pantano</a>
+                    <Link href="/" className="ep-nav__logo">El Pantano</Link>
                     <div className="ep-nav__cats">
                         {CATEGORIES.map((cat) => (
-                            <a key={cat.slug} href={`/categoria/${cat.slug}`} className={`ep-nav__cat ep-nav__cat--${cat.slug}`}>
+                            <Link key={cat.slug} href={`/categoria/${cat.slug}`} className={`ep-nav__cat ep-nav__cat--${cat.slug}`}>
                                 {cat.name}
-                            </a>
+                            </Link>
                         ))}
                     </div>
                     <div className="ep-nav__actions">
@@ -147,7 +148,7 @@ export function Nav() {
                                 </div>
                             )}
                             {!loading && results.map((r) => (
-                                <a key={r.id} href={`/${r.slug}`} className="ep-search-result">
+                                <Link key={r.id} href={`/${r.slug}`} className="ep-search-result">
                                     <div className="ep-search-result__cat">
                                         <span className={`ep-cat ep-cat--${r.category.color}`} style={{ fontSize: "0.6rem", padding: "2px 8px" }}>
                                             {r.category.name}
@@ -157,7 +158,7 @@ export function Nav() {
                                     <div className="ep-search-result__meta">
                                         {r.author.name} · {r.reading_time} min
                                     </div>
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     )}
