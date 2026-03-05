@@ -118,7 +118,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "https://elpantano-app.vercel.app/api/articles",
+                "url": "https://www.yacare.io/blog/api/articles",
                 "sendHeaders": true,
                 "headerParameters": {
                     "parameters": [
@@ -256,7 +256,7 @@
         {
             "parameters": {
                 "method": "POST",
-                "url": "https://elpantano-app.vercel.app/api/articles",
+                "url": "https://www.yacare.io/blog/api/articles",
                 "sendHeaders": true,
                 "headerParameters": {
                     "parameters": [
@@ -287,7 +287,7 @@
         {
             "parameters": {
                 "chatId": "={{ $('🔍 Parsear Mensaje TG').first().json.chat_id }}",
-                "text": "=✅ Artículo publicado!\n\n📝 {{ $json.title || $json.data?.title || 'Artículo' }}\n👤 {{ $('📄 Procesar TG').first().json.personality_name }}\n🔗 https://elpantano-app.vercel.app/{{ $json.slug || $json.data?.slug || '' }}",
+                "text": "=✅ Artículo publicado!\n\n📝 {{ $json.title || $json.data?.title || 'Artículo' }}\n👤 {{ $('📄 Procesar TG').first().json.personality_name }}\n🔗 https://www.yacare.io/blog/{{ $json.slug || $json.data?.slug || '' }}",
                 "additionalFields": {
                     "parse_mode": "HTML"
                 }
