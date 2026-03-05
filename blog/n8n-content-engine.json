@@ -1,0 +1,529 @@
+{
+    "name": "El Pantano — Content Engine",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 12
+                        }
+                    ]
+                }
+            },
+            "id": "cron-trigger",
+            "name": "⏰ Cron 12h",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                0,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const verticals = [\n  {\n    name: 'Product Design & UX Avanzado',\n    category: 'tecnologia',\n    keywords: [\n      'Nuevos patrones de diseño UI 2026',\n      'UX para Agentes de IA',\n      'Figma variables advanced workflows',\n      'Micro-interacciones funcionales',\n      'Design systems escalables 2026',\n      'AI-powered prototyping tools',\n      'UX writing con inteligencia artificial',\n      'Design tokens en equipos distribuidos'\n    ]\n  },\n  {\n    name: 'Automatización & AI Operations',\n    category: 'fintech',\n    keywords: [\n      'n8n for enterprise automation',\n      'AI agents for SaaS churn reduction',\n      'Automating product management workflows',\n      'No-code vs Custom code 2026',\n      'Workflow automation ROI para empresas',\n      'AI agents autónomos para empresas'\n    ]\n  },\n  {\n    name: 'Desarrollo Frontend & Stack Moderno',\n    category: 'open-source',\n    keywords: [\n      'Next.js performance tips 2026',\n      'Vercel storage solutions',\n      'Serverless architecture for startups',\n      'React Server Components best practices',\n      'Edge computing frontend 2026',\n      'Full-stack TypeScript architecture'\n    ]\n  },\n  {\n    name: 'Estrategia de Producto & Growth',\n    category: 'cultura-digital',\n    keywords: [\n      'Product-Led Growth strategies 2026',\n      'MVP development for AI startups',\n      'Retention hooks in digital products',\n      'Scaling product teams con automatización',\n      'Growth hacking con IA en startups'\n    ]\n  },\n  {\n    name: 'Futuro de la Interacción',\n    category: 'opinion',\n    keywords: [\n      'Apple Vision Pro business use cases',\n      'Humane tech vs AI wearables',\n      'Neural interfaces UI patterns',\n      'Spatial computing design principles',\n      'AI companions y ética digital'\n    ]\n  }\n];\n\nconst articles = verticals.map((v, i) => {\n  const kw = v.keywords[Math.floor(Math.random() * v.keywords.length)];\n  return {\n    topic: kw,\n    keyword: kw,\n    vertical: v.name,\n    category: v.category,\n    personality_number: (i % 4) + 1,\n    source: 'cron'\n  };\n});\n\nreturn articles;"
+            },
+            "id": "ai-strategist",
+            "name": "🧠 AI Strategist",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                280,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "batchSize": 1,
+                "options": {}
+            },
+            "id": "split-batches",
+            "name": "🔄 SplitInBatches",
+            "type": "n8n-nodes-base.splitInBatches",
+            "typeVersion": 3,
+            "position": [
+                520,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// =============================================\n// 📝 PERSONALIDADES DEL BLOG EL PANTANO\n// =============================================\n// EDITÁ los prompts cambiando el texto\n// dentro de las comillas de cada personalidad.\n// =============================================\n\nconst personalidades = {\n  1: {\n    nombre: 'El Visionario',\n    autor: 'valentina-cruz',\n    prompt: 'Sos El Visionario del blog El Pantano de Yacaré Studio. Tu estilo es futurista, inspirador y provocador intelectual. Hablás de tendencias emergentes con autoridad pero accesibilidad. Usás metáforas tech creativas y cerrás con una reflexión sobre el impacto humano de la tecnología. Tu tono es energético pero no superficial. Escribís en español rioplatense. Representás a Yacaré como un estudio que entiende hacia dónde va la industria.'\n  },\n  2: {\n    nombre: 'El Técnico',\n    autor: 'tomas-mendez',\n    prompt: 'Sos El Técnico del blog El Pantano de Yacaré Studio. Tu estilo es pragmático, detallado y orientado a soluciones. Explicás conceptos complejos con claridad, incluís ejemplos de código cuando es relevante. Cada párrafo aporta valor concreto y aplicable. Tu tono es directo y profesional pero amigable. Escribís en español rioplatense. Representás la capacidad técnica de Yacaré para construir lo que diseña.'\n  },\n  3: {\n    nombre: 'El Estratega',\n    autor: 'valentina-cruz',\n    prompt: 'Sos El Estratega del blog El Pantano de Yacaré Studio. Tu estilo es analítico, enfocado en negocio y métricas. Conectás tecnología con resultados de negocio. Hablás de ROI, escalabilidad, crecimiento. Citás datos y tendencias de mercado. Tu tono es ejecutivo pero no aburrido. Escribís en español rioplatense. Representás el pensamiento estratégico de producto de Yacaré.'\n  },\n  4: {\n    nombre: 'El Provocador',\n    autor: 'tomas-mendez',\n    prompt: 'Sos El Provocador del blog El Pantano de Yacaré Studio. Tu estilo es irreverente, opinado y contrarian. Cuestionás el status quo y señalás hipocresías de la industria tech. Usás humor inteligente y provocación constructiva. Tu tono es audaz pero fundamentado. Escribís en español rioplatense. Representás la voz más honesta y disruptiva de Yacaré.'\n  }\n};\n\nconst data = $input.first().json;\nconst num = data.personality_number || 1;\nconst p = personalidades[num];\n\nreturn [{\n  json: {\n    ...data,\n    personality_name: p.nombre,\n    personality_author: p.autor,\n    personality_prompt: p.prompt\n  }\n}];"
+            },
+            "id": "personalidades",
+            "name": "📝 PERSONALIDADES — EDITAR AQUÍ",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                760,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const d = $input.first().json;\n\nconst systemPrompt = d.personality_prompt + '\\n\\nINSTRUCCIONES DE FORMATO OBLIGATORIAS:\\n- El artículo DEBE tener un MÍNIMO de 1000 caracteres\\n- Estructura estricta:\\n  1. EL HOOK (15%): Intro gancho que atrape al lector\\n  2. EL NUDO (70%): Desarrollo con H2 y H3, datos, argumentos\\n  3. EL OUTRO (15%): Cierre con reflexión o call to action\\n\\nINSTRUCCIONES SEO:\\n- Incluí la keyword \\\"' + d.keyword + '\\\" naturalmente al menos 3 veces\\n- Usá variaciones semánticas de la keyword\\n- Primer párrafo DEBE contener la keyword\\n- Usá H2 y H3 para featured snippets\\n\\nRESPONDÉ SOLO CON JSON VÁLIDO con esta estructura exacta:\\n{\\n  \"title\": \"Título SEO max 60 chars\",\\n  \"slug\": \"slug-seo-optimizado\",\\n  \"excerpt\": \"Meta description 120-155 chars con keyword\",\\n  \"content\": \"<p>Hook...</p><h2>Sección</h2><p>Desarrollo...</p><h3>Sub</h3><p>...</p><p>Cierre...</p>\",\\n  \"keywords\": [\"kw1\", \"kw2\", \"kw3\", \"kw4\", \"kw5\"],\\n  \"reading_time\": 4,\\n  \"image_prompt\": \"English description for AI cover image, modern editorial style\"\\n}';\n\nconst userPrompt = d.source === 'telegram'\n  ? 'Desarrollá un artículo profundo basado en esta idea: ' + d.topic\n  : 'Escribí un artículo sobre: ' + d.topic + '. Keyword SEO: ' + d.keyword + '. Vertical: ' + d.vertical;\n\nreturn [{\n  json: {\n    ...d,\n    openai_body: {\n      model: 'gpt-4o',\n      messages: [\n        { role: 'system', content: systemPrompt },\n        { role: 'user', content: userPrompt }\n      ],\n      temperature: 0.8,\n      max_tokens: 4000,\n      response_format: { type: 'json_object' }\n    }\n  }\n}];"
+            },
+            "id": "build-prompt",
+            "name": "✍️ Preparar Prompt",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1000,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.openai.com/v1/chat/completions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($json.openai_body) }}",
+                "options": {
+                    "timeout": 60000
+                }
+            },
+            "id": "openai-generate",
+            "name": "🤖 OpenAI GPT-4o",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1240,
+                300
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "",
+                    "name": "OpenAI API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const d = $input.first().json;\nconst inputData = $('📝 PERSONALIDADES — EDITAR AQUÍ').first().json;\n\nlet article;\ntry {\n  const content = d.choices[0].message.content;\n  article = JSON.parse(content);\n} catch (e) {\n  throw new Error('Error parseando respuesta de OpenAI: ' + e.message);\n}\n\n// Generar imagen con Pollinations.ai (gratis, sin API key)\nconst imagePrompt = encodeURIComponent(article.image_prompt || 'modern technology editorial illustration');\nconst imageUrl = `https://image.pollinations.ai/prompt/${imagePrompt}?width=1200&height=630&nologo=true`;\n\nreturn [{\n  json: {\n    publish_body: {\n      title: article.title,\n      slug: article.slug,\n      excerpt: article.excerpt,\n      content: article.content,\n      featured_image: imageUrl,\n      image_alt: article.title,\n      category: inputData.category,\n      author: inputData.personality_author,\n      reading_time: article.reading_time || 4,\n      keywords: article.keywords || [],\n      is_featured: false,\n      is_hero: false,\n      status: 'published'\n    },\n    personality_name: inputData.personality_name,\n    source: inputData.source || 'cron'\n  }\n}];"
+            },
+            "id": "process-article",
+            "name": "📄 Procesar Artículo + Imagen",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1480,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://elpantano-app.vercel.app/api/articles",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer ep_n8n_secret_2026_xK9mP4"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($json.publish_body) }}",
+                "options": {}
+            },
+            "id": "publish-api",
+            "name": "📤 Publicar en El Pantano",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1720,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "updates": {
+                    "update": [
+                        {
+                            "name": "message",
+                            "value": "={{ $json.body }}"
+                        }
+                    ]
+                }
+            },
+            "id": "telegram-trigger",
+            "name": "📱 Telegram Trigger",
+            "type": "n8n-nodes-base.telegramTrigger",
+            "typeVersion": 1.1,
+            "position": [
+                0,
+                700
+            ],
+            "webhookId": "telegram-elpantano",
+            "credentials": {
+                "telegramApi": {
+                    "id": "",
+                    "name": "Telegram Bot"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const msg = $input.first().json.message.text || '';\n\n// Detectar personalidad: P1, P2, P3, P4\nlet personality = 1;\nconst match = msg.match(/[Pp](\\d)/);\nif (match) personality = parseInt(match[1]);\nif (personality < 1 || personality > 4) personality = 1;\n\n// Limpiar el mensaje removiendo el tag de personalidad\nconst topic = msg.replace(/[Pp]\\d/g, '').trim();\n\n// Detectar categoría si se menciona\nlet category = 'tecnologia';\nif (msg.toLowerCase().includes('ux') || msg.toLowerCase().includes('diseño')) category = 'tecnologia';\nelse if (msg.toLowerCase().includes('auto') || msg.toLowerCase().includes('n8n')) category = 'fintech';\nelse if (msg.toLowerCase().includes('frontend') || msg.toLowerCase().includes('next')) category = 'open-source';\nelse if (msg.toLowerCase().includes('growth') || msg.toLowerCase().includes('producto')) category = 'cultura-digital';\nelse if (msg.toLowerCase().includes('futuro') || msg.toLowerCase().includes('vision')) category = 'opinion';\n\nreturn [{\n  json: {\n    topic: topic,\n    keyword: topic.split(' ').slice(0, 5).join(' '),\n    vertical: 'Manual via Telegram',\n    category: category,\n    personality_number: personality,\n    source: 'telegram',\n    chat_id: $input.first().json.message.chat.id\n  }\n}];"
+            },
+            "id": "parse-telegram",
+            "name": "🔍 Parsear Mensaje TG",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                280,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Mismas personalidades que el nodo principal\nconst personalidades = {\n  1: { nombre: 'El Visionario', autor: 'valentina-cruz', prompt: 'Sos El Visionario del blog El Pantano de Yacaré Studio. Estilo futurista, inspirador. Escribís en español rioplatense.' },\n  2: { nombre: 'El Técnico', autor: 'tomas-mendez', prompt: 'Sos El Técnico del blog El Pantano de Yacaré Studio. Estilo pragmático, orientado a soluciones. Escribís en español rioplatense.' },\n  3: { nombre: 'El Estratega', autor: 'valentina-cruz', prompt: 'Sos El Estratega del blog El Pantano de Yacaré Studio. Estilo analítico, enfocado en negocio. Escribís en español rioplatense.' },\n  4: { nombre: 'El Provocador', autor: 'tomas-mendez', prompt: 'Sos El Provocador del blog El Pantano de Yacaré Studio. Estilo irreverente, contrarian. Escribís en español rioplatense.' }\n};\nconst d = $input.first().json;\nconst p = personalidades[d.personality_number || 1];\nreturn [{ json: { ...d, personality_name: p.nombre, personality_author: p.autor, personality_prompt: p.prompt } }];"
+            },
+            "id": "personalidades-tg",
+            "name": "📝 Personalidades TG",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                520,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const d = $input.first().json;\nconst systemPrompt = d.personality_prompt + '\\n\\nINSTRUCCIONES DE FORMATO OBLIGATORIAS:\\n- Mínimo 1000 caracteres\\n- Estructura: HOOK (15%) + NUDO con H2/H3 (70%) + OUTRO (15%)\\n\\nSEO: Incluí keyword naturalmente 3+ veces. Primer párrafo con keyword. Usá H2/H3.\\n\\nRESPONDÉ SOLO JSON:\\n{\"title\":\"...\",\"slug\":\"...\",\"excerpt\":\"...\",\"content\":\"<p>...</p>\",\"keywords\":[...],\"reading_time\":4,\"image_prompt\":\"English description for cover image\"}';\nreturn [{ json: { ...d, openai_body: { model: 'gpt-4o', messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: 'Escribí un artículo sobre: ' + d.topic }], temperature: 0.8, max_tokens: 4000, response_format: { type: 'json_object' } } } }];"
+            },
+            "id": "build-prompt-tg",
+            "name": "✍️ Preparar Prompt TG",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                760,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.openai.com/v1/chat/completions",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($json.openai_body) }}",
+                "options": {
+                    "timeout": 60000
+                }
+            },
+            "id": "openai-tg",
+            "name": "🤖 OpenAI TG",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1000,
+                700
+            ],
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "",
+                    "name": "OpenAI API Key"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "const d = $input.first().json;\nconst inputData = $('📝 Personalidades TG').first().json;\nlet article;\ntry { article = JSON.parse(d.choices[0].message.content); } catch(e) { throw new Error('Error parseando: ' + e.message); }\nconst imgPrompt = encodeURIComponent(article.image_prompt || 'modern tech editorial');\nconst imageUrl = `https://image.pollinations.ai/prompt/${imgPrompt}?width=1200&height=630&nologo=true`;\nreturn [{ json: { publish_body: { title: article.title, slug: article.slug, excerpt: article.excerpt, content: article.content, featured_image: imageUrl, image_alt: article.title, category: inputData.category, author: inputData.personality_author, reading_time: article.reading_time || 4, keywords: article.keywords || [], is_featured: false, is_hero: false, status: 'published' }, personality_name: inputData.personality_name, source: 'telegram', chat_id: inputData.chat_id } }];"
+            },
+            "id": "process-tg",
+            "name": "📄 Procesar TG",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1240,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://elpantano-app.vercel.app/api/articles",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer ep_n8n_secret_2026_xK9mP4"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($json.publish_body) }}",
+                "options": {}
+            },
+            "id": "publish-tg",
+            "name": "📤 Publicar TG",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1480,
+                700
+            ]
+        },
+        {
+            "parameters": {
+                "chatId": "={{ $('🔍 Parsear Mensaje TG').first().json.chat_id }}",
+                "text": "=✅ Artículo publicado!\n\n📝 {{ $json.title || $json.data?.title || 'Artículo' }}\n👤 {{ $('📄 Procesar TG').first().json.personality_name }}\n🔗 https://elpantano-app.vercel.app/{{ $json.slug || $json.data?.slug || '' }}",
+                "additionalFields": {
+                    "parse_mode": "HTML"
+                }
+            },
+            "id": "telegram-reply",
+            "name": "💬 Reply Telegram",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1.2,
+            "position": [
+                1720,
+                700
+            ],
+            "credentials": {
+                "telegramApi": {
+                    "id": "",
+                    "name": "Telegram Bot"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "## 🔑 CONFIGURACIÓN REQUERIDA\n\n**1. OpenAI API Key:**\nCrear credencial \"Header Auth\" en n8n:\n- Name: `Authorization`\n- Value: `Bearer sk-tu-api-key-aqui`\nAsignarla a los nodos 🤖 OpenAI\n\n**2. Telegram Bot:**\nCrear bot con @BotFather en Telegram.\nCrear credencial \"Telegram API\" con el token.\nAsignarla a los nodos 📱 y 💬\n\n**3. Imágenes IA:**\nUsa Pollinations.ai (gratis). No requiere config.",
+                "height": 380,
+                "width": 350
+            },
+            "id": "sticky-config",
+            "name": "Sticky Note",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                -300,
+                80
+            ]
+        },
+        {
+            "parameters": {
+                "content": "## 📝 PERSONALIDADES\n\nEditá los prompts en el nodo\n**📝 PERSONALIDADES — EDITAR AQUÍ**\n\n- **P1**: El Visionario (futurista)\n- **P2**: El Técnico (pragmático)\n- **P3**: El Estratega (analítico)\n- **P4**: El Provocador (contrarian)\n\nDesde Telegram escribí:\n`P2 tu idea de artículo`",
+                "height": 280,
+                "width": 300
+            },
+            "id": "sticky-personalidades",
+            "name": "Sticky Note1",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                700,
+                80
+            ]
+        },
+        {
+            "parameters": {
+                "content": "## 📱 TELEGRAM\n\nEnviá un mensaje al bot con:\n`P1 Tendencias de diseño UI para agentes de IA`\n`P3 Product-Led Growth en startups argentinas`\n\nEl número después de P indica la personalidad.",
+                "height": 200,
+                "width": 350
+            },
+            "id": "sticky-telegram",
+            "name": "Sticky Note2",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                -300,
+                580
+            ]
+        }
+    ],
+    "connections": {
+        "⏰ Cron 12h": {
+            "main": [
+                [
+                    {
+                        "node": "🧠 AI Strategist",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🧠 AI Strategist": {
+            "main": [
+                [
+                    {
+                        "node": "🔄 SplitInBatches",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🔄 SplitInBatches": {
+            "main": [
+                [
+                    {
+                        "node": "📝 PERSONALIDADES — EDITAR AQUÍ",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📝 PERSONALIDADES — EDITAR AQUÍ": {
+            "main": [
+                [
+                    {
+                        "node": "✍️ Preparar Prompt",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "✍️ Preparar Prompt": {
+            "main": [
+                [
+                    {
+                        "node": "🤖 OpenAI GPT-4o",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🤖 OpenAI GPT-4o": {
+            "main": [
+                [
+                    {
+                        "node": "📄 Procesar Artículo + Imagen",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📄 Procesar Artículo + Imagen": {
+            "main": [
+                [
+                    {
+                        "node": "📤 Publicar en El Pantano",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📤 Publicar en El Pantano": {
+            "main": [
+                [
+                    {
+                        "node": "🔄 SplitInBatches",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📱 Telegram Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "🔍 Parsear Mensaje TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🔍 Parsear Mensaje TG": {
+            "main": [
+                [
+                    {
+                        "node": "📝 Personalidades TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📝 Personalidades TG": {
+            "main": [
+                [
+                    {
+                        "node": "✍️ Preparar Prompt TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "✍️ Preparar Prompt TG": {
+            "main": [
+                [
+                    {
+                        "node": "🤖 OpenAI TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🤖 OpenAI TG": {
+            "main": [
+                [
+                    {
+                        "node": "📄 Procesar TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📄 Procesar TG": {
+            "main": [
+                [
+                    {
+                        "node": "📤 Publicar TG",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📤 Publicar TG": {
+            "main": [
+                [
+                    {
+                        "node": "💬 Reply Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "pinData": {},
+    "tags": []
+}

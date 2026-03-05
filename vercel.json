@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/blog",
+            "destination": "https://elpantano-app.vercel.app/blog"
+        },
+        {
+            "source": "/blog/:path*",
+            "destination": "https://elpantano-app.vercel.app/blog/:path*"
+        }
+    ]
+}

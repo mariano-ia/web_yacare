@@ -1,0 +1,197 @@
+{
+    "name": "El Pantano — Publicar Artículo",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "publicar-articulo",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "webhook-trigger",
+            "name": "Webhook Trigger",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.ELPANTANO_API_URL }}/api/articles",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer {{ $env.ELPANTANO_API_SECRET }}"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify({\n  title: $json.title,\n  slug: $json.slug || $json.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),\n  excerpt: $json.excerpt || '',\n  content: $json.content || '',\n  featured_image: $json.featured_image || '',\n  image_alt: $json.image_alt || $json.title,\n  category: $json.category || 'tecnologia',\n  author: $json.author || 'valentina-cruz',\n  reading_time: $json.reading_time || 5,\n  keywords: $json.keywords || [],\n  is_featured: $json.is_featured || false,\n  is_hero: $json.is_hero || false,\n  status: $json.status || 'published'\n}) }}",
+                "options": {}
+            },
+            "id": "create-article",
+            "name": "Crear Artículo en El Pantano",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                500,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "condition-success",
+                            "leftValue": "={{ $json.success }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "equals",
+                                "singleValue": true
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "id": "check-success",
+            "name": "¿Éxito?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                750,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "status-ok",
+                            "name": "status",
+                            "value": "ok",
+                            "type": "string"
+                        },
+                        {
+                            "id": "message-ok",
+                            "name": "message",
+                            "value": "=Artículo '{{ $('Crear Artículo en El Pantano').item.json.data.title }}' publicado exitosamente",
+                            "type": "string"
+                        },
+                        {
+                            "id": "slug-ok",
+                            "name": "slug",
+                            "value": "={{ $('Crear Artículo en El Pantano').item.json.data.slug }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "success-response",
+            "name": "Respuesta Éxito",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                1000,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "status-error",
+                            "name": "status",
+                            "value": "error",
+                            "type": "string"
+                        },
+                        {
+                            "id": "message-error",
+                            "name": "message",
+                            "value": "=Error al publicar: {{ $('Crear Artículo en El Pantano').item.json.error }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "error-response",
+            "name": "Respuesta Error",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                1000,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Crear Artículo en El Pantano",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Crear Artículo en El Pantano": {
+            "main": [
+                [
+                    {
+                        "node": "¿Éxito?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "¿Éxito?": {
+            "main": [
+                [
+                    {
+                        "node": "Respuesta Éxito",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Respuesta Error",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "meta": {
+        "templateCredsSetupCompleted": true
+    }
+}
