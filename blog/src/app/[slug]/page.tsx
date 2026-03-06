@@ -184,9 +184,9 @@ export default async function ArticlePage({
                 <div className="ep-article-wrap">
                     <div className="ep-article-col">
                         {/* In-article ad */}
-                        <div className="ep-ad ep-ad--in-article" role="complementary">
+                        <div className="ep-ad ep-ad--leaderboard" role="complementary" style={{ width: "100%", margin: "var(--space-6) 0" }}>
                             <span className="ep-ad__label">Publicidad</span>
-                            <div className="ep-ad__slot">300 × 250</div>
+                            <div className="ep-ad__slot">728 × 90</div>
                         </div>
                         {/* Article content */}
                         <div
