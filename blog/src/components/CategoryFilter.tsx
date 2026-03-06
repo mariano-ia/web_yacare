@@ -12,6 +12,9 @@ const FILTERS = [
     { label: "Cultura", value: "cultura" },
     { label: "Negocios", value: "negocios" },
     { label: "Opinión", value: "opinion" },
+    { label: "Fintech", value: "fintech" },
+    { label: "Open Source", value: "open-source" },
+    { label: "Cultura Digital", value: "cultura-digital" },
 ];
 
 export function CategoryFilter({ articles }: { articles: ArticleWithRelations[] }) {
@@ -20,7 +23,7 @@ export function CategoryFilter({ articles }: { articles: ArticleWithRelations[] 
     const filtered =
         active === "all"
             ? articles
-            : articles.filter((a) => a.category.color === active);
+            : articles.filter((a) => a.category.slug === active);
 
     return (
         <>
