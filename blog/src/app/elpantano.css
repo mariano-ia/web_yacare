@@ -1100,7 +1100,7 @@ body {
 
 /* Breadcrumb */
 .ep-breadcrumb {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: var(--space-4) var(--container-padding) 0;
     font-size: var(--fs-small);
@@ -1127,7 +1127,7 @@ body {
 
 /* Article header */
 .ep-article-head {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: var(--space-7) var(--container-padding) var(--space-6);
 }
@@ -1252,7 +1252,7 @@ body {
 
 /* Article body layout: reading col + sidebar */
 .ep-article-wrap {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: 0 var(--container-padding) var(--space-8);
     display: grid;
@@ -1498,7 +1498,7 @@ body {
 
 /* Full author card (below article) */
 .ep-author-card {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: var(--space-7) var(--container-padding) 0;
     border-top: 1px solid var(--ep-border);
@@ -1570,16 +1570,13 @@ body {
 }
 
 .ep-related {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: var(--space-8) auto 0;
     padding: 0 var(--container-padding) var(--space-8);
     border-top: 1px solid var(--ep-border);
     padding-top: var(--space-7);
 }
 
-.ep-related>* {
-    max-width: 720px;
-}
 
 /* ═══════════════════════════════════════════
    FOOTER
