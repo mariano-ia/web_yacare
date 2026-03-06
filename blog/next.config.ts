@@ -8,6 +8,7 @@ const nextConfig = {
       { protocol: "https", hostname: "placehold.co" },
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "image.pollinations.ai" },
+      { protocol: "https", hostname: "ajqjicwuqbxpgkrrnryn.supabase.co" },
       // Add your CDN / image host here
     ],
   },
