@@ -1500,7 +1500,7 @@ body {
 .ep-author-card {
     max-width: 1440px;
     margin: 0 auto;
-    padding: var(--space-7) var(--container-padding) 0;
+    padding: var(--space-7) var(--container-padding) var(--space-8);
     border-top: 1px solid var(--ep-border);
 }
 
@@ -1571,7 +1571,7 @@ body {
 
 .ep-related {
     max-width: 1440px;
-    margin: var(--space-8) auto 0;
+    margin: 0 auto;
     padding: 0 var(--container-padding) var(--space-8);
     border-top: 1px solid var(--ep-border);
     padding-top: var(--space-7);
@@ -1584,7 +1584,7 @@ body {
 .ep-footer {
     background: var(--ep-bg-raised);
     border-top: 1px solid var(--ep-border);
-    padding: var(--space-8) 0 var(--space-6);
+    padding: var(--space-6) 0 var(--space-5);
 }
 
 .ep-footer__inner {
@@ -1594,30 +1594,17 @@ body {
 }
 
 .ep-footer__top {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: var(--space-7);
-    margin-bottom: var(--space-7);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
 }
 
 @media (max-width: 860px) {
     .ep-footer__top {
-        grid-template-columns: 1fr 1fr;
+        flex-direction: column;
         gap: var(--space-5);
-    }
-
-    .ep-footer__brand {
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 480px) {
-    .ep-footer__top {
-        grid-template-columns: 1fr;
-    }
-
-    .ep-footer__brand {
-        grid-column: span 1;
     }
 }
 
