@@ -28,6 +28,7 @@ interface SearchResult {
 
 export function Nav() {
     const [searchOpen, setSearchOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [loading, setLoading] = useState(false);
@@ -99,7 +100,12 @@ export function Nav() {
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
                             </svg>
                         </button>
-                        <button className="ep-nav__toggle" aria-label="Menú">
+                        <button
+                            className="ep-nav__toggle"
+                            aria-label="Menú"
+                            aria-expanded={menuOpen}
+                            onClick={() => setMenuOpen(!menuOpen)}
+                        >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="3" y1="12" x2="21" y2="12" />
                                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -109,6 +115,22 @@ export function Nav() {
                     </div>
                 </div>
             </nav>
+
+            {/* Mobile menu */}
+            {menuOpen && (
+                <div className="ep-nav__mobile-menu">
+                    {CATEGORIES.map((cat) => (
+                        <Link
+                            key={cat.slug}
+                            href={`/categoria/${cat.slug}`}
+                            className={`ep-nav__mobile-link ep-nav__cat--${cat.slug}`}
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            {cat.name}
+                        </Link>
+                    ))}
+                </div>
+            )}
 
             {/* Search Overlay */}
             <div className={`ep-search-overlay ${searchOpen ? "active" : ""}`} role="dialog" aria-modal="true" aria-label="Buscar en El Pantano">

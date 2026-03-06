@@ -1,6 +1,29 @@
 import type { Metadata } from "next";
+import { Antonio, Figtree, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import "./elpantano.css";
+
+const antonio = Antonio({
+  subsets: ["latin"],
+  variable: "--font-antonio",
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const ibmPlexSerif = IBM_Plex_Serif({
+  subsets: ["latin"],
+  variable: "--font-ibm-plex",
+  weight: ["500"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -32,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${antonio.variable} ${figtree.variable} ${ibmPlexSerif.variable}`}>
       <head>
         <meta name="color-scheme" content="dark" />
         {/* Google Analytics */}
@@ -49,17 +72,6 @@ export default function RootLayout({
               gtag('config', 'G-TKZE3QCB9L');
             `,
           }}
-        />
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
-          rel="stylesheet"
         />
         {/* Google AdSense — set NEXT_PUBLIC_ADSENSE_ID env var to activate */}
         {process.env.NEXT_PUBLIC_ADSENSE_ID && (

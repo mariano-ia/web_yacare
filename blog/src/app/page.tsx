@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { HeroCard } from "@/components/HeroCard";
@@ -72,7 +73,7 @@ export default async function HomePage() {
             <div className="ep-section-head">
               <span className="ep-section-head__bar ep-section-head__bar--green" />
               <span className="ep-section-head__label">Lo último</span>
-              <a href="#" className="ep-section-head__more">Ver todo →</a>
+              <Link href="/categoria/tecnologia" className="ep-section-head__more">Ver todo →</Link>
             </div>
             <div className="ep-card-grid" style={{ marginBottom: "var(--space-6)" }}>
               {latest.map((article) => (

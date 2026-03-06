@@ -6,9 +6,9 @@
 /* ── Design system tokens (standalone) ── */
 :root {
     /* ── Typography ── */
-    --font-display: 'Antonio', 'Helvetica Neue', 'Arial', sans-serif;
-    --font-body: 'Figtree', 'Inter', 'Helvetica Neue', sans-serif;
-    --font-serif: 'IBM Plex Serif', 'Georgia', serif;
+    --font-display: var(--font-antonio), 'Helvetica Neue', 'Arial', sans-serif;
+    --font-body: var(--font-figtree), 'Inter', 'Helvetica Neue', sans-serif;
+    --font-serif: var(--font-ibm-plex), 'Georgia', serif;
 
     --fw-regular: 400;
     --fw-medium: 500;
@@ -266,8 +266,8 @@ body {
 }
 
 .ep-nav__search {
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: none;
     border: 1px solid var(--ep-border);
@@ -290,7 +290,10 @@ body {
     border: none;
     color: #ffffff;
     cursor: pointer;
-    padding: 6px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 860px) {
@@ -301,6 +304,45 @@ body {
     .ep-nav__toggle {
         display: flex;
     }
+}
+
+/* Mobile menu */
+.ep-nav__mobile-menu {
+    position: fixed;
+    top: var(--ep-nav-h);
+    left: 0;
+    right: 0;
+    background: #000;
+    border-bottom: 1px solid var(--ep-border);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+
+.ep-nav__mobile-link {
+    padding: var(--space-3) var(--space-5);
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    border-bottom: 1px solid var(--ep-border);
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.ep-nav__mobile-link:last-child {
+    border-bottom: none;
+}
+
+.ep-nav__mobile-link:hover {
+    color: #fff;
+    background: var(--ep-bg-raised);
+}
+
+/* Focus visible — keyboard navigation */
+:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 3px;
+    border-radius: 3px;
 }
 
 /* ═══════════════════════════════════════════

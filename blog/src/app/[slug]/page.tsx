@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import sanitizeHtml from "sanitize-html";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -140,12 +141,12 @@ export default async function ArticlePage({
                     <h1 className="ep-article-head__title">{article.title}</h1>
                     <p className="ep-article-head__standfirst">{article.excerpt}</p>
                     <div className="ep-article-head__meta">
-                        <a href="#" className="ep-article-head__author" aria-label={`Ver perfil de ${article.author.name}`}>
+                        <div className="ep-article-head__author">
                             <div className="ep-article-head__avatar" aria-hidden="true">
                                 {article.author.avatar_initial}
                             </div>
                             <span className="ep-article-head__author-name">{article.author.name}</span>
-                        </a>
+                        </div>
                         <span className="ep-meta-dot" aria-hidden="true" />
                         <time className="ep-meta-text" dateTime={article.published_at}>
                             {formatDateLong(article.published_at)}
@@ -181,7 +182,14 @@ export default async function ArticlePage({
                         {/* Article content */}
                         <div
                             className="ep-prose"
-                            dangerouslySetInnerHTML={{ __html: article.content }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content, {
+                                allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h1", "h2", "h3", "h4", "h5", "h6"]),
+                                allowedAttributes: {
+                                    ...sanitizeHtml.defaults.allowedAttributes,
+                                    "img": ["src", "alt", "class", "width", "height"],
+                                    "*": ["class", "id"],
+                                },
+                            }) }}
                         />
                     </div>
 
