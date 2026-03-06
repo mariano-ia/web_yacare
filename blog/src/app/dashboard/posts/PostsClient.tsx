@@ -164,6 +164,13 @@ export function PostsClient({ initialPosts }: { initialPosts: Post[] }) {
                             {/* Actions */}
                             <td>
                                 <div className="dash-btn-row">
+                                    <Link
+                                        href={`/dashboard/posts/${post.id}`}
+                                        className="dash-btn dash-btn--ghost"
+                                        title="Editar"
+                                    >
+                                        ✎
+                                    </Link>
                                     <button
                                         className={`dash-btn ${post.is_hero ? "dash-btn--hero-active" : "dash-btn--ghost"}`}
                                         onClick={() => toggleHero(post)}
