@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/blog",
-            "destination": "https://elpantano-app.vercel.app/blog"
+            "destination": "https://elpantanoblog.vercel.app/blog"
         },
         {
             "source": "/blog/:path*",
-            "destination": "https://elpantano-app.vercel.app/blog/:path*"
+            "destination": "https://elpantanoblog.vercel.app/blog/:path*"
         }
     ]
 }
