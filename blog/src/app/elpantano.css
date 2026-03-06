@@ -1058,7 +1058,7 @@ body {
 
 /* Breadcrumb */
 .ep-breadcrumb {
-    max-width: 1440px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-4) var(--container-padding) 0;
     font-size: var(--fs-small);
@@ -1085,9 +1085,9 @@ body {
 
 /* Article header */
 .ep-article-head {
-    max-width: 1440px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: var(--space-5) var(--container-padding) var(--space-6);
+    padding: var(--space-7) var(--container-padding) var(--space-6);
 }
 
 .ep-article-head__cat {
@@ -1101,7 +1101,7 @@ body {
     color: var(--text-primary);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    max-width: 860px;
+    max-width: 720px;
     margin-bottom: var(--space-4);
 }
 
@@ -1109,7 +1109,7 @@ body {
     font-size: clamp(1.05rem, 1.8vw, 1.25rem);
     color: var(--text-secondary);
     line-height: 1.65;
-    max-width: 680px;
+    max-width: 720px;
     margin-bottom: var(--space-5);
     font-style: italic;
 }
@@ -1119,6 +1119,7 @@ body {
     align-items: center;
     gap: var(--space-3);
     flex-wrap: wrap;
+    max-width: 720px;
 }
 
 .ep-article-head__author {
@@ -1195,24 +1196,9 @@ body {
     color: #ffffff;
 }
 
+/* Article hero image - REMOVED */
 .ep-article-hero {
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: var(--space-5);
-    float: left;
-    margin-right: var(--space-5);
-    display: flex;
-    flex-direction: column;
-}
-
-.ep-article-hero__img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: none;
 }
 
 .ep-article-hero__caption {
@@ -1227,10 +1213,10 @@ body {
 .ep-article-wrap {
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--space-6) var(--container-padding) var(--space-8);
+    padding: 0 var(--container-padding) var(--space-8);
     display: grid;
     grid-template-columns: 1fr 360px;
-    gap: clamp(var(--space-6), 6vw, var(--space-8));
+    gap: var(--space-8);
     align-items: start;
 }
 
@@ -1471,7 +1457,7 @@ body {
 
 /* Full author card (below article) */
 .ep-author-card {
-    max-width: 1440px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-7) var(--container-padding) 0;
     border-top: 1px solid var(--ep-border);
@@ -1486,6 +1472,7 @@ body {
     gap: var(--space-5);
     align-items: flex-start;
     max-width: 720px;
+    margin: 0;
 }
 
 .ep-author-card__avatar {

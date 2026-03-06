@@ -172,17 +172,7 @@ export default async function ArticlePage({
                 {/* Article Body + Sidebar */}
                 <div className="ep-article-wrap">
                     <div className="ep-article-col">
-                        {/* Hero Image */}
-                        <div className="ep-article-hero">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={article.featured_image}
-                                alt={article.image_alt || article.title}
-                                className="ep-article-hero__img"
-                                loading="eager"
-                            />
-                            <p className="ep-article-hero__caption">Ilustración: El Pantano / Yacaré</p>
-                        </div>
+
                         {/* In-article ad */}
                         <div className="ep-ad ep-ad--leaderboard" role="complementary" style={{ width: "100%", margin: "var(--space-6) 0" }}>
                             <span className="ep-ad__label">Publicidad</span>
