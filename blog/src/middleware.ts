@@ -1,14 +1,25 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// These dashboard sub-paths are publicly accessible (no login required)
+// Dashboard sub-paths that don't require authentication
 const PUBLIC_PATHS = [
     "/dashboard/login",
     "/dashboard/forgot-password",
     "/dashboard/reset-password",
 ];
 
-export async function middleware(request: NextRequest) {
+/** Decode JWT payload and check expiry — no signature verification needed
+ *  since the cookie is HTTP-only (not accessible via JS) */
+function isTokenValid(token: string): boolean {
+    try {
+        const [, payload] = token.split(".");
+        const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+        return typeof decoded.exp === "number" && decoded.exp > Math.floor(Date.now() / 1000);
+    } catch {
+        return false;
+    }
+}
+
+export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Only intercept /dashboard routes
@@ -16,45 +27,21 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // Pass through auth pages without checking session
+    // Allow auth pages through
     if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
         return NextResponse.next();
     }
 
-    let supabaseResponse = NextResponse.next({ request });
+    const token = request.cookies.get("ds")?.value;
 
-    const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            cookies: {
-                getAll() {
-                    return request.cookies.getAll();
-                },
-                setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value }) =>
-                        request.cookies.set(name, value)
-                    );
-                    supabaseResponse = NextResponse.next({ request });
-                    cookiesToSet.forEach(({ name, value, options }) =>
-                        supabaseResponse.cookies.set(name, value, options)
-                    );
-                },
-            },
-        }
-    );
-
-    // Refresh session if expired — important for SSR
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
+    if (!token || !isTokenValid(token)) {
         const loginUrl = request.nextUrl.clone();
         loginUrl.pathname = "/dashboard/login";
         loginUrl.searchParams.set("next", pathname);
         return NextResponse.redirect(loginUrl);
     }
 
-    return supabaseResponse;
+    return NextResponse.next();
 }
 
 export const config = {

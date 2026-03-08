@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { createAuthBrowserClient } from "@/lib/supabase-auth";
+
 
 const NAV = [
     {
@@ -86,8 +86,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     }, [dark]);
 
     async function handleLogout() {
-        const supabase = createAuthBrowserClient();
-        await supabase.auth.signOut();
+        await fetch("/api/dashboard/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "logout" }),
+        });
         window.location.href = "/dashboard/login";
     }
 

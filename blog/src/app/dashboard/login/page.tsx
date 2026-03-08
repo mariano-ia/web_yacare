@@ -2,7 +2,6 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createAuthBrowserClient } from "@/lib/supabase-auth";
 
 function LoginForm() {
     const router = useRouter();
@@ -19,11 +18,16 @@ function LoginForm() {
         setError("");
         setLoading(true);
 
-        const supabase = createAuthBrowserClient();
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const res = await fetch("/api/dashboard/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "login", email, password }),
+        });
 
-        if (error) {
-            setError("Email o contraseña incorrectos.");
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+            setError(data.error || "Email o contraseña incorrectos.");
             setLoading(false);
             return;
         }
