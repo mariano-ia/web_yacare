@@ -14,7 +14,7 @@ export default function InvitePage() {
         setError("");
         setLoading(true);
 
-        const res = await fetch("/api/dashboard/invite", {
+        const res = await fetch("/blog/api/dashboard/invite", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),

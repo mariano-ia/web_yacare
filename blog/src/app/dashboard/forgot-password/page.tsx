@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { createAuthBrowserClient } from "@/lib/supabase-auth";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.yacare.io/blog";
@@ -95,12 +96,12 @@ export default function ForgotPasswordPage() {
                     )}
 
                     <div style={{ textAlign: "center", marginTop: 20 }}>
-                        <a
+                        <Link
                             href="/dashboard/login"
                             style={{ fontSize: "0.75rem", color: "var(--dash-muted)", textDecoration: "none" }}
                         >
                             ← Volver al login
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

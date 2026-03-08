@@ -86,7 +86,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     }, [dark]);
 
     async function handleLogout() {
-        await fetch("/api/dashboard/auth", {
+        await fetch("/blog/api/dashboard/auth", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ action: "logout" }),

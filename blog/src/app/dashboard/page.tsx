@@ -30,7 +30,7 @@ export default function DashboardPage() {
     const load = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/dashboard/stats");
+            const res = await fetch("/blog/api/dashboard/stats");
             const data = await res.json();
             setStats(data);
         } finally {

@@ -34,8 +34,8 @@ export default function NewPostPage() {
 
     useEffect(() => {
         Promise.all([
-            fetch("/api/dashboard/stats").then(() => null), // warmup
-            fetch("/api/articles?limit=1").then(() => null), // warmup
+            fetch("/blog/api/dashboard/stats").then(() => null), // warmup
+            fetch("/blog/api/articles?limit=1").then(() => null), // warmup
         ]);
         // Load categories and authors directly from Supabase anon key
         const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -90,7 +90,7 @@ export default function NewPostPage() {
                 status: form.status,
             };
 
-            const res = await fetch("/api/articles", {
+            const res = await fetch("/blog/api/articles", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

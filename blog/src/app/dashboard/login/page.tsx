@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 function LoginForm() {
     const router = useRouter();
@@ -18,7 +19,7 @@ function LoginForm() {
         setError("");
         setLoading(true);
 
-        const res = await fetch("/api/dashboard/auth", {
+        const res = await fetch("/blog/api/dashboard/auth", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ action: "login", email, password }),
@@ -77,12 +78,12 @@ function LoginForm() {
             </button>
 
             <div style={{ textAlign: "center" }}>
-                <a
+                <Link
                     href="/dashboard/forgot-password"
                     style={{ fontSize: "0.75rem", color: "var(--dash-muted)", textDecoration: "none" }}
                 >
                     Olvidé mi contraseña
-                </a>
+                </Link>
             </div>
         </form>
     );

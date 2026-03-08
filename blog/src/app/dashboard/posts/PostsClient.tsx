@@ -41,7 +41,7 @@ export function PostsClient({ initialPosts }: { initialPosts: Post[] }) {
     async function toggleHero(post: Post) {
         setLoading(post.id);
         try {
-            const res = await fetch(`/api/dashboard/posts/${post.id}`, {
+            const res = await fetch(`/blog/api/dashboard/posts/${post.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ is_hero: !post.is_hero }),
@@ -65,7 +65,7 @@ export function PostsClient({ initialPosts }: { initialPosts: Post[] }) {
         if (!confirm(`¿Eliminar "${post.title}"? Esta acción no se puede deshacer.`)) return;
         setLoading(post.id);
         try {
-            const res = await fetch(`/api/dashboard/posts/${post.id}`, { method: "DELETE" });
+            const res = await fetch(`/blog/api/dashboard/posts/${post.id}`, { method: "DELETE" });
             if (!res.ok) throw new Error("Error");
             setPosts((prev) => prev.filter((p) => p.id !== post.id));
         } finally {

@@ -68,7 +68,7 @@ export function EditPostClient({ post }: { post: Post }) {
         setError("");
         setSaving(true);
         try {
-            const res = await fetch(`/api/dashboard/posts/${post.id}`, {
+            const res = await fetch(`/blog/api/dashboard/posts/${post.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
