@@ -67,7 +67,7 @@ export function Nav() {
 
         setLoading(true);
         try {
-            const res = await fetch(`/api/search?q=${encodeURIComponent(term)}`);
+            const res = await fetch(`/blog/api/search?q=${encodeURIComponent(term)}`);
             const data = await res.json();
             setResults(data.results ?? []);
         } catch {
