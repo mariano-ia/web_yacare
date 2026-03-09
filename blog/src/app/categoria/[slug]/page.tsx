@@ -8,6 +8,7 @@ import {
     getArticlesByCategory,
     getAllCategorySlugs,
 } from "@/lib/queries";
+
 import { getServerTranslation } from "@/lib/translations";
 
 export const revalidate = 3600;
@@ -27,6 +28,8 @@ export async function generateMetadata({
     if (!category) return {};
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
+    const articles = await getArticlesByCategory(category.slug, 1);
+    const ogImage = articles[0]?.featured_image ?? null;
 
     return {
         title: `${category.name} — El Pantano`,
@@ -39,13 +42,13 @@ export async function generateMetadata({
             description: `Todo sobre ${category.name} en El Pantano.`,
             type: "website",
             url: `${siteUrl}/categoria/${category.slug}`,
-            images: [{ url: `${siteUrl}/og-default.png`, width: 1200, height: 630, alt: `${category.name} — El Pantano` }],
+            ...(ogImage && { images: [{ url: ogImage, width: 1200, height: 630, alt: `${category.name} — El Pantano` }] }),
         },
         twitter: {
             card: "summary_large_image",
             title: `${category.name} — El Pantano`,
             description: `Todo sobre ${category.name} en El Pantano.`,
-            images: [`${siteUrl}/og-default.png`],
+            ...(ogImage && { images: [ogImage] }),
         },
     };
 }

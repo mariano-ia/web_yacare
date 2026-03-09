@@ -19,8 +19,9 @@ import { getServerTranslation } from "@/lib/translations";
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getServerTranslation();
+  const [t, hero] = await Promise.all([getServerTranslation(), getHeroArticle()]);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
+  const ogImage = hero?.featured_image ?? null;
 
   return {
     title: t("meta.title"),
@@ -33,13 +34,13 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t("meta.og_desc"),
       type: "website",
       url: siteUrl,
-      images: [{ url: `${siteUrl}/og-default.png`, width: 1200, height: 630, alt: "El Pantano — Tecnología, Cultura y Opinión" }],
+      ...(ogImage && { images: [{ url: ogImage, width: 1200, height: 630, alt: hero!.title }] }),
     },
     twitter: {
       card: "summary_large_image",
       title: t("meta.og_title"),
       description: t("meta.og_desc"),
-      images: [`${siteUrl}/og-default.png`],
+      ...(ogImage && { images: [ogImage] }),
     },
   };
 }
