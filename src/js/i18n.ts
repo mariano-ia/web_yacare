@@ -100,11 +100,17 @@ function detectLang(): Lang {
     const saved = localStorage.getItem('yacare_lang') as Lang | null;
     if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
 
-    // 2. Use browser/OS language
+    // 2. Check cookie fallback
+    const cookieMatch = document.cookie.match(/(?:^|; )yacare_lang=([^;]*)/);
+    if (cookieMatch && SUPPORTED_LANGS.includes(cookieMatch[1] as Lang)) {
+        return cookieMatch[1] as Lang;
+    }
+
+    // 3. Use browser/OS language
     const browserLang = navigator.language.split('-')[0].toLowerCase() as Lang;
     if (SUPPORTED_LANGS.includes(browserLang)) return browserLang;
 
-    // 3. Fallback to English
+    // 4. Fallback to English
     return 'en';
 }
 
@@ -116,6 +122,7 @@ export async function setLanguage(lang: Lang): Promise<void> {
     }
     currentLang = lang;
     localStorage.setItem('yacare_lang', lang);
+    document.cookie = `yacare_lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
     await loadTranslations(lang);
     applyTranslations();
 
@@ -131,10 +138,15 @@ export function getCurrentLang(): Lang {
 // ── Public: init — detects language and applies translations ──
 export async function initI18n(): Promise<void> {
     currentLang = detectLang();
+
+    // Ensure cookie is in sync with detected language
+    document.cookie = `yacare_lang=${currentLang}; path=/; max-age=31536000; SameSite=Lax`;
+
     await loadTranslations(currentLang);
     applyTranslations();
 
     // Expose on window so inline footer toggle can call without module imports
     (window as any).i18n = { setLanguage, getCurrentLang };
 }
+
 

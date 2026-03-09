@@ -13,31 +13,36 @@ import {
   getArticles,
   getMostReadArticles,
 } from "@/lib/queries";
+import { getServerTranslation } from "@/lib/translations";
 
 // ISR: revalidate every 1 hour as fallback (on-demand revalidation is primary)
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "El Pantano — Tecnología, Cultura y Opinión",
-  description:
-    "El Pantano es una publicación digital de múltiples voces. Tecnología, cultura, IA, análisis y opinión sin filtro.",
-  alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano",
-  },
-  openGraph: {
-    title: "El Pantano",
-    description: "Muchas voces. Un solo charco.",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerTranslation();
+
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+    alternates: {
+      canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano",
+    },
+    openGraph: {
+      title: t("meta.og_title"),
+      description: t("meta.og_desc"),
+      type: "website",
+    },
+  };
+}
 
 export default async function HomePage() {
-  const [hero, featured, latest, allArticles, mostRead] = await Promise.all([
+  const [hero, featured, latest, allArticles, mostRead, t] = await Promise.all([
     getHeroArticle(),
     getFeaturedArticles(2),
     getLatestArticles(3),
     getArticles(20),
     getMostReadArticles(5),
+    getServerTranslation(),
   ]);
 
   return (
@@ -49,7 +54,7 @@ export default async function HomePage() {
 
       {/* Ad Leaderboard */}
       <div className="ep-ad ep-ad--leaderboard" role="complementary">
-        <span className="ep-ad__label">Publicidad</span>
+        <span className="ep-ad__label">{t("sections.ad")}</span>
         <div className="ep-ad__slot">728 × 90</div>
       </div>
 
@@ -61,7 +66,7 @@ export default async function HomePage() {
             {/* Featured pair */}
             <div className="ep-section-head">
               <span className="ep-section-head__bar ep-section-head__bar--white" />
-              <span className="ep-section-head__label">Destacados</span>
+              <span className="ep-section-head__label">{t("sections.featured")}</span>
             </div>
             <div className="ep-featured-pair">
               {featured.map((article) => (
@@ -72,8 +77,8 @@ export default async function HomePage() {
             {/* Latest */}
             <div className="ep-section-head">
               <span className="ep-section-head__bar ep-section-head__bar--green" />
-              <span className="ep-section-head__label">Lo último</span>
-              <Link href="/categoria/tecnologia" className="ep-section-head__more">Ver todo →</Link>
+              <span className="ep-section-head__label">{t("sections.latest")}</span>
+              <Link href="/categoria/tecnologia" className="ep-section-head__more">{t("sections.see_all")}</Link>
             </div>
             <div className="ep-card-grid" style={{ marginBottom: "var(--space-6)" }}>
               {latest.map((article) => (
@@ -83,14 +88,14 @@ export default async function HomePage() {
 
             {/* In-feed ad */}
             <div className="ep-ad ep-ad--infeed" role="complementary">
-              <span className="ep-ad__label">Publicidad</span>
-              <div className="ep-ad__slot">In-feed · Responsive</div>
+              <span className="ep-ad__label">{t("sections.ad")}</span>
+              <div className="ep-ad__slot">{t("sections.infeed")}</div>
             </div>
 
             {/* Explore with category filter */}
             <div className="ep-section-head" style={{ marginTop: "var(--space-5)" }}>
               <span className="ep-section-head__bar ep-section-head__bar--purple" />
-              <span className="ep-section-head__label">Explorar</span>
+              <span className="ep-section-head__label">{t("sections.explore")}</span>
             </div>
             <CategoryFilter articles={allArticles} />
           </div>

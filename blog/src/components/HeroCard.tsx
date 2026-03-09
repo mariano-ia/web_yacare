@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import type { ArticleWithRelations } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 
 export function HeroCard({ article }: { article: ArticleWithRelations }) {
+    const { t, lang } = useI18n();
+
     return (
         <Link href={`/${article.slug}`} className="ep-hero">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -17,7 +22,7 @@ export function HeroCard({ article }: { article: ArticleWithRelations }) {
             <div className="ep-hero__content">
                 <div className="ep-hero__cat">
                     <span className={`ep-cat ep-cat--${article.category.color}`}>
-                        {article.category.name}
+                        {t(`categories.${article.category.slug}`) || article.category.name}
                     </span>
                 </div>
                 <h1 className="ep-hero__title">{article.title}</h1>
@@ -28,9 +33,9 @@ export function HeroCard({ article }: { article: ArticleWithRelations }) {
                     </div>
                     <span className="ep-hero__author-name">{article.author.name}</span>
                     <span className="ep-hero__dot" aria-hidden="true" />
-                    <span className="ep-hero__date">{formatDate(article.published_at)}</span>
+                    <span className="ep-hero__date">{formatDate(article.published_at, lang)}</span>
                     <span className="ep-hero__dot" aria-hidden="true" />
-                    <span className="ep-hero__date">{article.reading_time} min de lectura</span>
+                    <span className="ep-hero__date">{article.reading_time} {t("article.reading_time")}</span>
                 </div>
             </div>
         </Link>

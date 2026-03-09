@@ -12,6 +12,7 @@ import {
     getAllArticleSlugs,
     getRelatedArticles,
 } from "@/lib/queries";
+import { getServerTranslation, getServerLang } from "@/lib/translations";
 
 // ISR: revalidate every 1 hour as fallback
 export const revalidate = 3600;
@@ -69,6 +70,8 @@ export default async function ArticlePage({
     if (!article) notFound();
 
     const related = await getRelatedArticles(article.category_id, article.slug, 3);
+    const t = await getServerTranslation();
+    const lang = await getServerLang();
 
     // JSON-LD structured data
     const jsonLd = {
@@ -120,10 +123,10 @@ export default async function ArticlePage({
 
             <main>
                 {/* Breadcrumb */}
-                <nav className="ep-breadcrumb" aria-label="Ubicación">
+                <nav className="ep-breadcrumb" aria-label={t("article.location")}>
                     <Link href="/">El Pantano</Link>
                     <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
-                    <Link href={`/categoria/${article.category.slug}`}>{article.category.name}</Link>
+                    <Link href={`/categoria/${article.category.slug}`}>{t(`categories.${article.category.slug}`) || article.category.name}</Link>
                     <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
                     <span>{article.title}</span>
                 </nav>
@@ -135,7 +138,7 @@ export default async function ArticlePage({
                             href={`/categoria/${article.category.slug}`}
                             className={`ep-cat ep-cat--${article.category.color}`}
                         >
-                            {article.category.name}
+                            {t(`categories.${article.category.slug}`) || article.category.name}
                         </Link>
                     </div>
                     <h1 className="ep-article-head__title">{article.title}</h1>
@@ -149,18 +152,18 @@ export default async function ArticlePage({
                         </div>
                         <span className="ep-meta-dot" aria-hidden="true" />
                         <time className="ep-meta-text" dateTime={article.published_at}>
-                            {formatDateLong(article.published_at)}
+                            {formatDateLong(article.published_at, lang)}
                         </time>
                         <span className="ep-meta-dot" aria-hidden="true" />
-                        <span className="ep-meta-text">{article.reading_time} min de lectura</span>
+                        <span className="ep-meta-text">{article.reading_time} {t("article.reading_time")}</span>
 
-                        <div className="ep-article-head__share" aria-label="Compartir artículo">
-                            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label="Compartir en Twitter/X">
+                        <div className="ep-article-head__share" aria-label={t("article.share_article")}>
+                            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_twitter")}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                 </svg>
                             </a>
-                            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label="Compartir en LinkedIn">
+                            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_linkedin")}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                 </svg>
@@ -176,20 +179,22 @@ export default async function ArticlePage({
 
                         {/* In-article ad */}
                         <div className="ep-ad ep-ad--leaderboard" role="complementary" style={{ width: "100%", margin: "var(--space-6) 0" }}>
-                            <span className="ep-ad__label">Publicidad</span>
+                            <span className="ep-ad__label">{t("sections.ad")}</span>
                             <div className="ep-ad__slot">728 × 90</div>
                         </div>
                         {/* Article content */}
                         <div
                             className="ep-prose"
-                            dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content, {
-                                allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h1", "h2", "h3", "h4", "h5", "h6"]),
-                                allowedAttributes: {
-                                    ...sanitizeHtml.defaults.allowedAttributes,
-                                    "img": ["src", "alt", "class", "width", "height"],
-                                    "*": ["class", "id"],
-                                },
-                            }) }}
+                            dangerouslySetInnerHTML={{
+                                __html: sanitizeHtml(article.content, {
+                                    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "h1", "h2", "h3", "h4", "h5", "h6"]),
+                                    allowedAttributes: {
+                                        ...sanitizeHtml.defaults.allowedAttributes,
+                                        "img": ["src", "alt", "class", "width", "height"],
+                                        "*": ["class", "id"],
+                                    },
+                                })
+                            }}
                         />
                     </div>
 
@@ -211,7 +216,7 @@ export default async function ArticlePage({
 
                         {/* Ad */}
                         <div className="ep-ad ep-ad--mrect" role="complementary">
-                            <span className="ep-ad__label">Publicidad</span>
+                            <span className="ep-ad__label">{t("sections.ad")}</span>
                             <div className="ep-ad__slot">300 × 250</div>
                         </div>
                     </aside>
@@ -224,7 +229,7 @@ export default async function ArticlePage({
                             {article.author.avatar_initial}
                         </div>
                         <div>
-                            <div className="ep-author-card__label">Autor/a</div>
+                            <div className="ep-author-card__label">{t("article.author")}</div>
                             <div className="ep-author-card__name">{article.author.name}</div>
                             <div className="ep-author-card__role">{article.author.role}</div>
                             <p className="ep-author-card__bio">{article.author.bio}</p>
@@ -237,7 +242,7 @@ export default async function ArticlePage({
                     <div className="ep-related">
                         <div className="ep-section-head" style={{ marginBottom: "var(--space-6)" }}>
                             <span className="ep-section-head__bar ep-section-head__bar--green" />
-                            <span className="ep-section-head__label">Más de El Pantano</span>
+                            <span className="ep-section-head__label">{t("article.more_from")}</span>
                         </div>
                         <div className="ep-card-grid">
                             {related.map((r) => (

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Antonio, Figtree, IBM_Plex_Serif } from "next/font/google";
+import { cookies, headers } from "next/headers";
+import { I18nProvider } from "@/lib/i18n";
 import "./globals.css";
 import "./elpantano.css";
 
@@ -25,37 +27,58 @@ const ibmPlexSerif = IBM_Plex_Serif({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano"
-  ),
-  title: {
-    default: "El Pantano — Tecnología, Cultura y Opinión",
-    template: "%s — El Pantano",
-  },
-  description:
-    "El Pantano es una publicación digital de múltiples voces. Tecnología, cultura, IA, análisis y opinión sin filtro.",
-  openGraph: {
-    type: "website",
-    locale: "es_AR",
-    siteName: "El Pantano",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: "/favicon.svg",
-  },
-};
+import { getServerTranslation, getServerLang } from "@/lib/translations";
 
-export default function RootLayout({
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerTranslation();
+  const lang = await getServerLang();
+
+  return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano"
+    ),
+    title: {
+      default: t("meta.title"),
+      template: "%s — El Pantano",
+    },
+    description: t("meta.description"),
+    openGraph: {
+      type: "website",
+      locale: lang === "es" ? "es_AR" : "en_US",
+      siteName: "El Pantano",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    icons: {
+      icon: "/favicon.svg",
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 1. Check cookie
+  const cookieStore = await cookies();
+  let lang = cookieStore.get("yacare_lang")?.value;
+
+  // 2. Check Accept-Language
+  if (!lang || !["en", "es"].includes(lang)) {
+    const headersList = await headers();
+    const acceptLang = headersList.get("accept-language");
+    if (acceptLang?.toLowerCase().includes("es")) {
+      lang = "es";
+    } else {
+      lang = "en";
+    }
+  }
+
   return (
-    <html lang="es" className={`${antonio.variable} ${figtree.variable} ${ibmPlexSerif.variable}`}>
+    <html lang={lang as string} className={`${antonio.variable} ${figtree.variable} ${ibmPlexSerif.variable}`}>
       <head>
         <meta name="color-scheme" content="dark" />
         {/* Google Analytics */}
@@ -82,7 +105,11 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="ep-page">{children}</body>
+      <body className="ep-page">
+        <I18nProvider initialLang={lang as "es" | "en"}>
+          {children}
+        </I18nProvider>
+      </body>
     </html>
   );
 }

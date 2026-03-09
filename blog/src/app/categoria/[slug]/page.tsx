@@ -8,6 +8,7 @@ import {
     getArticlesByCategory,
     getAllCategorySlugs,
 } from "@/lib/queries";
+import { getServerTranslation } from "@/lib/translations";
 
 export const revalidate = 3600;
 
@@ -49,6 +50,7 @@ export default async function CategoryPage({
     if (!category) notFound();
 
     const articles = await getArticlesByCategory(slug);
+    const t = await getServerTranslation();
 
     return (
         <>
@@ -59,12 +61,12 @@ export default async function CategoryPage({
                     <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 var(--space-4)" }}>
                         <div className="ep-section-head" style={{ marginBottom: "var(--space-6)" }}>
                             <span className={`ep-section-head__bar ep-section-head__bar--green`} />
-                            <span className="ep-section-head__label">{category.name}</span>
+                            <span className="ep-section-head__label">{t(`categories.${category.slug}`) || category.name}</span>
                         </div>
 
                         {articles.length === 0 ? (
                             <p style={{ color: "rgba(255,255,255,0.5)", textAlign: "center", padding: "var(--space-8) 0" }}>
-                                No hay artículos en esta categoría todavía.
+                                {t("sections.category_empty")}
                             </p>
                         ) : (
                             <div className="ep-card-grid">

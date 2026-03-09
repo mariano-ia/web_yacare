@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const CATEGORIES = [
     { name: "Tecnología", slug: "tecnologia" },
@@ -27,6 +28,7 @@ interface SearchResult {
 }
 
 export function Nav() {
+    const { t } = useI18n();
     const [searchOpen, setSearchOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
@@ -89,7 +91,7 @@ export function Nav() {
                     <div className="ep-nav__cats">
                         {CATEGORIES.map((cat) => (
                             <Link key={cat.slug} href={`/categoria/${cat.slug}`} className={`ep-nav__cat ep-nav__cat--${cat.slug}`}>
-                                {cat.name}
+                                {t(`categories.${cat.slug}`)}
                             </Link>
                         ))}
                     </div>
@@ -126,7 +128,7 @@ export function Nav() {
                             className={`ep-nav__mobile-link ep-nav__cat--${cat.slug}`}
                             onClick={() => setMenuOpen(false)}
                         >
-                            {cat.name}
+                            {t(`categories.${cat.slug}`)}
                         </Link>
                     ))}
                 </div>
@@ -147,13 +149,13 @@ export function Nav() {
                             ref={inputRef}
                             type="search"
                             className="ep-search-bar__input"
-                            placeholder="Buscar en El Pantano…"
+                            placeholder={t('nav.search')}
                             autoComplete="off"
                             aria-label="Buscar"
                             value={query}
                             onChange={(e) => handleInputChange(e.target.value)}
                         />
-                        <button className="ep-search-bar__close" aria-label="Cerrar búsqueda" onClick={() => { setSearchOpen(false); setQuery(""); setResults([]); }}>
+                        <button className="ep-search-bar__close" aria-label={t('nav.close')} onClick={() => { setSearchOpen(false); setQuery(""); setResults([]); }}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18" />
                                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -165,11 +167,11 @@ export function Nav() {
                     {query.length >= 2 && (
                         <div className="ep-search-results">
                             {loading && (
-                                <div className="ep-search-results__loading">Buscando…</div>
+                                <div className="ep-search-results__loading">{t('nav.loading')}</div>
                             )}
                             {!loading && results.length === 0 && (
                                 <div className="ep-search-results__empty">
-                                    No se encontraron resultados para &ldquo;{query}&rdquo;
+                                    {t('nav.no_results')} &ldquo;{query}&rdquo;
                                 </div>
                             )}
                             {!loading && results.map((r) => (
@@ -188,7 +190,7 @@ export function Nav() {
                         </div>
                     )}
 
-                    <span className="ep-search-hint">ESC para cerrar</span>
+                    <span className="ep-search-hint">{t('nav.esc')}</span>
                 </div>
             </div>
         </>

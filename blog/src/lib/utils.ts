@@ -1,5 +1,5 @@
 // src/lib/utils.ts
-export function formatDate(dateStr: string): string {
+export function formatDate(dateStr: string, lang: string = "es"): string {
     if (!dateStr) return "";
     const cleanDateStr = dateStr.trim();
     const d = new Date(cleanDateStr);
@@ -8,14 +8,16 @@ export function formatDate(dateStr: string): string {
         return cleanDateStr; // Fallback to raw string if invalid
     }
 
-    return d.toLocaleDateString("es-AR", {
+    const locale = lang === "es" ? "es-AR" : "en-US";
+
+    return d.toLocaleDateString(locale, {
         day: "numeric",
         month: "short",
         year: "numeric"
     });
 }
 
-export function formatDateLong(dateStr: string): string {
+export function formatDateLong(dateStr: string, lang: string = "es"): string {
     if (!dateStr) return "";
     const cleanDateStr = dateStr.trim();
     const d = new Date(cleanDateStr);
@@ -24,7 +26,9 @@ export function formatDateLong(dateStr: string): string {
         return cleanDateStr;
     }
 
-    return d.toLocaleDateString("es-AR", {
+    const locale = lang === "es" ? "es-AR" : "en-US";
+
+    return d.toLocaleDateString(locale, {
         day: "numeric",
         month: "long",
         year: "numeric"

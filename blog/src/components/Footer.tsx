@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 export function Footer() {
+    const { t } = useI18n();
     return (
         <footer className="ep-footer">
             <div className="ep-footer__inner">
@@ -8,7 +12,7 @@ export function Footer() {
                     <div className="ep-footer__brand">
                         <Link href="/" className="ep-footer__logo">El Pantano</Link>
                         <p className="ep-footer__tagline">
-                            Muchas voces. Un solo charco. Tecnología, cultura, IA y opinión sin filtro corporativo.
+                            {t("footer.tagline")}
                         </p>
                     </div>
                     <div className="ep-footer__social">
@@ -32,11 +36,11 @@ export function Footer() {
                 <div className="ep-footer__bottom">
                     <div className="ep-footer__legal">
                         <span>© 2026 El Pantano</span>
-                        <a href="https://yacare.io/privacy-policy.html" className="ep-footer__link" style={{ opacity: 0.6, margin: 0 }}>Privacidad</a>
-                        <a href="https://yacare.io/terms-and-conditions.html" className="ep-footer__link" style={{ opacity: 0.6, margin: 0 }}>Términos</a>
+                        <a href="https://yacare.io/privacy-policy.html" className="ep-footer__link" style={{ opacity: 0.6, margin: 0 }}>{t("footer.privacy")}</a>
+                        <a href="https://yacare.io/terms-and-conditions.html" className="ep-footer__link" style={{ opacity: 0.6, margin: 0 }}>{t("footer.terms")}</a>
                     </div>
                     <div className="ep-footer__yacare">
-                        <span className="ep-footer__yacare-text">Un editorial de</span>
+                        <span className="ep-footer__yacare-text">{t("footer.editorial")}</span>
                         <a href="https://yacare.io" className="ep-footer__yacare-link" title="Yacaré — Boutique Digital Product Agency">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src="https://yacare.io/logo_yacare.svg" alt="Yacaré" className="ep-footer__yacare-img" />

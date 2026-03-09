@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { ArticleWithRelations } from "@/lib/types";
+import { useI18n } from "@/lib/i18n";
 
 export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
+    const { t } = useI18n();
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [message, setMessage] = useState("");
@@ -14,7 +16,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
 
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setStatus("error");
-            setMessage("Ingresá un email válido.");
+            setMessage(t("sidebar.newsletter_invalid_email"));
             return;
         }
 
@@ -28,15 +30,15 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
             const data = await res.json();
             if (data.success) {
                 setStatus("success");
-                setMessage(data.message || "¡Suscripción confirmada!");
+                setMessage(data.message || t("sidebar.newsletter_success"));
                 setEmail("");
             } else {
                 setStatus("error");
-                setMessage(data.error || "Hubo un error. Intentá de nuevo.");
+                setMessage(data.error || t("sidebar.newsletter_error"));
             }
         } catch {
             setStatus("error");
-            setMessage("Error de conexión. Intentá de nuevo.");
+            setMessage(t("sidebar.newsletter_error"));
         }
     };
 
@@ -44,12 +46,12 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
         <aside className="ep-sidebar">
             {/* Newsletter */}
             <div className="ep-sidebar__box">
-                <div className="ep-newsletter__eyebrow">Newsletter</div>
+                <div className="ep-newsletter__eyebrow">{t("sidebar.newsletter_eyebrow")}</div>
                 <h3 className="ep-newsletter__title">
-                    El Pantano directo<br />a tu casilla.
+                    {t("sidebar.newsletter_title_1")}<br />{t("sidebar.newsletter_title_2")}
                 </h3>
                 <p className="ep-newsletter__desc">
-                    Una vez por semana. Lo más leído, lo más debatido, sin algoritmo de por medio.
+                    {t("sidebar.newsletter_desc")}
                 </p>
                 {status === "success" ? (
                     <div className="ep-newsletter__success">
@@ -63,7 +65,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
                         <input
                             type="email"
                             className="ep-newsletter__input"
-                            placeholder="tu@email.com"
+                            placeholder={t("sidebar.newsletter_placeholder")}
                             aria-label="Email para newsletter"
                             value={email}
                             onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }}
@@ -74,7 +76,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
                             className="ep-newsletter__btn"
                             disabled={status === "loading"}
                         >
-                            {status === "loading" ? "Enviando…" : "Suscribirme"}
+                            {status === "loading" ? t("sidebar.newsletter_sending") : t("sidebar.newsletter_subscribe")}
                         </button>
                         {status === "error" && (
                             <p className="ep-newsletter__error">{message}</p>
@@ -87,7 +89,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
             <div className="ep-sidebar__box">
                 <div className="ep-section-head" style={{ marginBottom: "var(--space-4)", paddingBottom: "var(--space-3)" }}>
                     <span className="ep-section-head__bar ep-section-head__bar--amber" />
-                    <span className="ep-section-head__label" style={{ fontSize: "0.85rem" }}>Más leídos</span>
+                    <span className="ep-section-head__label" style={{ fontSize: "0.85rem" }}>{t("sidebar.trending")}</span>
                 </div>
                 <nav className="ep-trending" aria-label="Artículos más leídos">
                     {trending.slice(0, 5).map((article, i) => (
@@ -108,7 +110,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
 
             {/* Ad placeholder — will be replaced by AdSense */}
             <div className="ep-ad ep-ad--mrect" role="complementary" id="sidebar-ad">
-                <span className="ep-ad__label">Publicidad</span>
+                <span className="ep-ad__label">{t("sections.ad")}</span>
                 <div className="ep-ad__slot">300 × 250</div>
             </div>
         </aside>
