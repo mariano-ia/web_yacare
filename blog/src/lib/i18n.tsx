@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { defaultTranslations } from "./translations";
+import { defaultTranslations } from "./dictionaries";
 
 type Lang = "en" | "es";
 
