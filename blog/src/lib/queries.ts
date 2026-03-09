@@ -332,3 +332,24 @@ export async function getAllArticlesForSitemap(): Promise<
     if (error) throw error;
     return data ?? [];
 }
+
+/** Get articles published in the last 48h for Google News sitemap */
+export async function getRecentArticlesForNewsSitemap(): Promise<
+    { slug: string; title: string; published_at: string; keywords: string[] }[]
+> {
+    const sb = ensureClient();
+    if (!sb) return [];
+
+    const cutoff = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+
+    const { data, error } = await sb
+        .from("articles")
+        .select("slug, title, published_at, keywords")
+        .eq("status", "published")
+        .gte("published_at", cutoff)
+        .order("published_at", { ascending: false })
+        .limit(1000);
+
+    if (error) throw error;
+    return data ?? [];
+}

@@ -64,6 +64,9 @@ export async function generateMetadata({
             "article:author": article.author.name,
             "article:published_time": article.published_at,
             "article:section": article.category.name,
+            ...(article.keywords?.length && {
+                "news_keywords": article.keywords.join(", "),
+            }),
         },
     };
 }
