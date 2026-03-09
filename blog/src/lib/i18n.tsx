@@ -63,7 +63,7 @@ export const I18nProvider = ({
         };
         window.addEventListener("storage", handleStorage);
         return () => window.removeEventListener("storage", handleStorage);
-    }, [lang]);
+    }, []);
 
     const t = (key: string) => {
         const keys = key.split(".");

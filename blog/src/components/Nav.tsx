@@ -28,7 +28,7 @@ interface SearchResult {
 }
 
 export function Nav() {
-    const { t } = useI18n();
+    const { t, lang, setLang } = useI18n();
     const [searchOpen, setSearchOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
@@ -96,6 +96,13 @@ export function Nav() {
                         ))}
                     </div>
                     <div className="ep-nav__actions">
+                        <button
+                            className="ep-nav__lang"
+                            onClick={() => setLang(lang === "es" ? "en" : "es")}
+                            aria-label={lang === "es" ? "Switch to English" : "Cambiar a Español"}
+                        >
+                            {lang === "es" ? "EN" : "ES"}
+                        </button>
                         <button className="ep-nav__search" aria-label="Buscar" onClick={() => setSearchOpen(true)}>
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="11" cy="11" r="8" />

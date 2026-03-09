@@ -284,6 +284,25 @@ body {
     color: #ffffff;
 }
 
+.ep-nav__lang {
+    height: 32px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background: none;
+    border: 1px solid var(--ep-border);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    transition: all 0.2s ease;
+}
+
+.ep-nav__lang:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
 .ep-nav__toggle {
     display: none;
     background: none;
