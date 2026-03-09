@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import type { ArticleWithRelations } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
@@ -11,12 +12,13 @@ export function HeroCard({ article }: { article: ArticleWithRelations }) {
 
     return (
         <Link href={`/${article.slug}`} className="ep-hero">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
                 src={article.featured_image}
                 alt={article.image_alt || article.title}
                 className="ep-hero__img"
-                loading="eager"
+                width={1200}
+                height={550}
+                priority
             />
             <div className="ep-hero__overlay" aria-hidden="true" />
             <div className="ep-hero__content">

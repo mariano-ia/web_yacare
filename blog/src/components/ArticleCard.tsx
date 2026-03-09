@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import type { ArticleWithRelations } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
@@ -20,12 +21,12 @@ export function ArticleCard({
         return (
             <Link href={`/${article.slug}`} className="ep-card ep-card--compact">
                 <div className="ep-card__thumb">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                         src={article.featured_image}
                         alt={article.image_alt || article.title}
+                        fill
                         className="ep-card__img"
-                        loading="lazy"
+                        sizes="80px"
                     />
                 </div>
                 <div>
@@ -45,12 +46,12 @@ export function ArticleCard({
             data-cat={article.category.color}
         >
             <div className="ep-card__thumb">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                     src={article.featured_image}
                     alt={article.image_alt || article.title}
+                    fill
                     className="ep-card__img"
-                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
             </div>
             <div className="ep-card__cat">

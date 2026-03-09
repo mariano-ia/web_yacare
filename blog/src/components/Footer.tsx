@@ -42,8 +42,9 @@ export function Footer() {
                     <div className="ep-footer__yacare">
                         <span className="ep-footer__yacare-text">{t("footer.editorial")}</span>
                         <a href="https://yacare.io" className="ep-footer__yacare-link" title="Yacaré — Boutique Digital Product Agency">
+                            {/* SVG logo — next/image doesn't optimize SVGs, plain img with explicit dimensions prevents CLS */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="https://yacare.io/logo_yacare.svg" alt="Yacaré" className="ep-footer__yacare-img" />
+                            <img src="https://yacare.io/logo_yacare.svg" alt="Yacaré" className="ep-footer__yacare-img" width={80} height={18} />
                         </a>
                     </div>
                 </div>

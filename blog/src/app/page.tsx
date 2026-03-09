@@ -20,17 +20,26 @@ export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerTranslation();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
 
   return {
     title: t("meta.title"),
     description: t("meta.description"),
     alternates: {
-      canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano",
+      canonical: siteUrl,
     },
     openGraph: {
       title: t("meta.og_title"),
       description: t("meta.og_desc"),
       type: "website",
+      url: siteUrl,
+      images: [{ url: `${siteUrl}/og-default.png`, width: 1200, height: 630, alt: "El Pantano — Tecnología, Cultura y Opinión" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("meta.og_title"),
+      description: t("meta.og_desc"),
+      images: [`${siteUrl}/og-default.png`],
     },
   };
 }
@@ -45,8 +54,34 @@ export default async function HomePage() {
     getServerTranslation(),
   ]);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
+
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "El Pantano",
+    url: siteUrl,
+    description: t("meta.description"),
+    potentialAction: {
+      "@type": "SearchAction",
+      target: { "@type": "EntryPoint", urlTemplate: `${siteUrl}/?q={search_term_string}` },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const organizationLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "El Pantano",
+    url: siteUrl,
+    logo: { "@type": "ImageObject", url: `${siteUrl}/favicon.svg` },
+    sameAs: ["https://yacare.io"],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
       <Nav />
 
       {/* Hero */}
@@ -66,7 +101,7 @@ export default async function HomePage() {
             {/* Featured pair */}
             <div className="ep-section-head">
               <span className="ep-section-head__bar ep-section-head__bar--white" />
-              <span className="ep-section-head__label">{t("sections.featured")}</span>
+              <h2 className="ep-section-head__label">{t("sections.featured")}</h2>
             </div>
             <div className="ep-featured-pair">
               {featured.map((article) => (
@@ -77,7 +112,7 @@ export default async function HomePage() {
             {/* Latest */}
             <div className="ep-section-head">
               <span className="ep-section-head__bar ep-section-head__bar--green" />
-              <span className="ep-section-head__label">{t("sections.latest")}</span>
+              <h2 className="ep-section-head__label">{t("sections.latest")}</h2>
               <Link href="/categoria/tecnologia" className="ep-section-head__more">{t("sections.see_all")}</Link>
             </div>
             <div className="ep-card-grid" style={{ marginBottom: "var(--space-6)" }}>
@@ -95,7 +130,7 @@ export default async function HomePage() {
             {/* Explore with category filter */}
             <div className="ep-section-head" style={{ marginTop: "var(--space-5)" }}>
               <span className="ep-section-head__bar ep-section-head__bar--purple" />
-              <span className="ep-section-head__label">{t("sections.explore")}</span>
+              <h2 className="ep-section-head__label">{t("sections.explore")}</h2>
             </div>
             <CategoryFilter articles={allArticles} />
           </div>

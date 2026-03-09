@@ -833,6 +833,7 @@ body {
 }
 
 .ep-card__thumb {
+    position: relative;
     overflow: hidden;
     border-radius: 8px;
     background: var(--ep-bg-surface);
@@ -961,6 +962,7 @@ body {
 }
 
 .ep-card--compact .ep-card__thumb {
+    position: relative;
     width: 76px;
     height: 56px;
     flex-shrink: 0;

@@ -26,16 +26,26 @@ export async function generateMetadata({
     const category = await getCategoryBySlug(slug);
     if (!category) return {};
 
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
+
     return {
         title: `${category.name} — El Pantano`,
         description: `Artículos de ${category.name} en El Pantano. Tecnología, cultura, IA y opinión sin filtro.`,
         alternates: {
-            canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/categoria/${category.slug}`,
+            canonical: `${siteUrl}/categoria/${category.slug}`,
         },
         openGraph: {
             title: `${category.name} — El Pantano`,
             description: `Todo sobre ${category.name} en El Pantano.`,
             type: "website",
+            url: `${siteUrl}/categoria/${category.slug}`,
+            images: [{ url: `${siteUrl}/og-default.png`, width: 1200, height: 630, alt: `${category.name} — El Pantano` }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${category.name} — El Pantano`,
+            description: `Todo sobre ${category.name} en El Pantano.`,
+            images: [`${siteUrl}/og-default.png`],
         },
     };
 }
@@ -61,7 +71,7 @@ export default async function CategoryPage({
                     <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 var(--space-4)" }}>
                         <div className="ep-section-head" style={{ marginBottom: "var(--space-6)" }}>
                             <span className={`ep-section-head__bar ep-section-head__bar--green`} />
-                            <span className="ep-section-head__label">{t(`categories.${category.slug}`) || category.name}</span>
+                            <h1 className="ep-section-head__label">{t(`categories.${category.slug}`) || category.name}</h1>
                         </div>
 
                         {articles.length === 0 ? (

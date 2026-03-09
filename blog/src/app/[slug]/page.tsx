@@ -47,10 +47,18 @@ export async function generateMetadata({
             description: article.excerpt,
             type: "article",
             url: `${siteUrl}/${article.slug}`,
-            images: article.featured_image ? [{ url: article.featured_image }] : [],
+            images: article.featured_image
+                ? [{ url: article.featured_image, width: 1200, height: 630, alt: article.title }]
+                : [],
             publishedTime: article.published_at,
             authors: [article.author.name],
             section: article.category.name,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: article.title,
+            description: article.excerpt,
+            images: article.featured_image ? [article.featured_image] : [],
         },
         other: {
             "article:author": article.author.name,
