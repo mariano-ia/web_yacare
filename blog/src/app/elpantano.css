@@ -1584,10 +1584,107 @@ body {
     margin: 0;
 }
 
+/* ── Author page ── */
+.ep-author-page__header {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding: var(--space-8) 0 var(--space-7);
+    border-bottom: 1px solid var(--ep-border);
+}
+
+.ep-author-page__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 2px solid var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: var(--fw-bold);
+    color: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+.ep-author-page__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: var(--fw-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    line-height: 1.15;
+}
+
+.ep-author-page__role {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-4);
+}
+
+.ep-author-page__bio {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    max-width: 600px;
+    margin: 0;
+}
+
+@media (max-width: 560px) {
+    .ep-author-page__header {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+}
+
 @media (max-width: 560px) {
     .ep-author-card__inner {
         flex-direction: column;
     }
+}
+
+/* ── FAQ section ── */
+.ep-faq {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: var(--space-7) var(--container-padding);
+    border-top: 1px solid var(--ep-border);
+}
+
+.ep-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 720px;
+    margin: 0;
+    padding: 0;
+}
+
+.ep-faq__item {
+    background: var(--ep-bg-raised);
+    border: 1px solid var(--ep-border);
+    border-radius: 12px;
+    padding: var(--space-5);
+}
+
+.ep-faq__question {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+}
+
+.ep-faq__answer {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    margin: 0;
 }
 
 .ep-related {

@@ -17,6 +17,11 @@ export interface Category {
     color: string; // CSS class suffix: "tecnologia", "ia", "opinion", etc.
 }
 
+export interface FaqItem {
+    question: string;
+    answer: string;
+}
+
 export interface Article {
     id: string;
     title: string;
@@ -30,6 +35,7 @@ export interface Article {
     published_at: string;
     reading_time: number;
     keywords: string[];
+    faq: FaqItem[];
     is_featured: boolean;
     is_hero: boolean;
     status: "draft" | "published";

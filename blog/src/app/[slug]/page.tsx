@@ -87,7 +87,12 @@ export default async function ArticlePage({
         "@type": "Article",
         headline: article.title,
         description: article.excerpt,
-        author: { "@type": "Person", name: article.author.name },
+        author: {
+            "@type": "Person",
+            name: article.author.name,
+            url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog"}/autor/${article.author.slug}`,
+            jobTitle: article.author.role,
+        },
         publisher: {
             "@type": "Organization",
             name: "El Pantano",
@@ -99,6 +104,18 @@ export default async function ArticlePage({
         keywords: article.keywords,
         image: article.featured_image,
     };
+
+    const faqLd = article.faq?.length
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: article.faq.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: { "@type": "Answer", text: item.answer },
+            })),
+        }
+        : null;
 
     const breadcrumbLd = {
         "@context": "https://schema.org",
@@ -152,12 +169,12 @@ export default async function ArticlePage({
                     <h1 className="ep-article-head__title">{article.title}</h1>
                     <p className="ep-article-head__standfirst">{article.excerpt}</p>
                     <div className="ep-article-head__meta">
-                        <div className="ep-article-head__author">
+                        <Link href={`/autor/${article.author.slug}`} className="ep-article-head__author">
                             <div className="ep-article-head__avatar" aria-hidden="true">
                                 {article.author.avatar_initial}
                             </div>
                             <span className="ep-article-head__author-name">{article.author.name}</span>
-                        </div>
+                        </Link>
                         <span className="ep-meta-dot" aria-hidden="true" />
                         <time className="ep-meta-text" dateTime={article.published_at}>
                             {formatDateLong(article.published_at, lang)}
@@ -238,12 +255,30 @@ export default async function ArticlePage({
                         </div>
                         <div>
                             <div className="ep-author-card__label">{t("article.author")}</div>
-                            <div className="ep-author-card__name">{article.author.name}</div>
+                            <Link href={`/autor/${article.author.slug}`} className="ep-author-card__name" style={{ textDecoration: "none", color: "inherit" }}>{article.author.name}</Link>
                             <div className="ep-author-card__role">{article.author.role}</div>
                             <p className="ep-author-card__bio">{article.author.bio}</p>
                         </div>
                     </div>
                 </div>
+
+                {/* FAQ section */}
+                {article.faq?.length > 0 && (
+                    <div className="ep-faq">
+                        <div className="ep-section-head" style={{ marginBottom: "var(--space-5)" }}>
+                            <span className="ep-section-head__bar ep-section-head__bar--purple" />
+                            <h2 className="ep-section-head__label">Preguntas frecuentes</h2>
+                        </div>
+                        <dl className="ep-faq__list">
+                            {article.faq.map((item, i) => (
+                                <div key={i} className="ep-faq__item">
+                                    <dt className="ep-faq__question">{item.question}</dt>
+                                    <dd className="ep-faq__answer">{item.answer}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </div>
+                )}
 
                 {/* Related posts */}
                 {related.length > 0 && (
@@ -270,6 +305,12 @@ export default async function ArticlePage({
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
             />
+            {faqLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+                />
+            )}
 
             <Footer />
         </>

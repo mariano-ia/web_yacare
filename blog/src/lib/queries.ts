@@ -278,6 +278,45 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
     return (data as Author) ?? null;
 }
 
+/** Get all published articles by a specific author */
+export async function getArticlesByAuthor(
+    authorSlug: string
+): Promise<ArticleWithRelations[]> {
+    const sb = ensureClient();
+    if (!sb) return [];
+
+    const { data: author } = await sb
+        .from("authors")
+        .select("id")
+        .eq("slug", authorSlug)
+        .single();
+
+    if (!author) return [];
+
+    const { data, error } = await sb
+        .from("articles")
+        .select(ARTICLE_SELECT)
+        .eq("status", "published")
+        .eq("author_id", author.id)
+        .order("published_at", { ascending: false });
+
+    if (error) throw error;
+    return (data as ArticleWithRelations[]) ?? [];
+}
+
+/** Get all author slugs for static generation */
+export async function getAllAuthorSlugs(): Promise<string[]> {
+    const sb = ensureClient();
+    if (!sb) return [];
+
+    const { data, error } = await sb
+        .from("authors")
+        .select("slug");
+
+    if (error) throw error;
+    return (data ?? []).map((a) => a.slug);
+}
+
 /** Get all published articles for sitemap */
 export async function getAllArticlesForSitemap(): Promise<
     { slug: string; updated_at: string }[]

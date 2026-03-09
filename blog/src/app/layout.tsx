@@ -81,6 +81,10 @@ export default async function RootLayout({
     <html lang={lang as string} className={`${antonio.variable} ${figtree.variable} ${ibmPlexSerif.variable}`}>
       <head>
         <meta name="color-scheme" content="dark" />
+        {/* Preconnect to external origins for faster resource loading */}
+        <link rel="preconnect" href="https://ajqjicwuqbxpgkrrnryn.supabase.co" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Google Analytics */}
         <script
           async
