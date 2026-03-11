@@ -64,6 +64,13 @@ export const defaultTranslations = {
             description: "El Pantano es una publicación digital de múltiples voces. Tecnología, cultura, IA, análisis y opinión sin filtro.",
             og_title: "El Pantano",
             og_desc: "Muchas voces. Un solo charco."
+        },
+        pages: {
+            not_found: {
+                title: "Aguas Profundas",
+                subtitle: "La página que buscás se ha ido a la deriva. Volvamos a la superficie.",
+                btn: "Volver al Pantano"
+            }
         }
     },
     en: {
@@ -129,6 +136,13 @@ export const defaultTranslations = {
             description: "El Pantano is a digital publication with multiple voices. Technology, culture, AI, analysis and unfiltered opinion.",
             og_title: "El Pantano",
             og_desc: "Many voices. One swamp."
+        },
+        pages: {
+            not_found: {
+                title: "Deep Water",
+                subtitle: "The page you are looking for has drifted away. Let's get you back to the surface.",
+                btn: "Return to the Swamp"
+            }
         }
     }
 };
