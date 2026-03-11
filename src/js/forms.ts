@@ -1,6 +1,5 @@
 export function initForms(): void {
-    // Select forms that have an action pointing to formspree
-    const contactForms = document.querySelectorAll<HTMLFormElement>('form[action*="formspree.io"]');
+    const contactForms = document.querySelectorAll<HTMLFormElement>('#contact-form');
 
     contactForms.forEach((form) => {
         form.addEventListener('submit', async (e) => {
@@ -33,15 +32,11 @@ export function initForms(): void {
                     }
                 });
 
-                if (response.ok) {
+                const result = await response.json();
+                if (result.success) {
                     showSuccess(form);
                 } else {
-                    const result = await response.json();
-                    if (result.errors) {
-                        alert(result.errors.map((error: any) => error.message).join(", "));
-                    } else {
-                        throw new Error('Submission failed');
-                    }
+                    alert(result.error || 'Something went wrong. Please try again.');
                 }
             } catch (error) {
                 console.error('Form submission error:', error);
