@@ -22,6 +22,8 @@ export interface FaqItem {
     answer: string;
 }
 
+export type Lang = "es" | "en";
+
 export interface Article {
     id: string;
     title: string;
@@ -36,6 +38,8 @@ export interface Article {
     reading_time: number;
     keywords: string[];
     faq: FaqItem[];
+    lang: Lang;
+    translation_of: string | null;
     is_featured: boolean;
     is_hero: boolean;
     status: "draft" | "published";
@@ -63,6 +67,9 @@ export interface CreateArticlePayload {
     author: string; // author slug
     reading_time?: number;
     keywords?: string[];
+    faq?: FaqItem[];
+    lang?: Lang;
+    translation_of?: string; // UUID of the original article
     is_featured?: boolean;
     is_hero?: boolean;
     status?: "draft" | "published";

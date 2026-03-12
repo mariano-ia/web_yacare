@@ -21,7 +21,7 @@ function ensureClient() {
 // ─── Articles ───────────────────────────────────────────────
 
 /** Get all published articles ordered by date */
-export async function getArticles(limit?: number): Promise<ArticleWithRelations[]> {
+export async function getArticles(limit?: number, lang = "es"): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
 
@@ -29,6 +29,7 @@ export async function getArticles(limit?: number): Promise<ArticleWithRelations[
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .order("published_at", { ascending: false });
 
     if (limit) query = query.limit(limit);
@@ -39,7 +40,7 @@ export async function getArticles(limit?: number): Promise<ArticleWithRelations[
 }
 
 /** Get the hero article (is_hero = true, or fallback: latest published) */
-export async function getHeroArticle(): Promise<ArticleWithRelations | null> {
+export async function getHeroArticle(lang = "es"): Promise<ArticleWithRelations | null> {
     const sb = ensureClient();
     if (!sb) return null;
 
@@ -48,6 +49,7 @@ export async function getHeroArticle(): Promise<ArticleWithRelations | null> {
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .eq("is_hero", true)
         .order("published_at", { ascending: false })
         .limit(1)
@@ -61,6 +63,7 @@ export async function getHeroArticle(): Promise<ArticleWithRelations | null> {
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
@@ -70,7 +73,7 @@ export async function getHeroArticle(): Promise<ArticleWithRelations | null> {
 }
 
 /** Get featured articles (excluding hero) */
-export async function getFeaturedArticles(limit = 2): Promise<ArticleWithRelations[]> {
+export async function getFeaturedArticles(limit = 2, lang = "es"): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
 
@@ -78,6 +81,7 @@ export async function getFeaturedArticles(limit = 2): Promise<ArticleWithRelatio
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .eq("is_featured", true)
         .eq("is_hero", false)
         .order("published_at", { ascending: false })
@@ -88,7 +92,7 @@ export async function getFeaturedArticles(limit = 2): Promise<ArticleWithRelatio
 }
 
 /** Get latest articles (not featured, not hero) */
-export async function getLatestArticles(limit = 3): Promise<ArticleWithRelations[]> {
+export async function getLatestArticles(limit = 3, lang = "es"): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
 
@@ -96,6 +100,7 @@ export async function getLatestArticles(limit = 3): Promise<ArticleWithRelations
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .eq("is_featured", false)
         .eq("is_hero", false)
         .order("published_at", { ascending: false })
@@ -106,7 +111,7 @@ export async function getLatestArticles(limit = 3): Promise<ArticleWithRelations
 }
 
 /** Get a single article by slug */
-export async function getArticleBySlug(slug: string): Promise<ArticleWithRelations | null> {
+export async function getArticleBySlug(slug: string, lang = "es"): Promise<ArticleWithRelations | null> {
     const sb = ensureClient();
     if (!sb) return null;
 
@@ -114,6 +119,7 @@ export async function getArticleBySlug(slug: string): Promise<ArticleWithRelatio
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("slug", slug)
+        .eq("lang", lang)
         .eq("status", "published")
         .single();
 
@@ -122,14 +128,15 @@ export async function getArticleBySlug(slug: string): Promise<ArticleWithRelatio
 }
 
 /** Get all article slugs (for generateStaticParams) */
-export async function getAllArticleSlugs(): Promise<string[]> {
+export async function getAllArticleSlugs(lang = "es"): Promise<string[]> {
     const sb = ensureClient();
     if (!sb) return [];
 
     const { data, error } = await sb
         .from("articles")
         .select("slug")
-        .eq("status", "published");
+        .eq("status", "published")
+        .eq("lang", lang);
 
     if (error) throw error;
     return data?.map((a) => a.slug) ?? [];
@@ -138,7 +145,8 @@ export async function getAllArticleSlugs(): Promise<string[]> {
 /** Get articles by category slug */
 export async function getArticlesByCategory(
     categorySlug: string,
-    limit?: number
+    limit?: number,
+    lang = "es"
 ): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
@@ -155,6 +163,7 @@ export async function getArticlesByCategory(
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .eq("category_id", cat.id)
         .order("published_at", { ascending: false });
 
@@ -169,7 +178,8 @@ export async function getArticlesByCategory(
 export async function getRelatedArticles(
     categoryId: string,
     excludeSlug: string,
-    limit = 3
+    limit = 3,
+    lang = "es"
 ): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
@@ -178,6 +188,7 @@ export async function getRelatedArticles(
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .eq("category_id", categoryId)
         .neq("slug", excludeSlug)
         .order("published_at", { ascending: false })
@@ -188,7 +199,7 @@ export async function getRelatedArticles(
 }
 
 /** Get most-read articles (ordered by view_count, fallback to latest) */
-export async function getMostReadArticles(limit = 5): Promise<ArticleWithRelations[]> {
+export async function getMostReadArticles(limit = 5, lang = "es"): Promise<ArticleWithRelations[]> {
     const sb = ensureClient();
     if (!sb) return [];
 
@@ -197,6 +208,7 @@ export async function getMostReadArticles(limit = 5): Promise<ArticleWithRelatio
         .from("articles")
         .select(ARTICLE_SELECT)
         .eq("status", "published")
+        .eq("lang", lang)
         .order("view_count", { ascending: false })
         .order("published_at", { ascending: false })
         .limit(limit);
@@ -207,6 +219,7 @@ export async function getMostReadArticles(limit = 5): Promise<ArticleWithRelatio
             .from("articles")
             .select(ARTICLE_SELECT)
             .eq("status", "published")
+            .eq("lang", lang)
             .order("published_at", { ascending: false })
             .limit(limit);
 
@@ -215,6 +228,66 @@ export async function getMostReadArticles(limit = 5): Promise<ArticleWithRelatio
     }
 
     return (data as ArticleWithRelations[]) ?? [];
+}
+
+/** Get articles by author slug */
+export async function getArticlesByAuthor(
+    authorSlug: string,
+    lang = "es"
+): Promise<ArticleWithRelations[]> {
+    const sb = ensureClient();
+    if (!sb) return [];
+
+    const { data: author } = await sb
+        .from("authors")
+        .select("id")
+        .eq("slug", authorSlug)
+        .single();
+
+    if (!author) return [];
+
+    const { data, error } = await sb
+        .from("articles")
+        .select(ARTICLE_SELECT)
+        .eq("status", "published")
+        .eq("lang", lang)
+        .eq("author_id", author.id)
+        .order("published_at", { ascending: false });
+
+    if (error) throw error;
+    return (data as ArticleWithRelations[]) ?? [];
+}
+
+// ─── Translation ────────────────────────────────────────────
+
+/** Get the translation partner of an article (slug + lang) */
+export async function getTranslation(
+    articleId: string,
+    articleLang: string,
+    translationOf: string | null
+): Promise<{ slug: string; lang: string } | null> {
+    const sb = ensureClient();
+    if (!sb) return null;
+
+    if (translationOf) {
+        // This article IS a translation → find the original
+        const { data } = await sb
+            .from("articles")
+            .select("slug, lang")
+            .eq("id", translationOf)
+            .eq("status", "published")
+            .single();
+        return data ?? null;
+    }
+
+    // This article is the original → find who translates it
+    const { data } = await sb
+        .from("articles")
+        .select("slug, lang")
+        .eq("translation_of", articleId)
+        .eq("status", "published")
+        .single();
+    return data ?? null;
 }
 
 // ─── Categories ─────────────────────────────────────────────
@@ -278,32 +351,6 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
     return (data as Author) ?? null;
 }
 
-/** Get all published articles by a specific author */
-export async function getArticlesByAuthor(
-    authorSlug: string
-): Promise<ArticleWithRelations[]> {
-    const sb = ensureClient();
-    if (!sb) return [];
-
-    const { data: author } = await sb
-        .from("authors")
-        .select("id")
-        .eq("slug", authorSlug)
-        .single();
-
-    if (!author) return [];
-
-    const { data, error } = await sb
-        .from("articles")
-        .select(ARTICLE_SELECT)
-        .eq("status", "published")
-        .eq("author_id", author.id)
-        .order("published_at", { ascending: false });
-
-    if (error) throw error;
-    return (data as ArticleWithRelations[]) ?? [];
-}
-
 /** Get all author slugs for static generation */
 export async function getAllAuthorSlugs(): Promise<string[]> {
     const sb = ensureClient();
@@ -317,25 +364,27 @@ export async function getAllAuthorSlugs(): Promise<string[]> {
     return (data ?? []).map((a) => a.slug);
 }
 
-/** Get all published articles for sitemap */
+// ─── Sitemap ────────────────────────────────────────────────
+
+/** Get all published articles for sitemap (all languages) */
 export async function getAllArticlesForSitemap(): Promise<
-    { slug: string; updated_at: string }[]
+    { slug: string; lang: string; updated_at: string }[]
 > {
     const sb = ensureClient();
     if (!sb) return [];
 
     const { data, error } = await sb
         .from("articles")
-        .select("slug, updated_at")
+        .select("slug, lang, updated_at")
         .eq("status", "published");
 
     if (error) throw error;
     return data ?? [];
 }
 
-/** Get articles published in the last 48h for Google News sitemap */
+/** Get articles published in the last 48h for Google News sitemap (all languages) */
 export async function getRecentArticlesForNewsSitemap(): Promise<
-    { slug: string; title: string; published_at: string; keywords: string[] }[]
+    { slug: string; lang: string; title: string; published_at: string; keywords: string[] }[]
 > {
     const sb = ensureClient();
     if (!sb) return [];
@@ -344,7 +393,7 @@ export async function getRecentArticlesForNewsSitemap(): Promise<
 
     const { data, error } = await sb
         .from("articles")
-        .select("slug, title, published_at, keywords")
+        .select("slug, lang, title, published_at, keywords")
         .eq("status", "published")
         .gte("published_at", cutoff)
         .order("published_at", { ascending: false })

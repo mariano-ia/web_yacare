@@ -65,6 +65,9 @@ export async function POST(req: NextRequest) {
                 author_id: author.id,
                 reading_time: body.reading_time || 5,
                 keywords: body.keywords || [],
+                faq: body.faq || [],
+                lang: body.lang || "es",
+                translation_of: body.translation_of || null,
                 is_featured: body.is_featured || false,
                 is_hero: body.is_hero || false,
                 status: body.status || "published",
@@ -81,9 +84,26 @@ export async function POST(req: NextRequest) {
         }
 
         // ─── Revalidate ISR pages ───
+        const articleLang = body.lang || "es";
+        revalidatePath(`/${articleLang}`);
+        revalidatePath(`/${articleLang}/${body.slug}`);
+        revalidatePath(`/${articleLang}/categoria/${body.category}`);
+        // Also revalidate old paths (pre-i18n) during transition
         revalidatePath("/");
         revalidatePath(`/${body.slug}`);
         revalidatePath(`/categoria/${body.category}`);
+
+        // If this is a translation, revalidate the original article too (for hreflang)
+        if (body.translation_of) {
+            const { data: original } = await sb
+                .from("articles")
+                .select("slug, lang")
+                .eq("id", body.translation_of)
+                .single();
+            if (original) {
+                revalidatePath(`/${original.lang}/${original.slug}`);
+            }
+        }
 
         return NextResponse.json<ApiResponse>(
             { success: true, data: article },
