@@ -368,14 +368,14 @@ export async function getAllAuthorSlugs(): Promise<string[]> {
 
 /** Get all published articles for sitemap (all languages) */
 export async function getAllArticlesForSitemap(): Promise<
-    { slug: string; lang: string; updated_at: string }[]
+    { id: string; slug: string; lang: string; updated_at: string; translation_of: string | null }[]
 > {
     const sb = ensureClient();
     if (!sb) return [];
 
     const { data, error } = await sb
         .from("articles")
-        .select("slug, lang, updated_at")
+        .select("id, slug, lang, updated_at, translation_of")
         .eq("status", "published");
 
     if (error) throw error;
