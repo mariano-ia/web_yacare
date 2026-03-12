@@ -8,40 +8,46 @@ import {
     getArticlesByCategory,
     getAllCategorySlugs,
 } from "@/lib/queries";
-
 import { getServerTranslation } from "@/lib/translations";
 
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
     const slugs = await getAllCategorySlugs();
-    return slugs.map((slug) => ({ slug }));
+    return ["es", "en"].flatMap((lang) =>
+        slugs.map((slug) => ({ lang, slug }))
+    );
 }
 
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-    const { slug } = await params;
+    const { lang, slug } = await params;
     const category = await getCategoryBySlug(slug);
     if (!category) return {};
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
-    const articles = await getArticlesByCategory(category.slug, 1);
+    const articles = await getArticlesByCategory(category.slug, 1, lang);
     const ogImage = articles[0]?.featured_image ?? null;
 
     return {
         title: `${category.name} — El Pantano`,
         description: `Artículos de ${category.name} en El Pantano. Tecnología, cultura, IA y opinión sin filtro.`,
         alternates: {
-            canonical: `${siteUrl}/categoria/${category.slug}`,
+            canonical: `${siteUrl}/${lang}/categoria/${category.slug}`,
+            languages: {
+                es: `${siteUrl}/es/categoria/${category.slug}`,
+                en: `${siteUrl}/en/categoria/${category.slug}`,
+            },
         },
         openGraph: {
             title: `${category.name} — El Pantano`,
             description: `Todo sobre ${category.name} en El Pantano.`,
             type: "website",
-            url: `${siteUrl}/categoria/${category.slug}`,
+            locale: lang === "es" ? "es_AR" : "en_US",
+            url: `${siteUrl}/${lang}/categoria/${category.slug}`,
             ...(ogImage && { images: [{ url: ogImage, width: 1200, height: 630, alt: `${category.name} — El Pantano` }] }),
         },
         twitter: {
@@ -56,13 +62,13 @@ export async function generateMetadata({
 export default async function CategoryPage({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }) {
-    const { slug } = await params;
+    const { lang, slug } = await params;
     const category = await getCategoryBySlug(slug);
     if (!category) notFound();
 
-    const articles = await getArticlesByCategory(slug);
+    const articles = await getArticlesByCategory(slug, undefined, lang);
     const t = await getServerTranslation();
 
     return (

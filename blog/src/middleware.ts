@@ -1,14 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-// Dashboard sub-paths that don't require authentication
+// ─── Dashboard auth ──────────────────────────────────────────
+
 const PUBLIC_PATHS = [
     "/dashboard/login",
     "/dashboard/forgot-password",
     "/dashboard/reset-password",
 ];
 
-/** Decode JWT payload and check expiry — no signature verification needed
- *  since the cookie is HTTP-only (not accessible via JS) */
 function isTokenValid(token: string): boolean {
     try {
         const [, payload] = token.split(".");
@@ -19,31 +18,58 @@ function isTokenValid(token: string): boolean {
     }
 }
 
+// ─── i18n redirects ──────────────────────────────────────────
+
+/** Paths that should NOT be redirected to /es/... */
+const BYPASS_PREFIXES = ["/api/", "/dashboard", "/es", "/en", "/_next", "/sitemap", "/news-sitemap", "/robots", "/favicon"];
+const BYPASS_EXTENSIONS = [".xml", ".txt", ".ico", ".svg", ".png", ".jpg", ".html"];
+
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Only intercept /dashboard routes
-    if (!pathname.startsWith("/dashboard")) {
+    // ─── Dashboard auth guard ────────────────────────────────
+    if (pathname.startsWith("/dashboard")) {
+        if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+            return NextResponse.next();
+        }
+
+        const token = request.cookies.get("ds")?.value;
+        if (!token || !isTokenValid(token)) {
+            const loginUrl = request.nextUrl.clone();
+            loginUrl.pathname = "/dashboard/login";
+            loginUrl.searchParams.set("next", pathname);
+            return NextResponse.redirect(loginUrl);
+        }
+
         return NextResponse.next();
     }
 
-    // Allow auth pages through
-    if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+    // ─── i18n: redirect old URLs to /es/... ──────────────────
+    // Skip bypass paths
+    if (BYPASS_PREFIXES.some((p) => pathname.startsWith(p))) {
+        return NextResponse.next();
+    }
+    if (BYPASS_EXTENSIONS.some((ext) => pathname.endsWith(ext))) {
         return NextResponse.next();
     }
 
-    const token = request.cookies.get("ds")?.value;
-
-    if (!token || !isTokenValid(token)) {
-        const loginUrl = request.nextUrl.clone();
-        loginUrl.pathname = "/dashboard/login";
-        loginUrl.searchParams.set("next", pathname);
-        return NextResponse.redirect(loginUrl);
+    // "/" → "/es"
+    if (pathname === "/") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/es";
+        return NextResponse.redirect(url, 301);
     }
 
-    return NextResponse.next();
+    // "/categoria/slug" → "/es/categoria/slug"
+    // "/autor/slug" → "/es/autor/slug"
+    // "/any-article-slug" → "/es/any-article-slug"
+    const url = request.nextUrl.clone();
+    url.pathname = `/es${pathname}`;
+    return NextResponse.redirect(url, 301);
 }
 
 export const config = {
-    matcher: ["/dashboard/:path*"],
+    matcher: [
+        "/((?!_next/static|_next/image).*)",
+    ],
 };

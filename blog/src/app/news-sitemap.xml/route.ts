@@ -14,11 +14,11 @@ export async function GET() {
                 ? `<news:keywords>${a.keywords.join(", ")}</news:keywords>`
                 : "";
             return `  <url>
-    <loc>${siteUrl}/${a.slug}</loc>
+    <loc>${siteUrl}/${a.lang}/${a.slug}</loc>
     <news:news>
       <news:publication>
         <news:name>El Pantano</news:name>
-        <news:language>es</news:language>
+        <news:language>${a.lang}</news:language>
       </news:publication>
       <news:publication_date>${new Date(a.published_at).toISOString()}</news:publication_date>
       <news:title>${escapeXml(a.title)}</news:title>

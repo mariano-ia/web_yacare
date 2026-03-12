@@ -9,20 +9,24 @@ import {
     getAllAuthorSlugs,
 } from "@/lib/queries";
 import { getServerTranslation } from "@/lib/translations";
+import { authorPath } from "@/lib/link-helpers";
+import type { Lang } from "@/lib/types";
 
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
     const slugs = await getAllAuthorSlugs();
-    return slugs.map((slug) => ({ slug }));
+    return ["es", "en"].flatMap((lang) =>
+        slugs.map((slug) => ({ lang, slug }))
+    );
 }
 
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-    const { slug } = await params;
+    const { lang, slug } = await params;
     const author = await getAuthorBySlug(slug);
     if (!author) return {};
 
@@ -32,13 +36,17 @@ export async function generateMetadata({
         title: `${author.name} — El Pantano`,
         description: author.bio,
         alternates: {
-            canonical: `${siteUrl}/autor/${author.slug}`,
+            canonical: `${siteUrl}/${lang}/autor/${author.slug}`,
+            languages: {
+                es: `${siteUrl}/es/autor/${author.slug}`,
+                en: `${siteUrl}/en/autor/${author.slug}`,
+            },
         },
         openGraph: {
             title: `${author.name} — El Pantano`,
             description: author.bio,
             type: "profile",
-            url: `${siteUrl}/autor/${author.slug}`,
+            url: `${siteUrl}/${lang}/autor/${author.slug}`,
         },
         twitter: {
             card: "summary",
@@ -51,12 +59,12 @@ export async function generateMetadata({
 export default async function AuthorPage({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }) {
-    const { slug } = await params;
+    const { lang, slug } = await params;
     const [author, articles, t] = await Promise.all([
         getAuthorBySlug(slug),
-        getArticlesByAuthor(slug),
+        getArticlesByAuthor(slug, lang),
         getServerTranslation(),
     ]);
 
@@ -68,7 +76,7 @@ export default async function AuthorPage({
         "@context": "https://schema.org",
         "@type": "Person",
         name: author.name,
-        url: `${siteUrl}/autor/${author.slug}`,
+        url: `${siteUrl}${authorPath(author.slug, lang as Lang)}`,
         description: author.bio,
         jobTitle: author.role,
         worksFor: {

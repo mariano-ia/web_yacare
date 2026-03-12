@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
+import { homePath } from "@/lib/link-helpers";
+import type { Lang } from "@/lib/types";
 
 export function Footer() {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
     return (
         <footer className="ep-footer">
             <div className="ep-footer__inner">
                 <div className="ep-footer__top">
                     <div className="ep-footer__brand">
-                        <Link href="/" className="ep-footer__logo">El Pantano</Link>
+                        <Link href={homePath(lang as Lang)} className="ep-footer__logo">El Pantano</Link>
                         <p className="ep-footer__tagline">
                             {t("footer.tagline")}
                         </p>

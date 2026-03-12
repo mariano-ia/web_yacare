@@ -11,42 +11,62 @@ import {
     getArticleBySlug,
     getAllArticleSlugs,
     getRelatedArticles,
+    getTranslation,
 } from "@/lib/queries";
-import { getServerTranslation, getServerLang } from "@/lib/translations";
+import { getServerTranslation } from "@/lib/translations";
+import { homePath, categoryPath, authorPath, articlePath } from "@/lib/link-helpers";
+import type { Lang } from "@/lib/types";
 
 // ISR: revalidate every 1 hour as fallback
 export const revalidate = 3600;
 
 // Pre-generate all article pages at build time
 export async function generateStaticParams() {
-    const slugs = await getAllArticleSlugs();
-    return slugs.map((slug) => ({ slug }));
+    const [esSlugs, enSlugs] = await Promise.all([
+        getAllArticleSlugs("es"),
+        getAllArticleSlugs("en"),
+    ]);
+    return [
+        ...esSlugs.map((slug) => ({ lang: "es", slug })),
+        ...enSlugs.map((slug) => ({ lang: "en", slug })),
+    ];
 }
 
 // Dynamic metadata for SEO
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-    const { slug } = await params;
-    const article = await getArticleBySlug(slug);
+    const { lang, slug } = await params;
+    const article = await getArticleBySlug(slug, lang);
     if (!article) return {};
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
+
+    // Build hreflang alternates
+    const languages: Record<string, string> = {
+        [lang]: `${siteUrl}/${lang}/${slug}`,
+    };
+    const translation = await getTranslation(article.id, article.lang, article.translation_of);
+    if (translation) {
+        languages[translation.lang] = `${siteUrl}/${translation.lang}/${translation.slug}`;
+    }
 
     return {
         title: article.title,
         description: article.excerpt,
         keywords: article.keywords?.length ? article.keywords.join(", ") : undefined,
         alternates: {
-            canonical: `${siteUrl}/${article.slug}`,
+            canonical: `${siteUrl}/${lang}/${slug}`,
+            languages,
         },
         openGraph: {
             title: article.title,
             description: article.excerpt,
             type: "article",
-            url: `${siteUrl}/${article.slug}`,
+            locale: lang === "es" ? "es_AR" : "en_US",
+            url: `${siteUrl}/${lang}/${slug}`,
             images: article.featured_image
                 ? [{ url: article.featured_image, width: 1200, height: 630, alt: article.title }]
                 : [],
@@ -74,15 +94,16 @@ export async function generateMetadata({
 export default async function ArticlePage({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ lang: string; slug: string }>;
 }) {
-    const { slug } = await params;
-    const article = await getArticleBySlug(slug);
+    const { lang, slug } = await params;
+    const article = await getArticleBySlug(slug, lang);
     if (!article) notFound();
 
-    const related = await getRelatedArticles(article.category_id, article.slug, 3);
+    const related = await getRelatedArticles(article.category_id, article.slug, 3, lang);
     const t = await getServerTranslation();
-    const lang = await getServerLang();
+
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog";
 
     // JSON-LD structured data
     const jsonLd = {
@@ -90,16 +111,17 @@ export default async function ArticlePage({
         "@type": "Article",
         headline: article.title,
         description: article.excerpt,
+        inLanguage: lang,
         author: {
             "@type": "Person",
             name: article.author.name,
-            url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/blog"}/autor/${article.author.slug}`,
+            url: `${siteUrl}${authorPath(article.author.slug, lang as Lang)}`,
             jobTitle: article.author.role,
         },
         publisher: {
             "@type": "Organization",
             name: "El Pantano",
-            url: process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano",
+            url: siteUrl,
         },
         datePublished: article.published_at,
         dateModified: article.updated_at,
@@ -128,13 +150,13 @@ export default async function ArticlePage({
                 "@type": "ListItem",
                 position: 1,
                 name: "El Pantano",
-                item: process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano",
+                item: `${siteUrl}${homePath(lang as Lang)}`,
             },
             {
                 "@type": "ListItem",
                 position: 2,
                 name: article.category.name,
-                item: `${process.env.NEXT_PUBLIC_SITE_URL || "https://yacare.io/elpantano"}/categoria/${article.category.slug}`,
+                item: `${siteUrl}${categoryPath(article.category.slug, lang as Lang)}`,
             },
             {
                 "@type": "ListItem",
@@ -152,10 +174,10 @@ export default async function ArticlePage({
             <main>
                 {/* Breadcrumb */}
                 <nav className="ep-breadcrumb" aria-label={t("article.location")}>
-                    <Link href="/">El Pantano</Link>
-                    <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
-                    <Link href={`/categoria/${article.category.slug}`}>{t(`categories.${article.category.slug}`) || article.category.name}</Link>
-                    <span className="ep-breadcrumb__sep" aria-hidden="true">›</span>
+                    <Link href={homePath(lang as Lang)}>El Pantano</Link>
+                    <span className="ep-breadcrumb__sep" aria-hidden="true">&rsaquo;</span>
+                    <Link href={categoryPath(article.category.slug, lang as Lang)}>{t(`categories.${article.category.slug}`) || article.category.name}</Link>
+                    <span className="ep-breadcrumb__sep" aria-hidden="true">&rsaquo;</span>
                     <span>{article.title}</span>
                 </nav>
 
@@ -163,7 +185,7 @@ export default async function ArticlePage({
                 <header className="ep-article-head">
                     <div className="ep-article-head__cat">
                         <Link
-                            href={`/categoria/${article.category.slug}`}
+                            href={categoryPath(article.category.slug, lang as Lang)}
                             className={`ep-cat ep-cat--${article.category.color}`}
                         >
                             {t(`categories.${article.category.slug}`) || article.category.name}
@@ -172,7 +194,7 @@ export default async function ArticlePage({
                     <h1 className="ep-article-head__title">{article.title}</h1>
                     <p className="ep-article-head__standfirst">{article.excerpt}</p>
                     <div className="ep-article-head__meta">
-                        <Link href={`/autor/${article.author.slug}`} className="ep-article-head__author">
+                        <Link href={authorPath(article.author.slug, lang as Lang)} className="ep-article-head__author">
                             <div className="ep-article-head__avatar" aria-hidden="true">
                                 {article.author.avatar_initial}
                             </div>
@@ -186,12 +208,12 @@ export default async function ArticlePage({
                         <span className="ep-meta-text">{article.reading_time} {t("article.reading_time")}</span>
 
                         <div className="ep-article-head__share" aria-label={t("article.share_article")}>
-                            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_twitter")}>
+                            <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`${siteUrl}/${lang}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_twitter")}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                 </svg>
                             </a>
-                            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_linkedin")}>
+                            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${siteUrl}/${lang}/${article.slug}`)}`} target="_blank" rel="noopener" className="ep-share-btn" aria-label={t("article.share_linkedin")}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                 </svg>
@@ -258,7 +280,7 @@ export default async function ArticlePage({
                         </div>
                         <div>
                             <div className="ep-author-card__label">{t("article.author")}</div>
-                            <Link href={`/autor/${article.author.slug}`} className="ep-author-card__name" style={{ textDecoration: "none", color: "inherit" }}>{article.author.name}</Link>
+                            <Link href={authorPath(article.author.slug, lang as Lang)} className="ep-author-card__name" style={{ textDecoration: "none", color: "inherit" }}>{article.author.name}</Link>
                             <div className="ep-author-card__role">{article.author.role}</div>
                             <p className="ep-author-card__bio">{article.author.bio}</p>
                         </div>
@@ -270,7 +292,7 @@ export default async function ArticlePage({
                     <div className="ep-faq">
                         <div className="ep-section-head" style={{ marginBottom: "var(--space-5)" }}>
                             <span className="ep-section-head__bar ep-section-head__bar--purple" />
-                            <h2 className="ep-section-head__label">Preguntas frecuentes</h2>
+                            <h2 className="ep-section-head__label">{t("article.faq")}</h2>
                         </div>
                         <dl className="ep-faq__list">
                             {article.faq.map((item, i) => (

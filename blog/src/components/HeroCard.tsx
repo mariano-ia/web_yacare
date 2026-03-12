@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import type { ArticleWithRelations } from "@/lib/types";
+import type { ArticleWithRelations, Lang } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
+import { articlePath } from "@/lib/link-helpers";
 
 
 export function HeroCard({ article }: { article: ArticleWithRelations }) {
     const { t, lang } = useI18n();
 
     return (
-        <Link href={`/${article.slug}`} className="ep-hero">
+        <Link href={articlePath(article.slug, lang as Lang)} className="ep-hero">
             <Image
                 src={article.featured_image}
                 alt={article.image_alt || article.title}

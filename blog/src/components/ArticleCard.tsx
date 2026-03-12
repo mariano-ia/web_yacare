@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import type { ArticleWithRelations } from "@/lib/types";
+import type { ArticleWithRelations, Lang } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
+import { articlePath } from "@/lib/link-helpers";
 
 
 /** Standard card — used in grids (featured, latest, explore, related) */
@@ -19,7 +20,7 @@ export function ArticleCard({
 
     if (variant === "compact") {
         return (
-            <Link href={`/${article.slug}`} className="ep-card ep-card--compact">
+            <Link href={articlePath(article.slug, lang as Lang)} className="ep-card ep-card--compact">
                 <div className="ep-card__thumb">
                     <Image
                         src={article.featured_image}
@@ -41,7 +42,7 @@ export function ArticleCard({
 
     return (
         <Link
-            href={`/${article.slug}`}
+            href={articlePath(article.slug, lang as Lang)}
             className={`ep-card ep-card--${variant}`}
             data-cat={article.category.color}
         >

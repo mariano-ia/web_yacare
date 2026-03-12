@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { useI18n } from "@/lib/i18n";
+import { I18nProvider, useI18n } from "@/lib/i18n";
+import { homePath } from "@/lib/link-helpers";
+import type { Lang } from "@/lib/types";
 import { useEffect, useState } from "react";
 
-export default function NotFound() {
-  const { t } = useI18n();
+function NotFoundContent() {
+  const { t, lang } = useI18n();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function NotFound() {
             {t("pages.not_found.subtitle")}
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-            <Link href="/" style={{
+            <Link href={homePath(lang as Lang)} style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -94,5 +96,13 @@ export default function NotFound() {
       </div>
       <Footer />
     </div>
+  );
+}
+
+export default function NotFound() {
+  return (
+    <I18nProvider initialLang="es">
+      <NotFoundContent />
+    </I18nProvider>
   );
 }

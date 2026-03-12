@@ -57,7 +57,8 @@ export const defaultTranslations = {
             share_linkedin: "Compartir en LinkedIn",
             author: "Autor/a",
             more_from: "Más de El Pantano",
-            location: "Ubicación"
+            location: "Ubicación",
+            faq: "Preguntas frecuentes"
         },
         meta: {
             title: "El Pantano — Tecnología, Cultura y Opinión",
@@ -129,7 +130,8 @@ export const defaultTranslations = {
             share_linkedin: "Share on LinkedIn",
             author: "Author",
             more_from: "More from El Pantano",
-            location: "Location"
+            location: "Location",
+            faq: "Frequently Asked Questions"
         },
         meta: {
             title: "El Pantano — Technology, Culture and Opinion",

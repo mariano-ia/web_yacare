@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { ArticleWithRelations } from "@/lib/types";
+import type { ArticleWithRelations, Lang } from "@/lib/types";
 import { useI18n } from "@/lib/i18n";
+import { articlePath } from "@/lib/link-helpers";
 
 export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [message, setMessage] = useState("");
@@ -93,7 +94,7 @@ export function Sidebar({ trending }: { trending: ArticleWithRelations[] }) {
                 </div>
                 <nav className="ep-trending" aria-label="Artículos más leídos">
                     {trending.slice(0, 5).map((article, i) => (
-                        <Link key={article.id} href={`/${article.slug}`} className="ep-trending__item">
+                        <Link key={article.id} href={articlePath(article.slug, lang as Lang)} className="ep-trending__item">
                             <span className="ep-trending__num">{i + 1}</span>
                             <div className="ep-trending__body">
                                 <div className="ep-trending__cat">

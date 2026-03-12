@@ -12,25 +12,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     const articleEntries: MetadataRoute.Sitemap = articles.map((a) => ({
-        url: `${siteUrl}/${a.slug}`,
+        url: `${siteUrl}/${a.lang}/${a.slug}`,
         lastModified: new Date(a.updated_at),
         changeFrequency: "weekly" as const,
         priority: 0.8,
     }));
 
-    const categoryEntries: MetadataRoute.Sitemap = categorySlugs.map((slug) => ({
-        url: `${siteUrl}/categoria/${slug}`,
-        changeFrequency: "weekly" as const,
-        priority: 0.6,
+    const langs = ["es", "en"] as const;
+
+    const categoryEntries: MetadataRoute.Sitemap = langs.flatMap((lang) =>
+        categorySlugs.map((slug) => ({
+            url: `${siteUrl}/${lang}/categoria/${slug}`,
+            changeFrequency: "weekly" as const,
+            priority: 0.6,
+        }))
+    );
+
+    const homeEntries: MetadataRoute.Sitemap = langs.map((lang) => ({
+        url: `${siteUrl}/${lang}`,
+        lastModified: new Date(),
+        changeFrequency: "daily" as const,
+        priority: 1,
     }));
 
     return [
-        {
-            url: siteUrl,
-            lastModified: new Date(),
-            changeFrequency: "daily",
-            priority: 1,
-        },
+        ...homeEntries,
         ...categoryEntries,
         ...articleEntries,
     ];

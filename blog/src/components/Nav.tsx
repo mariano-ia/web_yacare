@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useI18n } from "@/lib/i18n";
+import { homePath, categoryPath, articlePath } from "@/lib/link-helpers";
+import type { Lang } from "@/lib/types";
 
 const CATEGORIES = [
     { name: "Tecnología", slug: "tecnologia" },
@@ -87,10 +89,10 @@ export function Nav() {
         <>
             <nav className="ep-nav" role="navigation" aria-label="El Pantano navigation">
                 <div className="ep-nav__inner">
-                    <Link href="/" className="ep-nav__logo">El Pantano</Link>
+                    <Link href={homePath(lang as Lang)} className="ep-nav__logo">El Pantano</Link>
                     <div className="ep-nav__cats">
                         {CATEGORIES.map((cat) => (
-                            <Link key={cat.slug} href={`/categoria/${cat.slug}`} className={`ep-nav__cat ep-nav__cat--${cat.slug}`}>
+                            <Link key={cat.slug} href={categoryPath(cat.slug, lang as Lang)} className={`ep-nav__cat ep-nav__cat--${cat.slug}`}>
                                 {t(`categories.${cat.slug}`)}
                             </Link>
                         ))}
@@ -98,7 +100,14 @@ export function Nav() {
                     <div className="ep-nav__actions">
                         <button
                             className="ep-nav__lang"
-                            onClick={() => setLang(lang === "es" ? "en" : "es")}
+                            onClick={() => {
+                                const newLang = lang === "es" ? "en" : "es";
+                                setLang(newLang);
+                                // Navigate to the equivalent page in the other language
+                                const path = window.location.pathname;
+                                const newPath = path.replace(/^\/(es|en)/, `/${newLang}`);
+                                window.location.href = newPath;
+                            }}
                             aria-label={lang === "es" ? "Switch to English" : "Cambiar a Español"}
                         >
                             {lang === "es" ? "EN" : "ES"}
@@ -131,7 +140,7 @@ export function Nav() {
                     {CATEGORIES.map((cat) => (
                         <Link
                             key={cat.slug}
-                            href={`/categoria/${cat.slug}`}
+                            href={categoryPath(cat.slug, lang as Lang)}
                             className={`ep-nav__mobile-link ep-nav__cat--${cat.slug}`}
                             onClick={() => setMenuOpen(false)}
                         >
@@ -182,7 +191,7 @@ export function Nav() {
                                 </div>
                             )}
                             {!loading && results.map((r) => (
-                                <Link key={r.id} href={`/${r.slug}`} className="ep-search-result">
+                                <Link key={r.id} href={articlePath(r.slug, lang as Lang)} className="ep-search-result">
                                     <div className="ep-search-result__cat">
                                         <span className={`ep-cat ep-cat--${r.category.color}`} style={{ fontSize: "0.6rem", padding: "2px 8px" }}>
                                             {r.category.name}
