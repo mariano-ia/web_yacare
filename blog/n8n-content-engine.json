@@ -148,6 +148,40 @@
         },
         {
             "parameters": {
+                "method": "POST",
+                "url": "https://www.yacare.io/blog/api/articles/translate",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer ep_n8n_secret_2026_xK9mP4"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify({ article_id: $json.data?.id }) }}",
+                "options": {
+                    "timeout": 120000
+                }
+            },
+            "id": "translate-en",
+            "name": "🌐 Traducir a EN",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1960,
+                300
+            ],
+            "continueOnFail": true
+        },
+        {
+            "parameters": {
                 "updates": {
                     "update": [
                         {
@@ -286,8 +320,42 @@
         },
         {
             "parameters": {
+                "method": "POST",
+                "url": "https://www.yacare.io/blog/api/articles/translate",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer ep_n8n_secret_2026_xK9mP4"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify({ article_id: $json.data?.id }) }}",
+                "options": {
+                    "timeout": 120000
+                }
+            },
+            "id": "translate-en-tg",
+            "name": "🌐 Traducir TG EN",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1720,
+                700
+            ],
+            "continueOnFail": true
+        },
+        {
+            "parameters": {
                 "chatId": "={{ $('🔍 Parsear Mensaje TG').first().json.chat_id }}",
-                "text": "=✅ Artículo publicado!\n\n📝 {{ $json.title || $json.data?.title || 'Artículo' }}\n👤 {{ $('📄 Procesar TG').first().json.personality_name }}\n🔗 https://www.yacare.io/blog/{{ $json.slug || $json.data?.slug || '' }}",
+                "text": "=✅ Artículos publicados!\n\n📝 ES: {{ $('📤 Publicar TG').first().json.data?.title || 'Artículo' }}\n🔗 https://www.yacare.io/blog/es/{{ $('📤 Publicar TG').first().json.data?.slug || '' }}\n\n🌐 EN: {{ $json.data?.title || '(traducción pendiente)' }}\n🔗 https://www.yacare.io/blog/en/{{ $json.data?.slug || '' }}\n\n👤 {{ $('📄 Procesar TG').first().json.personality_name }}",
                 "additionalFields": {
                     "parse_mode": "HTML"
                 }
@@ -297,7 +365,7 @@
             "type": "n8n-nodes-base.telegram",
             "typeVersion": 1.2,
             "position": [
-                1720,
+                1960,
                 700
             ],
             "credentials": {
@@ -309,8 +377,8 @@
         },
         {
             "parameters": {
-                "content": "## 🔑 CONFIGURACIÓN REQUERIDA\n\n**1. OpenAI API Key:**\nCrear credencial \"Header Auth\" en n8n:\n- Name: `Authorization`\n- Value: `Bearer sk-tu-api-key-aqui`\nAsignarla a los nodos 🤖 OpenAI\n\n**2. Telegram Bot:**\nCrear bot con @BotFather en Telegram.\nCrear credencial \"Telegram API\" con el token.\nAsignarla a los nodos 📱 y 💬\n\n**3. Imágenes IA:**\nUsa Pollinations.ai (gratis). No requiere config.",
-                "height": 380,
+                "content": "## 🔑 CONFIGURACIÓN REQUERIDA\n\n**1. OpenAI API Key:**\nCrear credencial \"Header Auth\" en n8n:\n- Name: `Authorization`\n- Value: `Bearer sk-tu-api-key-aqui`\nAsignarla a los nodos 🤖 OpenAI\n\n**2. Telegram Bot:**\nCrear bot con @BotFather en Telegram.\nCrear credencial \"Telegram API\" con el token.\nAsignarla a los nodos 📱 y 💬\n\n**3. Imágenes IA:**\nUsa Pollinations.ai (gratis). No requiere config.\n\n**4. Traducción automática:**\nAgregar `OPENAI_API_KEY` en Vercel env vars.\nLos nodos 🌐 llaman al blog API para traducir.",
+                "height": 440,
                 "width": 350
             },
             "id": "sticky-config",
@@ -350,6 +418,21 @@
             "position": [
                 -300,
                 580
+            ]
+        },
+        {
+            "parameters": {
+                "content": "## 🌐 TRADUCCIÓN AUTO\n\nDespués de publicar cada artículo en español,\nel nodo **🌐 Traducir** llama al endpoint\n`/blog/api/articles/translate` que:\n\n1. Busca el artículo ES en Supabase\n2. Traduce con GPT-4o (título, slug, contenido, FAQ)\n3. Publica la versión EN automáticamente\n\nRequiere `OPENAI_API_KEY` en Vercel.",
+                "height": 260,
+                "width": 300
+            },
+            "id": "sticky-translate",
+            "name": "Sticky Note3",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                1900,
+                80
             ]
         }
     ],
@@ -435,6 +518,17 @@
             "main": [
                 [
                     {
+                        "node": "🌐 Traducir a EN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🌐 Traducir a EN": {
+            "main": [
+                [
+                    {
                         "node": "🔄 SplitInBatches",
                         "type": "main",
                         "index": 0
@@ -509,6 +603,17 @@
             ]
         },
         "📤 Publicar TG": {
+            "main": [
+                [
+                    {
+                        "node": "🌐 Traducir TG EN",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🌐 Traducir TG EN": {
             "main": [
                 [
                     {
