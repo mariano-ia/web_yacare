@@ -64,7 +64,7 @@
 /* Center controls at bottom — small, subtle, horizontal arrows */
 .reveal .controls {
   position: fixed !important;
-  bottom: 12px !important;
+  bottom: 28px !important;
   left: 50% !important;
   right: auto !important;
   top: auto !important;
@@ -833,8 +833,7 @@ body.mobile .anim {
     <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Estamos listos para arrancar cuando SAMECO lo decida.</p>
     <div class="contact-row anim">
       <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
-      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> hola@yacare.io</div>
-      <div class="contact-item"><i data-lucide="linkedin" style="width:16px; height:16px;"></i> /yacare-studio</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
     </div>
   </div>
 </section>
@@ -870,7 +869,7 @@ body.mobile .anim {
     </div>
 
     <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
-      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a hola@yacare.io.
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
     </p>
 
   </div>
@@ -949,6 +948,28 @@ function goToChat() {
 // ═══════════════════════════════════════
 
 const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta propuesta. Podés preguntarme sobre el alcance, los entregables, el proceso, la inversión o cualquier otro punto que quieras entender mejor.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la propuesta, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras'],
+    answer: 'Esta propuesta plantea un diagnóstico integral de la experiencia de SAMECO. En 1 mes (40 horas, $1.200 USD) se analizan los recorridos, la comunicación, la presencia digital y las interacciones con usuarios (externos e internos). Se entregan 8 documentos: diagnóstico, user persona, mapa de empatía, journey map, informe digital, mapa de oportunidades, ideación en alto nivel y una hoja de ruta priorizada.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el precio y plazo del proyecto, los 8 entregables, el proceso de trabajo, las reuniones, qué se analiza, qué no está incluido, los próximos pasos para arrancar, o pedirme un resumen general de la propuesta.'
+  },
+  // Content
   {
     keywords: ['precio', 'costo', 'inversión', 'inversion', 'cuánto', 'cuanto', 'valor', 'presupuesto', 'cotización', 'cotizacion', 'plata', 'money', 'usd', 'dólar', 'dolar', '1200', '1.200'],
     answer: 'La inversión para el diagnóstico integral de experiencia es de $1.200 USD. Incluye 40 horas de trabajo, 2 a 3 reuniones con el equipo de SAMECO, 8 entregables documentados, informe de presencia digital y conversión, hoja de ruta priorizada y presentación final de hallazgos.'
@@ -999,7 +1020,7 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'equipo', 'contacto'],
-    answer: 'Yacaré Studio (yacare.io) es un estudio de producto digital. Para consultas sobre esta propuesta podés escribir a hola@yacare.io.'
+    answer: 'Yacaré Studio (yacare.io) es un estudio de producto digital. Para consultas sobre esta propuesta podés escribir a contact@yacare.io.'
   },
   {
     keywords: ['empatía', 'empatia', 'siente', 'piensa', 'busca'],
@@ -1023,15 +1044,15 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['arrancar', 'empezar', 'comenzar', 'inicio', 'start'],
-    answer: 'El equipo de Yacaré está listo para arrancar cuando SAMECO lo decida. Para coordinar el inicio podés escribir a hola@yacare.io.'
+    answer: 'El equipo de Yacaré está listo para arrancar cuando SAMECO lo decida. Para coordinar el inicio podés escribir a contact@yacare.io.'
   },
   {
     keywords: ['pago', 'factura', 'forma de pago', 'transferencia', 'cuota'],
-    answer: 'Esa información no está incluida en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en hola@yacare.io.'
+    answer: 'Esa información no está incluida en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en contact@yacare.io.'
   }
 ];
 
-const FALLBACK_ANSWER = 'Esa información no está detallada en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en hola@yacare.io.';
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta propuesta. Si querés, podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el precio, los entregables, el proceso o el alcance del proyecto.';
 
 function findBestAnswer(question) {
   const q = question.toLowerCase()
@@ -1056,7 +1077,7 @@ function findBestAnswer(question) {
     }
   }
 
-  return bestScore >= 3 ? bestMatch.answer : FALLBACK_ANSWER;
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
 }
 
 function sendMessage() {
