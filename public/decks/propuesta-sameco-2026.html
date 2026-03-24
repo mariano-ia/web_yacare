@@ -471,16 +471,18 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   body { font-size: 16px; }
 
   .deck {
-    height: auto;
-    overflow-y: visible;
-    scroll-snap-type: none;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
   }
   .slide {
-    min-height: auto;
-    scroll-snap-align: none;
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     padding: 40px 20px;
-    border-bottom: 1px solid var(--border-subtle);
-    justify-content: flex-start;
+    justify-content: center;
+    overflow-y: auto;
   }
 
   .slide-content {
@@ -541,11 +543,39 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   }
 }
 
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
 /* ═══════════════════════════════════════
    PRINT
    ═══════════════════════════════════════ */
 @media print {
-  .grain-overlay, .blob, .deck-toolbar, .slide-counter { display: none !important; }
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
   .deck { height: auto; overflow: visible; scroll-snap-type: none; }
   .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
@@ -579,6 +609,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <!-- ═══════════════════════════════════════
      DECK — All 11 slides
      ═══════════════════════════════════════ -->
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
 <div class="deck" id="deck">
 
 
@@ -929,6 +964,18 @@ const isMobile = window.innerWidth <= 768;
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
 });
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
 
 // ═══════════════════════════════════════
 // SLIDE COUNTER (desktop only)
