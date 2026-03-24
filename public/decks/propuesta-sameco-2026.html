@@ -10,8 +10,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
-<!-- Reveal.js -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<!-- Reveal.js (skip on mobile) -->
+<script>window.__isMobile = window.innerWidth <= 768;</script>
+<script>
+  if (!window.__isMobile) {
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">');
+  }
+  if (window.__isMobile) {
+    document.documentElement.classList.add('mobile-html');
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('mobile');
+    });
+  }
+</script>
 
 <!-- Reveal.js Print PDF (loaded conditionally) -->
 <script>
@@ -406,6 +417,23 @@
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
 }
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
 .chat-typing {
   align-self: flex-start;
   padding: 12px 18px;
@@ -432,53 +460,84 @@
    Slides render as a vertically scrolling page.
    ═══════════════════════════════════════════ */
 body.mobile {
-  background: var(--bg-primary);
-  overflow-y: auto;
-  overflow-x: hidden;
+  background: var(--bg-primary) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
 }
-body.mobile .reveal-viewport { background: var(--bg-primary) !important; }
-body.mobile .reveal {
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--text-primary);
+body.mobile .reveal-viewport {
+  background: var(--bg-primary) !important;
+  overflow: visible !important;
+  height: auto !important;
+}
+body.mobile .reveal,
+body.mobile .reveal-viewport .reveal {
+  font-family: var(--font-body) !important;
+  font-size: 16px !important;
+  color: var(--text-primary) !important;
   overflow: visible !important;
   position: relative !important;
   width: 100% !important;
   height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
   transform: none !important;
+  top: auto !important;
+  left: auto !important;
 }
-body.mobile .reveal .slides {
+body.mobile .reveal .slides,
+body.mobile .reveal-viewport .reveal .slides {
   overflow: visible !important;
   width: 100% !important;
   height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
   position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
   transform: none !important;
   display: block !important;
   perspective: none !important;
   perspective-origin: initial !important;
+  zoom: 1 !important;
 }
-body.mobile .reveal .slides section {
+body.mobile .reveal .slides section,
+body.mobile .reveal .slides section.present,
+body.mobile .reveal .slides section.past,
+body.mobile .reveal .slides section.future,
+body.mobile .reveal .slides > section {
   position: relative !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   width: 100% !important;
   height: auto !important;
   min-height: auto !important;
   max-height: none !important;
-  padding: 48px 20px !important;
+  padding: 40px 20px !important;
   top: auto !important;
   left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 auto !important;
   transform: none !important;
   opacity: 1 !important;
   visibility: visible !important;
   overflow: visible !important;
+  z-index: auto !important;
+  border-bottom: 1px solid var(--border-subtle);
 }
 body.mobile .reveal .backgrounds,
 body.mobile .reveal .slide-background,
 body.mobile .reveal .controls,
 body.mobile .reveal .progress,
-body.mobile .reveal .slide-number { display: none !important; }
+body.mobile .reveal .slide-number,
+body.mobile .reveal .navigate-left,
+body.mobile .reveal .navigate-right { display: none !important; }
 
 body.mobile .reveal h1 { font-size: 1.8rem !important; }
 body.mobile .reveal h2 { font-size: 1.5rem !important; }
@@ -853,7 +912,15 @@ body.mobile .anim {
       <!-- Messages area -->
       <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
         <div class="chat-msg chat-msg--assistant">
-          <p>Hola. Soy el asistente de esta propuesta. Puedo responder preguntas sobre el alcance, los entregables, el proceso de trabajo, la inversión o cualquier otro punto que quieras entender mejor. ¿En qué puedo ayudarte?</p>
+          <p>Hola. Soy el asistente de esta propuesta. Podés preguntarme lo que quieras sobre lo que acabás de ver.</p>
+        </div>
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuánto cuesta?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué entregables incluye?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuánto dura el proyecto?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué no incluye esta etapa?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo es el proceso de trabajo?</button>
         </div>
       </div>
 
@@ -881,7 +948,7 @@ body.mobile .anim {
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-const isMobile = window.innerWidth <= 768;
+const isMobile = window.__isMobile;
 if (isMobile) document.body.classList.add('mobile');
 
 if (!isMobile) {
@@ -1078,6 +1145,15 @@ function findBestAnswer(question) {
   }
 
   return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  // Hide all suggestions after clicking one
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  // Set input and send
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
 }
 
 function sendMessage() {
