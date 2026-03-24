@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Propuesta SAMECO</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Reveal.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<!-- Reveal.js Print PDF (loaded conditionally) -->
+<script>
+  if (window.location.search.includes('print-pdf')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css';
+    document.head.appendChild(link);
+  }
+</script>
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-viewport { background: var(--bg-primary) !important; }
+.reveal {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--text-primary);
+}
+.reveal .slides { text-align: left; }
+.reveal .slides section {
+  padding: 60px 80px;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+.reveal .slides section .slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  text-shadow: none;
+}
+.reveal p, .reveal li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+.reveal ul, .reveal ol { list-style: none; padding: 0; margin: 0; }
+
+/* Grain */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* Shimmer */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* Blobs */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* Slide enter */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal .slides section.present .anim {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.reveal .slides section.present .anim:nth-child(1) { animation-delay: 0.05s; }
+.reveal .slides section.present .anim:nth-child(2) { animation-delay: 0.12s; }
+.reveal .slides section.present .anim:nth-child(3) { animation-delay: 0.19s; }
+.reveal .slides section.present .anim:nth-child(4) { animation-delay: 0.26s; }
+.reveal .slides section.present .anim:nth-child(5) { animation-delay: 0.33s; }
+.reveal .slides section.present .anim:nth-child(6) { animation-delay: 0.40s; }
+.reveal .slides section:not(.present) .anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Components */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.price {
+  font-family: var(--font-display);
+  font-size: 3.5rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.price span {
+  font-size: 1rem; color: var(--text-muted);
+  font-family: var(--font-body); font-weight: 400;
+}
+.price-features { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.price-features li {
+  font-size: 0.85rem; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+}
+.price-features li i { color: var(--text-muted); width: 16px; height: 16px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff; cursor: pointer;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.slide-cover {
+  text-align: center !important;
+  position: relative; overflow: hidden;
+}
+.slide-cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide-cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide-cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide-divider {
+  text-align: center !important;
+  position: relative; overflow: hidden;
+}
+.slide-divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide-divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide-thanks {
+  text-align: center !important; position: relative;
+}
+.slide-thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* PDF button */
+.pdf-btn {
+  position: fixed; bottom: 24px; left: 24px; z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  cursor: pointer; transition: all 0.3s var(--ease-out); text-decoration: none;
+}
+.pdf-btn:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(0, 0, 0, 0.8); }
+.pdf-btn i { width: 14px; height: 14px; }
+
+/* — Chat widget — */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+@media print {
+  .grain-overlay, .blob, .pdf-btn { display: none !important; }
+  .reveal .slides section { break-inside: avoid; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<button class="pdf-btn" onclick="printPDF()">
+  <i data-lucide="download"></i> Descargar PDF
+</button>
+
+<div class="reveal">
+<div class="slides">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide-cover" data-background-color="#000">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../public/logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;">
+      <img src="sameco-logo.png" alt="Formación SAMECO" style="height:56px; border-radius:8px;">
+    </div>
+    <h1 class="shimmer-text anim">Diagnóstico integral de experiencia</h1>
+    <p class="subtitle anim">Comprender en profundidad cómo es hoy la experiencia de quienes interactúan con SAMECO y detectar con claridad las principales oportunidades de mejora.</p>
+    <p class="meta anim" style="margin-top:24px;">Marzo 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. EL PUNTO DE PARTIDA ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Punto de partida</div>
+        <h2 class="anim" style="font-size:2.2rem;">SAMECO ya tiene los activos más difíciles de construir</h2>
+        <p class="anim" style="margin-top:16px;">Trayectoria, legitimidad, comunidad, contenidos y una propuesta formativa con identidad propia. Todo eso ya está.</p>
+        <p class="anim">Lo que falta es una mirada estructurada sobre cómo se vive hoy esa experiencia (desde afuera y desde adentro) para saber exactamente dónde poner foco.</p>
+      </div>
+      <div class="anim">
+        <div class="card" style="padding:32px;">
+          <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">Cuando hablamos de experiencia, no nos referimos solo a lo digital. También incluye cómo se presentan las formaciones, los recorridos de consulta e inscripción, los materiales, la comunicación y cada interacción que una persona tiene con la institución en distintos momentos de su vínculo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. QUÉ PROPONEMOS ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">La propuesta</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Un diagnóstico profundo y accionable</h2>
+    <p class="anim" style="max-width:800px; margin-bottom:36px;">Una instancia de análisis que permita entender el escenario actual, ordenar hallazgos, definir prioridades y establecer una base sólida para avanzar con mejoras progresivas.</p>
+    <ul class="icon-list anim">
+      <li>
+        <i data-lucide="scan-search" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Detectar fricciones y oportunidades</strong> en la experiencia actual</div>
+      </li>
+      <li>
+        <i data-lucide="users" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Entender necesidades y motivaciones</strong> de los usuarios de SAMECO</div>
+      </li>
+      <li>
+        <i data-lucide="map-pin" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Identificar puntos críticos</strong> del recorrido actual</div>
+      </li>
+      <li>
+        <i data-lucide="lightbulb" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Traducir el análisis en oportunidades concretas</strong> de mejora</div>
+      </li>
+      <li>
+        <i data-lucide="list-ordered" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Definir un criterio de priorización</strong> para las acciones futuras</div>
+      </li>
+    </ul>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. ALCANCE ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Alcance del análisis</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Qué vamos a mirar</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Propuesta y mensaje</h4>
+        <p style="font-size:0.95rem;">Claridad general de la propuesta. Consistencia entre lo que SAMECO ofrece y cómo lo comunica.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Recorrido del usuario</h4>
+        <p style="font-size:0.95rem;">Desde el descubrimiento hasta la consulta o inscripción. Presentación de formaciones, puntos de fricción.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Experiencia digital</h4>
+        <p style="font-size:0.95rem;">Puntos de fricción en canales digitales. Señales de confianza, legitimidad y credibilidad.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Usuarios internos</h4>
+        <p style="font-size:0.95rem;">Experiencia de quienes participan en la construcción de la oferta y la relación con los usuarios.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. PROCESO ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Proceso de trabajo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">Cómo lo hacemos</h2>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Alineación</h4>
+        <p>Comprender el punto de vista del equipo, relevar necesidades, expectativas, problemas percibidos y señales importantes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Profundización</h4>
+        <p>Revisar recorridos, públicos, puntos de contacto, materiales existentes e hipótesis internas.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Análisis</h4>
+        <p>Trabajo de síntesis, construcción de herramientas UX e informe de presencia digital y conversión.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Devolución</h4>
+        <p>Presentación de hallazgos, oportunidades detectadas y propuesta de próximos pasos.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. ENTREGABLES — UX ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Entregables</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Herramientas de comprensión</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Diagnóstico integral</h4>
+        <p style="font-size:0.95rem;">Síntesis estructurada del estado actual: hallazgos principales, fricciones, patrones observados y lectura general del sistema desde la experiencia de usuario.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">User Persona</h4>
+        <p style="font-size:0.95rem;">Perfil sintético del usuario principal: motivaciones, necesidades, expectativas, dudas frecuentes, barreras de avance y criterios de decisión.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Mapa de empatía</h4>
+        <p style="font-size:0.95rem;">Qué busca, qué piensa, qué siente, qué necesita, qué lo frena y qué lo impulsa a avanzar en su relación con SAMECO.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Journey Map</h4>
+        <p style="font-size:0.95rem;">Mapa del recorrido actual: etapas, puntos de contacto, momentos críticos, tensiones y oportunidades detectadas en cada tramo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. ENTREGABLES — ESTRATÉGICOS ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Entregables</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Herramientas de acción</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Informe de presencia digital</h4>
+        <p style="font-size:0.95rem;">Evaluación de mensaje, propuesta de valor, estructura de contenidos, señales de confianza, SEO, discoverability y oportunidades de conversión.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Mapa de oportunidades</h4>
+        <p style="font-size:0.95rem;">Síntesis organizada en categorías: mejoras rápidas, de comunicación, del recorrido, digitales y de mayor alcance estructural.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Ideación en alto nivel</h4>
+        <p style="font-size:0.95rem;">Primeras líneas de solución planteadas de forma conceptual: contenidos, presentación de la oferta, puntos de contacto clave y simplificación de decisiones.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Priorización y hoja de ruta</h4>
+        <p style="font-size:0.95rem;">Qué conviene encarar primero, qué se resuelve con acciones acotadas, qué requiere una etapa posterior y cómo avanzar de forma progresiva.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. QUÉ NO INCLUYE ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Foco de esta etapa</div>
+        <h2 class="anim" style="font-size:2.2rem;">Comprensión y diagnóstico, no ejecución</h2>
+        <p class="anim" style="margin-top:16px;">Esta instancia está diseñada para construir una lectura clara, ordenada y accionable del estado actual. Las etapas de diseño, desarrollo e implementación pueden definirse y cotizarse por separado una vez completado el diagnóstico.</p>
+      </div>
+      <div>
+        <ul class="icon-list anim">
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div>Diseño final de interfaces</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div>Redacción final de contenidos</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div>Desarrollo web o implementación técnica</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div>Automatizaciones o ejecución operativa</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. INVERSIÓN ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Inversión</div>
+        <h2 class="shimmer-text anim" style="font-size:2.4rem;">Propuesta económica</h2>
+      </div>
+      <div class="anim">
+        <div class="card card--highlight" style="padding:48px;">
+          <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.1em;">DIAGNÓSTICO INTEGRAL DE EXPERIENCIA</h4>
+          <div class="price">$1.200 <span>USD</span></div>
+          <div style="display:flex; gap:32px; margin-top:20px; margin-bottom:24px;">
+            <div>
+              <div class="stat-number" style="font-size:2.5rem;">40</div>
+              <div class="stat-label" style="font-size:0.7rem;">Horas de trabajo</div>
+            </div>
+            <div>
+              <div class="stat-number" style="font-size:2.5rem;">1</div>
+              <div class="stat-label" style="font-size:0.7rem;">Mes de ejecución</div>
+            </div>
+          </div>
+          <ul class="price-features">
+            <li><i data-lucide="check"></i> Análisis integral de experiencia</li>
+            <li><i data-lucide="check"></i> 2-3 reuniones de trabajo con SAMECO</li>
+            <li><i data-lucide="check"></i> 8 entregables documentados</li>
+            <li><i data-lucide="check"></i> Informe de presencia digital y conversión</li>
+            <li><i data-lucide="check"></i> Hoja de ruta priorizada</li>
+            <li><i data-lucide="check"></i> Presentación final de hallazgos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>SAMECO · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. THANK YOU ══════════════ -->
+<section class="slide-thanks" data-background-color="#000">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../public/logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Estamos listos para arrancar cuando SAMECO lo decida.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> hola@yacare.io</div>
+      <div class="contact-item"><i data-lucide="linkedin" style="width:16px; height:16px;"></i> /yacare-studio</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11. CHAT ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta propuesta.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div class="chat-msg chat-msg--assistant">
+          <p>Hola. Soy el asistente de esta propuesta. Puedo responder preguntas sobre el alcance, los entregables, el proceso de trabajo, la inversión o cualquier otro punto que quieras entender mejor. ¿En qué puedo ayudarte?</p>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a hola@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  width: 1280,
+  height: 720,
+  margin: 0,
+  minScale: 0.2,
+  maxScale: 2.0,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  center: false,
+  controls: true,
+  controlsLayout: 'bottom-right',
+  progress: true,
+  slideNumber: 'c/t',
+  pdfSeparateFragments: false,
+});
+
+Reveal.on('ready', () => {
+  lucide.createIcons();
+  // Auto-trigger print dialog when in print-pdf mode
+  if (window.location.search.includes('print-pdf')) {
+    setTimeout(() => window.print(), 1500);
+  }
+});
+Reveal.on('slidechanged', () => setTimeout(() => lucide.createIcons(), 50));
+
+function printPDF() {
+  // If already in print-pdf mode, just print
+  if (window.location.search.includes('print-pdf')) {
+    window.print();
+    return;
+  }
+  // Reload with ?print-pdf param which triggers Reveal's print layout
+  window.location.search = '?print-pdf';
+}
+
+// ═══════════════════════════════════════
+// CHAT — Proposal Assistant
+// ═══════════════════════════════════════
+const CHAT_API = 'https://www.yacare.io/blog/api/chat-proposal';
+
+const PROPOSAL_CONTEXT = `PROPUESTA: Diagnóstico integral de experiencia y oportunidades de mejora para SAMECO
+
+PUNTO DE PARTIDA:
+SAMECO ya cuenta con activos muy valiosos: trayectoria, legitimidad, comunidad, contenidos y una propuesta formativa con identidad propia. El objetivo de esta etapa no es rediseñar una pieza puntual, sino comprender con mayor profundidad cómo es hoy la experiencia de quienes interactúan con SAMECO y detectar con claridad dónde están las principales oportunidades de mejora. Cuando hablamos de experiencia, no nos referimos solo a lo digital. También incluye cómo se presentan las formaciones, los recorridos de consulta e inscripción, los materiales, la comunicación y cada interacción que una persona tiene con la institución en distintos momentos de su vínculo. Esta mirada contempla tanto usuarios externos como usuarios internos que participan en la construcción de esa experiencia.
+
+OBJETIVO:
+Construir una comprensión clara y fundamentada de la experiencia actual de SAMECO para: detectar fricciones y oportunidades; entender mejor las necesidades, motivaciones y dudas de sus usuarios; identificar puntos críticos del recorrido actual; traducir el análisis en oportunidades concretas de mejora; definir un criterio de priorización para futuras acciones.
+
+ALCANCE DEL ANÁLISIS:
+1. Propuesta y mensaje: claridad general de la propuesta, consistencia entre lo que SAMECO ofrece y cómo lo comunica.
+2. Recorrido del usuario: desde el descubrimiento hasta la consulta o inscripción, presentación de formaciones, puntos de fricción.
+3. Experiencia digital: puntos de fricción en canales digitales, señales de confianza, legitimidad y credibilidad.
+4. Usuarios internos: experiencia de quienes participan en la construcción de la oferta y la relación con los usuarios.
+
+PROCESO DE TRABAJO (4 etapas):
+1. Alineación: comprender el punto de vista del equipo, relevar necesidades, expectativas, problemas percibidos y señales importantes.
+2. Profundización: revisar recorridos, públicos, puntos de contacto, materiales existentes e hipótesis internas.
+3. Análisis: trabajo de síntesis, construcción de herramientas UX e informe de presencia digital y conversión.
+4. Devolución: presentación de hallazgos, oportunidades detectadas y propuesta de próximos pasos.
+Se contemplan 2 o 3 reuniones de trabajo con el equipo de SAMECO.
+
+ENTREGABLES (8 en total):
+
+Herramientas de comprensión:
+1. Diagnóstico integral de experiencia: síntesis estructurada del estado actual con hallazgos principales, fricciones, patrones observados y lectura general del sistema desde la experiencia de usuario.
+2. User Persona: perfil sintético del usuario principal con motivaciones, necesidades, expectativas, dudas frecuentes, barreras de avance y criterios de decisión.
+3. Mapa de empatía: qué busca, qué piensa, qué siente, qué necesita, qué lo frena y qué lo impulsa a avanzar en su relación con SAMECO.
+4. Journey Map: mapa del recorrido actual con etapas, puntos de contacto, momentos críticos, tensiones y oportunidades detectadas en cada tramo.
+
+Herramientas de acción:
+5. Informe de presencia digital: evaluación de mensaje, propuesta de valor, estructura de contenidos, señales de confianza, SEO, discoverability y oportunidades de conversión.
+6. Mapa de oportunidades: síntesis organizada en categorías (mejoras rápidas, de comunicación, del recorrido, digitales y de mayor alcance estructural).
+7. Ideación en alto nivel: primeras líneas de solución planteadas de forma conceptual (contenidos, presentación de la oferta, puntos de contacto clave y simplificación de decisiones).
+8. Priorización y hoja de ruta: qué conviene encarar primero, qué se resuelve con acciones acotadas, qué requiere una etapa posterior y cómo avanzar de forma progresiva.
+
+QUÉ NO INCLUYE ESTA ETAPA:
+Diseño final de interfaces, redacción final de contenidos, desarrollo web o implementación técnica, automatizaciones o ejecución operativa. Las etapas posteriores pueden definirse y cotizarse por separado una vez completado el diagnóstico.
+
+INVERSIÓN:
+$1.200 USD, 40 horas de trabajo, 1 mes de ejecución.
+Incluye: análisis integral de experiencia, 2 a 3 reuniones de trabajo con SAMECO, 8 entregables documentados, informe de presencia digital y conversión, hoja de ruta priorizada, presentación final de hallazgos.
+
+EMPRESA:
+Yacaré Studio (yacare.io), contacto: hola@yacare.io`;
+
+let chatHistory = [];
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    const resp = await fetch(CHAT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        context: PROPOSAL_CONTEXT,
+        history: chatHistory,
+      }),
+    });
+
+    const data = await resp.json();
+    typing.remove();
+
+    const reply = data.reply || data.error || 'No pude procesar la consulta. Probá de nuevo.';
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+
+    chatHistory.push({ role: 'user', content: text });
+    chatHistory.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    typing.remove();
+    const errMsg = document.createElement('div');
+    errMsg.className = 'chat-msg chat-msg--assistant';
+    errMsg.innerHTML = '<p>No pude conectarme con el asistente. Probá de nuevo en unos segundos.</p>';
+    messages.appendChild(errMsg);
+  }
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>

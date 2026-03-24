@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré — Presentation Template</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Reveal.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════
+   YACARÉ DECK — Design Tokens
+   Fiel a yacare.io: solo blanco, gris, gris oscuro.
+   Headings usan shimmer animado (gris → blanco → gris).
+   ═══════════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════
+   REVEAL BASE
+   ═══════════════════════════════════════════ */
+.reveal-viewport { background: var(--bg-primary) !important; }
+.reveal {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--text-primary);
+}
+.reveal .slides { text-align: left; }
+.reveal .slides section {
+  padding: 60px 80px;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+.reveal .slides section .slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  text-shadow: none;
+}
+.reveal p, .reveal li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+.reveal ul, .reveal ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════════
+   GRAIN OVERLAY (from yacare.io)
+   ═══════════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════════
+   SHIMMER TEXT — from .text-hero-gradient on yacare.io
+   Used on "What We Offer", "How we build", etc.
+   ═══════════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════════
+   BLOB (from yacare.io hero)
+   ═══════════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE ENTER ANIMATION
+   Todo el slide entra junto con delay por hijo
+   ═══════════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal .slides section.present .anim {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.reveal .slides section.present .anim:nth-child(1) { animation-delay: 0.05s; }
+.reveal .slides section.present .anim:nth-child(2) { animation-delay: 0.12s; }
+.reveal .slides section.present .anim:nth-child(3) { animation-delay: 0.19s; }
+.reveal .slides section.present .anim:nth-child(4) { animation-delay: 0.26s; }
+.reveal .slides section.present .anim:nth-child(5) { animation-delay: 0.33s; }
+.reveal .slides section.present .anim:nth-child(6) { animation-delay: 0.40s; }
+
+/* Reset cuando no esta activo */
+.reveal .slides section:not(.present) .anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* ═══════════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════════ */
+
+/* — Label — */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--text-muted);
+}
+
+/* — Card (from yacare.io .card / .talent-card) — */
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--highlight {
+  border-color: var(--border-medium);
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+
+/* — Decorative top-border accent (from .service-item::before) — */
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+/* — Split — */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+/* — Grids — */
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4   { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
+
+/* — Stat number (plain #888, like .mstep__num on yacare.io) — */
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+}
+
+/* — Steps / Timeline — */
+.steps {
+  display: flex; gap: 24px; width: 100%; position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px;
+  background: var(--border-medium);
+  z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* — Icon list — */
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i {
+  color: var(--text-muted);
+  flex-shrink: 0; margin-top: 3px;
+}
+
+/* — Quote — */
+.quote-mark {
+  font-size: 6rem; line-height: 0.5;
+  color: var(--text-muted); opacity: 0.3;
+  font-family: Georgia, serif;
+}
+.quote-text {
+  font-family: var(--font-body);
+  font-size: 1.8rem; font-weight: 300;
+  line-height: 1.5; color: var(--text-primary);
+  font-style: italic; max-width: 800px;
+  margin: 24px 0;
+}
+.quote-attribution {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* — Pricing — */
+.price {
+  font-family: var(--font-display);
+  font-size: 3rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.price span {
+  font-size: 1rem; color: var(--text-muted);
+  font-family: var(--font-body); font-weight: 400;
+}
+.price-features {
+  display: flex; flex-direction: column; gap: 10px; margin-top: 20px;
+}
+.price-features li {
+  font-size: 0.85rem; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+}
+.price-features li i { color: var(--text-muted); width: 16px; height: 16px; }
+
+/* — Avatar — */
+.avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+/* — Checklist — */
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+/* — Button (from yacare.io .btn--primary) — */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff;
+  cursor: pointer;
+}
+
+/* — Section number — */
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute;
+  right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+/* — Brand bar — */
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+.brand-bar img { height: 16px; opacity: 0.5; filter: invert(1); }
+
+/* — Client logo slot — */
+.client-logo {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 8px 24px;
+  border: 1px dashed var(--border-medium);
+  border-radius: 12px;
+  color: var(--text-muted); font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* — Image placeholder — */
+.img-placeholder {
+  width: 100%; aspect-ratio: 4/3; border-radius: 24px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 0.8rem;
+  overflow: hidden;
+}
+.img-placeholder i { opacity: 0.3; }
+
+/* — Cover slide — */
+.slide-cover {
+  text-align: center !important;
+  position: relative; overflow: hidden;
+}
+.slide-cover h1 { font-size: clamp(3.5rem, 7vw, 5.5rem); margin-bottom: 20px; }
+.slide-cover .subtitle {
+  font-size: 1.15rem; color: var(--text-secondary);
+  max-width: 600px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide-cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+/* — Section divider — */
+.slide-divider {
+  text-align: center !important;
+  position: relative; overflow: hidden;
+}
+.slide-divider h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  position: relative; z-index: 1;
+}
+.slide-divider .label { justify-content: center; position: relative; z-index: 1; }
+
+/* — Thank you — */
+.slide-thanks {
+  text-align: center !important;
+  position: relative;
+}
+.slide-thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+.qr-placeholder {
+  width: 100px; height: 100px; border-radius: 12px;
+  border: 1px dashed var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 24px auto 0;
+  color: var(--text-muted); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* — Comparison — */
+.compare-col h3 {
+  font-size: 1.3rem; margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* — Recommended badge — */
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* — PDF button (fixed, all slides) — */
+.pdf-btn {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  text-decoration: none;
+}
+.pdf-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.pdf-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════════
+   PRINT / PDF
+   ═══════════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .pdf-btn { display: none !important; }
+  .reveal .slides section { break-inside: avoid; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- PDF download button -->
+<button class="pdf-btn" onclick="printPDF()">
+  <i data-lucide="download"></i> Descargar PDF
+</button>
+
+<div class="reveal">
+<div class="slides">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide-cover" data-background-color="#000">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../public/logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Propuesta de<br>Producto Digital</h1>
+    <p class="subtitle anim">Diseño, desarrollo y estrategia para llevar tu idea al mercado de forma rápida y efectiva.</p>
+    <div class="anim"><span class="client-logo">Logo del cliente</span></div>
+    <p class="meta anim" style="margin-top:32px;">Marzo 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. SECTION DIVIDER ══════════════ -->
+<section class="slide-divider" data-background-color="#000">
+  <div class="blob blob--purple" style="top:50%; left:50%; transform:translate(-50%,-50%);"></div>
+  <span class="section-num">01</span>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <div class="label anim">Sección</div>
+    <h2 class="shimmer-text anim">Quiénes<br>somos</h2>
+  </div>
+</section>
+
+
+<!-- ══════════════ 3. ABOUT ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Sobre nosotros</div>
+        <h2 class="anim" style="font-size:2.4rem;">Somos un estudio de producto digital</h2>
+        <p class="anim" style="font-size:1.05rem; margin-top:16px;">Combinamos diseño, tecnología y estrategia para crear productos digitales que generan impacto real. Trabajamos con startups y empresas que necesitan moverse rápido sin sacrificar calidad.</p>
+        <p class="anim" style="font-size:1.05rem;">Desde Buenos Aires para el mundo, con clientes en LATAM, USA y Europa.</p>
+      </div>
+      <div class="anim">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="card card--sm">
+            <div class="stat-number">+50</div>
+            <div class="stat-label">Productos lanzados</div>
+          </div>
+          <div class="card card--sm">
+            <div class="stat-number">8 años</div>
+            <div class="stat-label">De experiencia</div>
+          </div>
+          <div class="card card--sm">
+            <div class="stat-number">12 países</div>
+            <div class="stat-label">Con clientes activos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. CONTENT + IMAGE ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">El desafío</div>
+        <h2 class="anim" style="font-size:2.2rem;">Tu producto necesita escalar y el stack actual no acompaña</h2>
+        <p class="anim" style="margin-top:16px;">El crecimiento orgánico generó deuda técnica. La experiencia del usuario se resiente, los tiempos de carga aumentan y el equipo dedica más tiempo a apagar incendios que a construir features.</p>
+        <p class="anim">Necesitás un plan claro para estabilizar, optimizar y volver a crecer con confianza.</p>
+      </div>
+      <div class="anim">
+        <div class="img-placeholder">
+          <i data-lucide="image" style="width:48px; height:48px;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. BULLET POINTS ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Nuestra propuesta</div>
+    <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:40px;">Qué vamos a hacer juntos</h2>
+    <ul class="icon-list anim">
+      <li>
+        <i data-lucide="search" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Discovery & Research</strong><br>Entrevistas con usuarios, análisis competitivo y mapeo de oportunidades para validar la dirección del producto.</div>
+      </li>
+      <li>
+        <i data-lucide="pen-tool" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Diseño UX/UI</strong><br>Wireframes, prototipos interactivos y un design system escalable que tu equipo pueda mantener.</div>
+      </li>
+      <li>
+        <i data-lucide="code-2" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Desarrollo Frontend</strong><br>Implementación pixel-perfect con Next.js, optimizada para performance y accesibilidad.</div>
+      </li>
+      <li>
+        <i data-lucide="rocket" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Launch & Handoff</strong><br>Deploy a producción, documentación técnica y transferencia de conocimiento a tu equipo.</div>
+      </li>
+    </ul>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. BIG STATS ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Impacto esperado</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">Los números que buscamos alcanzar</h2>
+    <div class="grid-4 anim">
+      <div style="text-align:center;">
+        <div class="stat-number">3x</div>
+        <div class="stat-label">Velocidad de carga</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stat-number">+40%</div>
+        <div class="stat-label">Conversión</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stat-number">-60%</div>
+        <div class="stat-label">Bounce rate</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stat-number">98</div>
+        <div class="stat-label">Lighthouse score</div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. BENTO GRID ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Servicios</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Cómo trabajamos</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--accent-1">
+        <i data-lucide="compass" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.1rem;">Discovery Sprint</h4>
+        <p style="font-size:0.85rem;">2 semanas de investigación intensiva para definir el roadmap de tu producto con datos reales.</p>
+      </div>
+      <div class="card card--accent-2">
+        <i data-lucide="zap" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.1rem;">MVP Jumpstarter</h4>
+        <p style="font-size:0.85rem;">De idea a producto funcional en 6-8 semanas. Diseño, desarrollo y deploy incluidos.</p>
+      </div>
+      <div class="card card--accent-3">
+        <i data-lucide="trending-up" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.1rem;">Product Growth</h4>
+        <p style="font-size:0.85rem;">Optimización continua basada en métricas: A/B testing, UX improvements y growth loops.</p>
+      </div>
+      <div class="card card--accent-4">
+        <i data-lucide="bot" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.1rem;">AI Automation</h4>
+        <p style="font-size:0.85rem;">Workflows inteligentes con n8n, GPT-4o y agentes que automatizan procesos repetitivos.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. PROCESS / TIMELINE ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Proceso</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">Cómo lo hacemos, paso a paso</h2>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Descubrir</h4>
+        <p>Research, entrevistas y análisis del contexto actual.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Diseñar</h4>
+        <p>Wireframes, prototipos y validación con usuarios reales.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Construir</h4>
+        <p>Desarrollo iterativo con deploys semanales y feedback continuo.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Lanzar</h4>
+        <p>Go-live, monitoreo, iteración y handoff al equipo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. CASE STUDY ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Caso de éxito</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:32px;">FinTech App — Plataforma de inversiones</h2>
+    <div class="anim" style="margin-bottom:28px;">
+      <div class="img-placeholder" style="aspect-ratio:21/9; border-radius:20px;">
+        <i data-lucide="monitor-smartphone" style="width:48px; height:48px;"></i>
+      </div>
+    </div>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px; letter-spacing:0.1em;">DESAFÍO</h4>
+        <p style="font-size:0.82rem;">Plataforma legacy con UX confusa. Onboarding con 70% de abandono.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px; letter-spacing:0.1em;">SOLUCIÓN</h4>
+        <p style="font-size:0.82rem;">Rediseño completo del flujo de onboarding. App nativa con biometría.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px; letter-spacing:0.1em;">RESULTADO</h4>
+        <p style="font-size:0.82rem;">Abandono bajó al 22%. Time-to-invest de 15 min a 3 min. +180% MAU.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. QUOTE ══════════════ -->
+<section data-background-color="#000" style="text-align:center !important;">
+  <div class="slide-content" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="quote-mark anim">"</div>
+    <p class="quote-text anim">Yacaré transformó nuestra idea en un producto real en tiempo récord. La calidad del diseño y la velocidad de ejecución superaron todas nuestras expectativas.</p>
+    <p class="quote-attribution anim">— Santiago Morales, CEO de InvertirOnline</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11. COMPARISON ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Comparación</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:40px;">Por qué elegirnos</h2>
+    <div class="split anim" style="gap:40px;">
+      <div class="compare-col">
+        <h3 style="color:var(--text-muted);">Agencia tradicional</h3>
+        <ul style="display:flex; flex-direction:column; gap:14px;">
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-muted);">
+            <i data-lucide="x" style="width:16px; height:16px; flex-shrink:0;"></i> Procesos largos y burocráticos
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-muted);">
+            <i data-lucide="x" style="width:16px; height:16px; flex-shrink:0;"></i> Equipos rotativos sin ownership
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-muted);">
+            <i data-lucide="x" style="width:16px; height:16px; flex-shrink:0;"></i> Diseño genérico sin diferenciación
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-muted);">
+            <i data-lucide="x" style="width:16px; height:16px; flex-shrink:0;"></i> Sin visión de producto
+          </li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h3>Yacaré Studio</h3>
+        <ul style="display:flex; flex-direction:column; gap:14px;">
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-primary);">
+            <i data-lucide="check" style="width:16px; height:16px; flex-shrink:0;"></i> Sprints ágiles con entregables semanales
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-primary);">
+            <i data-lucide="check" style="width:16px; height:16px; flex-shrink:0;"></i> Equipo senior dedicado de punta a punta
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-primary);">
+            <i data-lucide="check" style="width:16px; height:16px; flex-shrink:0;"></i> Diseño con research y data real
+          </li>
+          <li style="display:flex; align-items:center; gap:12px; color:var(--text-primary);">
+            <i data-lucide="check" style="width:16px; height:16px; flex-shrink:0;"></i> Pensamiento de producto integrado
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 12. PRICING ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Inversión</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:32px;">Opciones de trabajo</h2>
+    <div class="grid-3 anim">
+      <div class="card card--accent-1">
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:16px; letter-spacing:0.1em;">DISCOVERY</h4>
+        <div class="price">$3.500 <span>USD</span></div>
+        <p style="font-size:0.85rem; margin:16px 0; color:var(--text-muted);">2 semanas</p>
+        <ul class="price-features">
+          <li><i data-lucide="check"></i> Research & análisis</li>
+          <li><i data-lucide="check"></i> Wireframes clave</li>
+          <li><i data-lucide="check"></i> Roadmap priorizado</li>
+          <li><i data-lucide="check"></i> Informe ejecutivo</li>
+        </ul>
+      </div>
+      <div class="card card--highlight card--accent-2">
+        <div class="badge-rec">Recomendado</div>
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:16px; letter-spacing:0.1em;">MVP COMPLETO</h4>
+        <div class="price">$18.000 <span>USD</span></div>
+        <p style="font-size:0.85rem; margin:16px 0; color:var(--text-muted);">8 semanas</p>
+        <ul class="price-features">
+          <li><i data-lucide="check"></i> Todo Discovery +</li>
+          <li><i data-lucide="check"></i> Diseño UI completo</li>
+          <li><i data-lucide="check"></i> Desarrollo frontend</li>
+          <li><i data-lucide="check"></i> API & integraciones</li>
+          <li><i data-lucide="check"></i> Deploy a producción</li>
+        </ul>
+      </div>
+      <div class="card card--accent-3">
+        <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:16px; letter-spacing:0.1em;">GROWTH RETAINER</h4>
+        <div class="price">$5.000 <span>USD/mes</span></div>
+        <p style="font-size:0.85rem; margin:16px 0; color:var(--text-muted);">Ongoing</p>
+        <ul class="price-features">
+          <li><i data-lucide="check"></i> Iteraciones mensuales</li>
+          <li><i data-lucide="check"></i> A/B testing</li>
+          <li><i data-lucide="check"></i> Analytics & reportes</li>
+          <li><i data-lucide="check"></i> Soporte prioritario</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 13. TEAM ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="label anim">Equipo</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:40px;">Quién va a trabajar en tu proyecto</h2>
+    <div class="grid-4 anim">
+      <div style="text-align:center;">
+        <div class="avatar" style="margin:0 auto 12px;">MN</div>
+        <h4 style="font-size:0.95rem; margin-bottom:4px;">Mariano Noceti</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted);">Product Lead</p>
+        <p style="font-size:0.78rem; margin-top:8px;">Estrategia de producto, UX y dirección del proyecto.</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="avatar" style="margin:0 auto 12px;">VC</div>
+        <h4 style="font-size:0.95rem; margin-bottom:4px;">Valentina Cruz</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted);">UX/UI Designer</p>
+        <p style="font-size:0.78rem; margin-top:8px;">Research, diseño de interfaces y design systems.</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="avatar" style="margin:0 auto 12px;">TM</div>
+        <h4 style="font-size:0.95rem; margin-bottom:4px;">Tomás Méndez</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted);">Frontend Engineer</p>
+        <p style="font-size:0.78rem; margin-top:8px;">Desarrollo, performance y arquitectura frontend.</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="avatar" style="margin:0 auto 12px;">LR</div>
+        <h4 style="font-size:0.95rem; margin-bottom:4px;">Laura Ríos</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted);">Growth Strategist</p>
+        <p style="font-size:0.78rem; margin-top:8px;">Métricas, A/B testing y estrategia de crecimiento.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 14. CTA / NEXT STEPS ══════════════ -->
+<section data-background-color="#000">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Próximos pasos</div>
+        <h2 class="anim" style="font-size:2.4rem;">Empecemos a construir juntos</h2>
+        <p class="anim" style="margin-top:16px;">Una vez aprobada la propuesta, arrancamos en la primera semana con el kick-off y el sprint de discovery.</p>
+        <div class="anim" style="margin-top:28px;">
+          <a href="#" class="btn">Agendar kick-off <i data-lucide="arrow-right" style="width:18px; height:18px;"></i></a>
+        </div>
+      </div>
+      <div>
+        <ul class="checklist anim">
+          <li><i data-lucide="circle" style="width:18px; height:18px;"></i> Aprobación de la propuesta y firma</li>
+          <li><i data-lucide="circle" style="width:18px; height:18px;"></i> Kick-off meeting (semana 1)</li>
+          <li><i data-lucide="circle" style="width:18px; height:18px;"></i> Acceso a herramientas y assets</li>
+          <li><i data-lucide="circle" style="width:18px; height:18px;"></i> Sprint 1: Discovery & Research</li>
+          <li><i data-lucide="circle" style="width:18px; height:18px;"></i> Primer entregable: wireframes + roadmap</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 15. THANK YOU ══════════════ -->
+<section class="slide-thanks" data-background-color="#000">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../public/logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Estamos listos para hacer que tu producto despegue.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> hola@yacare.io</div>
+      <div class="contact-item"><i data-lucide="linkedin" style="width:16px; height:16px;"></i> /yacare-studio</div>
+    </div>
+    <div class="qr-placeholder anim">QR</div>
+  </div>
+</section>
+
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  width: 1280,
+  height: 720,
+  margin: 0,
+  minScale: 0.2,
+  maxScale: 2.0,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  center: false,
+  controls: true,
+  controlsLayout: 'bottom-right',
+  progress: true,
+  slideNumber: 'c/t',
+  pdfSeparateFragments: false,
+});
+
+// Lucide icons
+Reveal.on('ready', () => {
+  lucide.createIcons();
+  if (window.location.search.includes('print-pdf')) {
+    setTimeout(() => window.print(), 1500);
+  }
+});
+Reveal.on('slidechanged', () => setTimeout(() => lucide.createIcons(), 50));
+
+// PDF export
+function printPDF() {
+  if (window.location.search.includes('print-pdf')) {
+    window.print();
+    return;
+  }
+  window.location.search = '?print-pdf';
+}
+</script>
+</body>
+</html>
