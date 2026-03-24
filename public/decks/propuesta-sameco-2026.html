@@ -10,34 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
-<!-- Reveal.js (skip on mobile) -->
-<script>window.__isMobile = window.innerWidth <= 768;</script>
-<script>
-  if (!window.__isMobile) {
-    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">');
-  }
-  if (window.__isMobile) {
-    document.documentElement.classList.add('mobile-html');
-    document.addEventListener('DOMContentLoaded', function() {
-      document.body.classList.add('mobile');
-    });
-  }
-</script>
-
-<!-- Reveal.js Print PDF (loaded conditionally) -->
-<script>
-  if (window.location.search.includes('print-pdf')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css';
-    document.head.appendChild(link);
-  }
-</script>
-
 <!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
 <style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
 :root {
   --bg-primary: #000000;
   --bg-secondary: #080808;
@@ -56,57 +35,26 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal-viewport { background: var(--bg-primary) !important; }
-.reveal {
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 18px;
-  color: var(--text-primary);
-}
-.reveal .slides { text-align: left; }
-.reveal .slides section {
-  padding: 60px 80px;
-  box-sizing: border-box;
-  height: 100%;
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Center controls at bottom — small, subtle, horizontal arrows */
-.reveal .controls {
-  position: fixed !important;
-  bottom: 28px !important;
-  left: 50% !important;
-  right: auto !important;
-  top: auto !important;
-  transform: translateX(-50%) !important;
-  width: auto !important;
-  height: auto !important;
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 24px !important;
-  z-index: 100 !important;
-}
-.reveal .controls button {
-  position: static !important;
-  transform: none !important;
-  width: 28px !important;
-  height: 28px !important;
-  opacity: 0.35 !important;
-  transition: opacity 0.2s !important;
-}
-.reveal .controls button:hover { opacity: 0.7 !important; }
-.reveal .controls button.enabled { opacity: 0.35 !important; }
-.reveal .controls button.enabled:hover { opacity: 0.7 !important; }
-.reveal .controls .navigate-up,
-.reveal .controls .navigate-down { display: none !important; }
-.reveal .slides section .slide-content {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
   font-family: var(--font-display);
   text-transform: uppercase;
   letter-spacing: -0.04em;
@@ -114,17 +62,18 @@
   color: var(--text-primary);
   font-weight: 700;
   margin: 0 0 24px 0;
-  text-shadow: none;
 }
-.reveal p, .reveal li {
+p, li {
   font-family: var(--font-body);
   line-height: 1.6;
   color: var(--text-secondary);
   margin: 0 0 12px 0;
 }
-.reveal ul, .reveal ol { list-style: none; padding: 0; margin: 0; }
+ul, ol { list-style: none; padding: 0; margin: 0; }
 
-/* Grain */
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
 .grain-overlay {
   position: fixed; top: -50%; left: -50%;
   width: 200%; height: 200%;
@@ -145,7 +94,9 @@
   90% { transform: translate(-10%, 10%) }
 }
 
-/* Shimmer */
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
 .shimmer-text {
   background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
   background-size: 200% auto;
@@ -160,7 +111,9 @@
   to { background-position: -200% center; }
 }
 
-/* Blobs */
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
 .blob {
   position: absolute; border-radius: 50%;
   filter: blur(120px); pointer-events: none; z-index: 0;
@@ -187,26 +140,59 @@
   100% { transform: translate(20px, -20px) scale(0.95); }
 }
 
-/* Slide enter */
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
 @keyframes slide-in {
   from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.reveal .slides section.present .anim {
-  animation: slide-in 0.8s var(--ease-out) both;
-}
-.reveal .slides section.present .anim:nth-child(1) { animation-delay: 0.05s; }
-.reveal .slides section.present .anim:nth-child(2) { animation-delay: 0.12s; }
-.reveal .slides section.present .anim:nth-child(3) { animation-delay: 0.19s; }
-.reveal .slides section.present .anim:nth-child(4) { animation-delay: 0.26s; }
-.reveal .slides section.present .anim:nth-child(5) { animation-delay: 0.33s; }
-.reveal .slides section.present .anim:nth-child(6) { animation-delay: 0.40s; }
-.reveal .slides section:not(.present) .anim {
+.anim {
   opacity: 0;
   transform: translateY(40px);
 }
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
 
-/* Components */
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
 .label {
   font-family: var(--font-body);
   font-size: 0.7rem; font-weight: 600;
@@ -324,32 +310,35 @@
   font-weight: 500; z-index: 10;
 }
 
-.slide-cover {
-  text-align: center !important;
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
   position: relative; overflow: hidden;
 }
-.slide-cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
-.slide-cover .subtitle {
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
   font-size: 1.1rem; color: var(--text-secondary);
   max-width: 650px; margin: 0 auto 32px; font-weight: 300;
 }
-.slide-cover .meta {
+.slide--cover .meta {
   font-size: 0.75rem; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.15em;
 }
 .cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
 
-.slide-divider {
-  text-align: center !important;
+.slide--divider {
+  text-align: center;
   position: relative; overflow: hidden;
 }
-.slide-divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
-.slide-divider .label { justify-content: center; position: relative; z-index: 1; }
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
 
-.slide-thanks {
-  text-align: center !important; position: relative;
+.slide--thanks {
+  text-align: center; position: relative;
 }
-.slide-thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
 .contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
 .contact-item {
   display: flex; align-items: center; gap: 10px;
@@ -365,7 +354,9 @@
   text-transform: uppercase; letter-spacing: 0.1em;
 }
 
-/* Toolbar (top-right, away from Reveal controls) */
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
 .deck-toolbar {
   position: fixed;
   top: 16px; right: 16px;
@@ -393,7 +384,26 @@
 }
 .toolbar-btn i { width: 14px; height: 14px; }
 
-/* — Chat widget — */
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
 .chat-msg {
   max-width: 85%;
   padding: 12px 18px;
@@ -454,148 +464,90 @@
 #chat-messages::-webkit-scrollbar-track { background: transparent; }
 #chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 
-/* ═══════════════════════════════════════════
-   RESPONSIVE — Mobile (body class .mobile)
-   Reveal.js is NOT initialized on mobile.
-   Slides render as a vertically scrolling page.
-   ═══════════════════════════════════════════ */
-body.mobile {
-  background: var(--bg-primary) !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto !important;
-}
-body.mobile .reveal-viewport {
-  background: var(--bg-primary) !important;
-  overflow: visible !important;
-  height: auto !important;
-}
-body.mobile .reveal,
-body.mobile .reveal-viewport .reveal {
-  font-family: var(--font-body) !important;
-  font-size: 16px !important;
-  color: var(--text-primary) !important;
-  overflow: visible !important;
-  position: relative !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  transform: none !important;
-  top: auto !important;
-  left: auto !important;
-}
-body.mobile .reveal .slides,
-body.mobile .reveal-viewport .reveal .slides {
-  overflow: visible !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  transform: none !important;
-  display: block !important;
-  perspective: none !important;
-  perspective-origin: initial !important;
-  zoom: 1 !important;
-}
-body.mobile .reveal .slides section,
-body.mobile .reveal .slides section.present,
-body.mobile .reveal .slides section.past,
-body.mobile .reveal .slides section.future,
-body.mobile .reveal .slides > section {
-  position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: auto !important;
-  max-height: none !important;
-  padding: 40px 20px !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 auto !important;
-  transform: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  overflow: visible !important;
-  z-index: auto !important;
-  border-bottom: 1px solid var(--border-subtle);
-}
-body.mobile .reveal .backgrounds,
-body.mobile .reveal .slide-background,
-body.mobile .reveal .controls,
-body.mobile .reveal .progress,
-body.mobile .reveal .slide-number,
-body.mobile .reveal .navigate-left,
-body.mobile .reveal .navigate-right { display: none !important; }
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
 
-body.mobile .reveal h1 { font-size: 1.8rem !important; }
-body.mobile .reveal h2 { font-size: 1.5rem !important; }
-body.mobile .reveal h4 { font-size: 1rem !important; }
-body.mobile .reveal p, body.mobile .reveal li { font-size: 0.9rem; }
+  .deck {
+    height: auto;
+    overflow-y: visible;
+    scroll-snap-type: none;
+  }
+  .slide {
+    min-height: auto;
+    scroll-snap-align: none;
+    padding: 40px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    justify-content: flex-start;
+  }
 
-body.mobile .slide-content {
-  max-width: 100% !important;
-  width: 100% !important;
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.5rem; }
+  .price { font-size: 2.2rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
-body.mobile .split { grid-template-columns: 1fr !important; gap: 24px !important; }
-body.mobile .grid-2x2 { grid-template-columns: 1fr !important; gap: 16px !important; }
-body.mobile .grid-3 { grid-template-columns: 1fr !important; gap: 16px !important; }
-body.mobile .grid-4 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-
-body.mobile .steps { flex-direction: column !important; gap: 20px !important; }
-body.mobile .steps::before { display: none !important; }
-body.mobile .step { text-align: left !important; display: flex !important; gap: 16px; align-items: flex-start; }
-body.mobile .step-num { width: 40px !important; height: 40px !important; min-width: 40px; font-size: 1rem !important; margin: 0 !important; }
-body.mobile .step h4 { font-size: 1rem !important; margin-bottom: 4px; }
-
-body.mobile .stat-number { font-size: 2.5rem !important; }
-body.mobile .price { font-size: 2.2rem !important; }
-
-body.mobile .section-num { display: none !important; }
-body.mobile .brand-bar { display: none !important; }
-
-body.mobile .slide-cover h1 { font-size: 2rem !important; }
-body.mobile .cover-logo { height: 22px !important; margin-bottom: 20px !important; }
-body.mobile .slide-cover .subtitle { font-size: 0.95rem !important; }
-body.mobile .slide-divider h2 { font-size: 1.8rem !important; }
-body.mobile .slide-thanks h2 { font-size: 2rem !important; }
-
-body.mobile .contact-row { flex-direction: column !important; gap: 12px !important; align-items: center; }
-
-body.mobile .icon-list { gap: 14px !important; }
-body.mobile .icon-list li { font-size: 0.88rem !important; gap: 12px; }
-
-body.mobile .card { padding: 20px !important; border-radius: 16px !important; }
-body.mobile .card--sm { padding: 16px !important; border-radius: 12px !important; }
-
-body.mobile .blob { width: 200px !important; height: 200px !important; }
-
-body.mobile .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
-body.mobile .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
-
-body.mobile #chat-container { max-height: none !important; border-radius: 16px !important; }
-
-body.mobile .anim {
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
-}
-
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
 @media print {
-  .grain-overlay, .blob, .deck-toolbar { display: none !important; }
-  .reveal .slides section { break-inside: avoid; }
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
   #chat-container { display: none !important; }
 }
@@ -603,6 +555,7 @@ body.mobile .anim {
 </head>
 <body>
 
+<!-- Grain overlay -->
 <svg class="grain-overlay">
   <filter id="noise">
     <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
@@ -610,6 +563,7 @@ body.mobile .anim {
   <rect width="100%" height="100%" filter="url(#noise)"/>
 </svg>
 
+<!-- Toolbar -->
 <div class="deck-toolbar">
   <button class="toolbar-btn" onclick="printPDF()">
     <i data-lucide="download"></i> PDF
@@ -619,12 +573,17 @@ body.mobile .anim {
   </button>
 </div>
 
-<div class="reveal">
-<div class="slides">
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 11</div>
+
+<!-- ═══════════════════════════════════════
+     DECK — All 11 slides
+     ═══════════════════════════════════════ -->
+<div class="deck" id="deck">
 
 
 <!-- ══════════════ 1. COVER ══════════════ -->
-<section class="slide-cover" data-background-color="#000">
+<section class="slide slide--cover" data-slide="1">
   <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
   <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
@@ -640,7 +599,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 2. EL PUNTO DE PARTIDA ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="2">
   <div class="slide-content">
     <div class="split">
       <div>
@@ -661,7 +620,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 3. QUÉ PROPONEMOS ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="3">
   <div class="slide-content">
     <div class="label anim">La propuesta</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Un diagnóstico profundo y accionable</h2>
@@ -694,7 +653,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 4. ALCANCE ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="4">
   <div class="slide-content">
     <div class="label anim">Alcance del análisis</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Qué vamos a mirar</h2>
@@ -722,30 +681,38 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 5. PROCESO ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="5">
   <div class="slide-content">
     <div class="label anim">Proceso de trabajo</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">Cómo lo hacemos</h2>
     <div class="steps anim">
       <div class="step">
         <div class="step-num">01</div>
-        <h4>Alineación</h4>
-        <p>Comprender el punto de vista del equipo, relevar necesidades, expectativas, problemas percibidos y señales importantes.</p>
+        <div>
+          <h4>Alineación</h4>
+          <p>Comprender el punto de vista del equipo, relevar necesidades, expectativas, problemas percibidos y señales importantes.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h4>Profundización</h4>
-        <p>Revisar recorridos, públicos, puntos de contacto, materiales existentes e hipótesis internas.</p>
+        <div>
+          <h4>Profundización</h4>
+          <p>Revisar recorridos, públicos, puntos de contacto, materiales existentes e hipótesis internas.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h4>Análisis</h4>
-        <p>Trabajo de síntesis, construcción de herramientas UX e informe de presencia digital y conversión.</p>
+        <div>
+          <h4>Análisis</h4>
+          <p>Trabajo de síntesis, construcción de herramientas UX e informe de presencia digital y conversión.</p>
+        </div>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h4>Devolución</h4>
-        <p>Presentación de hallazgos, oportunidades detectadas y propuesta de próximos pasos.</p>
+        <div>
+          <h4>Devolución</h4>
+          <p>Presentación de hallazgos, oportunidades detectadas y propuesta de próximos pasos.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -754,7 +721,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 6. ENTREGABLES — UX ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="6">
   <div class="slide-content">
     <div class="label anim">Entregables</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Herramientas de comprensión</h2>
@@ -782,7 +749,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 7. ENTREGABLES — ESTRATÉGICOS ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="7">
   <div class="slide-content">
     <div class="label anim">Entregables</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Herramientas de acción</h2>
@@ -810,7 +777,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 8. QUÉ NO INCLUYE ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="8">
   <div class="slide-content">
     <div class="split">
       <div>
@@ -845,7 +812,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 9. INVERSIÓN ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="9">
   <div class="slide-content">
     <div class="split">
       <div>
@@ -883,7 +850,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 10. THANK YOU ══════════════ -->
-<section class="slide-thanks" data-background-color="#000">
+<section class="slide slide--thanks" data-slide="10">
   <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
   <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
@@ -899,7 +866,7 @@ body.mobile .anim {
 
 
 <!-- ══════════════ 11. CHAT ══════════════ -->
-<section data-background-color="#000">
+<section class="slide" data-slide="11">
   <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
 
     <div class="anim" style="text-align:center; margin-bottom:24px;">
@@ -943,70 +910,127 @@ body.mobile .anim {
 </section>
 
 
-</div>
-</div>
+</div><!-- end .deck -->
 
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+
 <script>
-const isMobile = window.__isMobile;
-if (isMobile) document.body.classList.add('mobile');
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
 
-if (!isMobile) {
-  // Desktop: initialize Reveal.js normally
-  Reveal.initialize({
-    hash: true,
-    width: 1280,
-    height: 720,
-    margin: 0.04,
-    minScale: 0.1,
-    maxScale: 2.0,
-    transition: 'fade',
-    transitionSpeed: 'default',
-    backgroundTransition: 'fade',
-    center: false,
-    controls: true,
-    controlsLayout: 'bottom-right',
-    progress: true,
-    slideNumber: 'c/t',
-    pdfSeparateFragments: false,
-  });
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
 
-  Reveal.on('ready', () => {
-    lucide.createIcons();
-    if (window.location.search.includes('print-pdf')) {
-      setTimeout(() => window.print(), 1500);
-    }
-  });
-  Reveal.on('slidechanged', () => setTimeout(() => lucide.createIcons(), 50));
-} else {
-  // Mobile: do NOT initialize Reveal at all
-  // Just render icons and make all content visible
-  document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-  });
-  // Fallback if DOMContentLoaded already fired
-  if (document.readyState !== 'loading') {
-    setTimeout(() => lucide.createIcons(), 100);
-  }
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
 }
 
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Animate all .anim children inside this slide
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        // Reset animations when slide leaves viewport
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
 function printPDF() {
-  if (window.location.search.includes('print-pdf')) {
-    window.print();
-    return;
-  }
-  window.location.search = '?print-pdf';
+  window.print();
 }
 
 function goToChat() {
   if (isMobile) {
-    // On mobile, scroll to the chat section
     const chatSection = document.getElementById('chat-container');
     if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
   } else {
-    Reveal.slide(10);
-    setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+    // Navigate to slide 11 (index 10)
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: 10 * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
   }
 }
 
@@ -1178,7 +1202,7 @@ function sendMessage() {
   messages.scrollTop = messages.scrollHeight;
 
   // Simulate brief delay for natural feel
-  setTimeout(() => {
+  setTimeout(function() {
     typing.remove();
 
     const reply = findBestAnswer(text);
