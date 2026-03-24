@@ -324,46 +324,33 @@
   text-transform: uppercase; letter-spacing: 0.1em;
 }
 
-/* PDF button */
-.pdf-btn {
-  position: fixed; bottom: 24px; left: 24px; z-index: 9998;
+/* Toolbar (top-right, away from Reveal controls) */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
   display: flex; align-items: center; gap: 8px;
-  padding: 10px 20px; border-radius: 999px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
   border: 1px solid var(--border-medium);
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   color: var(--text-secondary);
   font-family: var(--font-body);
-  font-size: 0.72rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  cursor: pointer; transition: all 0.3s var(--ease-out); text-decoration: none;
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
 }
-.pdf-btn:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(0, 0, 0, 0.8); }
-.pdf-btn i { width: 14px; height: 14px; }
-
-/* — Help button (fixed, all slides) — */
-.help-btn {
-  position: fixed;
-  bottom: 24px; right: 24px;
-  z-index: 9998;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--border-medium);
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.3s var(--ease-out);
-  display: flex; align-items: center; justify-content: center;
-}
-.help-btn:hover {
+.toolbar-btn:hover {
   color: var(--text-primary);
   border-color: var(--text-muted);
   background: rgba(0, 0, 0, 0.8);
-  transform: scale(1.08);
 }
-.help-btn i { width: 20px; height: 20px; }
+.toolbar-btn i { width: 14px; height: 14px; }
 
 /* — Chat widget — */
 .chat-msg {
@@ -409,8 +396,77 @@
 #chat-messages::-webkit-scrollbar-track { background: transparent; }
 #chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Mobile
+   ═══════════════════════════════════════════ */
+@media screen and (max-width: 768px) {
+  .reveal .slides section {
+    padding: 32px 24px;
+  }
+  .reveal .slides section .slide-content {
+    max-width: 100%;
+  }
+  .reveal h1 { font-size: 2rem !important; }
+  .reveal h2 { font-size: 1.6rem !important; }
+  .reveal h4 { font-size: 1rem !important; }
+  .reveal p, .reveal li { font-size: 0.9rem; }
+
+  .split {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .grid-2x2 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .grid-4 {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+  .steps {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num {
+    width: 40px; height: 40px; min-width: 40px;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .step h4 { font-size: 1rem !important; margin-bottom: 4px; }
+
+  .stat-number { font-size: 2.8rem !important; }
+  .price { font-size: 2.5rem !important; }
+
+  .section-num { display: none; }
+  .brand-bar { left: 24px; right: 24px; }
+
+  .slide-cover h1 { font-size: 2.2rem !important; }
+  .cover-logo { height: 24px; margin-bottom: 24px; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list li { font-size: 0.9rem; gap: 12px; }
+  .icon-list li i { width: 18px !important; height: 18px !important; }
+
+  .card { padding: 20px !important; border-radius: 16px; }
+  .card--sm { padding: 16px !important; border-radius: 12px; }
+
+  .blob { width: 250px !important; height: 250px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 12px; font-size: 0.6rem; }
+
+  #chat-container { max-height: 400px; }
+}
+
 @media print {
-  .grain-overlay, .blob, .pdf-btn, .help-btn { display: none !important; }
+  .grain-overlay, .blob, .deck-toolbar { display: none !important; }
   .reveal .slides section { break-inside: avoid; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
   #chat-container { display: none !important; }
@@ -426,13 +482,14 @@
   <rect width="100%" height="100%" filter="url(#noise)"/>
 </svg>
 
-<button class="pdf-btn" onclick="printPDF()">
-  <i data-lucide="download"></i> Descargar PDF
-</button>
-
-<button class="help-btn" onclick="goToChat()" title="¿Tenés dudas? Preguntale al asistente">
-  <i data-lucide="message-circle-question"></i>
-</button>
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
 
 <div class="reveal">
 <div class="slides">
@@ -760,9 +817,10 @@ Reveal.initialize({
   hash: true,
   width: 1280,
   height: 720,
-  margin: 0,
-  minScale: 0.2,
+  margin: 0.04,
+  minScale: 0.1,
   maxScale: 2.0,
+  disableLayout: window.innerWidth <= 768,
   transition: 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
