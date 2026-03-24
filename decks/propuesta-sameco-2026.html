@@ -341,6 +341,30 @@
 .pdf-btn:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(0, 0, 0, 0.8); }
 .pdf-btn i { width: 14px; height: 14px; }
 
+/* — Help button (fixed, all slides) — */
+.help-btn {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 9998;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  display: flex; align-items: center; justify-content: center;
+}
+.help-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.08);
+}
+.help-btn i { width: 20px; height: 20px; }
+
 /* — Chat widget — */
 .chat-msg {
   max-width: 85%;
@@ -386,7 +410,7 @@
 #chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 
 @media print {
-  .grain-overlay, .blob, .pdf-btn { display: none !important; }
+  .grain-overlay, .blob, .pdf-btn, .help-btn { display: none !important; }
   .reveal .slides section { break-inside: avoid; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
   #chat-container { display: none !important; }
@@ -404,6 +428,10 @@
 
 <button class="pdf-btn" onclick="printPDF()">
   <i data-lucide="download"></i> Descargar PDF
+</button>
+
+<button class="help-btn" onclick="goToChat()" title="¿Tenés dudas? Preguntale al asistente">
+  <i data-lucide="message-circle-question"></i>
 </button>
 
 <div class="reveal">
@@ -763,6 +791,12 @@ function printPDF() {
   }
   // Reload with ?print-pdf param which triggers Reveal's print layout
   window.location.search = '?print-pdf';
+}
+
+function goToChat() {
+  // Slide 11 = index 10 (0-based)
+  Reveal.slide(10);
+  setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
 }
 
 // ═══════════════════════════════════════
