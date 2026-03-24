@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 
+const CORS_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+};
+
+// Handle CORS preflight
+export async function OPTIONS() {
+    return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
+}
+
+function jsonResp(body: object, status = 200) {
+    return NextResponse.json(body, { status, headers: CORS_HEADERS });
+}
+
 const SYSTEM_PROMPT = `Sos un asistente de Yacaré Studio que responde preguntas sobre una propuesta de trabajo específica. Tu único objetivo es ayudar al lector a entender mejor lo que se le está proponiendo.
 
 REGLAS ESTRICTAS:
@@ -34,10 +49,7 @@ interface ChatMessage {
 
 export async function POST(req: NextRequest) {
     if (!OPENAI_API_KEY) {
-        return NextResponse.json(
-            { error: "Chat not configured" },
-            { status: 500 }
-        );
+        return jsonResp({ error: "Chat not configured" }, 500);
     }
 
     try {
@@ -48,10 +60,7 @@ export async function POST(req: NextRequest) {
         };
 
         if (!message || !context) {
-            return NextResponse.json(
-                { error: "message and context are required" },
-                { status: 400 }
-            );
+            return jsonResp({ error: "message and context are required" }, 400);
         }
 
         // Build messages array
@@ -95,20 +104,14 @@ export async function POST(req: NextRequest) {
 
         if (!openaiResp.ok) {
             const errText = await openaiResp.text();
-            return NextResponse.json(
-                { error: `AI service error: ${errText}` },
-                { status: 502 }
-            );
+            return jsonResp({ error: `AI service error: ${errText}` }, 502);
         }
 
         const data = await openaiResp.json();
         const reply = data.choices[0].message.content;
 
-        return NextResponse.json({ reply });
+        return jsonResp({ reply });
     } catch (err) {
-        return NextResponse.json(
-            { error: (err as Error).message },
-            { status: 500 }
-        );
+        return jsonResp({ error: (err as Error).message }, 500);
     }
 }

@@ -60,6 +60,11 @@
   flex-direction: column;
   justify-content: center;
 }
+
+/* Center controls at bottom */
+.reveal .controls { bottom: 16px; right: 50% !important; transform: translateX(50%); }
+.reveal .controls .navigate-left { left: -80px; }
+.reveal .controls .navigate-right { right: -80px; }
 .reveal .slides section .slide-content {
   width: 100%;
   max-width: 1100px;
@@ -397,92 +402,84 @@
 #chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE — Mobile (scroll view)
+   RESPONSIVE — Mobile (body class .mobile)
+   Applied via JS, not media query, because
+   Reveal's transform:scale() breaks viewport queries.
    ═══════════════════════════════════════════ */
-@media screen and (max-width: 768px) {
-  .reveal .slides section {
-    padding: 48px 20px !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-  }
-  .reveal .slides section .slide-content {
-    max-width: 100%;
-  }
+body.mobile .reveal .slides {
+  overflow-y: auto !important;
+  height: 100vh !important;
+  position: relative !important;
+  transform: none !important;
+}
+body.mobile .reveal .slides section {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  padding: 48px 20px !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+body.mobile .reveal .slide-background { display: none !important; }
+body.mobile .reveal .controls,
+body.mobile .reveal .progress,
+body.mobile .reveal .slide-number { display: none !important; }
 
-  .reveal { font-size: 16px; }
-  .reveal h1 { font-size: 1.8rem !important; }
-  .reveal h2 { font-size: 1.5rem !important; }
-  .reveal h4 { font-size: 1rem !important; }
-  .reveal p, .reveal li { font-size: 0.9rem; }
+body.mobile .reveal { font-size: 16px; overflow: auto !important; }
+body.mobile .reveal h1 { font-size: 1.8rem !important; }
+body.mobile .reveal h2 { font-size: 1.5rem !important; }
+body.mobile .reveal h4 { font-size: 1rem !important; }
+body.mobile .reveal p, body.mobile .reveal li { font-size: 0.9rem; }
 
-  .split {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-  }
-  .grid-2x2 {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-  .grid-3 {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-  .grid-4 {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-  }
+body.mobile .slide-content { max-width: 100% !important; }
 
-  .steps {
-    flex-direction: column !important;
-    gap: 20px !important;
-  }
-  .steps::before { display: none !important; }
-  .step { text-align: left !important; display: flex !important; gap: 16px; align-items: flex-start; }
-  .step-num {
-    width: 40px !important; height: 40px !important; min-width: 40px;
-    font-size: 1rem !important;
-    margin: 0 !important;
-  }
-  .step h4 { font-size: 1rem !important; margin-bottom: 4px; }
+body.mobile .split { grid-template-columns: 1fr !important; gap: 24px !important; }
+body.mobile .grid-2x2 { grid-template-columns: 1fr !important; gap: 16px !important; }
+body.mobile .grid-3 { grid-template-columns: 1fr !important; gap: 16px !important; }
+body.mobile .grid-4 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
 
-  .stat-number { font-size: 2.5rem !important; }
-  .price { font-size: 2.2rem !important; }
+body.mobile .steps { flex-direction: column !important; gap: 20px !important; }
+body.mobile .steps::before { display: none !important; }
+body.mobile .step { text-align: left !important; display: flex !important; gap: 16px; align-items: flex-start; }
+body.mobile .step-num { width: 40px !important; height: 40px !important; min-width: 40px; font-size: 1rem !important; margin: 0 !important; }
+body.mobile .step h4 { font-size: 1rem !important; margin-bottom: 4px; }
 
-  .section-num { display: none !important; }
-  .brand-bar { display: none !important; }
+body.mobile .stat-number { font-size: 2.5rem !important; }
+body.mobile .price { font-size: 2.2rem !important; }
 
-  .slide-cover h1 { font-size: 2rem !important; }
-  .cover-logo { height: 22px !important; margin-bottom: 20px !important; }
-  .slide-cover .subtitle { font-size: 0.95rem !important; }
+body.mobile .section-num { display: none !important; }
+body.mobile .brand-bar { display: none !important; }
 
-  .slide-divider h2 { font-size: 1.8rem !important; }
-  .slide-thanks h2 { font-size: 2rem !important; }
+body.mobile .slide-cover h1 { font-size: 2rem !important; }
+body.mobile .cover-logo { height: 22px !important; margin-bottom: 20px !important; }
+body.mobile .slide-cover .subtitle { font-size: 0.95rem !important; }
+body.mobile .slide-divider h2 { font-size: 1.8rem !important; }
+body.mobile .slide-thanks h2 { font-size: 2rem !important; }
 
-  .contact-row { flex-direction: column !important; gap: 12px !important; align-items: center; }
+body.mobile .contact-row { flex-direction: column !important; gap: 12px !important; align-items: center; }
 
-  .icon-list { gap: 14px !important; }
-  .icon-list li { font-size: 0.88rem !important; gap: 12px; }
-  .icon-list li i { width: 18px !important; height: 18px !important; }
+body.mobile .icon-list { gap: 14px !important; }
+body.mobile .icon-list li { font-size: 0.88rem !important; gap: 12px; }
 
-  .card { padding: 20px !important; border-radius: 16px !important; }
-  .card--sm { padding: 16px !important; border-radius: 12px !important; }
+body.mobile .card { padding: 20px !important; border-radius: 16px !important; }
+body.mobile .card--sm { padding: 16px !important; border-radius: 12px !important; }
 
-  .blob { width: 200px !important; height: 200px !important; }
+body.mobile .blob { width: 200px !important; height: 200px !important; }
 
-  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
-  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+body.mobile .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+body.mobile .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
 
-  #chat-container { max-height: none !important; border-radius: 16px !important; }
-  .chat-msg { font-size: 0.85rem !important; }
-  .chat-msg p { font-size: 0.85rem !important; }
+body.mobile #chat-container { max-height: none !important; border-radius: 16px !important; }
 
-  /* Ensure animations work in scroll mode */
-  .anim {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
+body.mobile .anim {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 @media print {
@@ -834,23 +831,22 @@
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
 const isMobile = window.innerWidth <= 768;
+if (isMobile) document.body.classList.add('mobile');
 
 Reveal.initialize({
   hash: true,
-  width: isMobile ? '100%' : 1280,
-  height: isMobile ? '100%' : 720,
-  margin: isMobile ? 0 : 0.04,
+  width: 1280,
+  height: 720,
+  margin: 0.04,
   minScale: 0.1,
   maxScale: 2.0,
   disableLayout: isMobile,
-  view: isMobile ? 'scroll' : undefined,
-  scrollProgress: isMobile,
-  transition: isMobile ? 'none' : 'fade',
+  transition: 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
   center: false,
-  controls: !isMobile,
-  controlsLayout: 'bottom-right',
+  controls: true,
+  controlsLayout: 'edges',
   progress: !isMobile,
   slideNumber: isMobile ? false : 'c/t',
   pdfSeparateFragments: false,
