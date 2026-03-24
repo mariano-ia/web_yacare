@@ -61,10 +61,35 @@
   justify-content: center;
 }
 
-/* Center controls at bottom */
-.reveal .controls { bottom: 16px; right: 50% !important; transform: translateX(50%); }
-.reveal .controls .navigate-left { left: -80px; }
-.reveal .controls .navigate-right { right: -80px; }
+/* Center controls at bottom — small, subtle, horizontal arrows */
+.reveal .controls {
+  position: fixed !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 24px !important;
+  z-index: 100 !important;
+}
+.reveal .controls button {
+  position: static !important;
+  transform: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  opacity: 0.35 !important;
+  transition: opacity 0.2s !important;
+}
+.reveal .controls button:hover { opacity: 0.7 !important; }
+.reveal .controls button.enabled { opacity: 0.35 !important; }
+.reveal .controls button.enabled:hover { opacity: 0.7 !important; }
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down { display: none !important; }
 .reveal .slides section .slide-content {
   width: 100%;
   max-width: 1100px;
@@ -403,18 +428,40 @@
 
 /* ═══════════════════════════════════════════
    RESPONSIVE — Mobile (body class .mobile)
-   Applied via JS, not media query, because
-   Reveal's transform:scale() breaks viewport queries.
+   Reveal.js is NOT initialized on mobile.
+   Slides render as a vertically scrolling page.
    ═══════════════════════════════════════════ */
+body.mobile {
+  background: var(--bg-primary);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+body.mobile .reveal-viewport { background: var(--bg-primary) !important; }
+body.mobile .reveal {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-primary);
+  overflow: visible !important;
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  transform: none !important;
+}
 body.mobile .reveal .slides {
-  overflow-y: auto !important;
-  height: 100vh !important;
+  overflow: visible !important;
+  width: 100% !important;
+  height: auto !important;
   position: relative !important;
   transform: none !important;
+  display: block !important;
+  perspective: none !important;
+  perspective-origin: initial !important;
 }
 body.mobile .reveal .slides section {
   position: relative !important;
-  display: block !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
   width: 100% !important;
   height: auto !important;
   min-height: auto !important;
@@ -424,19 +471,24 @@ body.mobile .reveal .slides section {
   left: auto !important;
   transform: none !important;
   opacity: 1 !important;
+  visibility: visible !important;
+  overflow: visible !important;
 }
-body.mobile .reveal .slide-background { display: none !important; }
+body.mobile .reveal .backgrounds,
+body.mobile .reveal .slide-background,
 body.mobile .reveal .controls,
 body.mobile .reveal .progress,
 body.mobile .reveal .slide-number { display: none !important; }
 
-body.mobile .reveal { font-size: 16px; overflow: auto !important; }
 body.mobile .reveal h1 { font-size: 1.8rem !important; }
 body.mobile .reveal h2 { font-size: 1.5rem !important; }
 body.mobile .reveal h4 { font-size: 1rem !important; }
 body.mobile .reveal p, body.mobile .reveal li { font-size: 0.9rem; }
 
-body.mobile .slide-content { max-width: 100% !important; }
+body.mobile .slide-content {
+  max-width: 100% !important;
+  width: 100% !important;
+}
 
 body.mobile .split { grid-template-columns: 1fr !important; gap: 24px !important; }
 body.mobile .grid-2x2 { grid-template-columns: 1fr !important; gap: 16px !important; }
@@ -833,103 +885,181 @@ body.mobile .anim {
 const isMobile = window.innerWidth <= 768;
 if (isMobile) document.body.classList.add('mobile');
 
-Reveal.initialize({
-  hash: true,
-  width: 1280,
-  height: 720,
-  margin: 0.04,
-  minScale: 0.1,
-  maxScale: 2.0,
-  disableLayout: isMobile,
-  transition: 'fade',
-  transitionSpeed: 'default',
-  backgroundTransition: 'fade',
-  center: false,
-  controls: true,
-  controlsLayout: 'edges',
-  progress: !isMobile,
-  slideNumber: isMobile ? false : 'c/t',
-  pdfSeparateFragments: false,
-});
+if (!isMobile) {
+  // Desktop: initialize Reveal.js normally
+  Reveal.initialize({
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.1,
+    maxScale: 2.0,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: false,
+    controls: true,
+    controlsLayout: 'bottom-right',
+    progress: true,
+    slideNumber: 'c/t',
+    pdfSeparateFragments: false,
+  });
 
-Reveal.on('ready', () => {
-  lucide.createIcons();
-  // Auto-trigger print dialog when in print-pdf mode
-  if (window.location.search.includes('print-pdf')) {
-    setTimeout(() => window.print(), 1500);
+  Reveal.on('ready', () => {
+    lucide.createIcons();
+    if (window.location.search.includes('print-pdf')) {
+      setTimeout(() => window.print(), 1500);
+    }
+  });
+  Reveal.on('slidechanged', () => setTimeout(() => lucide.createIcons(), 50));
+} else {
+  // Mobile: do NOT initialize Reveal at all
+  // Just render icons and make all content visible
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+  // Fallback if DOMContentLoaded already fired
+  if (document.readyState !== 'loading') {
+    setTimeout(() => lucide.createIcons(), 100);
   }
-});
-Reveal.on('slidechanged', () => setTimeout(() => lucide.createIcons(), 50));
+}
 
 function printPDF() {
-  // If already in print-pdf mode, just print
   if (window.location.search.includes('print-pdf')) {
     window.print();
     return;
   }
-  // Reload with ?print-pdf param which triggers Reveal's print layout
   window.location.search = '?print-pdf';
 }
 
 function goToChat() {
-  // Slide 11 = index 10 (0-based)
-  Reveal.slide(10);
-  setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+  if (isMobile) {
+    // On mobile, scroll to the chat section
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+  } else {
+    Reveal.slide(10);
+    setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+  }
 }
 
 // ═══════════════════════════════════════
-// CHAT — Proposal Assistant
+// CHAT — Local Q&A (no API dependency)
 // ═══════════════════════════════════════
-const CHAT_API = 'https://www.yacare.io/blog/api/chat-proposal';
 
-const PROPOSAL_CONTEXT = `PROPUESTA: Diagnóstico integral de experiencia y oportunidades de mejora para SAMECO
+const QA_ENTRIES = [
+  {
+    keywords: ['precio', 'costo', 'inversión', 'inversion', 'cuánto', 'cuanto', 'valor', 'presupuesto', 'cotización', 'cotizacion', 'plata', 'money', 'usd', 'dólar', 'dolar', '1200', '1.200'],
+    answer: 'La inversión para el diagnóstico integral de experiencia es de $1.200 USD. Incluye 40 horas de trabajo, 2 a 3 reuniones con el equipo de SAMECO, 8 entregables documentados, informe de presencia digital y conversión, hoja de ruta priorizada y presentación final de hallazgos.'
+  },
+  {
+    keywords: ['plazo', 'tiempo', 'duración', 'duracion', 'cuándo', 'cuando', 'demora', 'tarda', 'mes', 'semana', 'calendario', 'deadline'],
+    answer: 'El proyecto tiene una duración estimada de 1 mes de ejecución. Durante ese período se realizan las 4 etapas del proceso (alineación, profundización, análisis y devolución) y se entregan los 8 documentos incluidos.'
+  },
+  {
+    keywords: ['entregable', 'entrega', 'documento', 'qué incluye', 'que incluye', 'qué recibo', 'que recibo', 'resultado', 'output'],
+    answer: 'Se entregan 8 documentos organizados en dos grupos. Herramientas de comprensión: (1) Diagnóstico integral de experiencia, (2) User Persona, (3) Mapa de empatía, (4) Journey Map. Herramientas de acción: (5) Informe de presencia digital, (6) Mapa de oportunidades, (7) Ideación en alto nivel, (8) Priorización y hoja de ruta.'
+  },
+  {
+    keywords: ['proceso', 'etapa', 'paso', 'cómo', 'como', 'metodología', 'metodologia', 'trabajo', 'fase'],
+    answer: 'El proceso tiene 4 etapas. (1) Alineación: comprender el punto de vista del equipo, relevar necesidades, expectativas y señales importantes. (2) Profundización: revisar recorridos, públicos, puntos de contacto y materiales existentes. (3) Análisis: síntesis, construcción de herramientas UX e informe de presencia digital. (4) Devolución: presentación de hallazgos, oportunidades y propuesta de próximos pasos. Se contemplan 2 a 3 reuniones con el equipo de SAMECO.'
+  },
+  {
+    keywords: ['alcance', 'qué miran', 'que miran', 'qué analizan', 'que analizan', 'scope', 'abarca'],
+    answer: 'El análisis cubre 4 dimensiones: (1) Propuesta y mensaje: claridad y consistencia entre lo que SAMECO ofrece y cómo lo comunica. (2) Recorrido del usuario: desde el descubrimiento hasta la consulta o inscripción. (3) Experiencia digital: fricción en canales, señales de confianza y credibilidad. (4) Usuarios internos: experiencia de quienes participan en la construcción de la oferta.'
+  },
+  {
+    keywords: ['no incluye', 'excluye', 'limitación', 'limitacion', 'fuera', 'diseño', 'desarrollo', 'implementación', 'implementacion', 'código', 'codigo', 'web'],
+    answer: 'Esta etapa se enfoca en comprensión y diagnóstico, no en ejecución. No incluye: diseño final de interfaces, redacción final de contenidos, desarrollo web o implementación técnica, ni automatizaciones u operaciones. Las etapas posteriores de diseño, desarrollo e implementación pueden definirse y cotizarse por separado una vez completado el diagnóstico.'
+  },
+  {
+    keywords: ['reunión', 'reunion', 'reuniones', 'meeting', 'call', 'llamada', 'participación', 'participacion'],
+    answer: 'Se contemplan 2 a 3 reuniones de trabajo con el equipo de SAMECO a lo largo del proyecto. La primera está en la etapa de alineación (para comprender expectativas y necesidades) y la última en la devolución (presentación de hallazgos y próximos pasos).'
+  },
+  {
+    keywords: ['persona', 'user persona', 'usuario', 'perfil'],
+    answer: 'Uno de los 8 entregables es el User Persona: un perfil sintético del usuario principal que incluye motivaciones, necesidades, expectativas, dudas frecuentes, barreras de avance y criterios de decisión.'
+  },
+  {
+    keywords: ['journey', 'recorrido', 'mapa', 'map', 'experiencia'],
+    answer: 'El Journey Map es uno de los entregables principales. Mapea el recorrido actual del usuario con sus etapas, puntos de contacto, momentos críticos, tensiones y oportunidades detectadas en cada tramo. Complementa al Mapa de empatía, que analiza qué busca, piensa, siente y necesita el usuario en su relación con SAMECO.'
+  },
+  {
+    keywords: ['digital', 'seo', 'web', 'online', 'presencia', 'conversión', 'conversion', 'sitio'],
+    answer: 'El Informe de presencia digital es uno de los 8 entregables. Evalúa el mensaje, la propuesta de valor, la estructura de contenidos, las señales de confianza, el SEO, la discoverability y las oportunidades de conversión en los canales digitales actuales de SAMECO.'
+  },
+  {
+    keywords: ['priorización', 'priorizacion', 'hoja de ruta', 'roadmap', 'qué primero', 'que primero', 'orden', 'prioridad'],
+    answer: 'El último entregable es la Priorización y hoja de ruta: un documento que define qué conviene encarar primero, qué se resuelve con acciones acotadas, qué requiere una etapa posterior y cómo avanzar de forma progresiva.'
+  },
+  {
+    keywords: ['oportunidad', 'mejora', 'quick win', 'rápido', 'rapido'],
+    answer: 'El Mapa de oportunidades organiza los hallazgos en categorías: mejoras rápidas, de comunicación, del recorrido, digitales y de mayor alcance estructural. Esto permite identificar victorias tempranas que se pueden implementar con acciones acotadas.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'equipo', 'contacto'],
+    answer: 'Yacaré Studio (yacare.io) es un estudio de producto digital. Para consultas sobre esta propuesta podés escribir a hola@yacare.io.'
+  },
+  {
+    keywords: ['empatía', 'empatia', 'siente', 'piensa', 'busca'],
+    answer: 'El Mapa de empatía es uno de los 8 entregables. Analiza qué busca, qué piensa, qué siente, qué necesita, qué frena y qué impulsa al usuario a avanzar en su relación con SAMECO.'
+  },
+  {
+    keywords: ['ideación', 'ideacion', 'solución', 'solucion', 'idea', 'concepto', 'conceptual'],
+    answer: 'El entregable de Ideación en alto nivel presenta primeras líneas de solución planteadas de forma conceptual: contenidos, presentación de la oferta, puntos de contacto clave y simplificación de decisiones. No son diseños finales, sino direcciones estratégicas derivadas del diagnóstico.'
+  },
+  {
+    keywords: ['diagnóstico', 'diagnostico', 'integral', 'hallazgo', 'fricción', 'friccion', 'patrón', 'patron'],
+    answer: 'El Diagnóstico integral de experiencia es el entregable principal: una síntesis estructurada del estado actual que incluye hallazgos principales, fricciones, patrones observados y una lectura general del sistema desde la experiencia de usuario.'
+  },
+  {
+    keywords: ['después', 'despues', 'siguiente', 'próximo', 'proximo', 'luego', 'futuro', 'continuación', 'continuacion', 'etapa posterior'],
+    answer: 'Una vez completado el diagnóstico, se pueden definir y cotizar por separado las etapas de diseño, desarrollo e implementación. La hoja de ruta priorizada (uno de los entregables) define qué conviene encarar primero y cómo avanzar de forma progresiva.'
+  },
+  {
+    keywords: ['hora', 'horas', 'dedicación', 'dedicacion', 'esfuerzo'],
+    answer: 'El proyecto contempla 40 horas de trabajo distribuidas a lo largo de 1 mes de ejecución.'
+  },
+  {
+    keywords: ['arrancar', 'empezar', 'comenzar', 'inicio', 'start'],
+    answer: 'El equipo de Yacaré está listo para arrancar cuando SAMECO lo decida. Para coordinar el inicio podés escribir a hola@yacare.io.'
+  },
+  {
+    keywords: ['pago', 'factura', 'forma de pago', 'transferencia', 'cuota'],
+    answer: 'Esa información no está incluida en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en hola@yacare.io.'
+  }
+];
 
-PUNTO DE PARTIDA:
-SAMECO ya cuenta con activos muy valiosos: trayectoria, legitimidad, comunidad, contenidos y una propuesta formativa con identidad propia. El objetivo de esta etapa no es rediseñar una pieza puntual, sino comprender con mayor profundidad cómo es hoy la experiencia de quienes interactúan con SAMECO y detectar con claridad dónde están las principales oportunidades de mejora. Cuando hablamos de experiencia, no nos referimos solo a lo digital. También incluye cómo se presentan las formaciones, los recorridos de consulta e inscripción, los materiales, la comunicación y cada interacción que una persona tiene con la institución en distintos momentos de su vínculo. Esta mirada contempla tanto usuarios externos como usuarios internos que participan en la construcción de esa experiencia.
+const FALLBACK_ANSWER = 'Esa información no está detallada en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en hola@yacare.io.';
 
-OBJETIVO:
-Construir una comprensión clara y fundamentada de la experiencia actual de SAMECO para: detectar fricciones y oportunidades; entender mejor las necesidades, motivaciones y dudas de sus usuarios; identificar puntos críticos del recorrido actual; traducir el análisis en oportunidades concretas de mejora; definir un criterio de priorización para futuras acciones.
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
 
-ALCANCE DEL ANÁLISIS:
-1. Propuesta y mensaje: claridad general de la propuesta, consistencia entre lo que SAMECO ofrece y cómo lo comunica.
-2. Recorrido del usuario: desde el descubrimiento hasta la consulta o inscripción, presentación de formaciones, puntos de fricción.
-3. Experiencia digital: puntos de fricción en canales digitales, señales de confianza, legitimidad y credibilidad.
-4. Usuarios internos: experiencia de quienes participan en la construcción de la oferta y la relación con los usuarios.
+  let bestMatch = null;
+  let bestScore = 0;
 
-PROCESO DE TRABAJO (4 etapas):
-1. Alineación: comprender el punto de vista del equipo, relevar necesidades, expectativas, problemas percibidos y señales importantes.
-2. Profundización: revisar recorridos, públicos, puntos de contacto, materiales existentes e hipótesis internas.
-3. Análisis: trabajo de síntesis, construcción de herramientas UX e informe de presencia digital y conversión.
-4. Devolución: presentación de hallazgos, oportunidades detectadas y propuesta de próximos pasos.
-Se contemplan 2 o 3 reuniones de trabajo con el equipo de SAMECO.
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        // Longer keyword matches are worth more
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
 
-ENTREGABLES (8 en total):
+  return bestScore >= 3 ? bestMatch.answer : FALLBACK_ANSWER;
+}
 
-Herramientas de comprensión:
-1. Diagnóstico integral de experiencia: síntesis estructurada del estado actual con hallazgos principales, fricciones, patrones observados y lectura general del sistema desde la experiencia de usuario.
-2. User Persona: perfil sintético del usuario principal con motivaciones, necesidades, expectativas, dudas frecuentes, barreras de avance y criterios de decisión.
-3. Mapa de empatía: qué busca, qué piensa, qué siente, qué necesita, qué lo frena y qué lo impulsa a avanzar en su relación con SAMECO.
-4. Journey Map: mapa del recorrido actual con etapas, puntos de contacto, momentos críticos, tensiones y oportunidades detectadas en cada tramo.
-
-Herramientas de acción:
-5. Informe de presencia digital: evaluación de mensaje, propuesta de valor, estructura de contenidos, señales de confianza, SEO, discoverability y oportunidades de conversión.
-6. Mapa de oportunidades: síntesis organizada en categorías (mejoras rápidas, de comunicación, del recorrido, digitales y de mayor alcance estructural).
-7. Ideación en alto nivel: primeras líneas de solución planteadas de forma conceptual (contenidos, presentación de la oferta, puntos de contacto clave y simplificación de decisiones).
-8. Priorización y hoja de ruta: qué conviene encarar primero, qué se resuelve con acciones acotadas, qué requiere una etapa posterior y cómo avanzar de forma progresiva.
-
-QUÉ NO INCLUYE ESTA ETAPA:
-Diseño final de interfaces, redacción final de contenidos, desarrollo web o implementación técnica, automatizaciones o ejecución operativa. Las etapas posteriores pueden definirse y cotizarse por separado una vez completado el diagnóstico.
-
-INVERSIÓN:
-$1.200 USD, 40 horas de trabajo, 1 mes de ejecución.
-Incluye: análisis integral de experiencia, 2 a 3 reuniones de trabajo con SAMECO, 8 entregables documentados, informe de presencia digital y conversión, hoja de ruta priorizada, presentación final de hallazgos.
-
-EMPRESA:
-Yacaré Studio (yacare.io), contacto: hola@yacare.io`;
-
-let chatHistory = [];
-
-async function sendMessage() {
+function sendMessage() {
   const input = document.getElementById('chat-input');
   const messages = document.getElementById('chat-messages');
   const text = input.value.trim();
@@ -950,39 +1080,18 @@ async function sendMessage() {
   messages.appendChild(typing);
   messages.scrollTop = messages.scrollHeight;
 
-  try {
-    const resp = await fetch(CHAT_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: text,
-        context: PROPOSAL_CONTEXT,
-        history: chatHistory,
-      }),
-    });
-
-    const data = await resp.json();
+  // Simulate brief delay for natural feel
+  setTimeout(() => {
     typing.remove();
 
-    const reply = data.reply || data.error || 'No pude procesar la consulta. Probá de nuevo.';
+    const reply = findBestAnswer(text);
 
     const assistantMsg = document.createElement('div');
     assistantMsg.className = 'chat-msg chat-msg--assistant';
     assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
     messages.appendChild(assistantMsg);
-
-    chatHistory.push({ role: 'user', content: text });
-    chatHistory.push({ role: 'assistant', content: reply });
-
-  } catch (err) {
-    typing.remove();
-    const errMsg = document.createElement('div');
-    errMsg.className = 'chat-msg chat-msg--assistant';
-    errMsg.innerHTML = '<p>No pude conectarme con el asistente. Probá de nuevo en unos segundos.</p>';
-    messages.appendChild(errMsg);
-  }
-
-  messages.scrollTop = messages.scrollHeight;
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
 }
 
 function escapeHtml(text) {
