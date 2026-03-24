@@ -397,17 +397,22 @@
 #chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE — Mobile
+   RESPONSIVE — Mobile (scroll view)
    ═══════════════════════════════════════════ */
 @media screen and (max-width: 768px) {
   .reveal .slides section {
-    padding: 32px 24px;
+    padding: 48px 20px !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
   }
   .reveal .slides section .slide-content {
     max-width: 100%;
   }
-  .reveal h1 { font-size: 2rem !important; }
-  .reveal h2 { font-size: 1.6rem !important; }
+
+  .reveal { font-size: 16px; }
+  .reveal h1 { font-size: 1.8rem !important; }
+  .reveal h2 { font-size: 1.5rem !important; }
   .reveal h4 { font-size: 1rem !important; }
   .reveal p, .reveal li { font-size: 0.9rem; }
 
@@ -425,44 +430,59 @@
   }
   .grid-4 {
     grid-template-columns: 1fr 1fr !important;
-    gap: 16px !important;
+    gap: 12px !important;
   }
+
   .steps {
     flex-direction: column !important;
     gap: 20px !important;
   }
-  .steps::before { display: none; }
-  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .steps::before { display: none !important; }
+  .step { text-align: left !important; display: flex !important; gap: 16px; align-items: flex-start; }
   .step-num {
-    width: 40px; height: 40px; min-width: 40px;
-    font-size: 1rem;
-    margin: 0;
+    width: 40px !important; height: 40px !important; min-width: 40px;
+    font-size: 1rem !important;
+    margin: 0 !important;
   }
   .step h4 { font-size: 1rem !important; margin-bottom: 4px; }
 
-  .stat-number { font-size: 2.8rem !important; }
-  .price { font-size: 2.5rem !important; }
+  .stat-number { font-size: 2.5rem !important; }
+  .price { font-size: 2.2rem !important; }
 
-  .section-num { display: none; }
-  .brand-bar { left: 24px; right: 24px; }
+  .section-num { display: none !important; }
+  .brand-bar { display: none !important; }
 
-  .slide-cover h1 { font-size: 2.2rem !important; }
-  .cover-logo { height: 24px; margin-bottom: 24px; }
+  .slide-cover h1 { font-size: 2rem !important; }
+  .cover-logo { height: 22px !important; margin-bottom: 20px !important; }
+  .slide-cover .subtitle { font-size: 0.95rem !important; }
 
-  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+  .slide-divider h2 { font-size: 1.8rem !important; }
+  .slide-thanks h2 { font-size: 2rem !important; }
 
-  .icon-list li { font-size: 0.9rem; gap: 12px; }
+  .contact-row { flex-direction: column !important; gap: 12px !important; align-items: center; }
+
+  .icon-list { gap: 14px !important; }
+  .icon-list li { font-size: 0.88rem !important; gap: 12px; }
   .icon-list li i { width: 18px !important; height: 18px !important; }
 
-  .card { padding: 20px !important; border-radius: 16px; }
-  .card--sm { padding: 16px !important; border-radius: 12px; }
+  .card { padding: 20px !important; border-radius: 16px !important; }
+  .card--sm { padding: 16px !important; border-radius: 12px !important; }
 
-  .blob { width: 250px !important; height: 250px !important; }
+  .blob { width: 200px !important; height: 200px !important; }
 
   .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
-  .toolbar-btn { padding: 6px 12px; font-size: 0.6rem; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
 
-  #chat-container { max-height: 400px; }
+  #chat-container { max-height: none !important; border-radius: 16px !important; }
+  .chat-msg { font-size: 0.85rem !important; }
+  .chat-msg p { font-size: 0.85rem !important; }
+
+  /* Ensure animations work in scroll mode */
+  .anim {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 @media print {
@@ -813,22 +833,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
+const isMobile = window.innerWidth <= 768;
+
 Reveal.initialize({
   hash: true,
-  width: 1280,
-  height: 720,
-  margin: 0.04,
+  width: isMobile ? '100%' : 1280,
+  height: isMobile ? '100%' : 720,
+  margin: isMobile ? 0 : 0.04,
   minScale: 0.1,
   maxScale: 2.0,
-  disableLayout: window.innerWidth <= 768,
-  transition: 'fade',
+  disableLayout: isMobile,
+  view: isMobile ? 'scroll' : undefined,
+  scrollProgress: isMobile,
+  transition: isMobile ? 'none' : 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
   center: false,
-  controls: true,
+  controls: !isMobile,
   controlsLayout: 'bottom-right',
-  progress: true,
-  slideNumber: 'c/t',
+  progress: !isMobile,
+  slideNumber: isMobile ? false : 'c/t',
   pdfSeparateFragments: false,
 });
 
