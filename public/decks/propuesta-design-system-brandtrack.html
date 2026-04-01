@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Design System Brandtrack</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.price {
+  font-family: var(--font-display);
+  font-size: 3.5rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.price span {
+  font-size: 1rem; color: var(--text-muted);
+  font-family: var(--font-body); font-weight: 400;
+}
+.price-features { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.price-features li {
+  font-size: 0.85rem; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+}
+.price-features li i { color: var(--text-muted); width: 16px; height: 16px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff; cursor: pointer;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.5rem; }
+  .price { font-size: 2.2rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 12</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Design System<br>Brandtrack</h1>
+    <p class="subtitle anim">Propuesta de construcción y estandarización del sistema de diseño como fuente única de verdad para alinear diseño y desarrollo.</p>
+    <p class="meta anim" style="margin-top:24px;">Marzo 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. EL DESAFÍO ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">El punto de partida</div>
+        <h2 class="anim" style="font-size:2.2rem;">Brandtrack ya tiene componentes. Lo que falta es sistema.</h2>
+        <p class="anim" style="margin-top:16px;">Existen componentes diseñados en Figma y elementos implementados en producto, pero no necesariamente están unificados ni sistematizados.</p>
+        <p class="anim">Esta propuesta busca ordenar ese ecosistema y prepararlo para escalar sin fricciones entre diseño y desarrollo.</p>
+      </div>
+      <div class="anim">
+        <div class="card" style="padding:32px;">
+          <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">Un Design System bien construido no es solo una librería de componentes. Es un lenguaje compartido entre equipos que acelera el trabajo, reduce la deuda acumulada y garantiza consistencia en cada pantalla del producto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. OBJETIVO ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">El objetivo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Una fuente única de verdad para diseño y desarrollo</h2>
+    <p class="anim" style="max-width:800px; margin-bottom:36px;">Construir, ordenar y consolidar el Design System de Brandtrack para mejorar la eficiencia del equipo, asegurar consistencia en el producto y dejar una base sólida para escalar.</p>
+    <ul class="icon-list anim">
+      <li>
+        <i data-lucide="layers" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Relevamiento de componentes existentes</strong> en Figma y producto</div>
+      </li>
+      <li>
+        <i data-lucide="blend" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Unificación visual y funcional</strong> de todo el sistema</div>
+      </li>
+      <li>
+        <i data-lucide="tag" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Definición de nomenclatura y estructura</strong> alineada con desarrollo</div>
+      </li>
+      <li>
+        <i data-lucide="package" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Preparación para Storybook</strong> u otras herramientas de documentación</div>
+      </li>
+      <li>
+        <i data-lucide="plus-circle" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Incorporación de nuevos componentes</strong> necesarios para el producto</div>
+      </li>
+    </ul>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. BENEFICIOS ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">Beneficios</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Por qué vale la pena hacerlo bien</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Consistencia total</h4>
+        <p style="font-size:0.95rem;">Misma visual e interacción en todo el producto. Menos decisiones ad hoc, más coherencia sistemática.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Velocidad de equipo</h4>
+        <p style="font-size:0.95rem;">Reducción significativa de tiempos en diseño y desarrollo al reutilizar componentes probados y documentados.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Menos deuda</h4>
+        <p style="font-size:0.95rem;">Menor deuda técnica y de diseño acumulada. Cada componente definido es uno menos que improvisar en el futuro.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Base para escalar</h4>
+        <p style="font-size:0.95rem;">Estructura lista para incorporar nuevos features, facilitar el onboarding de nuevos miembros y crecer sin caos.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. PROCESO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">Proceso de trabajo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">4 etapas estructuradas</h2>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Auditoría</h4>
+          <p>Relevamiento completo de componentes en Figma y producto. Detección de inconsistencias y variantes duplicadas.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Definición</h4>
+          <p>Normalización de componentes, variantes y estados. Estructuración del archivo como librería escalable.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Nomenclatura</h4>
+          <p>Naming consistente alineado con desarrollo. Props y variantes pensadas para integración futura con Storybook.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <h4>Iteración</h4>
+          <p>Incorporación progresiva de nuevos componentes. Ajustes iterativos sobre lo existente durante todo el mes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. DETALLE ETAPAS ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">Detalle del proceso</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Qué se hace en cada etapa</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">01 · Auditoría y relevamiento</h4>
+        <p style="font-size:0.95rem;">Identificación de todos los componentes en Figma, revisión de lo implementado en producto y detección de estilos no unificados o variantes inconsistentes.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">02 · Definición del sistema</h4>
+        <p style="font-size:0.95rem;">Normalización de botones, inputs, cards, modales y más. Definición de variantes, estados y reglas de uso. Estructuración del archivo como librería escalable.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">03 · Nomenclatura y documentación</h4>
+        <p style="font-size:0.95rem;">Naming consistente alineado con el equipo de desarrollo. Organización por categorías y props pensadas para herramientas como Storybook.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">04 · Iteración e integración</h4>
+        <p style="font-size:0.95rem;">Incorporación de nuevos componentes a medida que surgen necesidades del producto. Ajustes iterativos continuos sobre lo construido.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. HERRAMIENTAS ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Herramientas</div>
+        <h2 class="anim" style="font-size:2.2rem;">Stack de trabajo</h2>
+        <p class="anim" style="margin-top:16px;">Todo el trabajo de diseño y gestión del sistema se centraliza en Figma, con validación continua contra la implementación real del producto.</p>
+        <p class="anim">La nomenclatura y estructura del sistema se define desde el inicio pensando en la futura integración con herramientas de documentación como Storybook.</p>
+      </div>
+      <div>
+        <ul class="icon-list anim">
+          <li>
+            <i data-lucide="figma" style="width:22px; height:22px;"></i>
+            <div>
+              <strong style="color:#fff;">Figma</strong>
+              <p style="margin:4px 0 0; font-size:0.9rem;">Construcción y gestión del Design System como librería centralizada</p>
+            </div>
+          </li>
+          <li>
+            <i data-lucide="monitor" style="width:22px; height:22px;"></i>
+            <div>
+              <strong style="color:#fff;">Inspección del producto</strong>
+              <p style="margin:4px 0 0; font-size:0.9rem;">Validación del diseño contra lo implementado en el producto actual</p>
+            </div>
+          </li>
+          <li>
+            <i data-lucide="book-open" style="width:22px; height:22px;"></i>
+            <div>
+              <strong style="color:#fff;">Storybook (preparación)</strong>
+              <p style="margin:4px 0 0; font-size:0.9rem;">Estructura y naming diseñados para una integración fluida en el futuro</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. FOCO Y ALCANCE ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">Foco y alcance</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Qué sí y qué no en esta etapa</h2>
+    <div class="split anim">
+      <div>
+        <p style="font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px;">Foco principal</p>
+        <ul class="icon-list" style="gap:14px;">
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Crear una base sólida, consistente y usable</div>
+          </li>
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Alinear diseño con lo implementado en producto</div>
+          </li>
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Dejar el sistema listo para escalar</div>
+          </li>
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Preparar la base para herramientas como Storybook</div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px;">No es el objetivo en esta etapa</p>
+        <ul class="icon-list" style="gap:14px;">
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Documentación exhaustiva tipo "enterprise-level"</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Implementación de librería completa a nivel código</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Actualización de todos los diseños históricos</div>
+          </li>
+          <li>
+            <i data-lucide="x" style="width:18px; height:18px;"></i>
+            <div style="font-size:0.95rem;">Rediseño completo del producto</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:32px; font-size:0.95rem; font-style:italic; color:var(--text-muted);">El objetivo es pragmático: ordenar lo existente y preparar el futuro.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. MÉTRICAS ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">En números</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:48px;">El tiempo que lleva hacerlo bien</h2>
+    <div style="display:flex; justify-content:center;" class="anim">
+      <div style="text-align:center;">
+        <div class="stat-number">3</div>
+        <div class="stat-label">semanas de ejecución</div>
+      </div>
+    </div>
+    <p class="anim" style="text-align:center; margin-top:40px; font-size:0.95rem; max-width:600px; margin-left:auto; margin-right:auto;">Las fechas de inicio y ejecución se definen al aceptar la propuesta, contemplando el contexto y disponibilidad de ambos equipos.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. INVERSIÓN ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Inversión</div>
+        <h2 class="shimmer-text anim" style="font-size:2.4rem;">Propuesta económica</h2>
+        <p class="anim" style="margin-top:16px;">3 semanas de trabajo enfocado, con entrega continua de avances. El cronograma se acuerda al confirmar el proyecto.</p>
+        <p class="anim">Las etapas posteriores de implementación en código, documentación extendida o mantenimiento del sistema pueden definirse y cotizarse por separado una vez completada esta fase.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--highlight" style="padding:48px;">
+          <h4 style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px; letter-spacing:0.1em;">DESIGN SYSTEM BRANDTRACK</h4>
+          <div class="price">$2.600 <span>USD</span></div>
+          <p style="font-size:0.9rem; color:var(--text-secondary); margin:16px 0 24px;">3 semanas · fechas a definir · entrega continua</p>
+          <ul class="price-features">
+            <li><i data-lucide="check"></i> Auditoría completa de componentes</li>
+            <li><i data-lucide="check"></i> Construcción del Design System en Figma</li>
+            <li><i data-lucide="check"></i> Normalización y nomenclatura</li>
+            <li><i data-lucide="check"></i> Base para integración con Storybook</li>
+            <li><i data-lucide="check"></i> Incorporación de nuevos componentes</li>
+            <li><i data-lucide="check"></i> Iteración continua durante el mes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 11. THANK YOU ══════════════ -->
+<section class="slide slide--thanks" data-slide="11">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Listos para arrancar y construir algo que Brandtrack pueda usar y escalar.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 12. CHAT ══════════════ -->
+<section class="slide" data-slide="12">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta propuesta.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuánto cuesta?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué incluye?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuánto dura?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué no incluye esta etapa?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo es el proceso?</button>
+        </div>
+      </div>
+
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: 11 * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta propuesta. Podés preguntarme sobre el alcance, el proceso, la inversión, las herramientas o cualquier otro punto que quieras entender mejor.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la propuesta, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'en pocas palabras'],
+    answer: 'Esta propuesta plantea la construcción y estandarización del Design System de Brandtrack. En 3 semanas de ejecución, se hace una auditoría de componentes existentes en Figma y producto, se normaliza y documenta el sistema con nomenclatura alineada con desarrollo, y se deja una base lista para escalar e integrar con Storybook. Inversión: USD 2.600.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el precio y plazo del proyecto, el proceso de 4 etapas, qué incluye y qué no, las herramientas utilizadas, los beneficios del Design System, o pedirme un resumen general de la propuesta.'
+  },
+  {
+    keywords: ['precio', 'costo', 'inversión', 'inversion', 'cuánto', 'cuanto', 'valor', 'presupuesto', 'cotización', 'cotizacion', 'plata', 'usd', 'dólar', 'dolar', '3100', '3.100'],
+    answer: 'La inversión es de USD 2.600 por 3 semanas de ejecución. Incluye auditoría completa de componentes, construcción del Design System en Figma, normalización y nomenclatura, base para Storybook, incorporación de nuevos componentes e iteración continua. Las fechas se acuerdan al confirmar el proyecto.'
+  },
+  {
+    keywords: ['plazo', 'tiempo', 'duración', 'duracion', 'cuándo', 'cuando', 'demora', 'tarda', 'mes', 'semana', 'calendario', 'deadline', 'cuanto dura'],
+    answer: 'El proyecto se ejecuta en 3 semanas. Las fechas de inicio y ejecución se definen al aceptar la propuesta, contemplando el contexto y disponibilidad de ambos equipos. El trabajo es iterativo con avances continuos.'
+  },
+  {
+    keywords: ['incluye', 'qué incluye', 'que incluye', 'entregable', 'entrega', 'qué recibo', 'que recibo', 'resultado', 'output'],
+    answer: 'La propuesta incluye: (1) Auditoría completa de componentes existentes en Figma y producto, (2) Construcción del Design System en Figma como librería centralizada, (3) Normalización y nomenclatura alineada con desarrollo, (4) Base estructurada para integración futura con Storybook, (5) Incorporación de nuevos componentes necesarios, (6) Iteración continua durante el mes.'
+  },
+  {
+    keywords: ['proceso', 'etapa', 'paso', 'cómo', 'como', 'metodología', 'metodologia', 'trabajo', 'fase', 'pasos'],
+    answer: 'El proceso tiene 4 etapas: (1) Auditoría y relevamiento: identificación de componentes en Figma, revisión del producto y detección de inconsistencias. (2) Definición del sistema: normalización de componentes, variantes, estados y reglas de uso. (3) Nomenclatura y documentación: naming consistente, organización por categorías, props para Storybook. (4) Iteración e integración progresiva: incorporación de nuevos componentes y ajustes continuos.'
+  },
+  {
+    keywords: ['auditoria', 'auditoría', 'relevamiento', 'componentes existentes', 'inconsistencia'],
+    answer: 'La etapa de auditoría consiste en identificar todos los componentes en Figma, revisar lo implementado en el producto actual y detectar inconsistencias: variantes duplicadas, estilos no unificados, y diferencias entre diseño e implementación.'
+  },
+  {
+    keywords: ['normalización', 'normalizacion', 'normalizar', 'botones', 'inputs', 'cards', 'modales', 'variantes', 'estados'],
+    answer: 'En la etapa de definición se normalizan los componentes clave (botones, inputs, cards, modales y más), se definen variantes y estados, se estructura el archivo Figma como una librería escalable y se establecen las reglas de uso de cada componente.'
+  },
+  {
+    keywords: ['nomenclatura', 'naming', 'nombre', 'categoría', 'categoria', 'organización', 'organizacion'],
+    answer: 'La nomenclatura se define alineada con el equipo de desarrollo para que los nombres en Figma correspondan con los nombres en código. Los componentes se organizan por categorías y las props se estructuran pensando en la futura integración con Storybook.'
+  },
+  {
+    keywords: ['storybook', 'integración', 'integracion', 'código', 'codigo', 'librería', 'libreria', 'desarrollo'],
+    answer: 'En esta etapa no se implementa Storybook ni una librería de código completa. Lo que se hace es estructurar el sistema de diseño (nombres, variantes, props) de forma que una futura integración con Storybook sea fluida y sin retrabajos. La implementación en código puede cotizarse como una etapa posterior.'
+  },
+  {
+    keywords: ['figma', 'herramienta', 'tool', 'software'],
+    answer: 'Se trabaja principalmente con Figma, donde se construye y gestiona el Design System como librería centralizada. También se hace inspección del producto actual para validar el diseño contra la implementación real. La estructura se define pensando en herramientas futuras como Storybook.'
+  },
+  {
+    keywords: ['no incluye', 'excluye', 'limitación', 'limitacion', 'fuera', 'fuera de alcance', 'no hace', 'qué no'],
+    answer: 'Esta etapa no incluye: documentación exhaustiva tipo "enterprise-level", implementación de librería completa a nivel código en web, actualización de todos los diseños históricos, ni rediseño completo del producto. El objetivo es pragmático: ordenar lo existente y preparar el futuro, no rehacer todo desde cero.'
+  },
+  {
+    keywords: ['beneficio', 'ventaja', 'para qué sirve', 'por qué', 'valor'],
+    answer: 'Un Design System bien construido trae 4 beneficios principales: (1) Consistencia total en diseño e interacción a lo largo de todo el producto. (2) Velocidad de equipo, reduciendo tiempos de diseño y desarrollo al reutilizar componentes. (3) Menor deuda técnica y de diseño acumulada. (4) Base sólida para escalar nuevos features y facilitar el onboarding de nuevos miembros.'
+  },
+  {
+    keywords: ['después', 'despues', 'siguiente', 'próximo', 'proximo', 'luego', 'futuro', 'continuación', 'continuacion', 'etapa posterior'],
+    answer: 'Una vez completado el Design System en Figma, se pueden definir y cotizar por separado las etapas de implementación en código, documentación extendida o mantenimiento del sistema. Esta propuesta establece la base que hace que esas etapas futuras sean mucho más eficientes.'
+  },
+  {
+    keywords: ['arrancar', 'empezar', 'comenzar', 'inicio', 'start', 'cuándo arrancamos', 'cuando arrancamos'],
+    answer: 'El equipo de Yacaré está listo para arrancar cuando Brandtrack lo decida. Para coordinar el inicio podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['pago', 'factura', 'forma de pago', 'transferencia', 'cuota', 'cómo se paga'],
+    answer: 'Esa información no está incluida en esta propuesta. Te recomiendo consultarlo directamente con el equipo de Yacaré en contact@yacare.io.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'equipo', 'contacto'],
+    answer: 'Yacaré Studio (yacare.io) es un estudio de producto digital. Para consultas sobre esta propuesta podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta propuesta. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el precio, el proceso, qué incluye o el alcance del proyecto.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+    const reply = findBestAnswer(text);
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
