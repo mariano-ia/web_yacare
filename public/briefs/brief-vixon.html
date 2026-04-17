@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vixon · Brief de proyecto</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+
+h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.1; color: var(--text-primary); font-weight: 700; }
+p { color: var(--text-secondary); }
+a { color: inherit; }
+
+.shimmer-text {
+  background: linear-gradient(to right, #999 0%, #fff 50%, #999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine { from { background-position: 0% center; } to { background-position: -200% center; } }
+
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  30% { transform: translate(7%, -25%) }
+  60% { transform: translate(15%, 0%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+.brief {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 32px 160px;
+  position: relative;
+}
+
+.brief-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+}
+.brief-logo { height: 24px; width: auto; opacity: 0.9; }
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-subtle);
+  transition: background 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+.dot.is-done { background: var(--text-secondary); }
+.dot.is-active { background: var(--text-primary); transform: scale(1.25); }
+
+.step { display: none; animation: fade-in 0.5s var(--ease-out); }
+.step.is-active { display: block; }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.step-label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.step-title { font-size: clamp(1.6rem, 3.5vw, 2.25rem); margin-bottom: 12px; }
+.step-lead { color: var(--text-secondary); margin-bottom: 40px; max-width: 560px; }
+
+.note {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  font-size: 0.95rem;
+}
+.note strong { color: var(--text-primary); }
+
+.field { margin-bottom: 28px; }
+.field-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.field-required { color: var(--text-muted); font-weight: 400; margin-left: 6px; font-size: 0.85rem; }
+.field-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.input, .textarea {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  transition: border-color 0.2s, background 0.2s;
+  resize: vertical;
+}
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background: var(--bg-elevated);
+}
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); }
+.textarea { min-height: 120px; line-height: 1.5; }
+
+.input.has-error, .textarea.has-error { border-color: #ff6b6b; }
+.field-error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  display: none;
+}
+.field.has-error .field-error { display: block; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.footer-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-subtle);
+  padding: 16px 32px;
+  z-index: 100;
+}
+.footer-nav-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out);
+  background: transparent;
+  color: var(--text-primary);
+}
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn--primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+.btn--primary:hover:not(:disabled) {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+.btn--ghost { color: var(--text-secondary); border-color: transparent; }
+.btn--ghost:hover:not(:disabled) { color: var(--text-primary); }
+.btn--ghost[hidden] { display: none; }
+
+.review-section {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.review-section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.review-section-title {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+.review-edit {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.05em;
+}
+.review-edit:hover { color: var(--text-primary); border-color: var(--border-medium); }
+.review-item { margin-bottom: 16px; }
+.review-item:last-child { margin-bottom: 0; }
+.review-q { color: var(--text-primary); font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.review-a { color: var(--text-secondary); white-space: pre-wrap; font-size: 0.95rem; }
+.review-a.is-empty { color: var(--text-muted); font-style: italic; }
+
+.success {
+  text-align: center;
+  padding: 60px 20px;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 32px;
+  color: var(--text-primary);
+}
+.success h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 16px; }
+.success p { max-width: 440px; margin: 0 auto 12px; }
+
+.submitting-dots::after {
+  content: '';
+  animation: dots 1.4s steps(4, end) infinite;
+}
+@keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+
+@media (max-width: 560px) {
+  .brief { padding: 24px 20px 140px; }
+  .brief-top { margin-bottom: 32px; }
+  .dots { margin-bottom: 36px; }
+  .footer-nav { padding: 12px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<main class="brief">
+
+  <div class="brief-top">
+    <a href="https://yacare.io" aria-label="Yacaré">
+      <img src="/logo_yacare.svg" alt="Yacaré" class="brief-logo">
+    </a>
+  </div>
+
+  <div class="dots" id="dots" aria-hidden="true"></div>
+
+  <form id="brief-form" novalidate>
+
+    <!-- Step 1: Respondent info -->
+    <section class="step is-active" data-step="1">
+      <div class="step-label">Brief · Rediseño web</div>
+      <h2 class="step-title shimmer-text">Empezamos por vos</h2>
+      <p class="step-lead">Dejanos tus datos para arrancar. Las preguntas que siguen son todas opcionales: contestá lo que estés en condiciones de responder ahora.</p>
+
+      <div class="field">
+        <label class="field-label" for="respondent_name">Nombre y apellido<span class="field-required">requerido</span></label>
+        <input class="input" type="text" id="respondent_name" name="respondent_name" placeholder="Tu nombre" autocomplete="name" required>
+        <div class="field-error">Necesitamos tu nombre.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="respondent_email">Email<span class="field-required">requerido</span></label>
+        <input class="input" type="email" id="respondent_email" name="respondent_email" placeholder="vos@empresa.com" autocomplete="email" required>
+        <div class="field-error">Ingresá un email válido.</div>
+      </div>
+    </section>
+
+    <!-- Step 2: El producto -->
+    <section class="step" data-step="2">
+      <div class="step-label">01 · El producto</div>
+      <h2 class="step-title">Qué es Vixon</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_producto_1">¿Cómo explicarías Vixon a alguien que nunca escuchó hablar de entrenamiento cognitivo?</label>
+        <p class="field-hint">Pensalo como si se lo contaras a un jugador de 18 años en el vestuario.</p>
+        <textarea class="textarea" id="q_producto_1" name="q_producto_1" data-question="¿Cómo explicarías Vixon a alguien que nunca escuchó hablar de entrenamiento cognitivo?" data-hint="Pensalo como si se lo contaras a un jugador de 18 años en el vestuario."></textarea>
+      </div>
+    </section>
+
+    <!-- Step 3: Audiencia -->
+    <section class="step" data-step="3">
+      <div class="step-label">02 · Audiencia</div>
+      <h2 class="step-title">A quién le hablamos</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_audiencia_1">¿Quién toma la decisión de incorporar Vixon: el jugador, el entrenador, el club?</label>
+        <p class="field-hint">Puede ser más de uno. Contanos desde tu experiencia, no hace falta investigarlo.</p>
+        <textarea class="textarea" id="q_audiencia_1" name="q_audiencia_1" data-question="¿Quién toma la decisión de incorporar Vixon: el jugador, el entrenador, el club?" data-hint="Puede ser más de uno. Contanos desde tu experiencia, no hace falta investigarlo."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_audiencia_2">¿A qué tipo de usuario principal queremos hablarle en el sitio?</label>
+        <p class="field-hint">Sin dejar a nadie afuera, queremos enfocar la comunicación en uno tipo, el más representativo. Ej: futbolista profesional, futbolista amateur, entrenador de club.</p>
+        <textarea class="textarea" id="q_audiencia_2" name="q_audiencia_2" data-question="¿A qué tipo de usuario principal queremos hablarle en el sitio?" data-hint="Sin dejar a nadie afuera, queremos enfocar la comunicación en uno tipo, el más representativo. Ej: futbolista profesional, futbolista amateur, entrenador de club."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_audiencia_3">¿Hay un motivo principal por el que alguien no adopta Vixon cuando lo conoce?</label>
+        <p class="field-hint">La objeción más común, la que se repite.</p>
+        <textarea class="textarea" id="q_audiencia_3" name="q_audiencia_3" data-question="¿Hay un motivo principal por el que alguien no adopta Vixon cuando lo conoce?" data-hint="La objeción más común, la que se repite."></textarea>
+      </div>
+    </section>
+
+    <!-- Step 4: Validación y credibilidad -->
+    <section class="step" data-step="4">
+      <div class="step-label">03 · Validación y credibilidad</div>
+      <h2 class="step-title">Qué respalda a Vixon</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_validacion_1">¿Con qué clubes, equipos o deportistas ya trabajan? ¿Hay alguno que podamos mostrar?</label>
+        <textarea class="textarea" id="q_validacion_1" name="q_validacion_1" data-question="¿Con qué clubes, equipos o deportistas ya trabajan? ¿Hay alguno que podamos mostrar?"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_validacion_2">¿Tienen resultados, estudios o datos que respalden la efectividad del sistema?</label>
+        <p class="field-hint">Aunque sean internos o preliminares, son valiosos para el diseño.</p>
+        <textarea class="textarea" id="q_validacion_2" name="q_validacion_2" data-question="¿Tienen resultados, estudios o datos que respalden la efectividad del sistema?" data-hint="Aunque sean internos o preliminares, son valiosos para el diseño."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_validacion_3">¿Hay testimonios de jugadores o entrenadores que podamos usar?</label>
+        <textarea class="textarea" id="q_validacion_3" name="q_validacion_3" data-question="¿Hay testimonios de jugadores o entrenadores que podamos usar?"></textarea>
+      </div>
+    </section>
+
+    <!-- Step 5: Referentes y estilo -->
+    <section class="step" data-step="5">
+      <div class="step-label">04 · Referentes y estilo</div>
+      <h2 class="step-title">Cómo lo quieren ver</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_estilo_1">¿Hay sitios web que les gusten como referencia visual o de comunicación?</label>
+        <p class="field-hint">Links o nombres. No importa si son de tecnología, deporte u otro sector.</p>
+        <textarea class="textarea" id="q_estilo_1" name="q_estilo_1" data-question="¿Hay sitios web que les gusten como referencia visual o de comunicación?" data-hint="Links o nombres. No importa si son de tecnología, deporte u otro sector."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_estilo_2">¿Hay algo del sitio actual que quieran mantener sí o sí?</label>
+        <p class="field-hint">Puede ser un elemento visual, un tono, una sección.</p>
+        <textarea class="textarea" id="q_estilo_2" name="q_estilo_2" data-question="¿Hay algo del sitio actual que quieran mantener sí o sí?" data-hint="Puede ser un elemento visual, un tono, una sección."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_estilo_3">¿Tienen manual de marca o assets definidos además de los que hoy tiene la web?</label>
+        <p class="field-hint">Logo, tipografías, colores oficiales.</p>
+        <textarea class="textarea" id="q_estilo_3" name="q_estilo_3" data-question="¿Tienen manual de marca o assets definidos además de los que hoy tiene la web?" data-hint="Logo, tipografías, colores oficiales."></textarea>
+      </div>
+    </section>
+
+    <!-- Step 6: Contenido y estructura -->
+    <section class="step" data-step="6">
+      <div class="step-label">05 · Contenido y estructura</div>
+      <h2 class="step-title">Qué tiene que decir el sitio</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_contenido_1">¿Qué páginas o secciones creen que debería tener el nuevo sitio?</label>
+        <p class="field-hint">Por ejemplo: home, cómo funciona, para clubes, precios, contacto.</p>
+        <textarea class="textarea" id="q_contenido_1" name="q_contenido_1" data-question="¿Qué páginas o secciones creen que debería tener el nuevo sitio?" data-hint="Por ejemplo: home, cómo funciona, para clubes, precios, contacto."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_contenido_2">¿Cuál es la acción principal que quieren que haga quien visita el sitio?</label>
+        <p class="field-hint">¿Registrarse, pedir una demo, contactar, descargar algo?</p>
+        <textarea class="textarea" id="q_contenido_2" name="q_contenido_2" data-question="¿Cuál es la acción principal que quieren que haga quien visita el sitio?" data-hint="¿Registrarse, pedir una demo, contactar, descargar algo?"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_contenido_3">¿Tienen contenido listo para usar?</label>
+        <p class="field-hint">Fotos, videos, textos, demos del producto. Si no tienen, también es útil saberlo.</p>
+        <textarea class="textarea" id="q_contenido_3" name="q_contenido_3" data-question="¿Tienen contenido listo para usar?" data-hint="Fotos, videos, textos, demos del producto. Si no tienen, también es útil saberlo."></textarea>
+      </div>
+    </section>
+
+    <!-- Step 7: Técnico -->
+    <section class="step" data-step="7">
+      <div class="step-label">06 · Técnico</div>
+      <h2 class="step-title">Cómo está armado hoy</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_tecnico_1">¿Tienen acceso al WordPress actual o lo maneja alguien externo?</label>
+        <textarea class="textarea" id="q_tecnico_1" name="q_tecnico_1" data-question="¿Tienen acceso al WordPress actual o lo maneja alguien externo?"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="q_tecnico_2">¿Hay integraciones que el sitio deba tener?</label>
+        <p class="field-hint">Login a la app, formularios, analytics, chat, etc.</p>
+        <textarea class="textarea" id="q_tecnico_2" name="q_tecnico_2" data-question="¿Hay integraciones que el sitio deba tener?" data-hint="Login a la app, formularios, analytics, chat, etc."></textarea>
+      </div>
+    </section>
+
+    <!-- Step 8: Review + Submit -->
+    <section class="step" data-step="8">
+      <div class="step-label">Último paso</div>
+      <h2 class="step-title">Revisá y enviá</h2>
+      <p class="step-lead">Mirá rápido las respuestas. Si querés cambiar algo, tocá "Editar" en la sección. Cuando estés listo, enviá el brief.</p>
+
+      <div id="review"></div>
+    </section>
+
+    <!-- Honeypot (anti spam) -->
+    <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
+
+  </form>
+
+  <!-- Success screen -->
+  <section class="step" id="success-step">
+    <div class="success">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 class="shimmer-text">Recibimos tu brief</h2>
+      <p>Gracias por tomarte el tiempo. Te enviamos una copia de confirmación al email que dejaste.</p>
+      <p>Lo estamos revisando con el equipo. Te escribimos en las próximas 24 a 48 horas con los siguientes pasos.</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="footer-nav" id="footer-nav">
+  <div class="footer-nav-inner">
+    <button type="button" class="btn btn--ghost" id="btn-prev" hidden>Atrás</button>
+    <button type="button" class="btn btn--primary" id="btn-next">
+      Siguiente
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+    <button type="button" class="btn btn--secondary" id="btn-submit">Enviar brief</button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  const BRIEF_META = {
+    slug: 'brief-vixon',
+    client: 'Vixon',
+    project: 'Rediseño web',
+  };
+  const API_URL = '/blog/api/brief';
+  const STORAGE_KEY = 'brief-vixon-draft';
+
+  const SECTION_TITLES = {
+    2: '01. El producto',
+    3: '02. Audiencia',
+    4: '03. Validación y credibilidad',
+    5: '04. Referentes y estilo',
+    6: '05. Contenido y estructura',
+    7: '06. Técnico',
+  };
+
+  const form = document.getElementById('brief-form');
+  const steps = Array.from(form.querySelectorAll('.step'));
+  const totalSteps = steps.length;
+  const dotsEl = document.getElementById('dots');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const btnSubmit = document.getElementById('btn-submit');
+  const successStep = document.getElementById('success-step');
+  const footerNav = document.getElementById('footer-nav');
+  const review = document.getElementById('review');
+
+  let currentStep = 1;
+
+  // Build dots
+  for (let i = 0; i < totalSteps; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    dotsEl.appendChild(dot);
+  }
+  const dotEls = Array.from(dotsEl.children);
+
+  // ── Draft autosave ─────────────────────────────
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([name, value]) => {
+        const el = form.elements.namedItem(name);
+        if (el && typeof value === 'string') el.value = value;
+      });
+    } catch (e) {
+      console.warn('[brief] draft load failed', e);
+    }
+  }
+  function saveDraft() {
+    const data = {};
+    Array.from(form.elements).forEach((el) => {
+      if (!el.name || el.name === 'website') return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') data[el.name] = el.value;
+    });
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      // quota or privacy mode, ignore
+    }
+  }
+  function clearDraft() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+  form.addEventListener('input', saveDraft);
+
+  // ── Step navigation ────────────────────────────
+  function goToStep(n) {
+    if (n < 1 || n > totalSteps) return;
+    currentStep = n;
+    steps.forEach((s) => s.classList.toggle('is-active', Number(s.dataset.step) === n));
+
+    dotEls.forEach((d, i) => {
+      d.classList.toggle('is-active', i === n - 1);
+      d.classList.toggle('is-done', i < n - 1);
+    });
+
+    btnPrev.hidden = n === 1;
+    const isLast = n === totalSteps;
+    btnNext.hidden = isLast;
+    btnSubmit.classList.toggle('btn--primary', isLast);
+    btnSubmit.classList.toggle('btn--secondary', !isLast);
+
+    if (isLast) buildReview();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const firstInput = steps[n - 1].querySelector('input, textarea');
+    if (firstInput && n !== 1) setTimeout(() => firstInput.focus({ preventScroll: true }), 250);
+  }
+
+  function validateStep(n) {
+    if (n !== 1) return true; // only step 1 has required fields
+    const name = form.elements.namedItem('respondent_name');
+    const email = form.elements.namedItem('respondent_email');
+    let ok = true;
+
+    [name, email].forEach((el) => el.parentElement.classList.remove('has-error'));
+
+    if (!name.value.trim()) {
+      name.parentElement.classList.add('has-error');
+      ok = false;
+    }
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.parentElement.classList.add('has-error');
+      ok = false;
+    }
+    return ok;
+  }
+
+  btnPrev.addEventListener('click', () => goToStep(currentStep - 1));
+  btnNext.addEventListener('click', () => {
+    if (!validateStep(currentStep)) return;
+    goToStep(currentStep + 1);
+  });
+
+  // Enter in inputs → next step (not in textareas, textareas allow newlines)
+  form.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+      e.preventDefault();
+      btnNext.click();
+    }
+  });
+
+  // ── Review ─────────────────────────────────────
+  function buildReview() {
+    const groups = {};
+    Array.from(form.querySelectorAll('textarea[data-question]')).forEach((ta) => {
+      const stepEl = ta.closest('.step');
+      const stepNum = Number(stepEl.dataset.step);
+      const sectionTitle = SECTION_TITLES[stepNum] || 'Sección';
+      if (!groups[stepNum]) groups[stepNum] = { title: sectionTitle, items: [] };
+      groups[stepNum].items.push({
+        question: ta.dataset.question,
+        answer: ta.value.trim(),
+      });
+    });
+
+    let html = '';
+    Object.keys(groups).forEach((k) => {
+      const g = groups[k];
+      html += '<div class="review-section">';
+      html += '<div class="review-section-head">';
+      html += '<div class="review-section-title">' + g.title + '</div>';
+      html += '<button type="button" class="review-edit" data-goto="' + k + '">Editar</button>';
+      html += '</div>';
+      g.items.forEach((it) => {
+        const empty = !it.answer;
+        html += '<div class="review-item">';
+        html += '<div class="review-q">' + escapeHtml(it.question) + '</div>';
+        html += '<div class="review-a' + (empty ? ' is-empty' : '') + '">' + (empty ? 'Sin responder' : escapeHtml(it.answer)) + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    review.innerHTML = html;
+    review.querySelectorAll('.review-edit').forEach((btn) => {
+      btn.addEventListener('click', () => goToStep(Number(btn.dataset.goto)));
+    });
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ── Submit ─────────────────────────────────────
+  btnSubmit.addEventListener('click', async () => {
+    // Honeypot check
+    const hp = form.elements.namedItem('website');
+    if (hp && hp.value) return; // silently drop
+
+    btnSubmit.disabled = true;
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = '<span class="submitting-dots">Enviando</span>';
+
+    const payload = {
+      brief_slug: BRIEF_META.slug,
+      client_name: BRIEF_META.client,
+      project: BRIEF_META.project,
+      respondent: {
+        name: form.elements.namedItem('respondent_name').value.trim(),
+        email: form.elements.namedItem('respondent_email').value.trim(),
+      },
+      sections: buildSectionsPayload(),
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      clearDraft();
+      showSuccess();
+    } catch (err) {
+      console.error('[brief] submit failed', err);
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = originalText;
+      alert('Hubo un error al enviar el brief. Probá de nuevo o escribinos a contact@yacare.io.');
+    }
+  });
+
+  function buildSectionsPayload() {
+    const groups = {};
+    Array.from(form.querySelectorAll('textarea[data-question]')).forEach((ta) => {
+      const stepEl = ta.closest('.step');
+      const stepNum = Number(stepEl.dataset.step);
+      const sectionTitle = SECTION_TITLES[stepNum] || 'Sección';
+      if (!groups[stepNum]) groups[stepNum] = { title: sectionTitle, answers: [] };
+      groups[stepNum].answers.push({
+        question: ta.dataset.question,
+        hint: ta.dataset.hint || undefined,
+        answer: ta.value.trim(),
+      });
+    });
+    return Object.keys(groups)
+      .sort((a, b) => Number(a) - Number(b))
+      .map((k) => groups[k]);
+  }
+
+  function showSuccess() {
+    steps.forEach((s) => s.classList.remove('is-active'));
+    form.style.display = 'none';
+    footerNav.style.display = 'none';
+    dotsEl.style.display = 'none';
+    successStep.classList.add('is-active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Init ───────────────────────────────────────
+  loadDraft();
+  goToStep(1);
+})();
+</script>
+</body>
+</html>

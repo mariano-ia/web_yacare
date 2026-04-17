@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  YACARÉ BRIEF TEMPLATE
+  ───────────────────────────────────────────────────────────────
+  To create a new client brief, copy this file to brief-<client>.html
+  and replace:
+    1. <title>                              → "<Client> · Brief de proyecto"
+    2. .brief-client text                   → client name (uppercase display)
+    3. .brief-title text                    → project title (no dashes, use ":")
+    4. BRIEF_META object in <script>        → slug + client
+    5. STORAGE_KEY constant                 → brief-<client>-draft
+    6. SECTION_TITLES map                   → numbered sections
+    7. Each <section class="step">          → real questions + data-question / data-hint
+
+  Required step-1 fields (respondent_name, respondent_email, project) MUST
+  stay. Everything else is optional per the "contestá lo que puedas" note.
+  ═══════════════════════════════════════════════════════════════
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Brief de proyecto</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+
+h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.1; color: var(--text-primary); font-weight: 700; }
+p { color: var(--text-secondary); }
+a { color: inherit; }
+
+.shimmer-text {
+  background: linear-gradient(to right, #999 0%, #fff 50%, #999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine { from { background-position: 0% center; } to { background-position: -200% center; } }
+
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  30% { transform: translate(7%, -25%) }
+  60% { transform: translate(15%, 0%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+.brief { max-width: 720px; margin: 0 auto; padding: 40px 32px 160px; position: relative; }
+
+.brief-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 60px; }
+.brief-logo { height: 24px; width: auto; opacity: 0.9; }
+.brief-exit { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; }
+.brief-exit:hover { color: var(--text-secondary); }
+
+.brief-head { margin-bottom: 48px; }
+.brief-client { font-family: var(--font-display); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--text-muted); margin-bottom: 12px; }
+.brief-title { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+.brief-subtitle { color: var(--text-secondary); font-size: 1rem; }
+
+.progress { display: flex; align-items: center; gap: 12px; margin-bottom: 56px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; }
+.progress-track { flex: 1; height: 2px; background: var(--border-subtle); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--text-primary); width: 0%; transition: width 0.6s var(--ease-out); }
+
+.step { display: none; animation: fade-in 0.5s var(--ease-out); }
+.step.is-active { display: block; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-label { font-family: var(--font-body); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.step-label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.step-title { font-size: clamp(1.6rem, 3.5vw, 2.25rem); margin-bottom: 12px; }
+.step-lead { color: var(--text-secondary); margin-bottom: 40px; max-width: 560px; }
+
+.note { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px 24px; margin-bottom: 40px; font-size: 0.95rem; }
+.note strong { color: var(--text-primary); }
+
+.field { margin-bottom: 28px; }
+.field-label { display: block; font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
+.field-required { color: var(--text-muted); font-weight: 400; margin-left: 6px; font-size: 0.85rem; }
+.field-hint { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; font-style: italic; }
+
+.input, .textarea { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 12px; color: var(--text-primary); font-family: var(--font-body); font-size: 1rem; padding: 14px 16px; transition: border-color 0.2s, background 0.2s; resize: vertical; }
+.input:focus, .textarea:focus { outline: none; border-color: var(--accent-primary); background: var(--bg-elevated); }
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); }
+.textarea { min-height: 120px; line-height: 1.5; }
+
+.input.has-error, .textarea.has-error { border-color: #ff6b6b; }
+.field-error { color: #ff6b6b; font-size: 0.85rem; margin-top: 6px; display: none; }
+.field.has-error .field-error { display: block; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.footer-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--border-subtle); padding: 16px 32px; z-index: 100; }
+.footer-nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.footer-counter { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; padding: 12px 28px; border-radius: 999px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: all 0.3s var(--ease-out); background: transparent; color: var(--text-primary); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn--primary { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
+.btn--primary:hover:not(:disabled) { background: var(--bg-primary); color: var(--text-primary); border-color: var(--text-primary); }
+.btn--ghost { color: var(--text-secondary); border-color: transparent; }
+.btn--ghost:hover:not(:disabled) { color: var(--text-primary); }
+.btn--ghost[hidden] { display: none; }
+
+.review-section { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+.review-section-title { font-family: var(--font-body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 16px; }
+.review-item { margin-bottom: 16px; }
+.review-item:last-child { margin-bottom: 0; }
+.review-q { color: var(--text-primary); font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.review-a { color: var(--text-secondary); white-space: pre-wrap; font-size: 0.95rem; }
+.review-a.is-empty { color: var(--text-muted); font-style: italic; }
+
+.success { text-align: center; padding: 60px 20px; }
+.success-icon { width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--border-medium); display: flex; align-items: center; justify-content: center; margin: 0 auto 32px; color: var(--text-primary); }
+.success h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 16px; }
+.success p { max-width: 440px; margin: 0 auto 12px; }
+
+.submitting-dots::after { content: ''; animation: dots 1.4s steps(4, end) infinite; }
+@keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+
+@media (max-width: 560px) {
+  .brief { padding: 24px 20px 140px; }
+  .brief-top { margin-bottom: 40px; }
+  .brief-head { margin-bottom: 32px; }
+  .progress { margin-bottom: 40px; }
+  .footer-nav { padding: 12px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<main class="brief">
+
+  <div class="brief-top">
+    <a href="https://yacare.io" aria-label="Yacaré"><img src="/logo_yacare.svg" alt="Yacaré" class="brief-logo"></a>
+    <a href="https://yacare.io" class="brief-exit">Salir</a>
+  </div>
+
+  <header class="brief-head">
+    <!-- REPLACE: client name uppercase -->
+    <div class="brief-client">Cliente</div>
+    <!-- REPLACE: project title. Use ":" not "—". -->
+    <h1 class="brief-title shimmer-text">Brief de proyecto</h1>
+    <p class="brief-subtitle">Para completar antes del inicio del proyecto.</p>
+  </header>
+
+  <div class="progress" id="progress">
+    <span id="progress-label">Paso 1 de 3</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <form id="brief-form" novalidate>
+
+    <!-- Step 1 (FIXED): Respondent info. Do not remove required fields. -->
+    <section class="step is-active" data-step="1">
+      <div class="step-label">Empezamos</div>
+      <h2 class="step-title">Tus datos</h2>
+      <p class="step-lead">Antes de arrancar, dejanos saber con quién estamos hablando.</p>
+
+      <div class="note">
+        <strong>Nota:</strong> Algunas preguntas pueden haberse conversado antes. El objetivo es dejar las respuestas por escrito para arrancar el proyecto con todo el contexto claro. No es necesario responder todo, contestá lo que estés en condiciones de responder ahora.
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label class="field-label" for="respondent_name">Nombre y apellido<span class="field-required">requerido</span></label>
+          <input class="input" type="text" id="respondent_name" name="respondent_name" placeholder="Tu nombre" autocomplete="name" required>
+          <div class="field-error">Necesitamos tu nombre.</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="respondent_email">Email<span class="field-required">requerido</span></label>
+          <input class="input" type="email" id="respondent_email" name="respondent_email" placeholder="vos@empresa.com" autocomplete="email" required>
+          <div class="field-error">Ingresá un email válido.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="respondent_role">Rol en el proyecto</label>
+        <p class="field-hint">Ej: founder, marketing, product, etc.</p>
+        <input class="input" type="text" id="respondent_role" name="respondent_role" placeholder="Tu rol">
+      </div>
+
+      <div class="field">
+        <!-- REPLACE value with a sensible default for this client, or leave empty -->
+        <label class="field-label" for="project">Proyecto<span class="field-required">requerido</span></label>
+        <input class="input" type="text" id="project" name="project" value="" placeholder="Nombre del proyecto" required>
+        <div class="field-error">Ingresá el nombre del proyecto.</div>
+      </div>
+    </section>
+
+    <!-- ADD steps 2..N here. Each step = one "section" of the brief. Copy this block. -->
+    <!-- IMPORTANT: textareas need data-question (required) and data-hint (optional) for email/review. -->
+    <section class="step" data-step="2">
+      <div class="step-label">01 · Sección</div>
+      <h2 class="step-title">Título de la sección</h2>
+
+      <div class="field">
+        <label class="field-label" for="q_seccion_1">¿Pregunta número uno de esta sección?</label>
+        <p class="field-hint">Una ayuda corta para guiar la respuesta.</p>
+        <textarea class="textarea" id="q_seccion_1" name="q_seccion_1"
+          data-question="¿Pregunta número uno de esta sección?"
+          data-hint="Una ayuda corta para guiar la respuesta."></textarea>
+      </div>
+    </section>
+
+    <!-- LAST STEP (FIXED): review + submit. Keep this last and update its data-step number. -->
+    <section class="step" data-step="3">
+      <div class="step-label">Último paso</div>
+      <h2 class="step-title">Revisá y enviá</h2>
+      <p class="step-lead">Mirá rápido las respuestas. Si algo falta o querés cambiar algo, volvé con "Atrás". Cuando estés listo, dale a enviar.</p>
+      <div id="review"></div>
+    </section>
+
+    <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
+  </form>
+
+  <section class="step" id="success-step">
+    <div class="success">
+      <div class="success-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 class="shimmer-text">Recibimos tu brief</h2>
+      <p>Gracias por tomarte el tiempo. Te enviamos una copia de confirmación al email que dejaste.</p>
+      <p>Lo estamos revisando con el equipo. Te escribimos en las próximas 24 a 48 horas con los siguientes pasos.</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="footer-nav" id="footer-nav">
+  <div class="footer-nav-inner">
+    <button type="button" class="btn btn--ghost" id="btn-prev" hidden>Atrás</button>
+    <span class="footer-counter" id="footer-counter">1 / 3</span>
+    <button type="button" class="btn btn--primary" id="btn-next">
+      Siguiente
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+    <button type="button" class="btn btn--primary" id="btn-submit" hidden>Enviar brief</button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  // ═══ REPLACE: per-client identity ═══
+  const BRIEF_META = {
+    slug: 'brief-template',
+    client: 'Cliente',
+  };
+  const STORAGE_KEY = 'brief-template-draft';
+
+  // ═══ REPLACE: map each content step number to its review-title ═══
+  const SECTION_TITLES = {
+    2: '01. Sección',
+  };
+  // ════════════════════════════════════
+
+  const API_URL = '/blog/api/brief';
+  const form = document.getElementById('brief-form');
+  const steps = Array.from(form.querySelectorAll('.step'));
+  const totalSteps = steps.length;
+  const progressLabel = document.getElementById('progress-label');
+  const progressFill = document.getElementById('progress-fill');
+  const footerCounter = document.getElementById('footer-counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const btnSubmit = document.getElementById('btn-submit');
+  const successStep = document.getElementById('success-step');
+  const footerNav = document.getElementById('footer-nav');
+  const review = document.getElementById('review');
+
+  let currentStep = 1;
+
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([name, value]) => {
+        const el = form.elements.namedItem(name);
+        if (el && typeof value === 'string') el.value = value;
+      });
+    } catch (e) { console.warn('[brief] draft load failed', e); }
+  }
+  function saveDraft() {
+    const data = {};
+    Array.from(form.elements).forEach((el) => {
+      if (!el.name || el.name === 'website') return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') data[el.name] = el.value;
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+  function clearDraft() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
+  form.addEventListener('input', saveDraft);
+
+  function goToStep(n) {
+    if (n < 1 || n > totalSteps) return;
+    currentStep = n;
+    steps.forEach((s) => s.classList.toggle('is-active', Number(s.dataset.step) === n));
+    const pct = ((n - 1) / (totalSteps - 1)) * 100;
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = 'Paso ' + n + ' de ' + totalSteps;
+    footerCounter.textContent = n + ' / ' + totalSteps;
+    btnPrev.hidden = n === 1;
+    const isLast = n === totalSteps;
+    btnNext.hidden = isLast;
+    btnSubmit.hidden = !isLast;
+    if (isLast) buildReview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const firstInput = steps[n - 1].querySelector('input, textarea');
+    if (firstInput && n !== 1) setTimeout(() => firstInput.focus({ preventScroll: true }), 250);
+  }
+
+  function validateStep(n) {
+    if (n !== 1) return true;
+    const name = form.elements.namedItem('respondent_name');
+    const email = form.elements.namedItem('respondent_email');
+    const project = form.elements.namedItem('project');
+    let ok = true;
+    [name, email, project].forEach((el) => el.parentElement.classList.remove('has-error'));
+    if (!name.value.trim()) { name.parentElement.classList.add('has-error'); ok = false; }
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.parentElement.classList.add('has-error'); ok = false; }
+    if (!project.value.trim()) { project.parentElement.classList.add('has-error'); ok = false; }
+    return ok;
+  }
+
+  btnPrev.addEventListener('click', () => goToStep(currentStep - 1));
+  btnNext.addEventListener('click', () => { if (!validateStep(currentStep)) return; goToStep(currentStep + 1); });
+  form.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); btnNext.click(); } });
+
+  function buildReview() {
+    const groups = {};
+    Array.from(form.querySelectorAll('textarea[data-question]')).forEach((ta) => {
+      const stepEl = ta.closest('.step');
+      const stepNum = Number(stepEl.dataset.step);
+      const sectionTitle = SECTION_TITLES[stepNum] || 'Sección';
+      if (!groups[stepNum]) groups[stepNum] = { title: sectionTitle, items: [] };
+      groups[stepNum].items.push({ question: ta.dataset.question, answer: ta.value.trim() });
+    });
+    let html = '';
+    Object.keys(groups).forEach((k) => {
+      const g = groups[k];
+      html += '<div class="review-section"><div class="review-section-title">' + g.title + '</div>';
+      g.items.forEach((it) => {
+        const empty = !it.answer;
+        html += '<div class="review-item"><div class="review-q">' + escapeHtml(it.question) + '</div>';
+        html += '<div class="review-a' + (empty ? ' is-empty' : '') + '">' + (empty ? 'Sin responder' : escapeHtml(it.answer)) + '</div></div>';
+      });
+      html += '</div>';
+    });
+    review.innerHTML = html;
+  }
+  function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  btnSubmit.addEventListener('click', async () => {
+    const hp = form.elements.namedItem('website');
+    if (hp && hp.value) return;
+    btnSubmit.disabled = true;
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = '<span class="submitting-dots">Enviando</span>';
+
+    const payload = {
+      brief_slug: BRIEF_META.slug,
+      client_name: BRIEF_META.client,
+      project: form.elements.namedItem('project').value.trim(),
+      respondent: {
+        name: form.elements.namedItem('respondent_name').value.trim(),
+        email: form.elements.namedItem('respondent_email').value.trim(),
+        role: form.elements.namedItem('respondent_role').value.trim() || undefined,
+      },
+      sections: buildSectionsPayload(),
+    };
+
+    try {
+      const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      clearDraft();
+      showSuccess();
+    } catch (err) {
+      console.error('[brief] submit failed', err);
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = originalText;
+      alert('Hubo un error al enviar el brief. Probá de nuevo o escribinos a contact@yacare.io.');
+    }
+  });
+
+  function buildSectionsPayload() {
+    const groups = {};
+    Array.from(form.querySelectorAll('textarea[data-question]')).forEach((ta) => {
+      const stepEl = ta.closest('.step');
+      const stepNum = Number(stepEl.dataset.step);
+      const sectionTitle = SECTION_TITLES[stepNum] || 'Sección';
+      if (!groups[stepNum]) groups[stepNum] = { title: sectionTitle, answers: [] };
+      groups[stepNum].answers.push({ question: ta.dataset.question, hint: ta.dataset.hint || undefined, answer: ta.value.trim() });
+    });
+    return Object.keys(groups).sort((a, b) => Number(a) - Number(b)).map((k) => groups[k]);
+  }
+
+  function showSuccess() {
+    steps.forEach((s) => s.classList.remove('is-active'));
+    form.style.display = 'none';
+    footerNav.style.display = 'none';
+    document.getElementById('progress').style.display = 'none';
+    successStep.classList.add('is-active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  loadDraft();
+  goToStep(1);
+})();
+</script>
+</body>
+</html>
