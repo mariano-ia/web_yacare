@@ -10,7 +10,7 @@ type Payload = {
     sections: Section[];
 };
 
-const EMAIL_FROM = "Yacaré Briefs <noreply@updates.yacare.io>";
+const EMAIL_FROM = "Yacaré Briefs <noreply@yacare.io>";
 const INTERNAL_RECIPIENTS = ["mariano@yacare.io", "martin@yacare.io"];
 
 function escapeHtml(s: string): string {

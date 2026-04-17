@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        from: "Yacaré Web <noreply@updates.yacare.io>",
+                        from: "Yacaré Web <noreply@yacare.io>",
                         to: ["mariano@yacare.io"],
                         subject: `Nuevo contacto: ${name}`,
                         html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
