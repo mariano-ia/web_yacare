@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vixon · Gantt de Rediseño Web</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0A0A0A;
+    --white: #F5F5F0;
+    --accent: #00D4FF;
+    --accent2: #7B5EA7;
+    --done: #00C48C;
+    --warn: #FFB020;
+    --muted: #3A3A3A;
+    --border: #1E1E1E;
+    --row-h: 38px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 48px 40px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left {}
+  .logo-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--white);
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #888;
+    font-weight: 300;
+  }
+  .header-meta {
+    text-align: right;
+  }
+  .meta-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+  .meta-val {
+    color: var(--white);
+    font-size: 12px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .leg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #888;
+    font-family: 'DM Mono', monospace;
+  }
+  .leg-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── GANTT WRAPPER ── */
+  .gantt-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #0E0E0E;
+  }
+
+  .gantt-inner {
+    min-width: 900px;
+  }
+
+  /* ── WEEK HEADER ── */
+  .weeks-header {
+    display: grid;
+    grid-template-columns: 260px repeat(5, 1fr);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: #0E0E0E;
+    z-index: 10;
+  }
+  .wh-label {
+    padding: 16px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: #444;
+    text-transform: uppercase;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+  }
+  .week-col {
+    padding: 14px 8px 10px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .week-col:last-child { border-right: none; }
+  .week-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .week-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #444;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    display: grid;
+    grid-template-columns: 260px repeat(5, 1fr);
+    background: #141414;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-label {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-right: 1px solid var(--border);
+  }
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .phase-cells {
+    border-right: 1px solid var(--border);
+  }
+  .phase-cells:last-child { border-right: none; }
+
+  /* ── TASK ROW ── */
+  .task-row {
+    display: grid;
+    grid-template-columns: 260px repeat(5, 1fr);
+    border-bottom: 1px solid #161616;
+    transition: background 0.15s;
+    cursor: default;
+  }
+  .task-row:hover { background: #131313; }
+  .task-row:last-child { border-bottom: none; }
+
+  .task-name {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-right: 1px solid var(--border);
+    min-height: var(--row-h);
+  }
+  .task-status {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .task-text {
+    font-size: 12px;
+    color: #BCBCBC;
+    line-height: 1.35;
+  }
+  .task-cell {
+    border-right: 1px solid #161616;
+    padding: 6px 6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .task-cell:last-child { border-right: none; }
+
+  /* ── BARS ── */
+  .bar {
+    height: 22px;
+    border-radius: 4px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+    position: relative;
+  }
+  .bar-done {
+    background: linear-gradient(90deg, #00C48C22, #00C48C44);
+    border: 1px solid #00C48C66;
+    color: var(--done);
+  }
+  .bar-done::before {
+    content: '✓ ';
+    font-size: 9px;
+  }
+  .bar-active {
+    background: linear-gradient(90deg, var(--accent)22, var(--accent)44);
+    border: 1px solid var(--accent)66;
+    color: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .bar-plan {
+    background: #1E1E1E;
+    border: 1px solid #2A2A2A;
+    color: #555;
+  }
+  .bar-meet {
+    background: linear-gradient(90deg, var(--accent2)22, var(--accent2)44);
+    border: 1px solid var(--accent2)66;
+    color: var(--accent2);
+    font-size: 10px;
+  }
+  .bar-meet::before { content: '◆ '; font-size: 8px; }
+  .bar-kpi {
+    background: linear-gradient(90deg, #FFB02022, #FFB02044);
+    border: 1px solid #FFB02066;
+    color: var(--warn);
+  }
+  .bar-kpi::before { content: '▸ '; font-size: 9px; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* ── MILESTONE ROW ── */
+  .milestone-row {
+    display: grid;
+    grid-template-columns: 260px repeat(5, 1fr);
+    border-bottom: 1px solid var(--border);
+    background: #0B0B0B;
+  }
+  .milestone-label {
+    padding: 12px 20px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ms-icon { font-size: 14px; }
+  .ms-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .milestone-cell {
+    border-right: 1px solid #161616;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .milestone-cell:last-child { border-right: none; }
+  .diamond {
+    width: 14px; height: 14px;
+    background: var(--accent2);
+    transform: rotate(45deg);
+    border-radius: 2px;
+  }
+
+  /* ── KPI SECTION ── */
+  .kpi-section {
+    margin-top: 48px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px; height: 22px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #0E0E0E;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .kpi-card:hover { border-color: var(--accent)44; }
+  .kpi-card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .kpi-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #161616;
+  }
+  .kpi-item:last-child { border-bottom: none; }
+  .kpi-bullet {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .kpi-text { font-size: 12px; color: #BCBCBC; line-height: 1.4; }
+
+  /* ── MEETINGS ── */
+  .meetings-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .meet-card {
+    background: #0E0E0E;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    border-top: 2px solid var(--accent2);
+  }
+  .meet-week {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .meet-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .meet-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #444;
+  }
+  .footer-note {
+    font-size: 11px;
+    color: #444;
+  }
+
+  /* ── PROGRESS BADGE ── */
+  .progress-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #00C48C18;
+    border: 1px solid #00C48C44;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--done);
+    letter-spacing: 0.06em;
+    margin-left: 16px;
+    vertical-align: middle;
+  }
+  .progress-dot {
+    width: 6px; height: 6px;
+    background: var(--done);
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-line">Yacaré · Propuesta de proyecto</div>
+    <h1>Vixon<span>.</span><br>Rediseño Web</h1>
+    <div class="subtitle">Plan de trabajo · Desarrollo con Claude <span class="progress-badge"><span class="progress-dot"></span>En curso</span></div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item">CLIENTE <span class="meta-val">Vixon Pro</span></div>
+    <div class="meta-item">INICIO <span class="meta-val">Mayo 2026</span></div>
+    <div class="meta-item">DURACIÓN <span class="meta-val">5 semanas</span></div>
+    <div class="meta-item">ENTREGABLE <span class="meta-val">Sitio estático · Deploy en Vercel</span></div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#00C48C"></div>Completado</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--accent)"></div>En curso</div>
+  <div class="leg"><div class="leg-dot" style="background:#2A2A2A;border:1px solid #3A3A3A"></div>Planificado</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--accent2)"></div>Reunión de avance</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--warn)"></div>KPI / Métricas</div>
+</div>
+
+<!-- GANTT TABLE -->
+<div class="gantt-wrap">
+  <div class="gantt-inner">
+
+    <!-- WEEK HEADERS -->
+    <div class="weeks-header">
+      <div class="wh-label">Tarea</div>
+      <div class="week-col">
+        <div class="week-num">S1</div>
+        <div class="week-date">12–16 May</div>
+      </div>
+      <div class="week-col">
+        <div class="week-num">S2</div>
+        <div class="week-date">19–23 May</div>
+      </div>
+      <div class="week-col">
+        <div class="week-num">S3</div>
+        <div class="week-date">26–30 May</div>
+      </div>
+      <div class="week-col">
+        <div class="week-num">S4</div>
+        <div class="week-date">2–6 Jun</div>
+      </div>
+      <div class="week-col">
+        <div class="week-num">S5</div>
+        <div class="week-date">9–13 Jun</div>
+      </div>
+    </div>
+
+    <!-- ────── FASE 1 ────── -->
+    <div class="phase-header">
+      <div class="phase-label">
+        <span class="phase-num">FASE 01</span>
+        <span class="phase-name">Estrategia & Arquitectura</span>
+      </div>
+      <div class="phase-cells"></div><div class="phase-cells"></div>
+      <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--done)"></div>
+        <span class="task-text">Brief del cliente respondido</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-done">Completo</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--done)"></div>
+        <span class="task-text">Paleta cromática y KV</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-done">Completo</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--done)"></div>
+        <span class="task-text">Boceto inicial de estructura</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-done">Completo</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--accent)"></div>
+        <span class="task-text">Arquitectura de información final</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-active">En curso</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--accent)"></div>
+        <span class="task-text">Mapa de páginas y jerarquía de CTAs</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-active">En curso</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:var(--accent)"></div>
+        <span class="task-text">Definición de KPIs y GA4</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-kpi">KPIs</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <!-- Milestone 1 -->
+    <div class="milestone-row">
+      <div class="milestone-label">
+        <span class="ms-icon">◆</span>
+        <span class="ms-text">Reunión 1 · Kickoff & validación</span>
+      </div>
+      <div class="milestone-cell"><div class="diamond"></div></div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div>
+    </div>
+
+    <!-- ────── FASE 2 ────── -->
+    <div class="phase-header">
+      <div class="phase-label">
+        <span class="phase-num">FASE 02</span>
+        <span class="phase-name">Dirección Visual & Prototipo</span>
+      </div>
+      <div class="phase-cells"></div><div class="phase-cells"></div>
+      <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Moodboard y referencias visuales</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-plan">—</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Tokens de diseño (tipografía, colores)</span>
+      </div>
+      <div class="task-cell"><div class="bar bar-plan">—</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Home v1 generado con Claude (HTML)</span>
+      </div>
+      <div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 2</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Copy tentativo hero y propuesta de valor</span>
+      </div>
+      <div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 2</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <!-- Milestone 2 -->
+    <div class="milestone-row">
+      <div class="milestone-label">
+        <span class="ms-icon">◆</span>
+        <span class="ms-text">Reunión 2 · Revisión home v1</span>
+      </div>
+      <div class="milestone-cell"></div>
+      <div class="milestone-cell"><div class="diamond"></div></div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div><div class="milestone-cell"></div>
+    </div>
+
+    <!-- ────── FASE 3 ────── -->
+    <div class="phase-header">
+      <div class="phase-label">
+        <span class="phase-num">FASE 03</span>
+        <span class="phase-name">Iteración & Páginas Internas</span>
+      </div>
+      <div class="phase-cells"></div><div class="phase-cells"></div>
+      <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Ajustes home según feedback cliente</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 3</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Página: El Producto (HW + SW + AI Lab)</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 3</div></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Página: Por qué Vixon / Credibilidad</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 4</div></div>
+      <div class="task-cell"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Página: Demo / Contacto + formulario</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 4</div></div>
+      <div class="task-cell"></div>
+    </div>
+
+    <!-- Milestone 3 -->
+    <div class="milestone-row">
+      <div class="milestone-label">
+        <span class="ms-icon">◆</span>
+        <span class="ms-text">Reunión 3 · Review completo pre-contenido</span>
+      </div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div><div class="milestone-cell"></div>
+      <div class="milestone-cell"><div class="diamond"></div></div>
+      <div class="milestone-cell"></div>
+    </div>
+
+    <!-- ────── FASE 4 ────── -->
+    <div class="phase-header">
+      <div class="phase-label">
+        <span class="phase-num">FASE 04</span>
+        <span class="phase-name">Contenido Real, QA & Deploy</span>
+      </div>
+      <div class="phase-cells"></div><div class="phase-cells"></div>
+      <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Integración fotos, videos y copy final</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">QA responsive (mobile, tablet, desktop)</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Configuración GA4 + eventos de conversión</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-kpi">Analytics</div></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Deploy en Vercel + dominio</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
+    </div>
+
+    <div class="task-row">
+      <div class="task-name">
+        <div class="task-status" style="background:#2A2A2A"></div>
+        <span class="task-text">Handoff: código + doc de mantenimiento</span>
+      </div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"></div><div class="task-cell"></div>
+      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
+    </div>
+
+    <!-- Milestone 4 -->
+    <div class="milestone-row">
+      <div class="milestone-label">
+        <span class="ms-icon">◆</span>
+        <span class="ms-text">Reunión 4 · Launch & primeros KPIs</span>
+      </div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div>
+      <div class="milestone-cell"></div><div class="milestone-cell"></div>
+      <div class="milestone-cell"><div class="diamond"></div></div>
+    </div>
+
+  </div><!-- /gantt-inner -->
+</div><!-- /gantt-wrap -->
+
+<!-- KPIs -->
+<div class="kpi-section">
+  <div class="section-title">KPIs del proyecto</div>
+  <div class="kpi-grid">
+
+    <div class="kpi-card">
+      <div class="kpi-card-title">▸ Nivel 1 · Captación</div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Formularios completados / semana</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Tasa de conversión visitas → leads</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Costo por lead (CPL) desde Meta Ads</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">% leads calificados (entrenador / club / dirigente)</div></div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card-title">▸ Nivel 2 · Comportamiento</div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Tiempo promedio en página</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Tasa de rebote por sección</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Scroll depth en home</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Clicks en CTA por dispositivo</div></div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card-title">▸ Nivel 3 · Contenido</div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Páginas más visitadas post-home</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Tiempo en sección "El Producto"</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Procedencia del tráfico (orgánico / pauta / directo)</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Video play rate (si aplica)</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MEETINGS -->
+<div class="kpi-section">
+  <div class="section-title">Reuniones de avance</div>
+  <div class="meetings-grid">
+
+    <div class="meet-card">
+      <div class="meet-week">Semana 1</div>
+      <div class="meet-title">Kickoff & Validación</div>
+      <div class="meet-desc">Confirmar arquitectura, KPIs y dirección visual. Alinear expectativas antes de diseñar.</div>
+    </div>
+
+    <div class="meet-card">
+      <div class="meet-week">Semana 2</div>
+      <div class="meet-title">Revisión Home v1</div>
+      <div class="meet-desc">Primera versión navegable del home. Feedback sobre propuesta de valor, copy y estética.</div>
+    </div>
+
+    <div class="meet-card">
+      <div class="meet-week">Semana 3–4</div>
+      <div class="meet-title">Review Completo</div>
+      <div class="meet-desc">Todas las páginas internas terminadas. Ajuste de contenido y flujo antes de integrar assets reales.</div>
+    </div>
+
+    <div class="meet-card">
+      <div class="meet-week">Semana 5</div>
+      <div class="meet-title">Launch & Primeros KPIs</div>
+      <div class="meet-desc">Deploy en vivo. Confirmación de analytics. Presentación del documento de mejora continua.</div>
+    </div>
+
+    <div class="meet-card" style="border-top-color: var(--done)">
+      <div class="meet-week" style="color: var(--done)">Post-launch</div>
+      <div class="meet-title">Ciclo de Mejora</div>
+      <div class="meet-desc">Revisión mensual de KPIs. Hipótesis de mejora, iteraciones rápidas con Claude.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-brand">yacare.io · 2026</div>
+  <div class="footer-note">Sitio generado con Claude · Deploy estático · Mejora continua basada en datos</div>
+</div>
+
+</body>
+</html>
