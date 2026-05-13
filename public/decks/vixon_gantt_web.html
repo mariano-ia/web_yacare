@@ -373,7 +373,7 @@
   /* ── MEETINGS ── */
   .meetings-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin-top: 16px;
   }
@@ -505,7 +505,7 @@
     <div class="phase-header">
       <div class="phase-label">
         <span class="phase-num">FASE 01</span>
-        <span class="phase-name">Estrategia & Arquitectura</span>
+        <span class="phase-name">Estrategia & Contenido Estructurado</span>
       </div>
       <div class="phase-cells"></div><div class="phase-cells"></div>
       <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
@@ -514,7 +514,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:var(--done)"></div>
-        <span class="task-text">Brief del cliente respondido</span>
+        <span class="task-text">Brief y respuestas del cliente</span>
       </div>
       <div class="task-cell"><div class="bar bar-done">Completo</div></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -524,7 +524,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:var(--done)"></div>
-        <span class="task-text">Paleta cromática y KV</span>
+        <span class="task-text">Paleta cromática y manual de marca (KV)</span>
       </div>
       <div class="task-cell"><div class="bar bar-done">Completo</div></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -534,7 +534,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:var(--done)"></div>
-        <span class="task-text">Boceto inicial de estructura</span>
+        <span class="task-text">Boceto inicial de estructura del sitio</span>
       </div>
       <div class="task-cell"><div class="bar bar-done">Completo</div></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -544,7 +544,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:var(--accent)"></div>
-        <span class="task-text">Arquitectura de información final</span>
+        <span class="task-text">Contenido estructurado del sitio</span>
       </div>
       <div class="task-cell"><div class="bar bar-active">En curso</div></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -554,39 +554,18 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:var(--accent)"></div>
-        <span class="task-text">Mapa de páginas y jerarquía de CTAs</span>
+        <span class="task-text">Definición de KPIs <span style="color:#666;font-size:10px">(en conjunto con el cliente)</span></span>
       </div>
-      <div class="task-cell"><div class="bar bar-active">En curso</div></div>
+      <div class="task-cell"><div class="bar bar-kpi">A definir</div></div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"></div><div class="task-cell"></div>
-    </div>
-
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:var(--accent)"></div>
-        <span class="task-text">Definición de KPIs y GA4</span>
-      </div>
-      <div class="task-cell"><div class="bar bar-kpi">KPIs</div></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-    </div>
-
-    <!-- Milestone 1 -->
-    <div class="milestone-row">
-      <div class="milestone-label">
-        <span class="ms-icon">◆</span>
-        <span class="ms-text">Reunión 1 · Kickoff & validación</span>
-      </div>
-      <div class="milestone-cell"><div class="diamond"></div></div>
-      <div class="milestone-cell"></div><div class="milestone-cell"></div>
-      <div class="milestone-cell"></div><div class="milestone-cell"></div>
     </div>
 
     <!-- ────── FASE 2 ────── -->
     <div class="phase-header">
       <div class="phase-label">
         <span class="phase-num">FASE 02</span>
-        <span class="phase-name">Dirección Visual & Prototipo</span>
+        <span class="phase-name">Diseño del sitio · Home</span>
       </div>
       <div class="phase-cells"></div><div class="phase-cells"></div>
       <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
@@ -595,27 +574,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Moodboard y referencias visuales</span>
-      </div>
-      <div class="task-cell"><div class="bar bar-plan">—</div></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-    </div>
-
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Tokens de diseño (tipografía, colores)</span>
-      </div>
-      <div class="task-cell"><div class="bar bar-plan">—</div></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-    </div>
-
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Home v1 generado con Claude (HTML)</span>
+        <span class="task-text">Dirección visual y estética</span>
       </div>
       <div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-plan">Semana 2</div></div>
@@ -625,18 +584,18 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Copy tentativo hero y propuesta de valor</span>
+        <span class="task-text">Diseño y desarrollo del home</span>
       </div>
       <div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-plan">Semana 2</div></div>
       <div class="task-cell"></div><div class="task-cell"></div><div class="task-cell"></div>
     </div>
 
-    <!-- Milestone 2 -->
+    <!-- Reunión 1 -->
     <div class="milestone-row">
       <div class="milestone-label">
         <span class="ms-icon">◆</span>
-        <span class="ms-text">Reunión 2 · Revisión home v1</span>
+        <span class="ms-text">Reunión 1 · Entrega home v1</span>
       </div>
       <div class="milestone-cell"></div>
       <div class="milestone-cell"><div class="diamond"></div></div>
@@ -647,7 +606,7 @@
     <div class="phase-header">
       <div class="phase-label">
         <span class="phase-num">FASE 03</span>
-        <span class="phase-name">Iteración & Páginas Internas</span>
+        <span class="phase-name">Diseño del sitio · Subpáginas</span>
       </div>
       <div class="phase-cells"></div><div class="phase-cells"></div>
       <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
@@ -656,7 +615,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Ajustes home según feedback cliente</span>
+        <span class="task-text">Ajustes home según feedback</span>
       </div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-plan">Semana 3</div></div>
@@ -666,40 +625,19 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Página: El Producto (HW + SW + AI Lab)</span>
+        <span class="task-text">Diseño y desarrollo de subpáginas</span>
       </div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-plan">Semana 3</div></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-    </div>
-
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Página: Por qué Vixon / Credibilidad</span>
-      </div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-plan">Semana 4</div></div>
       <div class="task-cell"></div>
     </div>
 
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Página: Demo / Contacto + formulario</span>
-      </div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div>
-      <div class="task-cell"><div class="bar bar-plan">Semana 4</div></div>
-      <div class="task-cell"></div>
-    </div>
-
-    <!-- Milestone 3 -->
+    <!-- Reunión 2 -->
     <div class="milestone-row">
       <div class="milestone-label">
         <span class="ms-icon">◆</span>
-        <span class="ms-text">Reunión 3 · Review completo pre-contenido</span>
+        <span class="ms-text">Reunión 2 · Entrega de subpáginas</span>
       </div>
       <div class="milestone-cell"></div><div class="milestone-cell"></div><div class="milestone-cell"></div>
       <div class="milestone-cell"><div class="diamond"></div></div>
@@ -710,7 +648,7 @@
     <div class="phase-header">
       <div class="phase-label">
         <span class="phase-num">FASE 04</span>
-        <span class="phase-name">Contenido Real, QA & Deploy</span>
+        <span class="phase-name">Contenido real, QA & Deploy</span>
       </div>
       <div class="phase-cells"></div><div class="phase-cells"></div>
       <div class="phase-cells"></div><div class="phase-cells"></div><div class="phase-cells"></div>
@@ -719,7 +657,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Integración fotos, videos y copy final</span>
+        <span class="task-text">Integración de contenido real (fotos, video, textos)</span>
       </div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -729,7 +667,7 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">QA responsive (mobile, tablet, desktop)</span>
+        <span class="task-text">QA & testing en todos los dispositivos</span>
       </div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"></div><div class="task-cell"></div>
@@ -739,38 +677,18 @@
     <div class="task-row">
       <div class="task-name">
         <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Configuración GA4 + eventos de conversión</span>
+        <span class="task-text">Deploy + configuración de analytics</span>
       </div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"></div><div class="task-cell"></div>
       <div class="task-cell"><div class="bar bar-kpi">Analytics</div></div>
     </div>
 
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Deploy en Vercel + dominio</span>
-      </div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
-    </div>
-
-    <div class="task-row">
-      <div class="task-name">
-        <div class="task-status" style="background:#2A2A2A"></div>
-        <span class="task-text">Handoff: código + doc de mantenimiento</span>
-      </div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"></div><div class="task-cell"></div>
-      <div class="task-cell"><div class="bar bar-plan">Semana 5</div></div>
-    </div>
-
-    <!-- Milestone 4 -->
+    <!-- Reunión 3 -->
     <div class="milestone-row">
       <div class="milestone-label">
         <span class="ms-icon">◆</span>
-        <span class="ms-text">Reunión 4 · Launch & primeros KPIs</span>
+        <span class="ms-text">Reunión 3 · Entrega final</span>
       </div>
       <div class="milestone-cell"></div><div class="milestone-cell"></div>
       <div class="milestone-cell"></div><div class="milestone-cell"></div>
@@ -783,6 +701,7 @@
 <!-- KPIs -->
 <div class="kpi-section">
   <div class="section-title">KPIs del proyecto</div>
+  <p style="font-size:13px;color:#666;margin-bottom:24px;font-style:italic;">Los siguientes KPIs son una propuesta inicial. Se definirán y ajustarán en conjunto con el equipo de Vixon antes del lanzamiento.</p>
   <div class="kpi-grid">
 
     <div class="kpi-card">
@@ -806,7 +725,7 @@
       <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Páginas más visitadas post-home</div></div>
       <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Tiempo en sección "El Producto"</div></div>
       <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Procedencia del tráfico (orgánico / pauta / directo)</div></div>
-      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Video play rate (si aplica)</div></div>
+      <div class="kpi-item"><div class="kpi-bullet"></div><div class="kpi-text">Video play rate</div></div>
     </div>
 
   </div>
@@ -818,33 +737,27 @@
   <div class="meetings-grid">
 
     <div class="meet-card">
-      <div class="meet-week">Semana 1</div>
-      <div class="meet-title">Kickoff & Validación</div>
-      <div class="meet-desc">Confirmar arquitectura, KPIs y dirección visual. Alinear expectativas antes de diseñar.</div>
-    </div>
-
-    <div class="meet-card">
       <div class="meet-week">Semana 2</div>
-      <div class="meet-title">Revisión Home v1</div>
-      <div class="meet-desc">Primera versión navegable del home. Feedback sobre propuesta de valor, copy y estética.</div>
+      <div class="meet-title">Entrega Home v1</div>
+      <div class="meet-desc">Primera versión navegable del home. Feedback sobre propuesta de valor, estética y estructura.</div>
     </div>
 
     <div class="meet-card">
-      <div class="meet-week">Semana 3–4</div>
-      <div class="meet-title">Review Completo</div>
-      <div class="meet-desc">Todas las páginas internas terminadas. Ajuste de contenido y flujo antes de integrar assets reales.</div>
+      <div class="meet-week">Semana 4</div>
+      <div class="meet-title">Entrega de Subpáginas</div>
+      <div class="meet-desc">Revisión del sitio completo antes de integrar contenido real. Ajustes de flujo y navegación.</div>
     </div>
 
     <div class="meet-card">
       <div class="meet-week">Semana 5</div>
-      <div class="meet-title">Launch & Primeros KPIs</div>
-      <div class="meet-desc">Deploy en vivo. Confirmación de analytics. Presentación del documento de mejora continua.</div>
+      <div class="meet-title">Entrega Final</div>
+      <div class="meet-desc">Sitio con contenido real, en vivo. Revisión de analytics y cierre del proyecto.</div>
     </div>
 
-    <div class="meet-card" style="border-top-color: var(--done)">
-      <div class="meet-week" style="color: var(--done)">Post-launch</div>
-      <div class="meet-title">Ciclo de Mejora</div>
-      <div class="meet-desc">Revisión mensual de KPIs. Hipótesis de mejora, iteraciones rápidas con Claude.</div>
+    <div class="meet-card" style="border-top-color: var(--done); grid-column: span 2;">
+      <div class="meet-week" style="color: var(--done)">Post-launch · No incluido en propuesta</div>
+      <div class="meet-title">Ciclo de Mejora Continua</div>
+      <div class="meet-desc">Revisión periódica de KPIs, identificación de fricciones e iteraciones rápidas basadas en datos reales. Este servicio puede contratarse por separado como continuidad del proyecto.</div>
     </div>
 
   </div>
