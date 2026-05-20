@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brandtrack · Journey Mapping Inbound</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+:root {
+  --bg-primary: #000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111;
+  --text-primary: #fff;
+  --text-secondary: #888;
+  --text-muted: #555;
+  --accent-primary: #8A5EFF;
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --phase-discovery: #8A5EFF;
+  --phase-activation: #D1249D;
+  --phase-onboarding: #4DA8FF;
+  --phase-setup: #3DE0D4;
+  --phase-wow: #4ADE80;
+  --phase-usage: #FACC15;
+
+  --risk-low: #4ADE80;
+  --risk-mid: #FACC15;
+  --risk-high: #FB923C;
+  --risk-critical: #EF4444;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+p, li { color: var(--text-secondary); }
+ul, ol { list-style: none; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════ */
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════
+   HEADER STICKY
+   ═══════════════════════════════════════ */
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 20px 32px 16px;
+  position: relative;
+  z-index: 10;
+}
+
+.header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.header__client {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.header__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.header__subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.header__meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.counter strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════
+   TABS
+   ═══════════════════════════════════════ */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tab small {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 2px 8px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 999px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.tab.is-active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+.tab.is-active small {
+  background: rgba(0,0,0,0.12);
+  color: var(--bg-primary);
+}
+
+/* ═══════════════════════════════════════
+   FILTERS
+   ═══════════════════════════════════════ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.02);
+  white-space: nowrap;
+  transition: all 0.2s var(--ease-out);
+  cursor: default;
+}
+
+.chip--button {
+  cursor: pointer;
+  background: transparent;
+}
+
+.chip--button:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.chip--button.is-active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+.chip__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-medium);
+}
+
+.chip--phase[data-phase="descubrimiento"] .chip__dot { background: var(--phase-discovery); }
+.chip--phase[data-phase="activacion"] .chip__dot { background: var(--phase-activation); }
+.chip--phase[data-phase="onboarding"] .chip__dot { background: var(--phase-onboarding); }
+.chip--phase[data-phase="setup"] .chip__dot { background: var(--phase-setup); }
+.chip--phase[data-phase="wow"] .chip__dot { background: var(--phase-wow); }
+.chip--phase[data-phase="uso"] .chip__dot { background: var(--phase-usage); }
+
+.chip--risk[data-risk="bajo"] .chip__dot { background: var(--risk-low); }
+.chip--risk[data-risk="medio"] .chip__dot { background: var(--risk-mid); }
+.chip--risk[data-risk="alto"] .chip__dot { background: var(--risk-high); }
+.chip--risk[data-risk="critico"] .chip__dot { background: var(--risk-critical); }
+
+.chip--emotion {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════
+   TRACK (horizontal scroll)
+   ═══════════════════════════════════════ */
+.track-wrap {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(138, 94, 255, 0.08), transparent 50%),
+    radial-gradient(circle at 88% 70%, rgba(209, 36, 157, 0.06), transparent 50%),
+    var(--bg-primary);
+}
+
+.track {
+  display: flex;
+  gap: 24px;
+  padding: 32px 48px 48px;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) transparent;
+}
+
+.track[hidden] { display: none; }
+
+.track::-webkit-scrollbar { height: 6px; }
+.track::-webkit-scrollbar-track { background: transparent; }
+.track::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 999px;
+}
+
+/* ═══════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════ */
+.card {
+  flex: 0 0 480px;
+  scroll-snap-align: start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 22px;
+  padding: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--border-medium);
+}
+
+.card[data-risk="bajo"]::before { background: var(--risk-low); }
+.card[data-risk="medio"]::before { background: var(--risk-mid); }
+.card[data-risk="alto"]::before { background: var(--risk-high); }
+.card[data-risk="critico"]::before { background: var(--risk-critical); }
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--border-medium);
+  z-index: 2;
+}
+
+.card[hidden] { display: none; }
+
+/* Card header */
+.card__head {
+  padding: 22px 24px 16px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card__step-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.card__step-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  line-height: 0.9;
+}
+
+.card__step-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.card__head-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* Capture */
+.card__capture {
+  position: relative;
+  height: 200px;
+  background: var(--bg-elevated);
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card__capture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 12px, transparent 12px, transparent 24px),
+    var(--bg-elevated);
+  color: var(--text-muted);
+  gap: 6px;
+}
+
+.placeholder__num {
+  font-family: var(--font-display);
+  font-size: 3.6rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: rgba(255,255,255,0.18);
+  line-height: 1;
+}
+
+.placeholder__label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Card body */
+.card__body {
+  flex: 1;
+  padding: 18px 24px 22px 28px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
+}
+
+.card__body::-webkit-scrollbar { width: 4px; }
+.card__body::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 999px;
+}
+
+.block {
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.block__title {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.block__title i {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.2;
+}
+
+.kv {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.kv strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 6px 0 8px;
+}
+
+.scale {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.scale__label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  flex: 0 0 auto;
+  min-width: 130px;
+}
+
+.scale__bar {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  height: 6px;
+}
+
+.scale__seg {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border-radius: 1px;
+}
+
+.scale--cognitive .scale__seg.is-on { background: var(--phase-onboarding); }
+.scale--friction .scale__seg.is-on { background: var(--risk-high); }
+
+.scale__num {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 28px;
+  text-align: right;
+}
+
+.note {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.5;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--border-medium);
+  border-radius: 0 6px 6px 0;
+  margin-top: 6px;
+}
+
+.note + .note { margin-top: 6px; }
+
+.note__label {
+  display: block;
+  font-style: normal;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+/* Card footer */
+.card__foot {
+  padding: 14px 24px 16px 28px;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.015);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.risk-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.risk-display__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.risk-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.risk-pill[data-risk="bajo"] { background: rgba(74,222,128,0.12); color: var(--risk-low); border: 1px solid rgba(74,222,128,0.3); }
+.risk-pill[data-risk="medio"] { background: rgba(250,204,21,0.12); color: var(--risk-mid); border: 1px solid rgba(250,204,21,0.3); }
+.risk-pill[data-risk="alto"] { background: rgba(251,146,60,0.12); color: var(--risk-high); border: 1px solid rgba(251,146,60,0.3); }
+.risk-pill[data-risk="critico"] { background: rgba(239,68,68,0.12); color: var(--risk-critical); border: 1px solid rgba(239,68,68,0.3); }
+
+/* ═══════════════════════════════════════
+   NAV BUTTONS
+   ═══════════════════════════════════════ */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  z-index: 20;
+  transition: all 0.2s var(--ease-out);
+}
+
+.nav-btn:hover {
+  border-color: var(--text-primary);
+  background: rgba(0,0,0,0.9);
+}
+
+.nav-btn--prev { left: 14px; }
+.nav-btn--next { right: 14px; }
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════
+   SUMMARY CARD (heatmap)
+   ═══════════════════════════════════════ */
+.card--summary {
+  flex: 0 0 560px;
+  background: linear-gradient(180deg, rgba(138,94,255,0.05) 0%, rgba(209,36,157,0.025) 100%);
+  border: 1px solid var(--border-medium);
+}
+
+.card--summary::before {
+  background: linear-gradient(180deg, var(--accent-primary), var(--color-magenta));
+}
+
+.card--summary .card__head {
+  border-bottom: none;
+  padding-bottom: 12px;
+}
+
+.card--summary .card__body { padding-top: 8px; }
+
+.summary-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.summary-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.heatmap {
+  display: grid;
+  grid-template-columns: 60px repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 18px;
+}
+
+.heatmap__head {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 6px 4px;
+  font-weight: 700;
+}
+
+.heatmap__head:first-child { text-align: left; }
+
+.heatmap__row-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+}
+
+.heatmap__cell {
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--bg-primary);
+}
+
+.heatmap__cell[data-level="1"] { background: rgba(74,222,128,0.7); }
+.heatmap__cell[data-level="2"] { background: rgba(74,222,128,0.85); }
+.heatmap__cell[data-level="3"] { background: rgba(250,204,21,0.85); }
+.heatmap__cell[data-level="4"] { background: rgba(251,146,60,0.9); }
+.heatmap__cell[data-level="5"] { background: rgba(239,68,68,0.95); }
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.stat {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.stat__num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.stat__label {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .header { padding: 14px 18px 12px; }
+  .header__top { gap: 14px; }
+  .header__title { font-size: 1rem; }
+  .tabs { flex-wrap: wrap; }
+  .track { padding: 20px 18px 32px; gap: 16px; }
+  .card { flex: 0 0 86vw; }
+  .card--summary { flex: 0 0 86vw; }
+  .nav-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain-overlay"></div>
+
+<div class="app">
+
+  <header class="header">
+    <div class="header__top">
+      <div class="header__brand">
+        <div>
+          <div class="header__client">Brandtrack</div>
+          <div class="header__title">Journey Mapping · Flujo Inbound</div>
+          <div class="header__subtitle">Diagnóstico de la experiencia actual · Sesión 1 de 2</div>
+        </div>
+      </div>
+      <div class="header__meta">
+        <span class="counter">Paso <strong id="counter-current">1</strong> de <strong id="counter-total">8</strong></span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab is-active" data-tab="onboarding">
+        Onboarding <small>Pre-producto</small>
+      </button>
+      <button class="tab" data-tab="producto">
+        Producto <small>In-product</small>
+      </button>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Fase</span>
+        <button class="chip chip--button chip--phase is-active" data-filter="phase" data-value="all">Todas</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="descubrimiento" data-phase="descubrimiento"><span class="chip__dot"></span>Descubrimiento</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="activacion" data-phase="activacion"><span class="chip__dot"></span>Activación</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="onboarding" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="setup" data-phase="setup"><span class="chip__dot"></span>Setup</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="wow" data-phase="wow"><span class="chip__dot"></span>Wow</button>
+        <button class="chip chip--button chip--phase" data-filter="phase" data-value="uso" data-phase="uso"><span class="chip__dot"></span>Uso</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Riesgo</span>
+        <button class="chip chip--button chip--risk is-active" data-filter="risk" data-value="all">Todos</button>
+        <button class="chip chip--button chip--risk" data-filter="risk" data-value="bajo" data-risk="bajo"><span class="chip__dot"></span>Bajo</button>
+        <button class="chip chip--button chip--risk" data-filter="risk" data-value="medio" data-risk="medio"><span class="chip__dot"></span>Medio</button>
+        <button class="chip chip--button chip--risk" data-filter="risk" data-value="alto" data-risk="alto"><span class="chip__dot"></span>Alto</button>
+        <button class="chip chip--button chip--risk" data-filter="risk" data-value="critico" data-risk="critico"><span class="chip__dot"></span>Crítico</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="track-wrap">
+    <button class="nav-btn nav-btn--prev" id="nav-prev" aria-label="Anterior">
+      <i data-lucide="chevron-left"></i>
+    </button>
+    <button class="nav-btn nav-btn--next" id="nav-next" aria-label="Siguiente">
+      <i data-lucide="chevron-right"></i>
+    </button>
+
+    <!-- ═══════════════════════════════════
+         TRACK 1 — ONBOARDING
+         ═══════════════════════════════════ -->
+    <div class="track" id="track-onboarding" data-track="onboarding">
+
+      <!-- Card 1 -->
+      <article class="card" data-phase="descubrimiento" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">01</div>
+            <div class="card__step-name">Landing · CTA "Prueba gratuita"</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="descubrimiento"><span class="chip__dot"></span>Descubrimiento</span>
+            <span class="chip">Web desktop / mobile</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">01</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Lee value prop, escanea sección hero y hace clic en "Iniciar prueba gratuita".</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Headline, sub, beneficios, social proof, pricing referencial.</p>
+            <p class="kv"><strong>Decisión:</strong> Empezar o salir.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 90 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Entender si esto sirve para su negocio.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Curiosidad</span>
+              <span class="chip chip--emotion">Evaluación</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Convertir visita en click al onboarding.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Logos clientes</span>
+              <span class="chip">Testimonios</span>
+              <span class="chip">Garantía</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No aplica (entrada).</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, botón visible above the fold.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Placeholder: validar con cliente si el headline habla a un dueño de café o sigue enfocado en enterprise.
+            </div>
+            <div class="note">
+              <span class="note__label">Pregunta abierta</span>
+              ¿Hay diferenciación de copy o variantes A/B para Inbound?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" data-phase="activacion" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">02</div>
+            <div class="card__step-name">Modal de captura · Email</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="activacion"><span class="chip__dot"></span>Activación</span>
+            <span class="chip">Web modal</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">02</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Ingresa email y password.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Email</span>
+              <span class="chip">Password</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Breve copy "creá tu cuenta", términos legales.</p>
+            <p class="kv"><strong>Decisión:</strong> Cuenta nueva o login con Google.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 60 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Crear la cuenta lo más rápido posible.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Compromiso bajo</span>
+              <span class="chip chip--emotion">Apuro</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar lead activado.</p>
+            <div class="chip-row">
+              <span class="chip">Login Google</span>
+              <span class="chip">Términos visibles</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No visible aún.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, "Crear cuenta".</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Validar si hay confirmación por email obligatoria antes de seguir o si entra directo al onboarding.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card" data-phase="onboarding" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">03</div>
+            <div class="card__step-name">Onboarding · Tipo de negocio</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">03</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Selecciona categoría de negocio (café, restó, retail, gym, etc.).</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Tipo de local</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Grid de categorías con íconos.</p>
+            <p class="kv"><strong>Decisión:</strong> 1 de N categorías.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 15 a 30 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Sentir que el sistema lo entiende.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Curiosidad</span>
+              <span class="chip chip--emotion">Motivación</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Segmentar para personalizar la música.</p>
+            <div class="chip-row">
+              <span class="chip">Íconos visuales</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, paso 1 de N.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Siguiente" condicional a selección.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Si la categoría no calza con el negocio del usuario (caso edge), ¿qué pasa? Validar opción "otro".
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="card" data-phase="onboarding" data-risk="alto">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">04</div>
+            <div class="card__step-name">Onboarding · Datos del negocio</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">04</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Completa info del local (nombre, ubicación, horarios, capacidad).</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Nombre</span>
+              <span class="chip">Dirección</span>
+              <span class="chip">Horarios</span>
+              <span class="chip">Capacidad</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Formulario con varios campos, posiblemente paginado.</p>
+            <p class="kv"><strong>Decisión:</strong> Completar todo o saltear.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 4 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Llegar al final sin frustrarse.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Fatiga</span>
+              <span class="chip chip--emotion">Duda</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="4"></div>
+              <span class="scale__num">4/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="4"></div>
+              <span class="scale__num">4/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar data para personalización.</p>
+            <div class="chip-row">
+              <span class="chip">Validaciones</span>
+              <span class="chip">Autocomplete</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, pero pasos no terminan más.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta por paso, baja sobre el total.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Punto candidato a drop-off. Falta percepción de cuánto falta y por qué este dato es necesario.
+            </div>
+            <div class="note">
+              <span class="note__label">Pregunta abierta</span>
+              ¿Hay autosave entre pasos? Si el usuario vuelve más tarde, ¿retoma o reinicia?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="card" data-phase="setup" data-risk="critico">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">05</div>
+            <div class="card__step-name">Personalización · Vibe + Gustos musicales</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">05</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Elige géneros, vibe (chill, energético, sofisticado), referencias de bandas.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Géneros</span>
+              <span class="chip">Vibe</span>
+              <span class="chip">Referencias</span>
+              <span class="chip">Bloqueos</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Selectores multi-opción con previews.</p>
+            <p class="kv"><strong>Decisión:</strong> Decisiones subjetivas, alta cantidad de opciones.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 3 a 6 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Que la música refleje su negocio.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Indecisión</span>
+              <span class="chip chip--emotion">Sobrecarga</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="5"></div>
+              <span class="scale__num">5/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="5"></div>
+              <span class="scale__num">5/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar gustos para hiper-personalizar la curación.</p>
+            <div class="chip-row">
+              <span class="chip">Previews audio</span>
+              <span class="chip">Sugerencias por categoría</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, paso 5 de N.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, "Siguiente" siempre activo.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Drop-off candidato número uno. Demasiadas decisiones subjetivas seguidas, sin recompensa intermedia.
+            </div>
+            <div class="note">
+              <span class="note__label">Pregunta abierta</span>
+              ¿Se podría escuchar una muestra real de lo que armaría con cada selección?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="critico"><span class="chip__dot" style="background:var(--risk-critical)"></span>Crítico</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="card" data-phase="setup" data-risk="alto">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">06</div>
+            <div class="card__step-name">Horarios y momentos del día</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">06</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Define momentos del día (mañana, almuerzo, after, noche) y energía por slot.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Franjas horarias</span>
+              <span class="chip">Energía por franja</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Timeline con sliders de energía.</p>
+            <p class="kv"><strong>Decisión:</strong> Ajustes finos de programación.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 4 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Terminar de configurar y empezar a probar.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Impaciencia</span>
+              <span class="chip chip--emotion">Cansancio</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="4"></div>
+              <span class="scale__num">4/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="4"></div>
+              <span class="scale__num">4/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Setup completo para entregar primer playlist.</p>
+            <div class="chip-row">
+              <span class="chip">Defaults sugeridos</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Para un dueño de café, este nivel de granularidad puede ser excesivo. Validar si pueden venir con defaults inteligentes.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article class="card" data-phase="setup" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">07</div>
+            <div class="card__step-name">Confirmación + Loading "Armando tu música"</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Web pantalla</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">07</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Espera mientras el sistema genera la curación.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Animación de carga, copy explicando qué está pasando.</p>
+            <p class="kv"><strong>Decisión:</strong> Esperar.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 5 a 20 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Recompensa visible después de tanto setup.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Expectativa</span>
+              <span class="chip chip--emotion">Anticipación</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Construir expectativa antes del Wow moment.</p>
+            <div class="chip-row">
+              <span class="chip">Copy con resumen</span>
+              <span class="chip">Animación</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Loader visible.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> N/A (pantalla de espera).</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Buena oportunidad para storytelling. ¿Se aprovecha o es loader silencioso?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 8 -->
+      <article class="card" data-phase="wow" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">08</div>
+            <div class="card__step-name">Entrada al producto · Primer dashboard</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
+            <span class="chip">Web app</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">08</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Ve por primera vez el dashboard Migrant Track con su música ya armada.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Calendario / playlist generado, recomendaciones, CTA play.</p>
+            <p class="kv"><strong>Decisión:</strong> Explorar o dar play.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 90 segundos antes del primer play</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Validar que vale la pena.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Recompensa</span>
+              <span class="chip chip--emotion">Validación</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Entregar el Wow moment, primer play.</p>
+            <div class="chip-row">
+              <span class="chip">Tour guiado</span>
+              <span class="chip">CTA play visible</span>
+            </div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Onboarding completo.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Empezar a sonar".</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Punto bisagra. De acá en adelante se evalúa la experiencia in-product (ver tab Producto).
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Summary card -->
+      <article class="card card--summary">
+        <div class="card__head">
+          <div class="summary-title">Resumen · Onboarding</div>
+          <div class="summary-sub">Mapa de calor por paso, mientras más rojo más urgente</div>
+        </div>
+        <div class="card__body">
+          <div class="heatmap">
+            <div class="heatmap__head"></div>
+            <div class="heatmap__head">Cognitiva</div>
+            <div class="heatmap__head">Fricción</div>
+            <div class="heatmap__head">Riesgo</div>
+
+            <div class="heatmap__row-label">01</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+
+            <div class="heatmap__row-label">02</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">03</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">04</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">A</div>
+
+            <div class="heatmap__row-label">05</div>
+            <div class="heatmap__cell" data-level="5">5</div>
+            <div class="heatmap__cell" data-level="5">5</div>
+            <div class="heatmap__cell" data-level="5">C</div>
+
+            <div class="heatmap__row-label">06</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">A</div>
+
+            <div class="heatmap__row-label">07</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">08</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat">
+              <div class="stat__num">8</div>
+              <div class="stat__label">Pasos totales</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">3</div>
+              <div class="stat__label">Puntos calientes</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">~12'</div>
+              <div class="stat__label">Tiempo estimado</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ═══════════════════════════════════
+         TRACK 2 — PRODUCTO
+         ═══════════════════════════════════ -->
+    <div class="track" id="track-producto" data-track="producto" hidden>
+
+      <!-- Card P1 -->
+      <article class="card" data-phase="wow" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">01</div>
+            <div class="card__step-name">Migrant Track · Home del dashboard</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
+            <span class="chip">Web app</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P1</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Explora el dashboard y entiende la estructura: música del día, calendario, librería.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Hoy / próximos días / librería / botón play.</p>
+            <p class="kv"><strong>Decisión:</strong> Dar play o explorar primero.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 3 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Entender la herramienta y sentir control.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Curiosidad</span>
+              <span class="chip chip--emotion">Recompensa</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="2"></div>
+              <span class="scale__num">2/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Onboarding del producto, llevar al primer play.</p>
+            <div class="chip-row">
+              <span class="chip">Tour guiado</span>
+              <span class="chip">CTA play prominente</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Validar si hay tooltip / tour para usuarios nuevos.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card P2 -->
+      <article class="card" data-phase="wow" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">02</div>
+            <div class="card__step-name">Conexión del player en el local</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
+            <span class="chip">App player / hardware</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P2</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Vincula el dispositivo del local (tablet, smart device) con su cuenta.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Código de vinculación</span>
+              <span class="chip">Login</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Instrucciones de pairing.</p>
+            <p class="kv"><strong>Decisión:</strong> Dispositivo correcto y red estable.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 5 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Hacer sonar la música en el local.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Expectativa</span>
+              <span class="chip chip--emotion">Posible duda técnica</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Cerrar el loop dashboard → local.</p>
+            <div class="chip-row">
+              <span class="chip">QR / código corto</span>
+              <span class="chip">Guía paso a paso</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Pregunta abierta</span>
+              ¿Qué tipos de dispositivo soporta y cómo se ofrecen?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card P3 -->
+      <article class="card" data-phase="uso" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">03</div>
+            <div class="card__step-name">Primer play · Wow moment auditivo</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
+            <span class="chip">App player</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P3</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Da play, escucha en el local.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Track actual, próxima canción, controles.</p>
+            <p class="kv"><strong>Decisión:</strong> Validar curación.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> Continuo</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Sentir que valió la pena el setup.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Recompensa</span>
+              <span class="chip chip--emotion">Confianza</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Convertir trial en cliente activo.</p>
+            <div class="chip-row">
+              <span class="chip">Feedback like / dislike</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, play / skip / like.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Si la curación no calza al primer play, riesgo de churn inmediato. Crítico medir aprobación temprana.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card P4 -->
+      <article class="card" data-phase="uso" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">04</div>
+            <div class="card__step-name">Edición · Ajustar la curación</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
+            <span class="chip">Web app</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P4</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Bloquea canciones / artistas, ajusta géneros, prueba variantes.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Likes / dislikes</span>
+              <span class="chip">Bloqueos</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Editor de playlist, filtros, historial.</p>
+            <p class="kv"><strong>Decisión:</strong> Personalizar finamente.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 8 minutos por sesión</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Sentir control sobre la curación.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Control</span>
+              <span class="chip chip--emotion">Refinamiento</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Aumentar engagement y fit.</p>
+            <div class="chip-row">
+              <span class="chip">Sugerencias smart</span>
+              <span class="chip">Undo</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Pregunta abierta</span>
+              ¿Cómo se aprende del feedback del usuario? ¿Se ve la mejora?
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card P5 -->
+      <article class="card" data-phase="uso" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">05</div>
+            <div class="card__step-name">Calendarización · Programar la semana</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
+            <span class="chip">Web app</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P5</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Programa qué música va en cada día / momento.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Slots calendario</span>
+              <span class="chip">Asignación playlist</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> Vista calendario semanal.</p>
+            <p class="kv"><strong>Decisión:</strong> Strategy musical del local.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 5 a 15 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Set & forget para no tocar más por semanas.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Planificación</span>
+              <span class="chip chip--emotion">Curaduría</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="3"></div>
+              <span class="scale__num">3/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Retención por automatización.</p>
+            <div class="chip-row">
+              <span class="chip">Templates por momento</span>
+              <span class="chip">Recurrencia</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Para Inbound (1 local) puede ser overkill si el dueño solo quiere "que suene". Validar default smart.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card P6 -->
+      <article class="card" data-phase="uso" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">06</div>
+            <div class="card__step-name">Uso diario · Player on / off</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
+            <span class="chip">App player</span>
+          </div>
+        </div>
+        <div class="card__capture">
+          <div class="placeholder">
+            <div class="placeholder__num">P6</div>
+            <div class="placeholder__label">Captura pendiente</div>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Operativo diario, apertura, prende el player, cierre, lo apaga.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row">
+              <span class="chip">Ninguna</span>
+            </div>
+            <p class="kv"><strong>Información que ve:</strong> UI minimal, play / pause / volumen.</p>
+            <p class="kv"><strong>Decisión:</strong> Ninguna en la mayoría de los días.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> Segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Que funcione sin pensarlo.</p>
+            <div class="chip-row">
+              <span class="chip chip--emotion">Confianza</span>
+              <span class="chip chip--emotion">Hábito</span>
+            </div>
+            <div class="scale scale--cognitive">
+              <span class="scale__label">Carga cognitiva</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+            <div class="scale scale--friction">
+              <span class="scale__label">Fricción</span>
+              <div class="scale__bar" data-level="1"></div>
+              <span class="scale__num">1/5</span>
+            </div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Confiabilidad operativa, sin caídas.</p>
+            <div class="chip-row">
+              <span class="chip">Offline fallback</span>
+              <span class="chip">Auto-start</span>
+            </div>
+            <p class="kv"><strong>Claridad del CTA:</strong> N/A.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note">
+              <span class="note__label">Observación</span>
+              Acá la métrica clave es uptime sin intervención. Tracking de errores en device.
+            </div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display">
+            <span class="risk-display__label">Riesgo de abandono</span>
+            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Summary Producto -->
+      <article class="card card--summary">
+        <div class="card__head">
+          <div class="summary-title">Resumen · Producto</div>
+          <div class="summary-sub">Mapa de calor por paso de la experiencia in-product</div>
+        </div>
+        <div class="card__body">
+          <div class="heatmap">
+            <div class="heatmap__head"></div>
+            <div class="heatmap__head">Cognitiva</div>
+            <div class="heatmap__head">Fricción</div>
+            <div class="heatmap__head">Riesgo</div>
+
+            <div class="heatmap__row-label">P1</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+
+            <div class="heatmap__row-label">P2</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">P3</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+
+            <div class="heatmap__row-label">P4</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">P5</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">P6</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="stat">
+              <div class="stat__num">6</div>
+              <div class="stat__label">Pasos totales</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">0</div>
+              <div class="stat__label">Puntos críticos</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">Loop</div>
+              <div class="stat__label">Tipo de uso</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const tabs = document.querySelectorAll('.tab');
+  const tracks = document.querySelectorAll('.track');
+  const filterButtons = document.querySelectorAll('.chip--button[data-filter]');
+  const counterCurrent = document.getElementById('counter-current');
+  const counterTotal = document.getElementById('counter-total');
+  const navPrev = document.getElementById('nav-prev');
+  const navNext = document.getElementById('nav-next');
+
+  let activeTab = 'onboarding';
+  const filterState = { phase: 'all', risk: 'all' };
+
+  function getActiveTrack() {
+    return document.querySelector('.track[data-track="' + activeTab + '"]');
+  }
+
+  function applyFilters() {
+    const track = getActiveTrack();
+    if (!track) return;
+    const cards = track.querySelectorAll('.card:not(.card--summary)');
+    let visible = 0;
+    cards.forEach(function (c) {
+      const matchPhase = filterState.phase === 'all' || c.dataset.phase === filterState.phase;
+      const matchRisk = filterState.risk === 'all' || c.dataset.risk === filterState.risk;
+      const show = matchPhase && matchRisk;
+      c.hidden = !show;
+      if (show) visible++;
+    });
+    counterTotal.textContent = visible;
+    updateCurrentCounter();
+  }
+
+  function switchTab(name) {
+    activeTab = name;
+    tabs.forEach(function (t) {
+      t.classList.toggle('is-active', t.dataset.tab === name);
+    });
+    tracks.forEach(function (tr) {
+      tr.hidden = tr.dataset.track !== name;
+    });
+    applyFilters();
+    const track = getActiveTrack();
+    if (track) track.scrollLeft = 0;
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      switchTab(t.dataset.tab);
+    });
+  });
+
+  filterButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const f = btn.dataset.filter;
+      const v = btn.dataset.value;
+      filterState[f] = v;
+      document.querySelectorAll('.chip--button[data-filter="' + f + '"]').forEach(function (b) {
+        b.classList.toggle('is-active', b.dataset.value === v);
+      });
+      applyFilters();
+    });
+  });
+
+  function updateCurrentCounter() {
+    const track = getActiveTrack();
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.card:not([hidden])'));
+    if (!cards.length) {
+      counterCurrent.textContent = 0;
+      return;
+    }
+    const trackRect = track.getBoundingClientRect();
+    let bestIdx = 0;
+    let bestDist = Infinity;
+    cards.forEach(function (c, i) {
+      const r = c.getBoundingClientRect();
+      const dist = Math.abs(r.left - trackRect.left);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = i;
+      }
+    });
+    counterCurrent.textContent = bestIdx + 1;
+  }
+
+  tracks.forEach(function (track) {
+    track.addEventListener('scroll', updateCurrentCounter, { passive: true });
+  });
+
+  function scrollByCard(dir) {
+    const track = getActiveTrack();
+    if (!track) return;
+    const card = track.querySelector('.card:not([hidden])');
+    if (!card) return;
+    const step = card.offsetWidth + 24;
+    track.scrollBy({ left: step * dir, behavior: 'smooth' });
+  }
+
+  navPrev.addEventListener('click', function () { scrollByCard(-1); });
+  navNext.addEventListener('click', function () { scrollByCard(1); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight') scrollByCard(1);
+    if (e.key === 'ArrowLeft') scrollByCard(-1);
+  });
+
+  // Image fallback for placeholders
+  document.querySelectorAll('img[data-step]').forEach(function (img) {
+    img.addEventListener('error', function () {
+      img.style.display = 'none';
+    });
+  });
+
+  // Scale bars render
+  document.querySelectorAll('.scale__bar').forEach(function (bar) {
+    const level = parseInt(bar.dataset.level, 10) || 0;
+    for (let i = 1; i <= 5; i++) {
+      const seg = document.createElement('span');
+      seg.className = 'scale__seg' + (i <= level ? ' is-on' : '');
+      bar.appendChild(seg);
+    }
+  });
+
+  // Init lucide icons
+  if (window.lucide) lucide.createIcons();
+
+  // Initial
+  applyFilters();
+  updateCurrentCounter();
+})();
+</script>
+</body>
+</html>
