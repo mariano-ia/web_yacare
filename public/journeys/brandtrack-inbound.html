@@ -339,17 +339,22 @@ ul, ol { list-style: none; }
    CARDS
    ═══════════════════════════════════════ */
 .card {
-  flex: 0 0 480px;
+  flex: 0 0 760px;
   scroll-snap-align: start;
   background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%);
   border: 1px solid var(--border-subtle);
   border-radius: 22px;
   padding: 0;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "head head"
+    "capture body"
+    "foot foot";
   overflow: hidden;
-  transition: transform 0.4s var(--ease-out), border-color 0.3s var(--ease-out);
+  transition: border-color 0.3s var(--ease-out);
 }
 
 .card:hover {
@@ -375,6 +380,7 @@ ul, ol { list-style: none; }
 
 /* Card header */
 .card__head {
+  grid-area: head;
   padding: 22px 24px 16px 28px;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -412,60 +418,85 @@ ul, ol { list-style: none; }
   margin-top: 10px;
 }
 
-/* Capture */
+/* Capture · mobile vertical */
 .card__capture {
+  grid-area: capture;
   position: relative;
-  height: 200px;
-  background: var(--bg-elevated);
+  background: var(--bg-secondary);
   overflow: hidden;
-  border-bottom: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 24px;
 }
 
 .card__capture img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 24px;
   display: block;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 
 .placeholder {
-  width: 100%;
-  height: 100%;
+  width: 240px;
+  aspect-ratio: 9 / 19.5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 12px, transparent 12px, transparent 24px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 12px, transparent 12px, transparent 24px),
     var(--bg-elevated);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 28px;
   color: var(--text-muted);
-  gap: 6px;
+  gap: 10px;
+  position: relative;
+}
+
+.placeholder::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
 }
 
 .placeholder__num {
   font-family: var(--font-display);
-  font-size: 3.6rem;
+  font-size: 4.2rem;
   font-weight: 700;
   letter-spacing: -0.05em;
-  color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.22);
   line-height: 1;
 }
 
 .placeholder__label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
+  text-align: center;
+  padding: 0 10px;
 }
 
 /* Card body */
 .card__body {
-  flex: 1;
-  padding: 18px 24px 22px 28px;
+  grid-area: body;
+  min-height: 0;
+  padding: 0 24px 22px 28px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-subtle) transparent;
+  position: relative;
 }
 
 .card__body::-webkit-scrollbar { width: 4px; }
@@ -473,6 +504,30 @@ ul, ol { list-style: none; }
   background: var(--border-subtle);
   border-radius: 999px;
 }
+
+/* Sticky metrics bar — cognitive load + friction always visible */
+.card__metrics {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 0 -24px 16px -28px;
+  padding: 16px 24px 14px 28px;
+  background: linear-gradient(180deg, rgba(20,20,24,0.96) 0%, rgba(20,20,24,0.96) 80%, rgba(20,20,24,0) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.card__metrics .scale { margin-bottom: 8px; }
+.card__metrics .scale:last-child { margin-bottom: 0; }
+.card__metrics .scale__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 110px;
+}
+.card__metrics .scale__num { font-size: 0.78rem; }
 
 .block {
   margin-bottom: 18px;
@@ -588,8 +643,51 @@ ul, ol { list-style: none; }
   margin-bottom: 4px;
 }
 
+/* Opportunities block — highlighted */
+.block--opportunities {
+  background: linear-gradient(135deg, rgba(138,94,255,0.09) 0%, rgba(209,36,157,0.05) 100%);
+  border: 1px solid rgba(138,94,255,0.25);
+  border-radius: 14px;
+  padding: 14px 16px 14px 16px;
+  margin-bottom: 18px;
+}
+
+.block--opportunities .block__title {
+  color: var(--accent-primary);
+  margin-bottom: 10px;
+}
+
+.block--opportunities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.block--opportunities li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 0.84rem;
+  color: var(--text-primary);
+  line-height: 1.45;
+  border-bottom: 1px solid rgba(138,94,255,0.1);
+}
+
+.block--opportunities li:last-child { border-bottom: none; padding-bottom: 0; }
+.block--opportunities li:first-child { padding-top: 0; }
+
+.block--opportunities li::before {
+  content: '→';
+  color: var(--accent-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1.45;
+}
+
 /* Card footer */
 .card__foot {
+  grid-area: foot;
   padding: 14px 24px 16px 28px;
   border-top: 1px solid var(--border-subtle);
   background: rgba(255,255,255,0.015);
@@ -673,6 +771,11 @@ ul, ol { list-style: none; }
   flex: 0 0 560px;
   background: linear-gradient(180deg, rgba(138,94,255,0.05) 0%, rgba(209,36,157,0.025) 100%);
   border: 1px solid var(--border-medium);
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "head"
+    "body";
 }
 
 .card--summary::before {
@@ -789,8 +892,23 @@ ul, ol { list-style: none; }
   .header__title { font-size: 1rem; }
   .tabs { flex-wrap: wrap; }
   .track { padding: 20px 18px 32px; gap: 16px; }
-  .card { flex: 0 0 86vw; }
-  .card--summary { flex: 0 0 86vw; }
+  .card {
+    flex: 0 0 88vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "head"
+      "capture"
+      "body"
+      "foot";
+  }
+  .card__capture {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 18px;
+  }
+  .placeholder { width: 180px; }
+  .card--summary { flex: 0 0 88vw; }
   .nav-btn { display: none; }
 }
 </style>
@@ -2182,7 +2300,121 @@ ul, ol { list-style: none; }
     }
   });
 
-  // Init lucide icons
+  // Move cognitive + friction scales to a sticky metrics bar at top of each card body
+  document.querySelectorAll('.card:not(.card--summary)').forEach(function (card) {
+    const body = card.querySelector('.card__body');
+    if (!body) return;
+    const scales = card.querySelectorAll('.scale--cognitive, .scale--friction');
+    if (!scales.length) return;
+    const metrics = document.createElement('div');
+    metrics.className = 'card__metrics';
+    scales.forEach(function (s) { metrics.appendChild(s); });
+    body.insertBefore(metrics, body.firstChild);
+  });
+
+  // Opportunities per step — edit here to update content for all cards
+  const OPPORTUNITIES = {
+    'onboarding-01': [
+      'Variante de copy específica para Inbound (dueño de café), separada de la versión enterprise.',
+      'Pricing visible above the fold para reducir fricción de evaluación.',
+      'Calculadora "cuánto pagás hoy en streaming" como anchor de valor.'
+    ],
+    'onboarding-02': [
+      'Google OAuth como opción primaria, password como secundaria.',
+      'Magic link por email, sin crear password.',
+      'Permitir explorar un preview antes de pedir cuenta.'
+    ],
+    'onboarding-03': [
+      'Opción "Otro" con campo libre para edge cases.',
+      'Detectar de la URL si vino de una landing categoría-específica y pre-seleccionar.',
+      'Mostrar mini preview de qué tipo de música arma con esa elección.'
+    ],
+    'onboarding-04': [
+      'Reducir a 2 o 3 campos obligatorios, el resto opcional o post-onboarding.',
+      'Autosave entre pasos con retomar desde donde quedó.',
+      'Indicador honesto de tiempo restante ("Te faltan 2 minutos").'
+    ],
+    'onboarding-05': [
+      'Modo "Elegí por mí" basado en categoría de negocio, con override opcional.',
+      'Previews audio reales de 10s antes de cada decisión.',
+      'Reducir la cantidad de selecciones obligatorias por paso.'
+    ],
+    'onboarding-06': [
+      'Defaults inteligentes según tipo de local (café = mañana chill, noche media).',
+      'Modo simple "siempre igual" vs modo avanzado por franja horaria.',
+      'Mover este paso al post primer-play, no es bloqueante para arrancar.'
+    ],
+    'onboarding-07': [
+      'Storytelling activo en el loading ("Estoy mezclando indie chill para tu café...").',
+      'Mostrar tracklist armándose en tiempo real, no loader silencioso.',
+      'Si tarda más de 5s, mostrar primer track listo y arrancar audio.'
+    ],
+    'onboarding-08': [
+      'Auto-play opcional al entrar (con control de mute claro).',
+      'Tour contextual que aparece solo si no hay actividad en 30s.',
+      'Empty state estimulante con un único CTA destacado ("Hacé sonar tu local").'
+    ],
+    'producto-01': [
+      'CTA play sticky en bottom para que esté siempre visible.',
+      'Tour bajo demanda, no modal bloqueante.',
+      'Sección "qué hacer ahora" según uso del último login.'
+    ],
+    'producto-02': [
+      'QR code para pairing rápido desde mobile al player en el local.',
+      'Detección automática de dispositivos en la misma red WiFi.',
+      'Fallback para conectar a parlante Bluetooth o auriculares.'
+    ],
+    'producto-03': [
+      'Pregunta corta de feedback en los primeros 5 minutos ("¿Va bien?").',
+      'Detectar early churn signals (más de N skips seguidos) y ofrecer recalibrar.',
+      'Like / dislike de un toque para entrenar el modelo desde el día uno.'
+    ],
+    'producto-04': [
+      'Visualizar cómo el feedback ajusta la curación ("Desde tus likes, +12% jazz").',
+      'Undo y redo sobre los últimos N cambios.',
+      'Sugerencias proactivas según patrón ("Vimos que skipeás el rock duro, ¿lo bloqueamos?").'
+    ],
+    'producto-05': [
+      'Templates pre-armados por tipo de local (café boutique, restó nocturno, gym).',
+      'Set & forget automático a partir de los horarios cargados en onboarding.',
+      'Vista simplificada por defecto, modo avanzado solo si lo pedís.'
+    ],
+    'producto-06': [
+      'Auto-start del player al detectar conexión y horario de apertura.',
+      'Alerta si el player no se conectó cuando debería.',
+      'Modo offline si se cae internet, con biblioteca cacheada.'
+    ]
+  };
+
+  // Inject opportunities block into each card, before the Notas block
+  document.querySelectorAll('.card:not(.card--summary)').forEach(function (card) {
+    const track = card.closest('.track');
+    if (!track) return;
+    const trackName = track.dataset.track;
+    const stepEl = card.querySelector('.card__step-num');
+    if (!stepEl) return;
+    const step = stepEl.textContent.trim();
+    const key = trackName + '-' + step;
+    const items = OPPORTUNITIES[key];
+    if (!items || !items.length) return;
+    const body = card.querySelector('.card__body');
+    if (!body) return;
+    const block = document.createElement('div');
+    block.className = 'block block--opportunities';
+    block.innerHTML =
+      '<h5 class="block__title"><i data-lucide="lightbulb"></i>Oportunidades de mejora</h5>' +
+      '<ul>' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
+    // Insert before last block (Notas)
+    const blocks = body.querySelectorAll('.block');
+    const lastBlock = blocks[blocks.length - 1];
+    if (lastBlock) {
+      body.insertBefore(block, lastBlock);
+    } else {
+      body.appendChild(block);
+    }
+  });
+
+  // Init lucide icons (after all DOM insertions)
   if (window.lucide) lucide.createIcons();
 
   // Initial
