@@ -1623,11 +1623,6 @@ ul, ol { list-style: none; }
             <p class="kv"><strong>Indicador de progreso:</strong> Carrusel 2 de 4.</p>
             <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Next".</p>
           </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Segundo slide del carrusel. Una tarjeta de estado (Living Room, Online, Now Playing) flotando en mucho espacio vacío, más tres líneas para decir "controlás todo desde un dashboard". Otra pantalla dedicada a explicar en vez de a hacer.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Hace falta un slide entero para esto o se entiende mostrando el estado real una vez?</div>
-          </div>
         </div>
         <div class="card__foot">
           <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
@@ -1760,7 +1755,7 @@ ul, ol { list-style: none; }
             <p class="kv"><strong>Objetivo:</strong> Escuchar su música y poder volver al dashboard.</p>
             <div class="chip-row"><span class="chip chip--emotion">Recompensa</span><span class="chip chip--emotion">Desorientación</span></div>
             <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
-            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="5"></div><span class="scale__num">5/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
@@ -1772,8 +1767,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Acá suena la música, que es el valor. La oportunidad está en cómo se entrega: hoy es un player aparte que saca al usuario del dashboard (playlists, calendario), con controles muy acotados y sin un retorno claro. Integrarlo a la web sumaría a ese momento. Además, que la playlist la creó la IA respetando la marca todavía no se comunica.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Y si el player vive dentro de la web, junto al dashboard, en una sola interfaz?</div>
+            <div class="note"><span class="note__label">En progreso</span>Lo estamos trabajando.</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1821,8 +1815,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Al volver del player, en lugar del dashboard prometido (playlists, calendario) aparece otra vez "Activate music on your first player". El usuario no encuentra lo que se le prometió, lo que puede generar frustración y que muchos no vuelvan. Además, el camino es código manual + app solo iOS, que para un local de un dispositivo puede ni aplicar.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>Al volver, ¿no debería caer en el dashboard con su música y calendario, en vez de la pantalla de activación?</div>
+            <div class="note"><span class="note__label">En progreso</span>Lo estamos trabajando.</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1869,7 +1862,7 @@ ul, ol { list-style: none; }
 
             <div class="heatmap__row-label">05</div>
             <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="5">5</div>
             <div class="heatmap__cell" data-level="4">A</div>
 
             <div class="heatmap__row-label">06</div>
@@ -2082,30 +2075,25 @@ ul, ol { list-style: none; }
       'Para Inbound (un local, un dispositivo), el modelo de dos componentes y las zonas/grupos sobran: simplificar a "tu local + tu música".'
     ],
     'producto-02': [
-      'Mostrar el estado real (online, now playing) directamente, sin un slide explicativo aparte.',
-      'El beneficio "sin depender del staff" es fuerte: vale un microcopy, no una pantalla completa.',
+      'Convertir el beneficio "sin depender del staff" en una tarea recomendada de home: "Conectá un nuevo dispositivo y manejá la música a distancia sin que tu empleado ponga cualquier cosa".',
       'Fusionar con el resto de la intro para bajar el ruido visual.'
     ],
     'producto-03': [
       'Elevar la calendarización: es uno de los tres valores centrales para Inbound y hoy queda en el slide 3.',
-      'Convertirla en una tarea guiada: "creá tu primer calendario", con la primera semana ya pre-armada para que el usuario vea el valor sin tener que construir nada.',
+      'Convertirla en una tarea recomendada: "Programá tu primera semana", con una semana ya precargada. Mostrar con hechos el valor de "calendarizá la música y olvidate", mejor que explicarlo en mil palabras.',
       'Recortar el párrafo introductorio: el schedule visual se explica solo.',
       'Permitir aceptar el schedule con un toque y ajustarlo después.'
     ],
     'producto-04': [
-      'Venimos de una interfaz web: integrar el player dentro de la misma web en vez de mandar al usuario a un player aparte.',
-      'Que pueda dar play sin cambiar de lugar; lo del player externo se puede contar más adelante, no todo junto.',
-      'Para Inbound (un dispositivo), la conexión de un segundo player puede quedar como caso de borde.'
+      'No adelantar "activar el player" como paso aparte: lo que tiene que poder hacer en el primer vínculo es reproducir ahí mismo.',
+      'Dashboard y player juntos en la plataforma web: que escuche desde la misma interfaz, sin saltar a otro lado.',
+      'Conectar otro dispositivo pasa a ser un destacado de home, opcional: "si querés sumar otro equipo, hacelo".'
     ],
     'producto-05': [
-      'Componer dashboard y player en una sola interfaz web: que escuchar y gestionar (playlists, calendario) convivan, sin saltar a una app aparte.',
-      'Asegurar controles básicos (play / pausa) y un retorno claro al dashboard.',
-      'Comunicar que la playlist fue creada con IA respetando los lineamientos de marca: es un valor central y hoy no se nombra.'
+      'Lo estamos trabajando.'
     ],
     'producto-06': [
-      'Al volver, llevar al usuario al dashboard prometido (playlist + calendario), no de nuevo a la pantalla de activación.',
-      'Para Inbound, priorizar reproducir desde la web; dejar el player externo (código + app) como camino opcional.',
-      'Si se mantiene el pairing, reemplazar el código manual por QR y soportar más que iOS.'
+      'Lo estamos trabajando.'
     ]
   };
 
@@ -2127,11 +2115,14 @@ ul, ol { list-style: none; }
     block.innerHTML =
       '<h5 class="block__title"><i data-lucide="lightbulb"></i>Oportunidades de mejora</h5>' +
       '<ul>' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
-    // Insert before last block (Notas)
-    const blocks = body.querySelectorAll('.block');
-    const lastBlock = blocks[blocks.length - 1];
-    if (lastBlock) {
-      body.insertBefore(block, lastBlock);
+    // Insert before the Notas block if it exists; otherwise append at the end
+    const blocks = Array.prototype.slice.call(body.querySelectorAll('.block'));
+    const notasBlock = blocks.filter(function (b) {
+      const t = b.querySelector('.block__title');
+      return t && /Notas/.test(t.textContent);
+    })[0];
+    if (notasBlock) {
+      body.insertBefore(block, notasBlock);
     } else {
       body.appendChild(block);
     }
