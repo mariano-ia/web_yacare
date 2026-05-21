@@ -418,7 +418,7 @@ ul, ol { list-style: none; }
   margin-top: 10px;
 }
 
-/* Capture · mobile vertical */
+/* Capture · mobile screenshot (cropped, no phone chrome) */
 .card__capture {
   grid-area: capture;
   position: relative;
@@ -437,55 +437,9 @@ ul, ol { list-style: none; }
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 24px;
+  border-radius: 10px;
   display: block;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-
-.placeholder {
-  width: 240px;
-  aspect-ratio: 9 / 19.5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background:
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 12px, transparent 12px, transparent 24px),
-    var(--bg-elevated);
-  border: 2px solid rgba(255,255,255,0.08);
-  border-radius: 28px;
-  color: var(--text-muted);
-  gap: 10px;
-  position: relative;
-}
-
-.placeholder::before {
-  content: '';
-  position: absolute;
-  top: 10px; left: 50%;
-  transform: translateX(-50%);
-  width: 80px; height: 4px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 2px;
-}
-
-.placeholder__num {
-  font-family: var(--font-display);
-  font-size: 4.2rem;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  color: rgba(255,255,255,0.22);
-  line-height: 1;
-}
-
-.placeholder__label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-align: center;
-  padding: 0 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
 }
 
 /* Card body */
@@ -835,13 +789,13 @@ ul, ol { list-style: none; }
 }
 
 .heatmap__cell {
-  height: 28px;
+  height: 26px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
   color: var(--bg-primary);
 }
@@ -907,7 +861,7 @@ ul, ol { list-style: none; }
     border-bottom: 1px solid var(--border-subtle);
     padding: 18px;
   }
-  .placeholder { width: 180px; }
+  .card__capture img { max-height: 360px; }
   .card--summary { flex: 0 0 88vw; }
   .nav-btn { display: none; }
 }
@@ -929,7 +883,7 @@ ul, ol { list-style: none; }
         </div>
       </div>
       <div class="header__meta">
-        <span class="counter">Paso <strong id="counter-current">1</strong> de <strong id="counter-total">8</strong></span>
+        <span class="counter">Paso <strong id="counter-current">1</strong> de <strong id="counter-total">10</strong></span>
       </div>
     </div>
 
@@ -977,619 +931,497 @@ ul, ol { list-style: none; }
          ═══════════════════════════════════ -->
     <div class="track" id="track-onboarding" data-track="onboarding">
 
-      <!-- Card 1 -->
+      <!-- 01 -->
       <article class="card" data-phase="descubrimiento" data-risk="bajo">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">01</div>
-            <div class="card__step-name">Landing · CTA "Prueba gratuita"</div>
+            <div class="card__step-name">Landing · "Music for business"</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="descubrimiento"><span class="chip__dot"></span>Descubrimiento</span>
-            <span class="chip">Web desktop / mobile</span>
+            <span class="chip">brandtrack.ai · mobile</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">01</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt00.png" alt="Brandtrack paso 1 — Landing" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Lee value prop, escanea sección hero y hace clic en "Iniciar prueba gratuita".</p>
+            <p class="kv"><strong>Acción:</strong> Lee el hero "The right song at the right time" y elige entre "Start free trial" o "Book a meeting". Aparece el chat "Melody".</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Headline, sub, beneficios, social proof, pricing referencial.</p>
-            <p class="kv"><strong>Decisión:</strong> Empezar o salir.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 90 segundos</p>
+            <div class="chip-row"><span class="chip">Ninguna</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Value prop, dos CTAs, asistente Melody.</p>
+            <p class="kv"><strong>Decisión:</strong> Probar gratis, pedir reunión o salir.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 20 a 60 segundos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Entender si esto sirve para su negocio.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Curiosidad</span>
-              <span class="chip chip--emotion">Evaluación</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Entender rápido si sirve para su local.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Curiosidad</span><span class="chip chip--emotion">Evaluación</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Convertir visita en click al onboarding.</p>
+            <p class="kv"><strong>Objetivo:</strong> Llevar al "Start free trial".</p>
             <p class="kv"><strong>Señales de confianza:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Logos clientes</span>
-              <span class="chip">Testimonios</span>
-              <span class="chip">Garantía</span>
-            </div>
+            <div class="chip-row"><span class="chip">Música para empresas</span><span class="chip">Chat Melody</span></div>
             <p class="kv"><strong>Indicador de progreso:</strong> No aplica (entrada).</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta, botón visible above the fold.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, dos CTAs claros.</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Placeholder: validar con cliente si el headline habla a un dueño de café o sigue enfocado en enterprise.
-            </div>
-            <div class="note">
-              <span class="note__label">Pregunta abierta</span>
-              ¿Hay diferenciación de copy o variantes A/B para Inbound?
-            </div>
+            <div class="note"><span class="note__label">Observación</span>El mensaje "across all locations / brand guardrails" apunta a enterprise, no al dueño de un solo local.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Hay una landing distinta para Inbound o entran todos por la misma?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
         </div>
       </article>
 
-      <!-- Card 2 -->
-      <article class="card" data-phase="activacion" data-risk="medio">
+      <!-- 02 -->
+      <article class="card" data-phase="activacion" data-risk="bajo">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">02</div>
-            <div class="card__step-name">Modal de captura · Email</div>
+            <div class="card__step-name">Prueba gratis · 14 días sin tarjeta</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="activacion"><span class="chip__dot"></span>Activación</span>
-            <span class="chip">Web modal</span>
+            <span class="chip">Web mobile</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">02</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt01.png" alt="Brandtrack paso 2 — Sign up for free" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Ingresa email y password.</p>
+            <p class="kv"><strong>Acción:</strong> Lee "Sign up for free. Trial stops automatically. No credit card required" y toca "Start your 14-day free trial".</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Email</span>
-              <span class="chip">Password</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Breve copy "creá tu cuenta", términos legales.</p>
-            <p class="kv"><strong>Decisión:</strong> Cuenta nueva o login con Google.</p>
+            <div class="chip-row"><span class="chip">Ninguna aún</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Promesa de prueba sin riesgo, link "Sign in" para quien ya es usuario.</p>
+            <p class="kv"><strong>Decisión:</strong> Arrancar prueba o ir a login.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 10 a 30 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Probar sin comprometerse ni pagar.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Motivación</span><span class="chip chip--emotion">Bajo riesgo percibido</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Activar la prueba con mínima fricción.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Sin tarjeta</span><span class="chip">Se frena sola</span><span class="chip">14 días</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No visible aún.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, botón único dominante.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Los reductores de riesgo están muy bien planteados. Es el mejor argumento para Inbound.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Qué incluye exactamente la prueba (un dispositivo, horas, features)?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
+        </div>
+      </article>
+
+      <!-- 03 -->
+      <article class="card" data-phase="activacion" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">03</div>
+            <div class="card__step-name">Create account</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="activacion"><span class="chip__dot"></span>Activación</span>
+            <span class="chip">new.my.brandtrack.ai</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt02.png" alt="Brandtrack paso 3 — Create account" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Completa Firstname, Lastname, E-mail, Password y Confirm password.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Nombre</span><span class="chip">Apellido</span><span class="chip">Email</span><span class="chip">Password ×2</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Reglas de password (8 caracteres, 1 número), selector de idioma EN.</p>
+            <p class="kv"><strong>Decisión:</strong> Crear cuenta manualmente.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 45 a 90 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Crear la cuenta y avanzar.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Compromiso bajo</span><span class="chip chip--emotion">Apuro</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar lead activado con cuenta creada.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Reglas de password</span><span class="chip">"musical identity"</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No visible.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, sin SSO visible.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>5 campos + crear password es la primera fricción real. No hay login social.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Pide verificación de email antes de seguir el onboarding?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
+        </div>
+      </article>
+
+      <!-- 04 -->
+      <article class="card" data-phase="onboarding" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">04</div>
+            <div class="card__step-name">¿Qué es lo más importante?</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt03.png" alt="Brandtrack paso 4 — Qué es lo más importante" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Elige qué es lo más importante: controlar la música desde cualquier lado, música licenciada, o que refleje la identidad de marca.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Prioridad principal</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Tres opciones grandes, fáciles de leer.</p>
+            <p class="kv"><strong>Decisión:</strong> 1 de 3.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 10 a 20 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Sentir que lo van a entender.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Interés</span><span class="chip chip--emotion">Proyección</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar la motivación primaria del usuario.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Opciones claras</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No visible en este paso.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, selección directa.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Buen arranque del onboarding: pregunta liviana y de alto valor. No se ve barra de progreso todavía.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Esta respuesta cambia el resto del flujo o es solo data?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
+        </div>
+      </article>
+
+      <!-- 05 -->
+      <article class="card" data-phase="onboarding" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">05</div>
+            <div class="card__step-name">Completá tu perfil · Whatsapp + País</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
+            <span class="chip">Web wizard</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt04.png" alt="Brandtrack paso 5 — Completá tu perfil" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Ingresa número de Whatsapp y país. Back / Continue.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Whatsapp</span><span class="chip">País</span></div>
+            <p class="kv"><strong>Información que ve:</strong> "Welcome to Brandtrack! Complete your profile... so every playlist speaks to your style".</p>
+            <p class="kv"><strong>Decisión:</strong> Dar su contacto personal o frenar.</p>
             <p class="kv"><strong>Tiempo estimado:</strong> 30 a 60 segundos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Crear la cuenta lo más rápido posible.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Compromiso bajo</span>
-              <span class="chip chip--emotion">Apuro</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Avanzar sin exponerse de más.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Reticencia</span><span class="chip chip--emotion">Duda</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Capturar lead activado.</p>
-            <div class="chip-row">
-              <span class="chip">Login Google</span>
-              <span class="chip">Términos visibles</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> No visible aún.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Media, "Crear cuenta".</p>
+            <p class="kv"><strong>Objetivo:</strong> Capturar canal de contacto directo.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Copy "speaks to your style"</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> No visible en este paso.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, Continue arranca deshabilitado.</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Validar si hay confirmación por email obligatoria antes de seguir o si entra directo al onboarding.
-            </div>
+            <div class="note"><span class="note__label">Observación</span>Pedir Whatsapp tan temprano puede leerse como invasivo y no aporta a la personalización musical.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿El Whatsapp es obligatorio para continuar?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
         </div>
       </article>
 
-      <!-- Card 3 -->
-      <article class="card" data-phase="onboarding" data-risk="medio">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">03</div>
-            <div class="card__step-name">Onboarding · Tipo de negocio</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
-            <span class="chip">Web wizard</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">03</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Selecciona categoría de negocio (café, restó, retail, gym, etc.).</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Tipo de local</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Grid de categorías con íconos.</p>
-            <p class="kv"><strong>Decisión:</strong> 1 de N categorías.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 15 a 30 segundos</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Sentir que el sistema lo entiende.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Curiosidad</span>
-              <span class="chip chip--emotion">Motivación</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Segmentar para personalizar la música.</p>
-            <div class="chip-row">
-              <span class="chip">Íconos visuales</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Sí, paso 1 de N.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Siguiente" condicional a selección.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Si la categoría no calza con el negocio del usuario (caso edge), ¿qué pasa? Validar opción "otro".
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 4 -->
-      <article class="card" data-phase="onboarding" data-risk="alto">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">04</div>
-            <div class="card__step-name">Onboarding · Datos del negocio</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="onboarding"><span class="chip__dot"></span>Onboarding</span>
-            <span class="chip">Web wizard</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">04</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Completa info del local (nombre, ubicación, horarios, capacidad).</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Nombre</span>
-              <span class="chip">Dirección</span>
-              <span class="chip">Horarios</span>
-              <span class="chip">Capacidad</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Formulario con varios campos, posiblemente paginado.</p>
-            <p class="kv"><strong>Decisión:</strong> Completar todo o saltear.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 4 minutos</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Llegar al final sin frustrarse.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Fatiga</span>
-              <span class="chip chip--emotion">Duda</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="4"></div>
-              <span class="scale__num">4/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="4"></div>
-              <span class="scale__num">4/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Capturar data para personalización.</p>
-            <div class="chip-row">
-              <span class="chip">Validaciones</span>
-              <span class="chip">Autocomplete</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Sí, pero pasos no terminan más.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta por paso, baja sobre el total.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Punto candidato a drop-off. Falta percepción de cuánto falta y por qué este dato es necesario.
-            </div>
-            <div class="note">
-              <span class="note__label">Pregunta abierta</span>
-              ¿Hay autosave entre pasos? Si el usuario vuelve más tarde, ¿retoma o reinicia?
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 5 -->
-      <article class="card" data-phase="setup" data-risk="critico">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">05</div>
-            <div class="card__step-name">Personalización · Vibe + Gustos musicales</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
-            <span class="chip">Web wizard</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">05</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Elige géneros, vibe (chill, energético, sofisticado), referencias de bandas.</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Géneros</span>
-              <span class="chip">Vibe</span>
-              <span class="chip">Referencias</span>
-              <span class="chip">Bloqueos</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Selectores multi-opción con previews.</p>
-            <p class="kv"><strong>Decisión:</strong> Decisiones subjetivas, alta cantidad de opciones.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 3 a 6 minutos</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Que la música refleje su negocio.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Indecisión</span>
-              <span class="chip chip--emotion">Sobrecarga</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="5"></div>
-              <span class="scale__num">5/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="5"></div>
-              <span class="scale__num">5/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Capturar gustos para hiper-personalizar la curación.</p>
-            <div class="chip-row">
-              <span class="chip">Previews audio</span>
-              <span class="chip">Sugerencias por categoría</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Sí, paso 5 de N.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Media, "Siguiente" siempre activo.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Drop-off candidato número uno. Demasiadas decisiones subjetivas seguidas, sin recompensa intermedia.
-            </div>
-            <div class="note">
-              <span class="note__label">Pregunta abierta</span>
-              ¿Se podría escuchar una muestra real de lo que armaría con cada selección?
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="critico"><span class="chip__dot" style="background:var(--risk-critical)"></span>Crítico</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 6 -->
-      <article class="card" data-phase="setup" data-risk="alto">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">06</div>
-            <div class="card__step-name">Horarios y momentos del día</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
-            <span class="chip">Web wizard</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">06</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Define momentos del día (mañana, almuerzo, after, noche) y energía por slot.</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Franjas horarias</span>
-              <span class="chip">Energía por franja</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Timeline con sliders de energía.</p>
-            <p class="kv"><strong>Decisión:</strong> Ajustes finos de programación.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 4 minutos</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Terminar de configurar y empezar a probar.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Impaciencia</span>
-              <span class="chip chip--emotion">Cansancio</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="4"></div>
-              <span class="scale__num">4/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="4"></div>
-              <span class="scale__num">4/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Setup completo para entregar primer playlist.</p>
-            <div class="chip-row">
-              <span class="chip">Defaults sugeridos</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Sí.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Para un dueño de café, este nivel de granularidad puede ser excesivo. Validar si pueden venir con defaults inteligentes.
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 7 -->
+      <!-- 06 -->
       <article class="card" data-phase="setup" data-risk="medio">
         <div class="card__head">
           <div class="card__step-row">
-            <div class="card__step-num">07</div>
-            <div class="card__step-name">Confirmación + Loading "Armando tu música"</div>
+            <div class="card__step-num">06</div>
+            <div class="card__step-name">¿Dónde suena tu marca? · Datos del local</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
-            <span class="chip">Web pantalla</span>
+            <span class="chip">Wizard · paso 1/4</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">07</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt05.png" alt="Brandtrack paso 6 — Dónde suena tu marca" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Espera mientras el sistema genera la curación.</p>
+            <p class="kv"><strong>Acción:</strong> Completa Brand Name, Number of locations (default 1) y Main address.</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Animación de carga, copy explicando qué está pasando.</p>
+            <div class="chip-row"><span class="chip">Nombre de marca</span><span class="chip">N° locales</span><span class="chip">Dirección</span></div>
+            <p class="kv"><strong>Información que ve:</strong> "Tell us about your business so we can find the perfect sound identity". Barra de progreso 1/4 visible.</p>
+            <p class="kv"><strong>Decisión:</strong> Cargar datos del negocio.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 2 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Dar lo justo para avanzar.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Foco</span><span class="chip chip--emotion">Paciencia</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Capturar datos base para la personalización.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Barra de progreso</span><span class="chip">Copy de propósito</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, 1 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Next".</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Arranca la barra de progreso recién acá. Para Inbound el N° de locales casi siempre es 1.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿La dirección tiene autocompletado?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
+        </div>
+      </article>
+
+      <!-- 07 -->
+      <article class="card" data-phase="setup" data-risk="alto">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">07</div>
+            <div class="card__step-name">Categoría de negocio</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Wizard · dropdown</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt06.png" alt="Brandtrack paso 7 — Categoría de negocio" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Despliega y elige categoría dentro de una lista larga (Hospitality, Airports & Lounges, Banks, Co-working, Cruises, Healthcare, Hotels...).</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Categoría</span><span class="chip">Subcategoría</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Dropdown extenso, agrupado por rubro.</p>
+            <p class="kv"><strong>Decisión:</strong> Encontrar la categoría que mejor calza.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 90 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Ubicar su rubro sin scrollear de más.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Búsqueda</span><span class="chip chip--emotion">Posible duda</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Segmentar por rubro para curar la música.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Categorías agrupadas</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Implícito dentro del wizard.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, Next deshabilitado hasta elegir.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Lista larga sin buscador. Para Inbound (café, restó, retail) las categorías frecuentes no están al tope.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Existe opción "Otro" si el rubro no aparece?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
+        </div>
+      </article>
+
+      <!-- 08 -->
+      <article class="card" data-phase="setup" data-risk="alto">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">08</div>
+            <div class="card__step-name">Tu cliente · Edad + Nivel socioeconómico</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Wizard · paso 2/4</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt07.png" alt="Brandtrack paso 8 — Tu cliente" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Selecciona rango etario (Kids, Teens, Young Adults, Adults A/B, Seniors) y nivel socioeconómico (Luxury, Premium, Middle-range, Budget).</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Edad</span><span class="chip">Nivel socioeconómico</span></div>
+            <p class="kv"><strong>Información que ve:</strong> "Select the age and socioeconomic level of your audience to curate playlists". Progreso 2/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Caracterizar a su audiencia.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 2 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Llegar al final del perfilado.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Fatiga</span><span class="chip chip--emotion">Cumplir</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Afinar la curación según audiencia.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Selección múltiple</span><span class="chip">Progreso 2/4</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, 2 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Ya van 4 pantallas de perfilado seguidas. La fatiga acumulada empieza a pesar acá.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se podría inferir audiencia desde la categoría de negocio?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
+        </div>
+      </article>
+
+      <!-- 09 -->
+      <article class="card" data-phase="setup" data-risk="critico">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">09</div>
+            <div class="card__step-name">Perfil de marca · Elegí 3 identidades</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Wizard · paso 3/4</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt08.png" alt="Brandtrack paso 9 — Perfil de marca" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Elige hasta tres identidades entre 21 opciones (Cheerful, Sophisticated, Cool, Young, Elegant, Energetic...). Toca "Finish".</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">3 identidades de marca</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Grilla grande de chips, contador "0/3 selected". Progreso 3/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Decisión subjetiva y abstracta sobre la "personalidad" de la marca.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 3 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Terminar de una vez y ver el resultado.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Sobrecarga</span><span class="chip chip--emotion">Indecisión</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="5"></div><span class="scale__num">5/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Definir el tono de la curación.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Contador 0/3</span><span class="chip">Botón Finish</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Sí, 3 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, requiere selección para Finish.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Punto crítico: 21 opciones abstractas + selección obligatoria, al final de un perfilado largo. Pico de abandono probable.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede continuar con 0 seleccionadas o es un gate duro?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="critico"><span class="chip__dot" style="background:var(--risk-critical)"></span>Crítico</span></div>
+        </div>
+      </article>
+
+      <!-- 10 -->
+      <article class="card" data-phase="wow" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">10</div>
+            <div class="card__step-name">Generando · "Tuning the perfect sound"</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
+            <span class="chip">Web · pantalla de espera</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt09.png" alt="Brandtrack paso 10 — Generando sonido" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Espera mientras el sistema arma la curación. Logo animado + "We're tuning the perfect sound for your brand...".</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Ninguna</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Animación de carga con progreso por dots.</p>
             <p class="kv"><strong>Decisión:</strong> Esperar.</p>
             <p class="kv"><strong>Tiempo estimado:</strong> 5 a 20 segundos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Recompensa visible después de tanto setup.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Expectativa</span>
-              <span class="chip chip--emotion">Anticipación</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Recibir la recompensa del setup.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Expectativa</span><span class="chip chip--emotion">Anticipación</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Construir expectativa antes del Wow moment.</p>
-            <div class="chip-row">
-              <span class="chip">Copy con resumen</span>
-              <span class="chip">Animación</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Loader visible.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> N/A (pantalla de espera).</p>
+            <p class="kv"><strong>Objetivo:</strong> Construir expectativa antes de entrar al producto.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Copy personalizado</span><span class="chip">Animación de marca</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Dots de carga.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> N/A (espera).</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Buena oportunidad para storytelling. ¿Se aprovecha o es loader silencioso?
-            </div>
+            <div class="note"><span class="note__label">Observación</span>Buen momento de marca. Cierra el onboarding y abre la transición al producto.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Cuánto tarda realmente? ¿Hay riesgo de espera larga sin feedback?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
         </div>
       </article>
 
-      <!-- Card 8 -->
-      <article class="card" data-phase="wow" data-risk="bajo">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">08</div>
-            <div class="card__step-name">Entrada al producto · Primer dashboard</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
-            <span class="chip">Web app</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">08</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Ve por primera vez el dashboard Migrant Track con su música ya armada.</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Calendario / playlist generado, recomendaciones, CTA play.</p>
-            <p class="kv"><strong>Decisión:</strong> Explorar o dar play.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 30 a 90 segundos antes del primer play</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Validar que vale la pena.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Recompensa</span>
-              <span class="chip chip--emotion">Validación</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Entregar el Wow moment, primer play.</p>
-            <div class="chip-row">
-              <span class="chip">Tour guiado</span>
-              <span class="chip">CTA play visible</span>
-            </div>
-            <p class="kv"><strong>Indicador de progreso:</strong> Onboarding completo.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Empezar a sonar".</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Punto bisagra. De acá en adelante se evalúa la experiencia in-product (ver tab Producto).
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Summary card -->
+      <!-- Summary Onboarding -->
       <article class="card card--summary">
         <div class="card__head">
           <div class="summary-title">Resumen · Onboarding</div>
@@ -1609,43 +1441,53 @@ ul, ol { list-style: none; }
 
             <div class="heatmap__row-label">02</div>
             <div class="heatmap__cell" data-level="2">2</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">M</div>
+            <div class="heatmap__cell" data-level="1">1</div>
+            <div class="heatmap__cell" data-level="1">B</div>
 
             <div class="heatmap__row-label">03</div>
             <div class="heatmap__cell" data-level="2">2</div>
-            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="3">3</div>
             <div class="heatmap__cell" data-level="3">M</div>
 
             <div class="heatmap__row-label">04</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+
+            <div class="heatmap__row-label">05</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">06</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">07</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">A</div>
+
+            <div class="heatmap__row-label">08</div>
             <div class="heatmap__cell" data-level="4">4</div>
             <div class="heatmap__cell" data-level="4">4</div>
             <div class="heatmap__cell" data-level="4">A</div>
 
-            <div class="heatmap__row-label">05</div>
-            <div class="heatmap__cell" data-level="5">5</div>
+            <div class="heatmap__row-label">09</div>
+            <div class="heatmap__cell" data-level="4">4</div>
             <div class="heatmap__cell" data-level="5">5</div>
             <div class="heatmap__cell" data-level="5">C</div>
 
-            <div class="heatmap__row-label">06</div>
-            <div class="heatmap__cell" data-level="4">4</div>
-            <div class="heatmap__cell" data-level="4">4</div>
-            <div class="heatmap__cell" data-level="4">A</div>
-
-            <div class="heatmap__row-label">07</div>
+            <div class="heatmap__row-label">10</div>
             <div class="heatmap__cell" data-level="1">1</div>
-            <div class="heatmap__cell" data-level="2">2</div>
-            <div class="heatmap__cell" data-level="3">M</div>
-
-            <div class="heatmap__row-label">08</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">1</div>
             <div class="heatmap__cell" data-level="1">B</div>
           </div>
 
           <div class="summary-stats">
             <div class="stat">
-              <div class="stat__num">8</div>
+              <div class="stat__num">10</div>
               <div class="stat__label">Pasos totales</div>
             </div>
             <div class="stat">
@@ -1653,7 +1495,7 @@ ul, ol { list-style: none; }
               <div class="stat__label">Puntos calientes</div>
             </div>
             <div class="stat">
-              <div class="stat__num">~12'</div>
+              <div class="stat__num">~10'</div>
               <div class="stat__label">Tiempo estimado</div>
             </div>
           </div>
@@ -1667,443 +1509,297 @@ ul, ol { list-style: none; }
          ═══════════════════════════════════ -->
     <div class="track" id="track-producto" data-track="producto" hidden>
 
-      <!-- Card P1 -->
+      <!-- P1 -->
       <article class="card" data-phase="wow" data-risk="bajo">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">01</div>
-            <div class="card__step-name">Migrant Track · Home del dashboard</div>
+            <div class="card__step-name">Dashboard · "Two components, one system"</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
-            <span class="chip">Web app</span>
+            <span class="chip">MyBrandtrack · web</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P1</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt10.png" alt="Brandtrack producto 1 — Dashboard Zones" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Explora el dashboard y entiende la estructura: música del día, calendario, librería.</p>
+            <p class="kv"><strong>Acción:</strong> Entra al dashboard (Zones / Groups / Locations) y lee el explainer: MyBrandtrack gestiona, la Player App reproduce.</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Hoy / próximos días / librería / botón play.</p>
-            <p class="kv"><strong>Decisión:</strong> Dar play o explorar primero.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 3 minutos</p>
+            <div class="chip-row"><span class="chip">Ninguna</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Tabs, botón Subscribe, intro de los dos componentes. Carrusel 1/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Avanzar con "Next".</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 20 a 60 segundos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Entender la herramienta y sentir control.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Curiosidad</span>
-              <span class="chip chip--emotion">Recompensa</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="2"></div>
-              <span class="scale__num">2/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Entender cómo funciona el sistema.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Curiosidad</span><span class="chip chip--emotion">Orientación</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Onboarding del producto, llevar al primer play.</p>
-            <div class="chip-row">
-              <span class="chip">Tour guiado</span>
-              <span class="chip">CTA play prominente</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta.</p>
+            <p class="kv"><strong>Objetivo:</strong> Explicar el modelo de dos componentes.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Visuales de producto</span><span class="chip">Explicación clara</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Carrusel 1 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Next".</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Validar si hay tooltip / tour para usuarios nuevos.
-            </div>
+            <div class="note"><span class="note__label">Observación</span>El concepto MyBrandtrack + Player App es central. Para un local con un solo dispositivo hay que dejarlo clarísimo.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede saltar el intro si ya se entendió?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
         </div>
       </article>
 
-      <!-- Card P2 -->
-      <article class="card" data-phase="wow" data-risk="medio">
+      <!-- P2 -->
+      <article class="card" data-phase="wow" data-risk="bajo">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">02</div>
-            <div class="card__step-name">Conexión del player en el local</div>
+            <div class="card__step-name">Bienvenida · "Welcome to My Brandtrack"</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
-            <span class="chip">App player / hardware</span>
+            <span class="chip">MyBrandtrack · web</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P2</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt11.png" alt="Brandtrack producto 2 — Welcome to My Brandtrack" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Vincula el dispositivo del local (tablet, smart device) con su cuenta.</p>
+            <p class="kv"><strong>Acción:</strong> Ve la tarjeta de su zona (Living Room · ID 123456 · Online · Now Playing) y el copy de bienvenida. Toca "Next".</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Código de vinculación</span>
-              <span class="chip">Login</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Instrucciones de pairing.</p>
-            <p class="kv"><strong>Decisión:</strong> Dispositivo correcto y red estable.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 1 a 5 minutos</p>
+            <div class="chip-row"><span class="chip">Ninguna</span></div>
+            <p class="kv"><strong>Información que ve:</strong> "Control your music from a single dashboard, remotely, without depending on staff". Carrusel 2/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Seguir el tour.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 15 a 40 segundos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Hacer sonar la música en el local.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Expectativa</span>
-              <span class="chip chip--emotion">Posible duda técnica</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Confirmar que controla todo desde un lugar.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Recompensa</span><span class="chip chip--emotion">Control</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Cerrar el loop dashboard → local.</p>
-            <div class="chip-row">
-              <span class="chip">QR / código corto</span>
-              <span class="chip">Guía paso a paso</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
+            <p class="kv"><strong>Objetivo:</strong> Mostrar el valor del control centralizado.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Estado Online</span><span class="chip">Now Playing</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Carrusel 2 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Next".</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Pregunta abierta</span>
-              ¿Qué tipos de dispositivo soporta y cómo se ofrecen?
-            </div>
+            <div class="note"><span class="note__label">Observación</span>"Sin depender del staff" es un beneficio fuerte para un local chico. Mostrar el estado real (online / now playing) genera confianza.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Cuántas slides tiene el carrusel antes de poder operar?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
         </div>
       </article>
 
-      <!-- Card P3 -->
-      <article class="card" data-phase="uso" data-risk="bajo">
+      <!-- P3 -->
+      <article class="card" data-phase="uso" data-risk="medio">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">03</div>
-            <div class="card__step-name">Primer play · Wow moment auditivo</div>
+            <div class="card__step-name">Schedule · Programación pre-armada</div>
           </div>
           <div class="card__head-chips">
             <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
-            <span class="chip">App player</span>
+            <span class="chip">MyBrandtrack · web</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P3</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt12.png" alt="Brandtrack producto 3 — Schedule your music" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Da play, escucha en el local.</p>
+            <p class="kv"><strong>Acción:</strong> Revisa el schedule que Brandtrack ya creó (Slow Morning 07-11, Afternoon 11-15, Evening 15-19...). Acepta con "Schedule music" o elige otro.</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Track actual, próxima canción, controles.</p>
-            <p class="kv"><strong>Decisión:</strong> Validar curación.</p>
+            <div class="chip-row"><span class="chip">Confirmar / cambiar schedule</span></div>
+            <p class="kv"><strong>Información que ve:</strong> "We created this schedule for you", bloques por franja con energía y color. Carrusel 3/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Aceptar el armado automático o explorar otros.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 30 segundos a 3 minutos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Que quede sonando sin tener que pensar mucho.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Alivio</span><span class="chip chip--emotion">Evaluación</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Entregar valor inmediato con un schedule listo.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Schedule pre-armado</span><span class="chip">"adapts to your rhythm"</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Carrusel 3 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, "Schedule music".</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Gran acierto: el schedule viene armado a partir de los datos del onboarding. Reduce el trabajo del dueño.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede aceptar con un toque y editar después, o hay que revisarlo ahora?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
+        </div>
+      </article>
+
+      <!-- P4 -->
+      <article class="card" data-phase="wow" data-risk="medio">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">04</div>
+            <div class="card__step-name">Activar player · Conectar dispositivo</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="wow"><span class="chip__dot"></span>Wow moment</span>
+            <span class="chip">MyBrandtrack · web</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt13.png" alt="Brandtrack producto 4 — Activar music on first player" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> Lee "Activate music on your first player" y elige "Connect on this device" o "Connect on another device".</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Dónde reproducir</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Zona (Rest area), arte, dos botones de conexión. Carrusel 4/4.</p>
+            <p class="kv"><strong>Decisión:</strong> Reproducir en este equipo o vincular otro.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 20 a 60 segundos</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
+            <p class="kv"><strong>Objetivo:</strong> Lograr que la música suene en el local.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Expectativa</span><span class="chip chip--emotion">Decisión técnica</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
+            <p class="kv"><strong>Objetivo:</strong> Cerrar el loop dashboard → player.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Dos caminos claros</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Carrusel 4 de 4.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, dos opciones a entender.</p>
+          </div>
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
+            <div class="note"><span class="note__label">Observación</span>Para Inbound, "este dispositivo" (el cel o tablet del local) suele ser el caso más común. Conviene destacarlo.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Qué diferencia operativa hay entre las dos opciones?</div>
+          </div>
+        </div>
+        <div class="card__foot">
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
+        </div>
+      </article>
+
+      <!-- P5 -->
+      <article class="card" data-phase="uso" data-risk="bajo">
+        <div class="card__head">
+          <div class="card__step-row">
+            <div class="card__step-num">05</div>
+            <div class="card__step-name">Player App · Reproduciendo</div>
+          </div>
+          <div class="card__head-chips">
+            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
+            <span class="chip">Player App · iOS</span>
+          </div>
+        </div>
+        <div class="card__capture"><img src="images/cropped/bt14.png" alt="Brandtrack producto 5 — Player App reproduciendo" loading="lazy"></div>
+        <div class="card__body">
+          <div class="block">
+            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
+            <p class="kv"><strong>Acción:</strong> La Player App reproduce. Ve track actual ("Let's Get Back" - Matt Andersen), 1245 songs, 61% descargado y botones like / dislike.</p>
+            <p class="kv"><strong>Información pedida:</strong></p>
+            <div class="chip-row"><span class="chip">Like / dislike (opcional)</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Nombre de la curación ("Mariano - Serene Escapes"), progreso de canción, estado de descarga.</p>
+            <p class="kv"><strong>Decisión:</strong> Validar si la música le gusta.</p>
             <p class="kv"><strong>Tiempo estimado:</strong> Continuo</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Sentir que valió la pena el setup.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Recompensa</span>
-              <span class="chip chip--emotion">Confianza</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Confirmar que valió la pena el setup.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Recompensa</span><span class="chip chip--emotion">Confianza</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Convertir trial en cliente activo.</p>
-            <div class="chip-row">
-              <span class="chip">Feedback like / dislike</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta, play / skip / like.</p>
+            <p class="kv"><strong>Objetivo:</strong> Convertir la prueba en cliente activo.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">1245 songs</span><span class="chip">Descarga 61%</span><span class="chip">Feedback like</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Barra de la canción.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Alta, controles simples.</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Si la curación no calza al primer play, riesgo de churn inmediato. Crítico medir aprobación temprana.
-            </div>
+            <div class="note"><span class="note__label">Observación</span>Este es el Wow moment auditivo. Si la curación no calza al primer play, hay riesgo de churn temprano.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se le pide feedback explícito en los primeros minutos?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
         </div>
       </article>
 
-      <!-- Card P4 -->
-      <article class="card" data-phase="uso" data-risk="medio">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">04</div>
-            <div class="card__step-name">Edición · Ajustar la curación</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
-            <span class="chip">Web app</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P4</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Bloquea canciones / artistas, ajusta géneros, prueba variantes.</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Likes / dislikes</span>
-              <span class="chip">Bloqueos</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Editor de playlist, filtros, historial.</p>
-            <p class="kv"><strong>Decisión:</strong> Personalizar finamente.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 8 minutos por sesión</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Sentir control sobre la curación.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Control</span>
-              <span class="chip chip--emotion">Refinamiento</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Aumentar engagement y fit.</p>
-            <div class="chip-row">
-              <span class="chip">Sugerencias smart</span>
-              <span class="chip">Undo</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Pregunta abierta</span>
-              ¿Cómo se aprende del feedback del usuario? ¿Se ve la mejora?
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card P5 -->
-      <article class="card" data-phase="uso" data-risk="medio">
-        <div class="card__head">
-          <div class="card__step-row">
-            <div class="card__step-num">05</div>
-            <div class="card__step-name">Calendarización · Programar la semana</div>
-          </div>
-          <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
-            <span class="chip">Web app</span>
-          </div>
-        </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P5</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
-        <div class="card__body">
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Programa qué música va en cada día / momento.</p>
-            <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Slots calendario</span>
-              <span class="chip">Asignación playlist</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> Vista calendario semanal.</p>
-            <p class="kv"><strong>Decisión:</strong> Strategy musical del local.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> 5 a 15 minutos</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Set & forget para no tocar más por semanas.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Planificación</span>
-              <span class="chip chip--emotion">Curaduría</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="3"></div>
-              <span class="scale__num">3/5</span>
-            </div>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Retención por automatización.</p>
-            <div class="chip-row">
-              <span class="chip">Templates por momento</span>
-              <span class="chip">Recurrencia</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> Media.</p>
-          </div>
-          <div class="block">
-            <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Para Inbound (1 local) puede ser overkill si el dueño solo quiere "que suene". Validar default smart.
-            </div>
-          </div>
-        </div>
-        <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card P6 -->
-      <article class="card" data-phase="uso" data-risk="bajo">
+      <!-- P6 -->
+      <article class="card" data-phase="setup" data-risk="alto">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">06</div>
-            <div class="card__step-name">Uso diario · Player on / off</div>
+            <div class="card__step-name">Vincular otro player · Código + app</div>
           </div>
           <div class="card__head-chips">
-            <span class="chip chip--phase" data-phase="uso"><span class="chip__dot"></span>Uso recurrente</span>
-            <span class="chip">App player</span>
+            <span class="chip chip--phase" data-phase="setup"><span class="chip__dot"></span>Setup</span>
+            <span class="chip">Pairing · iOS</span>
           </div>
         </div>
-        <div class="card__capture">
-          <div class="placeholder">
-            <div class="placeholder__num">P6</div>
-            <div class="placeholder__label">Captura pendiente</div>
-          </div>
-        </div>
+        <div class="card__capture"><img src="images/cropped/bt15.png" alt="Brandtrack producto 6 — Vincular otro player" loading="lazy"></div>
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Operativo diario, apertura, prende el player, cierre, lo apaga.</p>
+            <p class="kv"><strong>Acción:</strong> Para usar otro dispositivo, instala la app desde app.brandtrack.fm e ingresa el código (574839). Botón "Download for iOS".</p>
             <p class="kv"><strong>Información pedida:</strong></p>
-            <div class="chip-row">
-              <span class="chip">Ninguna</span>
-            </div>
-            <p class="kv"><strong>Información que ve:</strong> UI minimal, play / pause / volumen.</p>
-            <p class="kv"><strong>Decisión:</strong> Ninguna en la mayoría de los días.</p>
-            <p class="kv"><strong>Tiempo estimado:</strong> Segundos</p>
+            <div class="chip-row"><span class="chip">Código de vinculación</span><span class="chip">Instalar app</span></div>
+            <p class="kv"><strong>Información que ve:</strong> Zona (Waiting room), código grande, instrucción de instalar y botón de descarga iOS.</p>
+            <p class="kv"><strong>Decisión:</strong> Pasar a otro dispositivo, instalar app y tipear el código.</p>
+            <p class="kv"><strong>Tiempo estimado:</strong> 2 a 5 minutos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Que funcione sin pensarlo.</p>
-            <div class="chip-row">
-              <span class="chip chip--emotion">Confianza</span>
-              <span class="chip chip--emotion">Hábito</span>
-            </div>
-            <div class="scale scale--cognitive">
-              <span class="scale__label">Carga cognitiva</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
-            <div class="scale scale--friction">
-              <span class="scale__label">Fricción</span>
-              <div class="scale__bar" data-level="1"></div>
-              <span class="scale__num">1/5</span>
-            </div>
+            <p class="kv"><strong>Objetivo:</strong> Dejar sonando el local en el equipo definitivo.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Esfuerzo técnico</span><span class="chip chip--emotion">Posible fricción</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
-            <p class="kv"><strong>Objetivo:</strong> Confiabilidad operativa, sin caídas.</p>
-            <div class="chip-row">
-              <span class="chip">Offline fallback</span>
-              <span class="chip">Auto-start</span>
-            </div>
-            <p class="kv"><strong>Claridad del CTA:</strong> N/A.</p>
+            <p class="kv"><strong>Objetivo:</strong> Vincular el player definitivo del local.</p>
+            <p class="kv"><strong>Señales de confianza:</strong></p>
+            <div class="chip-row"><span class="chip">Código corto</span><span class="chip">Instrucción paso a paso</span></div>
+            <p class="kv"><strong>Indicador de progreso:</strong> Estado de la zona (Waiting room).</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Media, solo "Download for iOS" visible.</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note">
-              <span class="note__label">Observación</span>
-              Acá la métrica clave es uptime sin intervención. Tracking de errores en device.
-            </div>
+            <div class="note"><span class="note__label">Observación</span>Cambiar de dispositivo, instalar app y tipear un código manual es la mayor fricción técnica del producto. Solo se ve descarga para iOS.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Hay soporte Android / web player? ¿Se puede usar QR en vez del código?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display">
-            <span class="risk-display__label">Riesgo de abandono</span>
-            <span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span>
-          </div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
         </div>
       </article>
 
@@ -2120,35 +1816,35 @@ ul, ol { list-style: none; }
             <div class="heatmap__head">Fricción</div>
             <div class="heatmap__head">Riesgo</div>
 
-            <div class="heatmap__row-label">P1</div>
+            <div class="heatmap__row-label">01</div>
             <div class="heatmap__cell" data-level="3">3</div>
             <div class="heatmap__cell" data-level="2">2</div>
             <div class="heatmap__cell" data-level="1">B</div>
 
-            <div class="heatmap__row-label">P2</div>
+            <div class="heatmap__row-label">02</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="2">2</div>
+            <div class="heatmap__cell" data-level="1">B</div>
+
+            <div class="heatmap__row-label">03</div>
             <div class="heatmap__cell" data-level="3">3</div>
             <div class="heatmap__cell" data-level="3">3</div>
             <div class="heatmap__cell" data-level="3">M</div>
 
-            <div class="heatmap__row-label">P3</div>
+            <div class="heatmap__row-label">04</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
+
+            <div class="heatmap__row-label">05</div>
             <div class="heatmap__cell" data-level="1">1</div>
             <div class="heatmap__cell" data-level="1">1</div>
             <div class="heatmap__cell" data-level="1">B</div>
 
-            <div class="heatmap__row-label">P4</div>
+            <div class="heatmap__row-label">06</div>
             <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">M</div>
-
-            <div class="heatmap__row-label">P5</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">M</div>
-
-            <div class="heatmap__row-label">P6</div>
-            <div class="heatmap__cell" data-level="1">1</div>
-            <div class="heatmap__cell" data-level="1">1</div>
-            <div class="heatmap__cell" data-level="1">B</div>
+            <div class="heatmap__cell" data-level="4">4</div>
+            <div class="heatmap__cell" data-level="4">A</div>
           </div>
 
           <div class="summary-stats">
@@ -2157,8 +1853,8 @@ ul, ol { list-style: none; }
               <div class="stat__label">Pasos totales</div>
             </div>
             <div class="stat">
-              <div class="stat__num">0</div>
-              <div class="stat__label">Puntos críticos</div>
+              <div class="stat__num">1</div>
+              <div class="stat__label">Punto caliente</div>
             </div>
             <div class="stat">
               <div class="stat__num">Loop</div>
@@ -2283,13 +1979,6 @@ ul, ol { list-style: none; }
     if (e.key === 'ArrowLeft') scrollByCard(-1);
   });
 
-  // Image fallback for placeholders
-  document.querySelectorAll('img[data-step]').forEach(function (img) {
-    img.addEventListener('error', function () {
-      img.style.display = 'none';
-    });
-  });
-
   // Scale bars render
   document.querySelectorAll('.scale__bar').forEach(function (bar) {
     const level = parseInt(bar.dataset.level, 10) || 0;
@@ -2315,74 +2004,84 @@ ul, ol { list-style: none; }
   // Opportunities per step — edit here to update content for all cards
   const OPPORTUNITIES = {
     'onboarding-01': [
-      'Variante de copy específica para Inbound (dueño de café), separada de la versión enterprise.',
-      'Pricing visible above the fold para reducir fricción de evaluación.',
-      'Calculadora "cuánto pagás hoy en streaming" como anchor de valor.'
+      'Variante de landing específica para negocios de un solo local, separada del mensaje multi-location enterprise.',
+      'Mostrar el precio del plan Inbound above the fold, sin obligar a pedir reunión.',
+      'Que el chat Melody ofrezca arrancar la prueba directo, no solo responder dudas.'
     ],
     'onboarding-02': [
-      'Google OAuth como opción primaria, password como secundaria.',
-      'Magic link por email, sin crear password.',
-      'Permitir explorar un preview antes de pedir cuenta.'
+      'Destacar aún más "sin tarjeta" y "se frena sola": son el mejor argumento para un local chico.',
+      'Permitir sign-up con Google / Apple desde acá.',
+      'Mostrar qué incluye la prueba (1 dispositivo, features) para setear expectativa.'
     ],
     'onboarding-03': [
-      'Opción "Otro" con campo libre para edge cases.',
-      'Detectar de la URL si vino de una landing categoría-específica y pre-seleccionar.',
-      'Mostrar mini preview de qué tipo de música arma con esa elección.'
+      'Sumar login con Google / Apple como opción primaria.',
+      'Pedir solo email + password; nombre y apellido se pueden capturar más tarde.',
+      'Permitir "mostrar password" desde el inicio para evitar el doble tipeo de confirmación.'
     ],
     'onboarding-04': [
-      'Reducir a 2 o 3 campos obligatorios, el resto opcional o post-onboarding.',
-      'Autosave entre pasos con retomar desde donde quedó.',
-      'Indicador honesto de tiempo restante ("Te faltan 2 minutos").'
+      'Usar esta respuesta para adaptar el resto del onboarding (ej: si prioriza control remoto, ir antes al setup del player).',
+      'Permitir elegir más de una opción o rankearlas.',
+      'Agregar microcopy de por qué se hace esta pregunta.'
     ],
     'onboarding-05': [
-      'Modo "Elegí por mí" basado en categoría de negocio, con override opcional.',
-      'Previews audio reales de 10s antes de cada decisión.',
-      'Reducir la cantidad de selecciones obligatorias por paso.'
+      'Pedir Whatsapp tan temprano es invasivo: hacerlo opcional o moverlo post-activación.',
+      'Autodetectar país por IP o idioma del navegador.',
+      'Explicar para qué se usa el Whatsapp (soporte, no spam).'
     ],
     'onboarding-06': [
-      'Defaults inteligentes según tipo de local (café = mañana chill, noche media).',
-      'Modo simple "siempre igual" vs modo avanzado por franja horaria.',
-      'Mover este paso al post primer-play, no es bloqueante para arrancar.'
+      'Para Inbound, "Number of locations" casi siempre es 1: dejarlo pre-cargado.',
+      'Autocompletar la dirección con Google Places.',
+      'Mostrar cuántos pasos faltan en total, no solo la barra del sub-wizard.'
     ],
     'onboarding-07': [
-      'Storytelling activo en el loading ("Estoy mezclando indie chill para tu café...").',
-      'Mostrar tracklist armándose en tiempo real, no loader silencioso.',
-      'Si tarda más de 5s, mostrar primer track listo y arrancar audio.'
+      'Lista de categorías muy larga: agregar buscador y rubros frecuentes arriba.',
+      'Para Inbound, destacar Café / Restó / Retail / Gym al tope.',
+      'Sumar opción "Otro" con campo libre.'
     ],
     'onboarding-08': [
-      'Auto-play opcional al entrar (con control de mute claro).',
-      'Tour contextual que aparece solo si no hay actividad en 30s.',
-      'Empty state estimulante con un único CTA destacado ("Hacé sonar tu local").'
+      'Pre-cargar defaults de audiencia según la categoría de negocio elegida antes.',
+      'Permitir "No estoy seguro / Elegí por mí" para no frenar al usuario.',
+      'Evaluar fusionar pasos: ya van varias pantallas de perfilado seguidas.'
+    ],
+    'onboarding-09': [
+      'El "elegí 3" obligatorio puede frenar: permitir continuar con 0 y sugerir según lo ya cargado.',
+      '21 opciones es mucho: agrupar o pre-seleccionar las más probables por rubro.',
+      'Mostrar un preview de cómo cambia la música según las identidades elegidas.'
+    ],
+    'onboarding-10': [
+      'Aprovechar el loading para storytelling con el nombre del negocio.',
+      'Mostrar el primer playlist armándose en vivo.',
+      'Si tarda, dejar entrar al dashboard y completar en background.'
     ],
     'producto-01': [
-      'CTA play sticky en bottom para que esté siempre visible.',
-      'Tour bajo demanda, no modal bloqueante.',
-      'Sección "qué hacer ahora" según uso del último login.'
+      'El modelo MyBrandtrack + Player App es clave: para un local con 1 dispositivo hay que dejarlo clarísimo.',
+      'CTA principal evidente hacia "activar el primer player".',
+      'Permitir saltar el intro si el usuario ya entendió.'
     ],
     'producto-02': [
-      'QR code para pairing rápido desde mobile al player en el local.',
-      'Detección automática de dispositivos en la misma red WiFi.',
-      'Fallback para conectar a parlante Bluetooth o auriculares.'
+      'Carrusel de bienvenida: permitir skip y volver.',
+      'Mostrar el estado real (zona, online, now playing) lo antes posible.',
+      'Onboarding contextual en vez de varias slides seguidas.'
     ],
     'producto-03': [
-      'Pregunta corta de feedback en los primeros 5 minutos ("¿Va bien?").',
-      'Detectar early churn signals (más de N skips seguidos) y ofrecer recalibrar.',
-      'Like / dislike de un toque para entrenar el modelo desde el día uno.'
+      'El schedule pre-armado es un gran acierto: destacarlo como "listo para usar".',
+      'Permitir aceptarlo con un toque y editarlo después.',
+      'Explicar que se adapta solo según los horarios cargados en el onboarding.'
     ],
     'producto-04': [
-      'Visualizar cómo el feedback ajusta la curación ("Desde tus likes, +12% jazz").',
-      'Undo y redo sobre los últimos N cambios.',
-      'Sugerencias proactivas según patrón ("Vimos que skipeás el rock duro, ¿lo bloqueamos?").'
+      'Diferenciar visualmente "este dispositivo" vs "otro dispositivo".',
+      'Para Inbound, destacar "este dispositivo" (el cel o tablet del local) como camino principal.',
+      'Mostrar qué se necesita (parlante, wifi) antes de empezar.'
     ],
     'producto-05': [
-      'Templates pre-armados por tipo de local (café boutique, restó nocturno, gym).',
-      'Set & forget automático a partir de los horarios cargados en onboarding.',
-      'Vista simplificada por defecto, modo avanzado solo si lo pedís.'
+      'Pedir feedback explícito en el primer play para entrenar el modelo desde el día uno.',
+      'Clarificar qué pasa offline y mostrar el progreso de descarga.',
+      'Confirmar visualmente "tu local ya está sonando".'
     ],
     'producto-06': [
-      'Auto-start del player al detectar conexión y horario de apertura.',
-      'Alerta si el player no se conectó cuando debería.',
-      'Modo offline si se cae internet, con biblioteca cacheada.'
+      'Instalar app + tipear código es la mayor fricción técnica: simplificar con QR.',
+      'Detectar dispositivos en la misma red para evitar el código manual.',
+      'Soportar Android / web player, no solo iOS.'
     ]
   };
 
