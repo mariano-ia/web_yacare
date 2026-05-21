@@ -1576,8 +1576,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Primer slide de un carrusel de 4. Explica la arquitectura (MyBrandtrack vs Player App, zonas, grupos, locaciones) con tres párrafos y dos renders. Para un local con un solo dispositivo es información que no necesita: ruido visual antes de poder hacer algo.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿El usuario Inbound necesita entender "zones / groups / locations" o alcanza con "tu local"?</div>
+            <div class="note"><span class="note__label">Observación</span>Primer slide de un carrusel de 4. Explica la arquitectura (MyBrandtrack vs Player App, zonas, grupos, locaciones) antes de dejar hacer nada. Productos comparables resuelven el primer ingreso con un play inmediato, no con explicación.</div>
+            <div class="note"><span class="note__label">A coordinar</span>Reordenar el primer ingreso (play inmediato + guiar por la hipótesis, ej. crear una playlist con IA como primer paso) es una decisión de producto, no solo de copy: coordinarla con los stakeholders de Brandtrack.</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1723,8 +1723,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Cierre del carrusel (slide 4). Recién acá aparece la acción que el usuario quería desde el principio: hacer sonar la música. Buena pantalla, pero llega después de tres slides de explicación.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Por qué no es esta la primera pantalla del producto?</div>
+            <div class="note"><span class="note__label">Observación</span>El usuario está en una interfaz web y acá se lo invita a salir a un player aparte para reproducir. Una opción más simple sería integrar el player dentro de la misma web, para que pueda dar play sin cambiar de lugar. La vinculación de un player externo puede contarse más adelante, cuando haga falta.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Y si el play vive dentro de la web y dejamos la conexión de un player externo para otro momento?</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1733,7 +1733,7 @@ ul, ol { list-style: none; }
       </article>
 
       <!-- P5 -->
-      <article class="card" data-phase="uso" data-risk="bajo">
+      <article class="card" data-phase="uso" data-risk="alto">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">05</div>
@@ -1748,19 +1748,19 @@ ul, ol { list-style: none; }
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> La Player App reproduce. Ve track actual ("Let's Get Back" - Matt Andersen), 1245 songs, 61% descargado y botones like / dislike.</p>
+            <p class="kv"><strong>Acción:</strong> La Player App reproduce ("Let's Get Back" - Matt Andersen), 1245 songs, 61% descargado, like / dislike.</p>
             <p class="kv"><strong>Información pedida:</strong></p>
             <div class="chip-row"><span class="chip">Like / dislike (opcional)</span></div>
-            <p class="kv"><strong>Información que ve:</strong> Nombre de la curación ("Mariano - Serene Escapes"), progreso de canción, estado de descarga.</p>
-            <p class="kv"><strong>Decisión:</strong> Validar si la música le gusta.</p>
+            <p class="kv"><strong>Información que ve:</strong> Un player aparte, separado del dashboard (playlists, calendario). Controles mínimos.</p>
+            <p class="kv"><strong>Decisión:</strong> Escuchar; cómo volver al dashboard no es evidente.</p>
             <p class="kv"><strong>Tiempo estimado:</strong> Continuo</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Confirmar que valió la pena el setup.</p>
-            <div class="chip-row"><span class="chip chip--emotion">Recompensa</span><span class="chip chip--emotion">Confianza</span></div>
-            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
-            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="1"></div><span class="scale__num">1/5</span></div>
+            <p class="kv"><strong>Objetivo:</strong> Escuchar su música y poder volver al dashboard.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Recompensa</span><span class="chip chip--emotion">Desorientación</span></div>
+            <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
@@ -1768,16 +1768,16 @@ ul, ol { list-style: none; }
             <p class="kv"><strong>Señales de confianza:</strong></p>
             <div class="chip-row"><span class="chip">1245 songs</span><span class="chip">Descarga 61%</span><span class="chip">Feedback like</span></div>
             <p class="kv"><strong>Indicador de progreso:</strong> Barra de la canción.</p>
-            <p class="kv"><strong>Claridad del CTA:</strong> Alta, controles simples.</p>
+            <p class="kv"><strong>Claridad del CTA:</strong> Controles mínimos (play); sin pausa visible ni retorno claro al dashboard.</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>El payoff real: música sonando. Acá vive el valor de la creación de playlists con IA ("Serene Escapes", 1245 temas), pero no se comunica como tal: se ve como un reproductor más. La fidelidad a los lineamientos de marca tampoco se hace visible. De estas cosas, ni se habla.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Cómo le mostramos al usuario que esta playlist la creó la IA respetando su marca?</div>
+            <div class="note"><span class="note__label">Observación</span>Acá suena la música, que es el valor. La oportunidad está en cómo se entrega: hoy es un player aparte que saca al usuario del dashboard (playlists, calendario), con controles muy acotados y sin un retorno claro. Integrarlo a la web sumaría a ese momento. Además, que la playlist la creó la IA respetando la marca todavía no se comunica.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Y si el player vive dentro de la web, junto al dashboard, en una sola interfaz?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
         </div>
       </article>
 
@@ -1797,19 +1797,19 @@ ul, ol { list-style: none; }
         <div class="card__body">
           <div class="block">
             <h5 class="block__title"><i data-lucide="mouse-pointer-click"></i>Comportamiento</h5>
-            <p class="kv"><strong>Acción:</strong> Para usar otro dispositivo, instala la app desde app.brandtrack.fm e ingresa el código (574839). Botón "Download for iOS".</p>
+            <p class="kv"><strong>Acción:</strong> Al volver del player (descargó la app y la vinculó con el código), en vez del dashboard se encuentra de nuevo con "Activate music on your first player".</p>
             <p class="kv"><strong>Información pedida:</strong></p>
             <div class="chip-row"><span class="chip">Código de vinculación</span><span class="chip">Instalar app</span></div>
-            <p class="kv"><strong>Información que ve:</strong> Zona (Waiting room), código grande, instrucción de instalar y botón de descarga iOS.</p>
-            <p class="kv"><strong>Decisión:</strong> Pasar a otro dispositivo, instalar app y tipear el código.</p>
+            <p class="kv"><strong>Información que ve:</strong> Zona (Waiting room), código y "Download for iOS". No ve la playlist ni el calendario prometidos.</p>
+            <p class="kv"><strong>Decisión:</strong> Buscar cómo llegar a lo que se le prometió.</p>
             <p class="kv"><strong>Tiempo estimado:</strong> 2 a 5 minutos</p>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Dejar sonando el local en el equipo definitivo.</p>
-            <div class="chip-row"><span class="chip chip--emotion">Esfuerzo técnico</span><span class="chip chip--emotion">Posible fricción</span></div>
+            <p class="kv"><strong>Objetivo:</strong> Volver a su dashboard con la música y el calendario.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Frustración</span><span class="chip chip--emotion">Desorientación</span></div>
             <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
-            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="4"></div><span class="scale__num">4/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="5"></div><span class="scale__num">5/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
@@ -1821,12 +1821,12 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Vinculación de un segundo dispositivo: código manual de 6 dígitos + instalar la app desde otro lado, solo iOS. Es la mayor fricción técnica del producto y para el Inbound (un solo dispositivo) puede ni aplicar.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>Para un local de un solo dispositivo, ¿este camino es necesario o es un caso de borde?</div>
+            <div class="note"><span class="note__label">Observación</span>Al volver del player, en lugar del dashboard prometido (playlists, calendario) aparece otra vez "Activate music on your first player". El usuario no encuentra lo que se le prometió, lo que puede generar frustración y que muchos no vuelvan. Además, el camino es código manual + app solo iOS, que para un local de un dispositivo puede ni aplicar.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>Al volver, ¿no debería caer en el dashboard con su música y calendario, en vez de la pantalla de activación?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="critico"><span class="chip__dot" style="background:var(--risk-critical)"></span>Crítico</span></div>
         </div>
       </article>
 
@@ -1839,7 +1839,7 @@ ul, ol { list-style: none; }
         <div class="card__body">
           <div class="summary-thesis">
             <span class="summary-thesis__label">Diagnóstico general</span>
-            <p>El producto explica todo todo el tiempo: 4 slides de intro antes de poder operar (los dos componentes, el control remoto, la bienvenida). Eso es ruido visual. Al usuario Inbound le importan tres cosas: crear playlists con IA, que la música respete los lineamientos de su marca, y poder calendarizarla. De esas tres, solo la calendarización está bien expuesta (y enterrada en el slide 3). Para la sesión 2: bajar el ruido y elevar las tres que mueven la aguja.</p>
+            <p>El punto de fondo: hoy se ofrece el mismo producto a dos buyers muy distintos, el local de un solo dispositivo (Inbound) y la cadena de cientos de zonas (enterprise). Lo que para el grande es necesario (zonas, grupos, locaciones, vincular players) para el Inbound es complejidad de más. La oportunidad es diferenciar la experiencia: para Inbound, aligerar el onboarding largo, llevar al play apenas entra (time to value), integrar dashboard y player en una sola interfaz web, y revelar los pasos de a uno según la hipótesis (por ejemplo "creá tu primer calendario" con la primera semana ya pre-armada). Reordenar esto es una decisión de producto, a coordinar con los stakeholders.</p>
           </div>
           <div class="heatmap">
             <div class="heatmap__head"></div>
@@ -1868,14 +1868,14 @@ ul, ol { list-style: none; }
             <div class="heatmap__cell" data-level="3">M</div>
 
             <div class="heatmap__row-label">05</div>
-            <div class="heatmap__cell" data-level="1">1</div>
-            <div class="heatmap__cell" data-level="1">1</div>
-            <div class="heatmap__cell" data-level="1">B</div>
-
-            <div class="heatmap__row-label">06</div>
             <div class="heatmap__cell" data-level="3">3</div>
             <div class="heatmap__cell" data-level="4">4</div>
             <div class="heatmap__cell" data-level="4">A</div>
+
+            <div class="heatmap__row-label">06</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="5">5</div>
+            <div class="heatmap__cell" data-level="5">C</div>
           </div>
 
           <div class="summary-stats">
@@ -1884,8 +1884,8 @@ ul, ol { list-style: none; }
               <div class="stat__label">Pasos totales</div>
             </div>
             <div class="stat">
-              <div class="stat__num">1</div>
-              <div class="stat__label">Punto caliente</div>
+              <div class="stat__num">2</div>
+              <div class="stat__label">Puntos calientes</div>
             </div>
             <div class="stat">
               <div class="stat__num">Loop</div>
@@ -2076,9 +2076,10 @@ ul, ol { list-style: none; }
       'Mantener: la espera está bien aprovechada y hace amena la transición.'
     ],
     'producto-01': [
-      'Para Inbound (un local, un dispositivo) el modelo de dos componentes y las zonas/grupos sobran: simplificar a "tu local + tu música".',
-      'Recortar los 4 slides de intro a uno solo accionable, o eliminarlos.',
-      'Reemplazar la explicación de arquitectura por mostrar valor: las playlists ya creadas con IA para su marca.'
+      'Dar play inmediato apenas entra (como hacen productos comparables): es el camino más corto al valor.',
+      'No contar todo junto: revelar los pasos de a uno, guiados por la hipótesis y a medida que queremos que el usuario ejecute una acción.',
+      'Si la hipótesis es que compra por la playlist con IA, que el primer paso propuesto sea crear una playlist con IA.',
+      'Para Inbound (un local, un dispositivo), el modelo de dos componentes y las zonas/grupos sobran: simplificar a "tu local + tu música".'
     ],
     'producto-02': [
       'Mostrar el estado real (online, now playing) directamente, sin un slide explicativo aparte.',
@@ -2087,23 +2088,24 @@ ul, ol { list-style: none; }
     ],
     'producto-03': [
       'Elevar la calendarización: es uno de los tres valores centrales para Inbound y hoy queda en el slide 3.',
+      'Convertirla en una tarea guiada: "creá tu primer calendario", con la primera semana ya pre-armada para que el usuario vea el valor sin tener que construir nada.',
       'Recortar el párrafo introductorio: el schedule visual se explica solo.',
       'Permitir aceptar el schedule con un toque y ajustarlo después.'
     ],
     'producto-04': [
-      'Adelantar la activación del player: es lo primero que el Inbound quiere hacer, no el slide 4.',
-      'Diferenciar visualmente "este dispositivo" (caso típico Inbound) de "otro dispositivo".',
-      'Mostrar qué se necesita (parlante, wifi) antes de empezar.'
+      'Venimos de una interfaz web: integrar el player dentro de la misma web en vez de mandar al usuario a un player aparte.',
+      'Que pueda dar play sin cambiar de lugar; lo del player externo se puede contar más adelante, no todo junto.',
+      'Para Inbound (un dispositivo), la conexión de un segundo player puede quedar como caso de borde.'
     ],
     'producto-05': [
-      'Comunicar que la playlist fue creada con IA respetando los lineamientos de su marca: es un valor central y hoy no se nombra.',
-      'Pedir feedback (like / dislike) de forma destacada en el primer play para entrenar el modelo.',
-      'Confirmar visualmente "tu local ya está sonando".'
+      'Componer dashboard y player en una sola interfaz web: que escuchar y gestionar (playlists, calendario) convivan, sin saltar a una app aparte.',
+      'Asegurar controles básicos (play / pausa) y un retorno claro al dashboard.',
+      'Comunicar que la playlist fue creada con IA respetando los lineamientos de marca: es un valor central y hoy no se nombra.'
     ],
     'producto-06': [
-      'Para Inbound, priorizar "conectar en este dispositivo" y tratar el segundo player como caso de borde.',
-      'Reemplazar el código manual por QR y soportar Android / web, no solo iOS.',
-      'Detectar dispositivos en la misma red para evitar tipear el código.'
+      'Al volver, llevar al usuario al dashboard prometido (playlist + calendario), no de nuevo a la pantalla de activación.',
+      'Para Inbound, priorizar reproducir desde la web; dejar el player externo (código + app) como camino opcional.',
+      'Si se mantiene el pairing, reemplazar el código manual por QR y soportar más que iOS.'
     ]
   };
 
