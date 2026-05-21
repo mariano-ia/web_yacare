@@ -293,8 +293,15 @@ body{
 
 /* ============================== RESPONSIVE ======================== */
 @media(max-width:860px){
+  /* En mobile manda el contenido: scroll con snap suave para que las
+     láminas más altas que la pantalla (p. ej. "El panel") se vean
+     completas en vez de quedar cortadas por el snap obligatorio.       */
+  .deck{scroll-snap-type:y proximity}
+  .slide{scroll-snap-stop:normal}
+
   .split,.cover-grid{grid-template-columns:1fr;gap:38px}
-  .steps,.grid-3,.grid-2,.compare,.checks{grid-template-columns:1fr;gap:16px}
+  .steps,.grid-2,.compare,.checks{grid-template-columns:1fr;gap:16px}
+  .grid-3{grid-template-columns:1fr 1fr;gap:14px}
   .steps{gap:32px}
   .step{padding:0}
   .escuadra{max-width:190px;margin:0}
@@ -305,6 +312,20 @@ body{
   .crop{display:none}
 }
 @media(max-width:860px) and (orientation:portrait){.slide{padding-top:100px}}
+
+/* Teléfono: una sola columna y tarjetas compactas, para que respire
+   y el scroll por "El panel" sea corto y legible.                      */
+@media(max-width:560px){
+  .slide{padding-left:24px;padding-right:24px}
+  .grid-3,.grid-2,.checks{grid-template-columns:1fr;gap:12px}
+  .card{padding:22px 22px}
+  .card .ic{margin-bottom:14px}
+  .card h3{font-size:1.06rem;margin-bottom:7px}
+  .card p{font-size:.92rem}
+  .card .idx{top:20px;right:20px}
+  .checks li{padding:16px 0}
+  .stat-num{font-size:clamp(3rem,15vw,4.6rem)}
+}
 
 /* =========================== REDUCED MOTION ====================== */
 @media(prefers-reduced-motion:reduce){
@@ -604,23 +625,42 @@ body{
   var cur = document.querySelector('.counter .cur');
   var tot = document.querySelector('.counter .tot');
   var barfill = document.querySelector('.counter .bar i');
-  var current = 0;
+  var current = -1;
   tot.textContent = String(slides.length).padStart(2,'0');
   function pad(n){ return String(n).padStart(2,'0'); }
 
+  function setCounter(i){
+    if(i === current) return;
+    current = i;
+    cur.textContent = pad(current+1);
+    barfill.style.transform = 'scaleX('+ ((current+1)/slides.length) +')';
+  }
+
+  // Revela la lámina e inicia sus contadores apenas entra en pantalla.
+  // Umbral bajo a propósito: una lámina más alta que el viewport nunca
+  // llega a mostrar el 55%, así que con un umbral alto sus animaciones
+  // no dispararían y las tarjetas quedarían invisibles.
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
         e.target.classList.add('is-visible');
-        current = slides.indexOf(e.target);
-        cur.textContent = pad(current+1);
-        barfill.style.transform = 'scaleX('+ ((current+1)/slides.length) +')';
         var nums = e.target.querySelectorAll('[data-count]');
         for(var i=0;i<nums.length;i++){ countUp(nums[i]); }
       }
     });
-  }, { root: deck, threshold: 0.55 });
+  }, { root: deck, threshold: 0.25 });
   slides.forEach(function(s){ io.observe(s); });
+
+  // El contador sigue la lámina cuyo borde superior está más cerca del
+  // tope: funciona aunque la lámina sea más alta que la pantalla.
+  function updateCounter(){
+    var best = 0, bestDist = Infinity;
+    for(var i=0;i<slides.length;i++){
+      var d = Math.abs(slides[i].getBoundingClientRect().top);
+      if(d < bestDist){ bestDist = d; best = i; }
+    }
+    setCounter(best);
+  }
 
   function countUp(el){
     if(el.dataset.done) return; el.dataset.done = '1';
@@ -642,7 +682,13 @@ body{
     else if(e.key === 'End'){ e.preventDefault(); goto(slides.length-1); }
   });
 
-  deck.addEventListener('scroll', function(){ if(deck.scrollTop > 40) deck.classList.add('scrolled'); }, { passive:true });
+  var ticking = false;
+  deck.addEventListener('scroll', function(){
+    if(deck.scrollTop > 40) deck.classList.add('scrolled');
+    if(!ticking){ ticking = true; requestAnimationFrame(function(){ updateCounter(); ticking = false; }); }
+  }, { passive:true });
+
+  updateCounter();
 })();
 </script>
 </body>
