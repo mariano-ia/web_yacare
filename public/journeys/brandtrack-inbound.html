@@ -758,6 +758,31 @@ ul, ol { list-style: none; }
   margin-bottom: 16px;
 }
 
+.summary-thesis {
+  background: linear-gradient(135deg, rgba(138,94,255,0.12) 0%, rgba(209,36,157,0.07) 100%);
+  border: 1px solid rgba(138,94,255,0.3);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.summary-thesis__label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+}
+
+.summary-thesis p {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+}
+
 .heatmap {
   display: grid;
   grid-template-columns: 60px repeat(3, 1fr);
@@ -971,7 +996,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>El mensaje "across all locations / brand guardrails" apunta a enterprise, no al dueño de un solo local.</div>
+            <div class="note"><span class="note__label">Observación</span>La propuesta de valor se entiende de inmediato y la fricción es nula. Buen punto de partida.</div>
             <div class="note"><span class="note__label">Pregunta abierta</span>¿Hay una landing distinta para Inbound o entran todos por la misma?</div>
           </div>
         </div>
@@ -1020,7 +1045,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Los reductores de riesgo están muy bien planteados. Es el mejor argumento para Inbound.</div>
+            <div class="note"><span class="note__label">Observación</span>Seguimos por buen camino. "Sin tarjeta" y la prueba que se frena sola sostienen la conversión. Fricción nula.</div>
             <div class="note"><span class="note__label">Pregunta abierta</span>¿Qué incluye exactamente la prueba (un dispositivo, horas, features)?</div>
           </div>
         </div>
@@ -1069,8 +1094,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>5 campos + crear password es la primera fricción real. No hay login social.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Pide verificación de email antes de seguir el onboarding?</div>
+            <div class="note"><span class="note__label">Observación</span>Acá empieza la fricción. Explicar las reglas de contraseña de entrada suma ruido (mejor mostrarlas solo ante error) y falta login social. Nada de más es gratis: cada elemento compite por atención.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede habilitar Google / Apple sign-in para acortar este paso?</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1079,7 +1104,7 @@ ul, ol { list-style: none; }
       </article>
 
       <!-- 04 -->
-      <article class="card" data-phase="onboarding" data-risk="bajo">
+      <article class="card" data-phase="onboarding" data-risk="medio">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">04</div>
@@ -1103,10 +1128,10 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
-            <p class="kv"><strong>Objetivo:</strong> Sentir que lo van a entender.</p>
-            <div class="chip-row"><span class="chip chip--emotion">Interés</span><span class="chip chip--emotion">Proyección</span></div>
+            <p class="kv"><strong>Objetivo:</strong> Avanzar hacia la prueba, no responder research.</p>
+            <div class="chip-row"><span class="chip chip--emotion">Impaciencia</span><span class="chip chip--emotion">Desconcierto</span></div>
             <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
-            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="2"></div><span class="scale__num">2/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
@@ -1118,17 +1143,17 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Buen arranque del onboarding: pregunta liviana y de alto valor. No se ve barra de progreso todavía.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Esta respuesta cambia el resto del flujo o es solo data?</div>
+            <div class="note"><span class="note__label">Observación</span>Paso de research que inserta fricción sin aportar a la conversión. Candidato a eliminar del flujo y capturarlo por otro canal. El camino a convertir debe ser el más corto posible.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Qué se hace hoy con esta respuesta? ¿Es accionable o solo se guarda?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="bajo"><span class="chip__dot" style="background:var(--risk-low)"></span>Bajo</span></div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
         </div>
       </article>
 
       <!-- 05 -->
-      <article class="card" data-phase="onboarding" data-risk="medio">
+      <article class="card" data-phase="onboarding" data-risk="alto">
         <div class="card__head">
           <div class="card__step-row">
             <div class="card__step-num">05</div>
@@ -1153,9 +1178,9 @@ ul, ol { list-style: none; }
           <div class="block">
             <h5 class="block__title"><i data-lucide="user"></i>Estado del usuario</h5>
             <p class="kv"><strong>Objetivo:</strong> Avanzar sin exponerse de más.</p>
-            <div class="chip-row"><span class="chip chip--emotion">Reticencia</span><span class="chip chip--emotion">Duda</span></div>
+            <div class="chip-row"><span class="chip chip--emotion">Intrusión</span><span class="chip chip--emotion">Reticencia</span></div>
             <div class="scale scale--cognitive"><span class="scale__label">Carga cognitiva</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
-            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="3"></div><span class="scale__num">3/5</span></div>
+            <div class="scale scale--friction"><span class="scale__label">Fricción</span><div class="scale__bar" data-level="5"></div><span class="scale__num">5/5</span></div>
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="target"></i>Estado del producto</h5>
@@ -1167,12 +1192,12 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Pedir Whatsapp tan temprano puede leerse como invasivo y no aporta a la personalización musical.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿El Whatsapp es obligatorio para continuar?</div>
+            <div class="note"><span class="note__label">Observación</span>El paso más invasivo del onboarding. Pedir WhatsApp es intrusivo, excluye a quien no lo usa y es el segundo research seguido cuando el objetivo es convertir.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿El WhatsApp es obligatorio para continuar?</div>
           </div>
         </div>
         <div class="card__foot">
-          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="medio"><span class="chip__dot" style="background:var(--risk-mid)"></span>Medio</span></div>
+          <div class="risk-display"><span class="risk-display__label">Riesgo de abandono</span><span class="risk-pill" data-risk="alto"><span class="chip__dot" style="background:var(--risk-high)"></span>Alto</span></div>
         </div>
       </article>
 
@@ -1216,8 +1241,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Arranca la barra de progreso recién acá. Para Inbound el N° de locales casi siempre es 1.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿La dirección tiene autocompletado?</div>
+            <div class="note"><span class="note__label">Observación</span>El email ya se capturó al crear la cuenta, no hace falta volver a pedirlo. Alcanzaría con nombre de marca y cantidad de locales.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede pre-cargar "Number of locations" en 1 para el caso Inbound?</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1265,8 +1290,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Lista larga sin buscador. Para Inbound (café, restó, retail) las categorías frecuentes no están al tope.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Existe opción "Otro" si el rubro no aparece?</div>
+            <div class="note"><span class="note__label">Observación</span>La hiperpersonalización tiene sentido para el B2B consultivo, pero este buyer es muy distinto. El universo de categorías se puede acotar a los rubros relevantes para Inbound.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede tener un set de categorías propio para Inbound, separado del enterprise?</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1314,8 +1339,8 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Ya van 4 pantallas de perfilado seguidas. La fatiga acumulada empieza a pesar acá.</div>
-            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se podría inferir audiencia desde la categoría de negocio?</div>
+            <div class="note"><span class="note__label">Observación</span>Mismo patrón que el paso anterior: perfilado extenso que alarga un onboarding ya largo. Para Inbound conviene acotar las opciones o diferir esta captura.</div>
+            <div class="note"><span class="note__label">Pregunta abierta</span>¿Se podría inferir la audiencia desde la categoría de negocio en vez de preguntarla?</div>
           </div>
         </div>
         <div class="card__foot">
@@ -1363,7 +1388,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Punto crítico: 21 opciones abstractas + selección obligatoria, al final de un perfilado largo. Pico de abandono probable.</div>
+            <div class="note"><span class="note__label">Observación</span>Pico de fricción y de abandono: identidad de marca abstracta (21 opciones, elección obligatoria) al final de 9 pasos. La raíz es tratar a este buyer igual que al gran consumidor B2B; para conversión online conviene simplificar o vender un producto menos personalizado.</div>
             <div class="note"><span class="note__label">Pregunta abierta</span>¿Se puede continuar con 0 seleccionadas o es un gate duro?</div>
           </div>
         </div>
@@ -1412,7 +1437,7 @@ ul, ol { list-style: none; }
           </div>
           <div class="block">
             <h5 class="block__title"><i data-lucide="message-circle"></i>Notas</h5>
-            <div class="note"><span class="note__label">Observación</span>Buen momento de marca. Cierra el onboarding y abre la transición al producto.</div>
+            <div class="note"><span class="note__label">Observación</span>Buen cierre: la espera se hace amena y es una oportunidad para comunicar contenido que le conviene a Brandtrack.</div>
             <div class="note"><span class="note__label">Pregunta abierta</span>¿Cuánto tarda realmente? ¿Hay riesgo de espera larga sin feedback?</div>
           </div>
         </div>
@@ -1428,6 +1453,10 @@ ul, ol { list-style: none; }
           <div class="summary-sub">Mapa de calor por paso, mientras más rojo más urgente</div>
         </div>
         <div class="card__body">
+          <div class="summary-thesis">
+            <span class="summary-thesis__label">Diagnóstico general</span>
+            <p>El onboarding tiene 9 pasos antes del primer playlist: demasiado largo para el buyer Inbound (un local, un dispositivo). La raíz es tratar a este segmento igual que al gran consumidor B2B consultivo. Para la sesión 2: acortar el flujo, diferir la hiperpersonalización al post-activación y evaluar un producto más simple, de conversión online inmediata.</p>
+          </div>
           <div class="heatmap">
             <div class="heatmap__head"></div>
             <div class="heatmap__head">Cognitiva</div>
@@ -1451,13 +1480,13 @@ ul, ol { list-style: none; }
 
             <div class="heatmap__row-label">04</div>
             <div class="heatmap__cell" data-level="2">2</div>
-            <div class="heatmap__cell" data-level="2">2</div>
-            <div class="heatmap__cell" data-level="1">B</div>
+            <div class="heatmap__cell" data-level="3">3</div>
+            <div class="heatmap__cell" data-level="3">M</div>
 
             <div class="heatmap__row-label">05</div>
             <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">3</div>
-            <div class="heatmap__cell" data-level="3">M</div>
+            <div class="heatmap__cell" data-level="5">5</div>
+            <div class="heatmap__cell" data-level="4">A</div>
 
             <div class="heatmap__row-label">06</div>
             <div class="heatmap__cell" data-level="3">3</div>
@@ -1491,7 +1520,7 @@ ul, ol { list-style: none; }
               <div class="stat__label">Pasos totales</div>
             </div>
             <div class="stat">
-              <div class="stat__num">3</div>
+              <div class="stat__num">4</div>
               <div class="stat__label">Puntos calientes</div>
             </div>
             <div class="stat">
@@ -2004,54 +2033,51 @@ ul, ol { list-style: none; }
   // Opportunities per step — edit here to update content for all cards
   const OPPORTUNITIES = {
     'onboarding-01': [
-      'Variante de landing específica para negocios de un solo local, separada del mensaje multi-location enterprise.',
-      'Mostrar el precio del plan Inbound above the fold, sin obligar a pedir reunión.',
-      'Que el chat Melody ofrezca arrancar la prueba directo, no solo responder dudas.'
+      'Mantener: la propuesta de valor ("the right song at the right time", control desde un solo lugar) se entiende rápido y no agrega fricción.',
+      'Verificar que el mensaje también hable al local de un solo dispositivo, no solo a cadenas multi-location.'
     ],
     'onboarding-02': [
-      'Destacar aún más "sin tarjeta" y "se frena sola": son el mejor argumento para un local chico.',
-      'Permitir sign-up con Google / Apple desde acá.',
-      'Mostrar qué incluye la prueba (1 dispositivo, features) para setear expectativa.'
+      'Mantener bien visibles los reductores de riesgo ("no credit card", la prueba se frena sola): son el principal driver de conversión.',
+      'Anticipar qué incluye la prueba (1 dispositivo, features) para alinear expectativas.'
     ],
     'onboarding-03': [
-      'Sumar login con Google / Apple como opción primaria.',
-      'Pedir solo email + password; nombre y apellido se pueden capturar más tarde.',
-      'Permitir "mostrar password" desde el inicio para evitar el doble tipeo de confirmación.'
+      'Sumar login con Google / Apple: bajaría la fricción de este paso de forma drástica.',
+      'Mostrar las reglas de contraseña solo ante error, no de entrada: cada elemento en pantalla compite por atención, ninguno de más es gratis.',
+      'Evaluar reducir campos: nombre y apellido pueden capturarse después.'
     ],
     'onboarding-04': [
-      'Usar esta respuesta para adaptar el resto del onboarding (ej: si prioriza control remoto, ir antes al setup del player).',
-      'Permitir elegir más de una opción o rankearlas.',
-      'Agregar microcopy de por qué se hace esta pregunta.'
+      'Sacar este paso del flujo de activación: es research que no aporta a la conversión inmediata.',
+      'Capturar este insight más adelante y en otro canal (in-app con PostHog, email, encuesta post-activación).',
+      'Regla rectora: el camino a la conversión debe ser el más corto y suave posible.'
     ],
     'onboarding-05': [
-      'Pedir Whatsapp tan temprano es invasivo: hacerlo opcional o moverlo post-activación.',
-      'Autodetectar país por IP o idioma del navegador.',
-      'Explicar para qué se usa el Whatsapp (soporte, no spam).'
+      'Eliminar o volver opcional: es el paso más invasivo del onboarding y excluye a quien no usa WhatsApp.',
+      'El contacto directo se puede pedir después de la conversión, no durante.',
+      'Ya son dos pasos seguidos de research cuando el objetivo es convertir: conviene fusionarlos o quitarlos.'
     ],
     'onboarding-06': [
-      'Para Inbound, "Number of locations" casi siempre es 1: dejarlo pre-cargado.',
-      'Autocompletar la dirección con Google Places.',
-      'Mostrar cuántos pasos faltan en total, no solo la barra del sub-wizard.'
+      'No volver a pedir el email: ya lo tenemos desde el signup.',
+      'Pedir solo lo esencial acá: nombre de la marca y cantidad de locales.',
+      'Autocompletar la dirección o diferirla: no es bloqueante para arrancar.'
     ],
     'onboarding-07': [
-      'Lista de categorías muy larga: agregar buscador y rubros frecuentes arriba.',
-      'Para Inbound, destacar Café / Restó / Retail / Gym al tope.',
-      'Sumar opción "Otro" con campo libre.'
+      'Acotar el universo de categorías: este buyer Inbound es muy distinto del B2B consultivo.',
+      'Mostrar primero los rubros relevantes para Inbound (café, restó, retail, gym) y separar el set del flujo enterprise.',
+      'Sumar buscador y opción "Otro".'
     ],
     'onboarding-08': [
-      'Pre-cargar defaults de audiencia según la categoría de negocio elegida antes.',
-      'Permitir "No estoy seguro / Elegí por mí" para no frenar al usuario.',
-      'Evaluar fusionar pasos: ya van varias pantallas de perfilado seguidas.'
+      'Acotar las opciones de perfilado de audiencia para el segmento Inbound.',
+      'Diferir la hiperpersonalización al post-activación, cuando el usuario ya es cliente.',
+      'Pre-cargar defaults según la categoría de negocio para no frenar.'
     ],
     'onboarding-09': [
-      'El "elegí 3" obligatorio puede frenar: permitir continuar con 0 y sugerir según lo ya cargado.',
-      '21 opciones es mucho: agrupar o pre-seleccionar las más probables por rubro.',
-      'Mostrar un preview de cómo cambia la música según las identidades elegidas.'
+      'Tratar a este buyer distinto del gran consumidor de Brandtrack: simplificar el perfilado o eliminarlo en esta etapa.',
+      'Considerar un producto menos personalizado pero de conversión online inmediata para este segmento.',
+      'Si se mantiene, reducir las 21 identidades y permitir continuar sin selección obligatoria.'
     ],
     'onboarding-10': [
-      'Aprovechar el loading para storytelling con el nombre del negocio.',
-      'Mostrar el primer playlist armándose en vivo.',
-      'Si tarda, dejar entrar al dashboard y completar en background.'
+      'Mantener: la espera está bien aprovechada y hace amena la transición.',
+      'Usar este momento para comunicar contenido que le conviene a Brandtrack (qué viene ahora, beneficios, primeros pasos).'
     ],
     'producto-01': [
       'El modelo MyBrandtrack + Player App es clave: para un local con 1 dispositivo hay que dejarlo clarísimo.',
