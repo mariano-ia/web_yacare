@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brandtrack · Ajustes Inbound Flow</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* GRAIN */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* SHIMMER */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* BLOBS */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ANIM */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim { opacity: 0; transform: translateY(40px); }
+.anim.anim--visible { animation: slide-in 0.8s var(--ease-out) both; }
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* DECK & SLIDES */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.slide-content { width: 100%; max-width: 1100px; margin: 0 auto; }
+
+/* COMPONENTS */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* SLIDE VARIANTS */
+.slide--cover { text-align: center; position: relative; overflow: hidden; }
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   UI MOCKUPS (interface elements)
+   ═══════════════════════════════════════ */
+.mock {
+  max-width: 320px; margin: 0 auto;
+  border: 1px solid var(--border-medium);
+  border-radius: 28px;
+  background: var(--bg-secondary);
+  padding: 22px 20px 24px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+  position: relative;
+}
+.mock::before {
+  content: ''; position: absolute; top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 4px; border-radius: 2px;
+  background: rgba(255,255,255,0.12);
+}
+.mock__brand {
+  font-family: var(--font-display); text-transform: uppercase;
+  letter-spacing: -0.02em; font-size: 0.95rem;
+  color: var(--text-secondary); margin: 14px 0 18px;
+}
+.mock__title {
+  font-family: var(--font-display); text-transform: uppercase;
+  font-size: 1.35rem; color: var(--text-primary);
+  margin-bottom: 14px; line-height: 1.05; letter-spacing: -0.03em;
+}
+.mock__label {
+  font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--text-muted); margin: 0 0 8px;
+}
+.mock__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.mock__chip {
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 6px 12px; font-size: 0.72rem; color: var(--text-secondary);
+}
+.mock__chip--on { background: var(--text-primary); color: #000; border-color: var(--text-primary); font-weight: 600; }
+.mock__textarea {
+  border: 1px solid var(--border-medium); border-radius: 12px;
+  padding: 12px 14px; font-size: 0.78rem; color: var(--text-muted);
+  min-height: 70px; margin-bottom: 16px; line-height: 1.5;
+  background: rgba(255,255,255,0.02);
+}
+.mock__btn {
+  background: var(--text-primary); color: #000; border-radius: 999px;
+  padding: 13px; text-align: center; font-weight: 700; font-size: 0.85rem;
+  font-family: var(--font-body); display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.mock__btn i { width: 16px; height: 16px; }
+.mock__hero {
+  text-align: center; padding: 8px 0 18px;
+  border-bottom: 1px solid var(--border-subtle); margin-bottom: 16px;
+}
+.mock__hero p { font-size: 0.72rem; color: var(--text-muted); margin: 10px 0 0; text-transform: uppercase; letter-spacing: 0.14em; }
+.mock__play {
+  width: 66px; height: 66px; border-radius: 50%;
+  background: var(--text-primary); color: #000;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.mock__play i { width: 26px; height: 26px; }
+.mock__task {
+  border: 1px solid var(--border-subtle); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 10px; background: rgba(255,255,255,0.02);
+  display: flex; align-items: center; gap: 12px;
+}
+.mock__task i { color: var(--text-muted); width: 20px; height: 20px; flex-shrink: 0; }
+.mock__task h5 { font-family: var(--font-display); text-transform: uppercase; font-size: 0.92rem; color: var(--text-primary); margin: 0 0 2px; letter-spacing: -0.02em; }
+.mock__task p { font-size: 0.68rem; color: var(--text-muted); margin: 0; }
+.mock__week { display: flex; gap: 3px; margin-top: 12px; }
+.mock__week span { flex: 1; height: 26px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+.mock__week span:nth-child(2) { background: rgba(255,255,255,0.12); }
+.mock__week span:nth-child(4) { background: rgba(255,255,255,0.10); }
+.mock__week span:nth-child(6) { background: rgba(255,255,255,0.16); }
+
+/* dropdown (select look) */
+.mock__select {
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid var(--border-medium); border-radius: 12px;
+  padding: 12px 14px; font-size: 0.82rem; color: var(--text-primary);
+  margin-bottom: 16px; background: rgba(255,255,255,0.03); cursor: pointer;
+}
+.mock__select i { width: 16px; height: 16px; color: var(--text-muted); }
+
+/* player mockup (resembles real product) */
+.mock__bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.mock__bar i { width: 18px; height: 18px; color: var(--text-secondary); }
+.mock__bar-title { font-family: var(--font-display); text-transform: uppercase; font-size: 0.95rem; color: var(--text-secondary); letter-spacing: -0.02em; }
+.mock__art { position: relative; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.mock__art-sq {
+  width: 92px; height: 92px; border-radius: 16px;
+  background: linear-gradient(140deg, rgba(138,94,255,0.55), rgba(209,36,157,0.3));
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.mock__art-sq i { width: 38px; height: 38px; color: rgba(255,255,255,0.9); }
+.mock__art-sq--back { position: absolute; transform: translate(30px, 16px) scale(0.82); opacity: 0.75; }
+.mock__pl-title { font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); margin-bottom: 10px; line-height: 1.15; }
+.mock__metarow { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+.mock__metachip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border-subtle); border-radius: 999px; padding: 5px 10px; font-size: 0.62rem; color: var(--text-muted); }
+.mock__metachip i { width: 11px; height: 11px; }
+.mock__now { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border-subtle); }
+.mock__now-track { font-size: 0.82rem; color: var(--text-primary); }
+.mock__now-artist { font-size: 0.68rem; color: var(--text-muted); }
+.mock__now-actions { display: flex; gap: 12px; color: var(--text-muted); }
+.mock__now-actions i { width: 18px; height: 18px; }
+.mock__progress { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 12px 0 6px; position: relative; }
+.mock__progress::after { content:''; position:absolute; left:0; top:0; height:100%; width:62%; background: var(--text-secondary); border-radius:2px; }
+.mock__times { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 14px; }
+.mock__controls { display: flex; align-items: center; justify-content: center; gap: 22px; margin-bottom: 16px; }
+.mock__controls .mock__play { width: 54px; height: 54px; margin: 0; }
+.mock__controls > i { color: var(--text-secondary); width: 22px; height: 22px; }
+.mock__values { display: flex; gap: 6px; }
+.mock__valuechip { flex: 1; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 9px 6px; text-align: center; font-size: 0.58rem; color: var(--text-secondary); background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; gap: 5px; line-height: 1.2; }
+.mock__valuechip i { width: 15px; height: 15px; color: var(--text-muted); }
+
+/* violet highlighted card */
+.card--violet { border-color: rgba(138,94,255,0.45) !important; }
+.card--violet::after { content:''; position:absolute; inset:0; border-radius:24px; box-shadow: inset 0 0 0 1px rgba(138,94,255,0.25); pointer-events:none; }
+
+/* flow strip (step reduction, horizontal scroll) */
+.flowrow { margin-bottom: 28px; }
+.flowrow__label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: 14px; }
+.flowrow__label strong { color: var(--text-secondary); font-weight: 700; }
+.flowtrack { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--border-medium) transparent; }
+.flowtrack::-webkit-scrollbar { height: 5px; }
+.flowtrack::-webkit-scrollbar-track { background: transparent; }
+.flowtrack::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 999px; }
+.flowstep {
+  flex: 0 0 auto; width: 110px; min-height: 104px; border-radius: 14px;
+  border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.02);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  text-align: center; padding: 12px 8px;
+}
+.flowstep__num { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--text-secondary); line-height: 1; }
+.flowstep__lbl { font-size: 0.6rem; color: var(--text-muted); line-height: 1.2; }
+.flowstep__tag { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--border-medium); color: var(--text-secondary); white-space: nowrap; }
+.flowstep--ghost { opacity: 0.55; }
+.flowstep--cut .flowstep__lbl { text-decoration: line-through; }
+.flowstep--new { border-color: rgba(138,94,255,0.5); }
+.flowstep--new .flowstep__num { color: var(--text-primary); }
+.flowstep--new .flowstep__lbl { color: var(--text-secondary); }
+.flowstep--result { border-color: var(--text-primary); background: rgba(255,255,255,0.06); }
+.flowstep--result .flowstep__num { color: var(--text-primary); display:flex; align-items:center; justify-content:center; }
+.flowstep--result .flowstep__num i { width: 24px; height: 24px; }
+.flowstep--result .flowstep__lbl { color: var(--text-secondary); }
+
+/* openable dropdown in mockup */
+.mock__options { border: 1px solid var(--border-medium); border-radius: 12px; margin: -8px 0 16px; overflow: hidden; background: var(--bg-elevated); }
+.mock__option { padding: 11px 14px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; border-bottom: 1px solid var(--border-subtle); }
+.mock__option:last-child { border-bottom: none; }
+.mock__option:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+
+/* mockup disclaimer badge */
+.mock-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 5px 12px; margin-top: 18px;
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.mock-badge i { width: 12px; height: 12px; }
+
+/* nurturing momentos (sí/no branches) */
+.branch { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; color: var(--text-secondary); margin-top: 14px; line-height: 1.45; }
+.branch__tag { flex: 0 0 auto; font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border-medium); color: var(--text-muted); margin-top: 1px; }
+.branch__tag--yes { background: var(--text-primary); color: #000; border-color: var(--text-primary); }
+.nurt-foot { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 28px; font-size: 0.82rem; color: var(--text-muted); }
+.nurt-foot span { display: inline-flex; align-items: center; gap: 8px; }
+.nurt-foot i { width: 14px; height: 14px; }
+
+/* proposed-flow screens (overview slide) */
+.flow-screens { display: flex; align-items: flex-start; justify-content: safe center; gap: 18px; overflow-x: auto; padding: 4px 2px 14px; scrollbar-width: thin; scrollbar-color: var(--border-medium) transparent; }
+.flow-screens::-webkit-scrollbar { height: 6px; }
+.flow-screens::-webkit-scrollbar-track { background: transparent; }
+.flow-screens::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 999px; }
+.fscreen { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.fphone { width: 216px; height: 430px; border: 1px solid var(--border-medium); border-radius: 26px; background: var(--bg-secondary); overflow: hidden; box-shadow: 0 16px 50px rgba(0,0,0,0.45); position: relative; }
+.fphone img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.fscreen__shot { height: 430px; display: flex; align-items: center; justify-content: center; }
+.fscreen__shot img { height: 100%; width: auto; object-fit: contain; border-radius: 10px; display: block; }
+.fscreen__cap { display: flex; align-items: center; gap: 8px; }
+.fscreen__num { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-medium); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); }
+.fscreen__num--end { background: var(--text-primary); color: #000; border-color: var(--text-primary); }
+.fscreen__lbl { font-size: 0.78rem; color: var(--text-secondary); }
+
+/* mini mock inside fphone */
+.fmock { width: 100%; height: 100%; padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; }
+.fmock__brand { font-family: var(--font-display); text-transform: uppercase; letter-spacing: -0.02em; font-size: 0.8rem; color: var(--text-secondary); }
+.fmock__h { font-family: var(--font-display); text-transform: uppercase; letter-spacing: -0.02em; font-size: 1.05rem; color: var(--text-primary); line-height: 1.05; margin-bottom: 2px; }
+.fmock__lbl { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+.fmock__btn { border: 1px solid var(--border-medium); border-radius: 10px; padding: 9px; text-align: center; font-size: 0.72rem; color: var(--text-secondary); }
+.fmock__btn--solid { background: var(--text-primary); color: #000; border-color: var(--text-primary); font-weight: 600; }
+.fmock__note { font-size: 0.56rem; color: var(--text-muted); line-height: 1.4; margin-top: 2px; }
+.fmock__field { border: 1px solid var(--border-medium); border-radius: 10px; padding: 9px 11px; font-size: 0.7rem; color: var(--text-primary); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); }
+.fmock__chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.fmock__chips span { border: 1px solid var(--border-medium); border-radius: 999px; padding: 4px 9px; font-size: 0.58rem; color: var(--text-secondary); }
+.fmock__area { border: 1px solid var(--border-medium); border-radius: 10px; padding: 9px 11px; font-size: 0.6rem; color: var(--text-muted); min-height: 40px; background: rgba(255,255,255,0.02); line-height: 1.4; }
+.fmock__bar { display: flex; justify-content: space-between; align-items: center; color: var(--text-secondary); }
+.fmock__bar i { width: 14px; height: 14px; }
+.fmock__bartitle { font-family: var(--font-display); text-transform: uppercase; font-size: 0.78rem; }
+.fmock__art { height: 96px; border-radius: 14px; background: linear-gradient(140deg, rgba(138,94,255,0.5), rgba(209,36,157,0.3)); display: flex; align-items: center; justify-content: center; }
+.fmock__art i { width: 34px; height: 34px; color: rgba(255,255,255,0.9); }
+.fmock__pl { font-size: 0.82rem; color: var(--text-primary); font-weight: 600; line-height: 1.2; }
+.fmock__playc { display: flex; justify-content: center; margin: 4px 0; }
+.fmock__play { width: 46px; height: 46px; border-radius: 50%; background: var(--text-primary); color: #000; display: flex; align-items: center; justify-content: center; }
+.fmock__play i { width: 18px; height: 18px; }
+.fmock__vchips { display: flex; gap: 5px; margin-top: auto; }
+.fmock__vchips span { flex: 1; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 6px 3px; text-align: center; font-size: 0.5rem; color: var(--text-secondary); }
+
+/* TOOLBAR */
+.deck-toolbar {
+  position: fixed; top: 16px; right: 16px; z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(0, 0, 0, 0.8); }
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* COUNTER */
+.slide-counter {
+  position: fixed; bottom: 28px; right: 32px; z-index: 9998;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 500;
+  color: var(--text-muted); letter-spacing: 0.08em;
+  pointer-events: none; opacity: 0.6; transition: opacity 0.3s;
+}
+
+/* CHAT */
+.chat-msg { max-width: 85%; padding: 12px 18px; border-radius: 16px; font-size: 0.88rem; line-height: 1.55; }
+.chat-msg p { color: var(--text-secondary); margin: 0; font-size: 0.88rem; }
+.chat-msg--user { align-self: flex-end; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-medium); }
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant { align-self: flex-start; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); }
+.chat-chip {
+  background: transparent; border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 8px 16px; color: var(--text-secondary);
+  font-family: var(--font-body); font-size: 0.78rem; cursor: pointer;
+  transition: all 0.2s var(--ease-out); white-space: nowrap;
+}
+.chat-chip:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(255,255,255,0.05); }
+.chat-typing { align-self: flex-start; padding: 12px 18px; font-size: 0.85rem; color: var(--text-muted); }
+.chat-typing::after { content: '...'; animation: typing-dots 1.2s steps(3) infinite; }
+@keyframes typing-dots { 0% { content: '.'; } 33% { content: '..'; } 66% { content: '...'; } }
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .deck { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+  .slide { min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; padding: 40px 20px; justify-content: center; overflow-y: auto; }
+  .slide-content { max-width: 100%; width: 100%; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+  .stat-number { font-size: 2.5rem; }
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .blob { width: 200px !important; height: 200px !important; }
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+  .slide-counter { display: none; }
+  .mock { max-width: 280px; }
+  #chat-container { border-radius: 16px; }
+  .anim { opacity: 1; transform: none; animation: none; }
+}
+
+/* SCROLL HINT */
+.scroll-hint {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text-muted); font-family: var(--font-body); font-size: 0.65rem;
+  font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite; transition: opacity 0.6s ease; pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* PRINT */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<div class="slide-counter" id="slide-counter">1 / 11</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Ajustes al Inbound Flow</h1>
+    <p class="subtitle anim">Recomendaciones enfocadas en una sola cosa: mejorar la conversión del flujo Inbound.</p>
+    <p class="meta anim" style="margin-top:24px;">Brandtrack · Producto · Confidencial</p>
+  </div>
+</section>
+
+<!-- ══════════════ UN PRODUCTO, DOS USUARIOS ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">El insight</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Un producto, dos usuarios diferentes</h2>
+    <p class="anim" style="max-width:880px; margin-bottom:32px;">Nuestra hipótesis: parte de lo que hay que resolver es que el producto le habla igual a dos usuarios que necesitan cosas distintas. Uno necesita simplificación. El otro, más información e hiperpersonalización. El desafío es atender a los dos sin traicionar la propuesta de valor del producto.</p>
+    <div class="grid-2x2 anim" style="grid-template-columns:1fr 1fr;">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Enterprise</h4>
+        <p style="font-size:0.95rem;">Cadenas con decenas o cientos de zonas. Necesitan grupos, locaciones, control de muchos espacios e hiperpersonalización. Esa profundidad les suma.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Inbound</h4>
+        <p style="font-size:0.95rem;">Un local, un dispositivo. Quieren poner play y olvidarse. La misma profundidad que ayuda al grande, acá los frena.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 4. EL PRINCIPIO ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">El principio</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Contar el valor vs explicar el producto</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:36px;">Que el usuario experimente el valor cuanto antes, y que cada paso lo acerque a una de las tres cosas que de verdad le importan. Estos tres aspectos los elegimos en consenso con el equipo.</p>
+    <ul class="icon-list anim">
+      <li>
+        <i data-lucide="sparkles" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Crear su playlist con IA</strong>, a la medida de su marca</div>
+      </li>
+      <li>
+        <i data-lucide="calendar-clock" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Programar la música de la semana</strong> y olvidarse</div>
+      </li>
+      <li>
+        <i data-lucide="radio" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Manejar el local a distancia</strong>, sin depender de quién está en el mostrador</div>
+      </li>
+    </ul>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ONBOARDING · DEL FORMULARIO AL VALOR ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="section-num">01</div>
+  <div class="slide-content">
+    <div class="split" style="gap:48px; align-items:flex-start;">
+      <div>
+        <div class="label anim">Onboarding · de 9 a 4 pasos</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Del formulario al valor</h2>
+        <p class="anim">Pasamos de 9 pasos a 4 sin cambiar lo que ya existe. Sacamos del inicio lo que no acerca al play y lo movemos a después.</p>
+        <p class="anim">A la derecha, exactamente lo que cambia.</p>
+      </div>
+      <div class="anim" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card--sm card--accent-1" style="padding:18px 20px;">
+          <h4 style="font-size:1.05rem; margin-bottom:6px;">Cuenta sin fricción</h4>
+          <p style="font-size:0.9rem; margin:0;">Login con Google o Apple, o acceso por link mágico.</p>
+        </div>
+        <div class="card card--sm card--accent-2" style="padding:18px 20px;">
+          <h4 style="font-size:1.05rem; margin-bottom:6px;">Menos research por delante</h4>
+          <p style="font-size:0.9rem; margin:0;">Lo que no acerca al play se mueve a después de la activación.</p>
+        </div>
+        <div class="card card--sm card--accent-3" style="padding:18px 20px;">
+          <h4 style="font-size:1.05rem; margin-bottom:6px;">Solo los datos que importan</h4>
+          <p style="font-size:0.9rem; margin:0;">Nombre y dirección del local (necesaria por derechos), con ubicación sugerida.</p>
+        </div>
+        <div class="card card--sm card--accent-4" style="padding:18px 20px;">
+          <h4 style="font-size:1.05rem; margin-bottom:6px;">La IA arma la música</h4>
+          <p style="font-size:0.9rem; margin:0;">Tres pantallas de perfilado se vuelven una: rubro más prompt, y listo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ONBOARDING · EL FLUJO DE UN VISTAZO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">El flujo, de un vistazo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Mucho más corto</h2>
+    <div class="flowrow anim">
+      <div class="flowrow__label">Hoy · <strong>9 pasos</strong> antes del valor</div>
+      <div class="flowtrack">
+        <div class="flowstep flowstep--ghost"><div class="flowstep__num">1</div><div class="flowstep__lbl">Prueba</div></div>
+        <div class="flowstep flowstep--ghost"><div class="flowstep__num">2</div><div class="flowstep__lbl">Cuenta</div></div>
+        <div class="flowstep flowstep--ghost flowstep--cut"><div class="flowstep__num">3</div><div class="flowstep__lbl">Prioridad</div><div class="flowstep__tag">Se saca</div></div>
+        <div class="flowstep flowstep--ghost flowstep--cut"><div class="flowstep__num">4</div><div class="flowstep__lbl">WhatsApp</div><div class="flowstep__tag">Se saca</div></div>
+        <div class="flowstep flowstep--ghost"><div class="flowstep__num">5</div><div class="flowstep__lbl">Datos del local</div></div>
+        <div class="flowstep flowstep--ghost flowstep--merge"><div class="flowstep__num">6</div><div class="flowstep__lbl">Categoría</div><div class="flowstep__tag">Fusión</div></div>
+        <div class="flowstep flowstep--ghost flowstep--merge"><div class="flowstep__num">7</div><div class="flowstep__lbl">Audiencia</div><div class="flowstep__tag">Fusión</div></div>
+        <div class="flowstep flowstep--ghost flowstep--merge"><div class="flowstep__num">8</div><div class="flowstep__lbl">Identidad</div><div class="flowstep__tag">Fusión</div></div>
+        <div class="flowstep flowstep--ghost"><div class="flowstep__num">9</div><div class="flowstep__lbl">Loading</div></div>
+      </div>
+    </div>
+    <div class="flowrow anim">
+      <div class="flowrow__label">Propuesto · <strong>4 pasos</strong> y entrás al producto</div>
+      <div class="flowtrack">
+        <div class="flowstep flowstep--new"><div class="flowstep__num">1</div><div class="flowstep__lbl">Prueba gratis</div></div>
+        <div class="flowstep flowstep--new"><div class="flowstep__num">2</div><div class="flowstep__lbl">Crear cuenta</div></div>
+        <div class="flowstep flowstep--new"><div class="flowstep__num">3</div><div class="flowstep__lbl">Datos del local</div></div>
+        <div class="flowstep flowstep--new"><div class="flowstep__num">4</div><div class="flowstep__lbl">Tu música con IA</div></div>
+        <div class="flowstep flowstep--result"><div class="flowstep__num"><i data-lucide="play"></i></div><div class="flowstep__lbl">El producto</div></div>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:8px; font-size:0.95rem; color:var(--text-muted);">Sacamos 2 pasos de research (prioridad y WhatsApp) y fusionamos 3 de perfilado en 1. Misma propuesta de valor, la mitad del camino.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ONBOARDING · ASÍ QUEDARÍA ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">Onboarding · cómo quedaría</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">Los 4 pasos, en pantallas</h2>
+    <p class="anim" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:22px;">Lo que queda, lo nuevo y el aterrizaje. Pasos 1 y 3 son del producto de hoy; 2, 4 y 5 son mockups ilustrativos.</p>
+  </div>
+  <div class="flow-screens anim" style="width:100%; max-width:100%;">
+
+      <div class="fscreen">
+        <div class="fscreen__shot"><img src="../journeys/images/cropped/bt01.png" alt="Prueba gratis"></div>
+        <div class="fscreen__cap"><span class="fscreen__num">1</span><span class="fscreen__lbl">Prueba gratis</span></div>
+      </div>
+
+      <div class="fscreen">
+        <div class="fphone">
+          <div class="fmock">
+            <div class="fmock__brand">brandtrack</div>
+            <div class="fmock__h">Creá tu cuenta</div>
+            <div class="fmock__btn fmock__btn--solid">Continuar con Google</div>
+            <div class="fmock__btn fmock__btn--solid">Continuar con Apple</div>
+            <div class="fmock__btn">Continuar con email</div>
+            <div class="fmock__note">Te mandamos un link para entrar. Sin contraseñas ni spam.</div>
+          </div>
+        </div>
+        <div class="fscreen__cap"><span class="fscreen__num">2</span><span class="fscreen__lbl">Crear cuenta</span></div>
+      </div>
+
+      <div class="fscreen">
+        <div class="fscreen__shot"><img src="../journeys/images/cropped/bt05.png" alt="Datos del local"></div>
+        <div class="fscreen__cap"><span class="fscreen__num">3</span><span class="fscreen__lbl">Datos del local</span></div>
+      </div>
+
+      <div class="fscreen">
+        <div class="fphone">
+          <div class="fmock">
+            <div class="fmock__brand">brandtrack</div>
+            <div class="fmock__h">¿Qué suena en tu local?</div>
+            <div class="fmock__lbl">Categoría</div>
+            <div class="fmock__field">Categoría negocio 1 <i data-lucide="chevron-down" style="width:13px;height:13px;"></i></div>
+            <div class="fmock__lbl">Brand profile</div>
+            <div class="fmock__chips"><span>Brand profile 1</span><span>Brand profile 2</span><span>Brand profile 3</span></div>
+            <div class="fmock__lbl">Tu música</div>
+            <div class="fmock__area">Describí lo que querés que suene en tu local…</div>
+            <div class="fmock__btn fmock__btn--solid">Crear mi música</div>
+          </div>
+        </div>
+        <div class="fscreen__cap"><span class="fscreen__num">4</span><span class="fscreen__lbl">Tu música con IA</span></div>
+      </div>
+
+      <div class="fscreen">
+        <div class="fphone">
+          <div class="fmock">
+            <div class="fmock__bar"><i data-lucide="menu"></i><span class="fmock__bartitle">Mi local</span><i data-lucide="bell"></i></div>
+            <div class="fmock__art"><i data-lucide="audio-lines"></i></div>
+            <div class="fmock__pl">Electronic Nomads &amp; Chill Beats</div>
+            <div class="fmock__playc"><div class="fmock__play"><i data-lucide="play"></i></div></div>
+            <div class="fmock__vchips"><span>Playlist IA</span><span>Programá</span><span>Conectá</span></div>
+          </div>
+        </div>
+        <div class="fscreen__cap"><span class="fscreen__num fscreen__num--end"><i data-lucide="play" style="width:11px;height:11px;"></i></span><span class="fscreen__lbl">Home, ya suena</span></div>
+      </div>
+
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 10. LOS 3 VALORES ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="section-num">02</div>
+  <div class="slide-content">
+    <div class="label anim">Momento de activación</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Acompañamos al usuario a cumplir 3 tareas</h2>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <i data-lucide="sparkles" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:10px;">Tu playlist con IA</h4>
+        <p style="font-size:0.92rem;">Música a la medida de tu marca, creada con inteligencia artificial. Lo que el usuario vino a buscar.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <i data-lucide="calendar-clock" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:10px;">Programá la semana</h4>
+        <p style="font-size:0.92rem;">Un calendario ya armado. En dos clics, la música de toda la semana resuelta. Calendarizá una vez y olvidate.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <i data-lucide="radio" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:10px;">Control a distancia</h4>
+        <p style="font-size:0.92rem;">Conectá tu local y definí qué suena, sin depender de quién está en el mostrador.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ NURTURING · LOS 3 MOMENTOS ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="section-num">03</div>
+  <div class="slide-content">
+    <div class="label anim">Nurturing · primeros pasos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Aspectos que ponen en riesgo la conversión</h2>
+    <p class="anim" style="max-width:880px; margin-bottom:34px;">Logramos que vea valor rápido, pero todavía no sabemos si entendió el producto completo. Estos son los puntos que, si no los resolvemos, ponen en riesgo la compra.</p>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <i data-lucide="alert-triangle" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:12px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Programar la próxima semana</h4>
+        <p style="font-size:0.92rem;">Solo le dejamos lista la primera. ¿Entiende cómo programar la siguiente? Si no, deja de usar el producto.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <i data-lucide="alert-triangle" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:12px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Diferencias con Spotify</h4>
+        <p style="font-size:0.92rem;">Todavía no están claras. Si no las ve, no entiende por qué pagar en vez de usar una playlist común.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <i data-lucide="alert-triangle" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:12px;"></i>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Tareas sin cumplir</h4>
+        <p style="font-size:0.92rem;">Qué pasa si no completa las tareas como las planteamos. Necesitamos tenerlo claro.</p>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:26px; font-size:0.95rem; color:var(--text-muted);">Esto es el comienzo. De a poco sumamos el sistema completo: email, redes sociales, influencers.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ PRÓXIMOS PASOS ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Próximos pasos</div>
+        <h2 class="shimmer-text anim" style="font-size:2.4rem;">Cómo seguimos</h2>
+      </div>
+      <div class="anim">
+        <ul class="checklist">
+          <li><i data-lucide="check"></i> Definir si simplificamos el producto</li>
+          <li><i data-lucide="check"></i> Qué inputs necesitamos para la playlist con IA</li>
+          <li><i data-lucide="check"></i> Diseño de interfaces definitivas</li>
+          <li><i data-lucide="check"></i> Mapear el detalle del ciclo de nurturing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 14. GRACIAS ══════════════ -->
+<section class="slide slide--thanks" data-slide="10">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 15. CHAT ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Dudas sobre estos ajustes?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime los ajustes</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué de 9 a 4 pasos?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son los 3 valores?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo lo validamos sin riesgo?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es el ciclo de nurturing?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué tratar distinto al Inbound?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde sobre el contenido de esta presentación. Puede cometer errores. Para coordinar, escribí a contact@yacare.io.
+    </p>
+  </div>
+</section>
+
+</div><!-- end .deck -->
+
+<script>
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) { hintHidden = true; hint.classList.add('hidden'); }
+}, { passive: true });
+
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+if (!isMobile) { deck.addEventListener('scroll', updateCounter, { passive: true }); updateCounter(); }
+
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+    switch (e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        break;
+      case 'Home': e.preventDefault(); deck.scrollTo({ top: 0, behavior: 'smooth' }); break;
+      case 'End': e.preventDefault(); deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' }); break;
+    }
+  });
+}
+
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      anims.forEach(function(el) { el.classList.toggle('anim--visible', entry.isIntersecting); });
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(function(slide) { animObserver.observe(slide); });
+}
+
+function printPDF() { window.print(); }
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A
+// ═══════════════════════════════════════
+const QA_ENTRIES = [
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme sobre los ajustes al onboarding, la home del producto, los tres valores, el ciclo de nurturing o cómo proponemos validarlo.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'dale'],
+    answer: '¡De nada! Si te queda alguna duda sobre la propuesta, estoy acá. También podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda, volvé a consultar acá o escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'en pocas palabras', 'ajustes'],
+    answer: 'La propuesta diferencia la experiencia del usuario Inbound (un local, un dispositivo) de la del enterprise. El onboarding pasa de 9 a 4 pasos para llegar antes al valor: cuenta con login social, menos research por delante, solo los datos esenciales y una pantalla donde la IA arma la música a partir de un prompt. En el producto, la persona aterriza en una sola interfaz web con play inmediato y dos tareas (programar la semana y conectar el local). Se suma un ciclo de nurturing y se propone validar todo corriendo el flujo nuevo en paralelo al actual.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'opciones'],
+    answer: 'Podés preguntarme sobre: el onboarding de 4 pasos, qué se elimina y por qué, la pantalla de IA, la home del producto, los tres valores, el ciclo de nurturing, cómo lo validamos, la diferencia entre Inbound y enterprise, o los próximos pasos.'
+  },
+  {
+    keywords: ['9 a 4', '9 a 4 pasos', 'cuatro pasos', '4 pasos', 'reducir', 'acortar', 'menos pasos', 'onboarding'],
+    answer: 'El onboarding pasa de 9 a 4 pasos. Quedan: (1) la prueba gratis, (2) crear la cuenta con login social o link mágico, (3) nombre y dirección del local (la dirección es necesaria para declarar los derechos de la música), y (4) una sola pantalla donde la IA arma la música. Las preguntas que no acercan al play se mueven a después de la activación. En 4 pasos el usuario ya está escuchando música con IA.'
+  },
+  {
+    keywords: ['eliminar', 'sacamos', 'quitar', 'research', 'whatsapp', 'qué sacamos', 'que sacamos', 'eliminamos'],
+    answer: 'Se sacan del inicio los pasos que no acercan al valor: la pregunta de "qué es lo más importante" y el pedido de WhatsApp. Ese research es valioso, pero se puede capturar después, dentro del producto, con encuestas in app. El objetivo del onboarding es convertir, así que el camino tiene que ser lo más corto posible.'
+  },
+  {
+    keywords: ['dirección', 'direccion', 'derechos', 'ubicación', 'ubicacion', 'datos', 'brand name', 'nombre del local'],
+    answer: 'En el paso de datos quedan el nombre del local y la dirección. La dirección es necesaria para declarar los derechos de la música, por eso se pide al inicio (si no, no se completa nunca). La ubicación se sugiere por defecto y el usuario solo confirma, para bajar la fricción.'
+  },
+  {
+    keywords: ['cuenta', 'login', 'google', 'apple', 'magic link', 'link mágico', 'magico', 'email', 'contraseña', 'password', 'registro'],
+    answer: 'La creación de cuenta se simplifica a login con Google o Apple. Para quien prefiera el email, hay un acceso por link mágico, sin tener que inventar una contraseña, con un microcopy cálido porque sigue siendo un pedido de dato.'
+  },
+  {
+    keywords: ['ia', 'inteligencia artificial', 'playlist', 'prompt', 'chips', 'categoría', 'categoria', 'rubro', 'pantalla', 'magia'],
+    answer: 'Las tres pantallas de perfilado se vuelven una sola: el usuario elige su rubro, que propone unos chips y un prompt de ejemplo, y describe en lenguaje natural lo que quiere sonar. La IA arma la música. La hiperpersonalización no se pierde, cambia de lugar: deja de ser un formulario y pasa a ser el momento de valor. El loading después refuerza que la IA está haciendo magia.'
+  },
+  {
+    keywords: ['home', 'aterrizaje', 'producto', 'play', 'dashboard', 'player', 'interfaz', 'web'],
+    answer: 'Al terminar el onboarding la playlist ya está lista. El usuario entra a una sola interfaz web donde conviven el dashboard y el player, con play inmediato. La home muestra las acciones que le importan (no explica la arquitectura): su música lista para sonar, y dos tareas, programar la semana y conectar el local.'
+  },
+  {
+    keywords: ['valores', '3 valores', 'tres valores', 'beneficios', 'qué le contamos', 'que le contamos'],
+    answer: 'Le contamos solo tres valores: (1) tu playlist con IA, música a la medida de tu marca; (2) programá la semana, un calendario ya armado que en dos clics resuelve la música de toda la semana; (3) control a distancia, conectá tu local y definí qué suena sin depender de quién está en el mostrador.'
+  },
+  {
+    keywords: ['calendario', 'calendarización', 'calendarizacion', 'programar', 'semana', 'schedule', 'agenda'],
+    answer: 'La calendarización se presenta como una tarea recomendada: "programá tu primera semana", con una semana ya precargada. En dos clics el usuario ve el valor de dejar resuelta la música de toda la semana, sin armar nada desde cero. Mostramos el valor con hechos, no con texto.'
+  },
+  {
+    keywords: ['control', 'distancia', 'remoto', 'staff', 'empleado', 'dispositivo', 'conectar'],
+    answer: 'El control a distancia se comunica con el beneficio más fuerte para un dueño: la música de tu local bajo tu control, sin que dependa de quién está en el mostrador. Conectás tu local y definís qué suena, sin tener que estar ahí.'
+  },
+  {
+    keywords: ['nurturing', 'notificaciones', 'notificación', 'notificacion', 'emails', 'push', 'ciclo', 'mensajes'],
+    answer: 'Después del primer valor hay un ciclo de notificaciones por email y push: Día 0 ("tu música ya suena"), Día 1 a 2 (mirá la semana programada), mitad del trial (tu playlist aprendió de vos), antes de que termine (así suena sin que pienses), cierre (seguí sin cortes) y re-enganche si el local se queda en silencio. Cada mensaje empuja uno de los tres valores y acerca a la conversión.'
+  },
+  {
+    keywords: ['validar', 'validamos', 'medir', 'test', 'experimento', 'paralelo', 'reemplazar', 'riesgo', 'data', 'datos', 'conversión', 'conversion'],
+    answer: 'No proponemos apagar el flujo actual. Corremos el nuevo en paralelo, con usuarios reales, y medimos cuál convierte mejor. La playlist prompteada sigue siendo hiperpersonalización, así que no se pierde el activo, se pone a competir. Decide la data, no las opiniones.'
+  },
+  {
+    keywords: ['inbound', 'enterprise', 'dos usuarios', 'diferente', 'distinto', 'zonas', 'grupos', 'upgrade', 'plan', 'mi local'],
+    answer: 'Hoy se ofrece el mismo producto a dos usuarios muy distintos: el enterprise (cadenas con decenas o cientos de zonas, que necesitan grupos y locaciones) y el Inbound (un local, un dispositivo, que solo quiere poner play y olvidarse). La complejidad que ayuda al grande, al Inbound le resta. Por eso para Inbound desaparecen zonas y grupos (es "mi local") y querer más de uno se vuelve una mejora de plan.'
+  },
+  {
+    keywords: ['próximos', 'proximos', 'siguiente', 'pasos', 'seguir', 'avanzar', 'roadmap', 'qué sigue', 'que sigue'],
+    answer: 'Próximos pasos: definir con producto qué inputs hacen smart a la IA (chips y prompt), diseñar el onboarding de 4 pasos y la home, preparar el experimento para correr ambos flujos y mapear el detalle del ciclo de nurturing.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'quiénes', 'quienes', 'equipo', 'contacto'],
+    answer: 'Yacaré (yacare.io) acompaña a Brandtrack en el rediseño de la experiencia Inbound. Para coordinar, escribí a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o escribir a contact@yacare.io. También podés preguntarme sobre el onboarding de 4 pasos, los tres valores, el nurturing o cómo proponemos validarlo.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,;:]/g, '');
+  let bestMatch = null; let bestScore = 0;
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) score += kwNorm.length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+  setTimeout(function() {
+    typing.remove();
+    const reply = findBestAnswer(text);
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+// ═══════════════════════════════════════
+// MOCKUP · category dropdown (illustrative)
+// ═══════════════════════════════════════
+function toggleCat(e) {
+  if (e) e.stopPropagation();
+  const o = document.getElementById('mk-options');
+  if (o) o.style.display = (o.style.display === 'none' || !o.style.display) ? 'block' : 'none';
+}
+const BRAND_PROFILES = {
+  1: ['Brand profile 1', 'Brand profile 2', 'Brand profile 3'],
+  2: ['Brand profile 4', 'Brand profile 5'],
+  3: ['Brand profile 6', 'Brand profile 7', 'Brand profile 8', 'Brand profile 9'],
+  4: ['Brand profile 10', 'Brand profile 11', 'Brand profile 12']
+};
+function pickCat(n) {
+  const cat = document.getElementById('mk-cat');
+  const opts = document.getElementById('mk-options');
+  const chips = document.getElementById('mk-chips');
+  if (cat) cat.textContent = 'Categoría negocio ' + n;
+  if (opts) opts.style.display = 'none';
+  if (chips) chips.innerHTML = BRAND_PROFILES[n].map(function (b) { return '<span class="mock__chip">' + b + '</span>'; }).join('');
+}
+</script>
+</body>
+</html>
