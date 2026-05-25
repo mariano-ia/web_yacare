@@ -475,6 +475,8 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .fmock__bar { display: flex; justify-content: space-between; align-items: center; color: var(--text-secondary); }
 .fmock__bar i { width: 14px; height: 14px; }
 .fmock__bartitle { font-family: var(--font-display); text-transform: uppercase; font-size: 0.78rem; }
+.fmock__alert { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-medium); border-left: 3px solid rgba(138,94,255,0.7); border-radius: 8px; padding: 7px 9px; font-size: 0.6rem; color: var(--text-secondary); background: rgba(255,255,255,0.02); line-height: 1.25; }
+.fmock__alert i { width: 13px; height: 13px; color: var(--text-muted); flex-shrink: 0; }
 .fmock__art { height: 96px; border-radius: 14px; background: linear-gradient(140deg, rgba(138,94,255,0.5), rgba(209,36,157,0.3)); display: flex; align-items: center; justify-content: center; }
 .fmock__art i { width: 34px; height: 34px; color: rgba(255,255,255,0.9); }
 .fmock__pl { font-size: 0.82rem; color: var(--text-primary); font-weight: 600; line-height: 1.2; }
@@ -753,7 +755,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <section class="slide" data-slide="6">
   <div class="slide-content">
     <div class="label anim">Onboarding · cómo quedaría</div>
-    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">Los 4 pasos, en pantallas</h2>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">El nuevo flujo</h2>
     <p class="anim" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:22px;">Lo que queda, lo nuevo y el aterrizaje. Pasos 1 y 3 son del producto de hoy; 2, 4 y 5 son mockups ilustrativos.</p>
   </div>
   <div class="flow-screens anim" style="width:100%; max-width:100%;">
@@ -803,10 +805,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
         <div class="fphone">
           <div class="fmock">
             <div class="fmock__bar"><i data-lucide="menu"></i><span class="fmock__bartitle">Mi local</span><i data-lucide="bell"></i></div>
+            <div class="fmock__alert"><i data-lucide="calendar-clock"></i> Programá tu primera semana de música</div>
+            <div class="fmock__alert"><i data-lucide="radio"></i> Conectá tu local</div>
             <div class="fmock__art"><i data-lucide="audio-lines"></i></div>
             <div class="fmock__pl">Electronic Nomads &amp; Chill Beats</div>
             <div class="fmock__playc"><div class="fmock__play"><i data-lucide="play"></i></div></div>
-            <div class="fmock__vchips"><span>Playlist IA</span><span>Programá</span><span>Conectá</span></div>
           </div>
         </div>
         <div class="fscreen__cap"><span class="fscreen__num fscreen__num--end"><i data-lucide="play" style="width:11px;height:11px;"></i></span><span class="fscreen__lbl">Home, ya suena</span></div>
