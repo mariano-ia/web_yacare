@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Vixon Web · Proceso de diseño</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #D2FF00;
+  --accent-glow: rgba(210, 255, 0, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS — Vixon lime palette
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--lime {
+  background: radial-gradient(circle, rgba(210, 255, 0, 0.28) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--lime-2 {
+  background: radial-gradient(circle, rgba(160, 200, 0, 0.18) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim { opacity: 0; transform: translateY(40px); }
+.anim.anim--visible { animation: slide-in 0.8s var(--ease-out) both; }
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+/* Lime accent card borders */
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D2FF00, #88CC00); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #A8CC00, #D2FF00); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D2FF00, #CCFF44); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #CCFF44, #88CC00); }
+.card--accent-lime { border-color: rgba(210,255,0,0.2); }
+.card--accent-lime::before { background: linear-gradient(180deg, rgba(210,255,0,0.04) 0%, transparent 100%); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid rgba(210,255,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.95rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); flex-shrink: 0; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   FUNNEL LIST (slide 5)
+   ═══════════════════════════════════════ */
+.funnel-list { display: flex; flex-direction: column; gap: 0; }
+.funnel-row {
+  display: grid; grid-template-columns: 28px 1fr 1fr; gap: 12px;
+  align-items: start; padding: 9px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.funnel-row:last-child { border-bottom: none; }
+.funnel-row.funnel-row--cta {
+  padding: 9px 10px; border-radius: 8px; border: 1px solid rgba(210,255,0,0.2);
+  background: rgba(210,255,0,0.04); margin-top: 4px;
+}
+.funnel-num { font-family: var(--font-display); font-size: 0.75rem; color: var(--text-muted); padding-top: 1px; }
+.funnel-name { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+.funnel-fn { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed; top: 16px; right: 16px;
+  z-index: 9998; display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary); border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed; bottom: 28px; right: 32px;
+  z-index: 9998; font-family: var(--font-body);
+  font-size: 0.72rem; font-weight: 500;
+  color: var(--text-muted); letter-spacing: 0.08em;
+  pointer-events: none; opacity: 0.6; transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%; padding: 12px 18px;
+  border-radius: 16px; font-size: 0.88rem; line-height: 1.55;
+}
+.chat-msg p { color: var(--text-secondary); margin: 0; font-size: 0.88rem; }
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent; border: 1px solid var(--border-medium);
+  border-radius: 999px; padding: 8px 16px;
+  color: var(--text-secondary); font-family: var(--font-body);
+  font-size: 0.78rem; cursor: pointer;
+  transition: all 0.2s var(--ease-out); white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary); border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start; padding: 12px 18px;
+  font-size: 0.85rem; color: var(--text-muted);
+}
+.chat-typing::after { content: '...'; animation: typing-dots 1.2s steps(3) infinite; }
+@keyframes typing-dots {
+  0% { content: '.'; } 33% { content: '..'; } 66% { content: '...'; }
+}
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   SCROLL HINT
+   ═══════════════════════════════════════ */
+.scroll-hint {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text-muted); font-family: var(--font-body);
+  font-size: 0.65rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease; pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .deck { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+  .slide { min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; padding: 40px 20px; justify-content: center; overflow-y: auto; }
+  .slide-content { max-width: 100%; width: 100%; }
+  h1 { font-size: 1.8rem; } h2 { font-size: 1.5rem; } h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step > div { display: flex; flex-direction: column; }
+  .stat-number { font-size: 2.5rem; }
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .blob { width: 200px !important; height: 200px !important; }
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+  .slide-counter { display: none; }
+  #chat-container { border-radius: 16px; }
+  .funnel-row { grid-template-columns: 24px 1fr; }
+  .funnel-fn { display: none; }
+  .anim { opacity: 1; transform: none; animation: none; }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter -->
+<div class="slide-counter" id="slide-counter">1 / 15</div>
+
+<!-- Scroll hint -->
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--lime" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--lime-2" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Vixon Web · Proceso de diseño</h1>
+    <p class="subtitle anim">Primera entrega · Home v1<br>Del brief al primer entregable: decisiones, criterios y proceso</p>
+    <p class="meta anim" style="margin-top:24px;">Mayo 2026 · Yacaré</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. EL PUNTO DE PARTIDA ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Acto 1 · El problema</div>
+        <h2 class="anim" style="font-size:2.2rem;">No era solo hacer una web</h2>
+        <p class="anim" style="margin-top:16px;">Vixon opera en una categoría que el mercado todavía no tiene clara. No es un smartwatch. No es una app de entrenamiento. No es equipamiento deportivo tradicional.</p>
+        <p class="anim">Eso es un riesgo de comunicación, pero también una oportunidad: si la web define bien qué es Vixon, puede ser la referencia de esa categoría.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-lime" style="padding:36px;">
+          <div class="label" style="margin-bottom:20px;">Objetivo central</div>
+          <p style="font-size:1rem; color:var(--text-secondary); line-height:1.75; margin:0;">Construir una web que comunique tecnología de alto nivel con un tono cercano. Que mezcle ciencia con emoción. Que convierta visitas en demos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 3. CÓMO TRABAJAMOS ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Proceso de trabajo</div>
+        <h2 class="anim" style="font-size:2.2rem;">Diseñamos mientras construíamos</h2>
+        <p class="anim" style="margin-top:16px;">En vez del proceso clásico (investigación, wireframes, diseño, desarrollo), trabajamos de forma iterativa con Claude como motor de diseño y desarrollo.</p>
+        <p class="anim">El cliente ve algo real desde la semana 2. El feedback es sobre algo concreto, no sobre un mockup. Las iteraciones son más rápidas y más baratas.</p>
+      </div>
+      <div class="anim">
+        <ul class="icon-list">
+          <li>
+            <i data-lucide="circle-1" style="width:22px; height:22px;"></i>
+            <div><strong style="color:#fff;">Brief con el cliente</strong> — entender el producto, la audiencia y el objetivo</div>
+          </li>
+          <li>
+            <i data-lucide="circle-2" style="width:22px; height:22px;"></i>
+            <div><strong style="color:#fff;">Arquitectura de información</strong> — qué páginas, qué secciones, qué CTA</div>
+          </li>
+          <li>
+            <i data-lucide="circle-3" style="width:22px; height:22px;"></i>
+            <div><strong style="color:#fff;">Dirección visual</strong> — paleta, tipografía, referentes (Hyperice, Whoop, Oura)</div>
+          </li>
+          <li>
+            <i data-lucide="circle-4" style="width:22px; height:22px;"></i>
+            <div><strong style="color:#fff;">Construcción directa</strong> — HTML/CSS generado, visto en browser, iterado en tiempo real</div>
+          </li>
+          <li>
+            <i data-lucide="circle-check" style="width:22px; height:22px;"></i>
+            <div><strong style="color:#fff;">Contenido</strong> — copy en español, integrado sobre la estructura</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 4. EL PROBLEMA DE COMUNICACIÓN ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Acto 2 · Las decisiones</div>
+        <h2 class="anim" style="font-size:2.2rem;">El producto se explica al verlo, no al leerlo</h2>
+        <p class="anim" style="margin-top:16px;">La primera decisión importante fue de copy, no de diseño:</p>
+        <p class="anim"><strong style="color:#fff;">No arrancar explicando qué es el producto. Arrancar con el problema del atleta.</strong></p>
+        <p class="anim">La velocidad de decisión. La reacción bajo presión. El cerebro como músculo que no se entrena. El producto aparece como la respuesta a ese problema, no como el protagonista inicial.</p>
+        <div class="anim" style="margin-top:20px;">
+          <div class="card card--sm card--accent-lime">
+            <div class="label" style="margin-bottom:10px;">Para alinear</div>
+            <p style="font-size:0.9rem; margin:0;">Esta historia es la base de todo el sitio. Vale la pena trabajarla en conjunto con marketing para que cada texto esté afinado para la venta.</p>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-1" style="padding:48px; text-align:center;">
+          <div class="label" style="justify-content:center; margin-bottom:24px;">El headline del hero</div>
+          <p style="font-family:var(--font-display); font-size:2.4rem; letter-spacing:-0.04em; line-height:1.1; color:var(--text-primary); text-transform:uppercase; margin-bottom:24px;">Faster Brain.<br>Faster Body.</p>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">Dos líneas. Propuesta clara. Sin jerga técnica.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 5. ARQUITECTURA ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Arquitectura de información</div>
+        <h2 class="anim" style="font-size:2.2rem;">El flow no es arbitrario</h2>
+        <p class="anim" style="margin-top:16px;">La web sigue una lógica de funnel de convicción: cada sección prepara al visitante para la siguiente hasta que pedir una demo resulta casi obvio.</p>
+        <div class="anim" style="margin-top:20px;">
+          <div class="card card--accent-lime card--sm">
+            <div class="label" style="margin-bottom:12px;">Decisión clave</div>
+            <p style="font-size:0.95rem; margin:0;">El CTA intermedio está después de Neuro, no antes. Ese es el momento donde el visitante pasa de "me parece interesante" a "entiendo por qué esto funciona".</p>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="funnel-list">
+          <div class="funnel-row">
+            <span class="funnel-num">01</span>
+            <span class="funnel-name">Intro + Hero</span>
+            <span class="funnel-fn">Impacto inicial. Capturar atención.</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-num">02</span>
+            <span class="funnel-name">Producto</span>
+            <span class="funnel-fn">Explicar el sistema: chaleco + app.</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-num">03</span>
+            <span class="funnel-name">Neuro</span>
+            <span class="funnel-fn">El argumento científico.</span>
+          </div>
+          <div class="funnel-row funnel-row--cta">
+            <span class="funnel-num">CTA</span>
+            <span class="funnel-name">CTA intermedio</span>
+            <span class="funnel-fn">Pico de convicción.</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-num">04</span>
+            <span class="funnel-name">Experiencia</span>
+            <span class="funnel-fn">Amplía el mercado. Validación.</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-num">05</span>
+            <span class="funnel-name">Testimonios</span>
+            <span class="funnel-fn">Prueba social. Reduce escepticismo.</span>
+          </div>
+          <div class="funnel-row">
+            <span class="funnel-num">06</span>
+            <span class="funnel-name">Demo</span>
+            <span class="funnel-fn">Conversión.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 6. DISEÑO VISUAL ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Identidad visual</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem;">Negro, blanco y un solo acento</h2>
+        <p class="anim" style="margin-top:16px;">La paleta tiene tres colores y no más. Cada uno con una función específica.</p>
+        <div class="anim" style="display:flex; gap:24px; margin-top:24px;">
+          <div>
+            <div style="width:68px; height:68px; border-radius:14px; background:#060606; border:1px solid rgba(255,255,255,0.2); margin-bottom:10px;"></div>
+            <p style="font-size:0.68rem; letter-spacing:0.06em; margin:0; color:var(--text-muted);">#060606</p>
+            <p style="font-size:0.82rem; margin:4px 0 0; color:var(--text-secondary);">Negro base</p>
+          </div>
+          <div>
+            <div style="width:68px; height:68px; border-radius:14px; background:#F2F2EE; margin-bottom:10px;"></div>
+            <p style="font-size:0.68rem; letter-spacing:0.06em; margin:0; color:var(--text-muted);">#F2F2EE</p>
+            <p style="font-size:0.82rem; margin:4px 0 0; color:var(--text-secondary);">Blanco cálido</p>
+          </div>
+          <div>
+            <div style="width:68px; height:68px; border-radius:14px; background:#D2FF00; margin-bottom:10px;"></div>
+            <p style="font-size:0.68rem; letter-spacing:0.06em; margin:0; color:var(--text-muted);">#D2FF00</p>
+            <p style="font-size:0.82rem; margin:4px 0 0; color:var(--text-secondary);">Lima</p>
+          </div>
+        </div>
+        <p class="anim" style="font-size:0.85rem; margin-top:20px;">Lima remite a LEDs industriales, señalética de alta energía, tecnología orgánica.</p>
+      </div>
+      <div>
+        <div class="anim">
+          <div class="label" style="margin-bottom:20px;">Ritmo de fondos</div>
+          <p style="font-size:0.9rem; margin-bottom:20px;">Las secciones alternan entre oscuro y claro para evitar la fatiga visual y dar respiro entre zonas de alta densidad informativa.</p>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:40px; height:32px; background:#060606; border-radius:6px; border:1px solid rgba(255,255,255,0.2); flex-shrink:0;"></div>
+              <p style="margin:0; font-size:0.82rem; color:var(--text-secondary);">Hero · Neuro · CTA · Testimonios</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:40px; height:32px; background:#F2F2EE; border-radius:6px; flex-shrink:0;"></div>
+              <p style="margin:0; font-size:0.82rem; color:var(--text-secondary);">Producto · Experiencia · Formulario</p>
+            </div>
+          </div>
+        </div>
+        <div class="anim" style="margin-top:24px;">
+          <div class="card card--sm card--accent-3">
+            <p style="font-size:0.9rem; margin:0;">No es decoración: es para que el ritmo visual acompañe la densidad informativa de cada sección.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 7. TIPOGRAFÍA ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">Tipografía</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Una decisión tipográfica que cambia todo</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <div style="font-family:'Antonio',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.035em; text-transform:uppercase; color:var(--text-primary); margin-bottom:16px; line-height:1;">Inter Bold</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Tracking negativo</h4>
+        <p style="font-size:0.95rem;">Se eligió Inter por su diseño para interfaces digitales. A peso 800/900 en uppercase, da contundencia. La decisión fue ir al contrario de la tendencia: tracking negativo (<code style="font-size:0.8rem; color:var(--text-muted);">-0.035em</code>). Con letras comprimidas, el peso visual aumenta y los títulos ganan autoridad.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <div style="font-family:'Courier New', monospace; font-size:1.1rem; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.05em;">DM MONO · 500</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Fuente técnica</h4>
+        <p style="font-size:0.95rem;">DM Mono para etiquetas y datos técnicos. Refuerza el carácter científico sin recurrir a fuentes display especiales. Aparece en porcentajes, métricas y labels de sección.</p>
+      </div>
+      <div class="card card--sm card--accent-3" style="grid-column:1/-1;">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">El mismo principio que usan The Atlantic o campañas gráficas de Nike</h4>
+        <p style="font-size:0.95rem; margin:0;">Las fuentes en uppercase tienden a verse espaciadas por defecto. La decisión consciente de comprimir el tracking invierte esa tendencia y genera una identidad tipográfica más contundente y reconocible.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 8. EL HERO ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">El hero</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">4 capas con una lógica</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <div style="font-family:var(--font-display); font-size:2.5rem; color:var(--text-muted); opacity:0.4; line-height:1; margin-bottom:12px;">01</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Video de fondo</h4>
+        <p style="font-size:0.95rem;">Opacity 0.22. Contexto real, movimiento, el producto en uso. No interfiere con la lectura del texto.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <div style="font-family:var(--font-display); font-size:2.5rem; color:var(--text-muted); opacity:0.4; line-height:1; margin-bottom:12px;">02</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Gradiente de legibilidad</h4>
+        <p style="font-size:0.95rem;">Asegura que el texto sea legible en cualquier frame del video, sin depender de la imagen.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <div style="font-family:var(--font-display); font-size:2.5rem; color:var(--text-muted); opacity:0.4; line-height:1; margin-bottom:12px;">03</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Niebla fractal SVG</h4>
+        <p style="font-size:0.95rem;">Profundidad sin ser figurativa. Generada con filtros CSS puros. No requiere imagen externa.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <div style="font-family:var(--font-display); font-size:2.5rem; color:var(--text-muted); opacity:0.4; line-height:1; margin-bottom:12px;">04</div>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Chaleco animado</h4>
+        <p style="font-size:0.95rem;">El producto como protagonista. Arranca apagado y enciende a los <strong style="color:#fff;">700ms</strong>: justo cuando el usuario termina de leer el headline y mira a la derecha.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 9. NEUROENGINE™ ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Naming de producto</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem;">Por qué nombramos la tecnología</h2>
+        <p class="anim" style="margin-top:16px; margin-bottom:28px;">Nombramos <strong style="color:#fff;">NeuroEngine™</strong> como nombre propio del motor de IA de Vixon, para darle identidad a la tecnología que usa el sistema.</p>
+        <ul class="icon-list anim">
+          <li>
+            <i data-lucide="fingerprint" style="width:20px; height:20px;"></i>
+            <div><strong style="color:#fff;">Diferenciación:</strong> nombrar la tecnología la hace tangible y propietaria</div>
+          </li>
+          <li>
+            <i data-lucide="shield-check" style="width:20px; height:20px;"></i>
+            <div><strong style="color:#fff;">Credibilidad:</strong> un sistema con nombre propio genera más confianza que "análisis con IA"</div>
+          </li>
+          <li>
+            <i data-lucide="git-branch" style="width:20px; height:20px;"></i>
+            <div><strong style="color:#fff;">Narrativa:</strong> permite construir una historia progresiva: el chaleco recopila, la app controla, NeuroEngine™ aprende</div>
+          </li>
+        </ul>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-2" style="padding:36px;">
+          <div class="label" style="margin-bottom:20px;">Aparece en 3 momentos</div>
+          <ul class="icon-list" style="gap:16px;">
+            <li>
+              <i data-lucide="package" style="width:18px; height:18px;"></i>
+              <span style="font-size:0.95rem;">Sección del producto (chaleco + app)</span>
+            </li>
+            <li>
+              <i data-lucide="brain" style="width:18px; height:18px;"></i>
+              <span style="font-size:0.95rem;">Sección Neuro (argumento científico)</span>
+            </li>
+            <li>
+              <i data-lucide="footprints" style="width:18px; height:18px;"></i>
+              <span style="font-size:0.95rem;">Paso 4 del método (aprendizaje)</span>
+            </li>
+          </ul>
+          <p style="font-size:0.85rem; margin-top:20px; margin-bottom:0;">Siempre en contexto de datos y aprendizaje. Nunca como característica técnica aislada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 10. SECCIÓN NEURO ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Acto 3 · Lo que viene</div>
+        <h2 class="anim" style="font-size:2.2rem;">La sección más importante tiene margen de mejora</h2>
+        <p class="anim" style="margin-top:16px;">La sección de neurociencia es el corazón argumental de la web. Tiene respaldo científico real: cuatro publicaciones referenciadas, datos concretos y la integración de NeuroEngine™.</p>
+        <p class="anim">El formato actual (grilla 2x2 con los 4 pasos del método) funciona, pero puede crecer.</p>
+      </div>
+      <div>
+        <div class="anim">
+          <div class="label" style="margin-bottom:20px;">Preguntas abiertas</div>
+          <ul class="icon-list" style="gap:18px;">
+            <li>
+              <i data-lucide="help-circle" style="width:20px; height:20px;"></i>
+              <span style="font-size:0.95rem;">¿Qué recursos externos podemos incorporar? Videos, artículos, infografías</span>
+            </li>
+            <li>
+              <i data-lucide="help-circle" style="width:20px; height:20px;"></i>
+              <span style="font-size:0.95rem;">¿Hay algún dato propio de Vixon que pueda reemplazar las referencias genéricas?</span>
+            </li>
+            <li>
+              <i data-lucide="help-circle" style="width:20px; height:20px;"></i>
+              <span style="font-size:0.95rem;">¿El formato de grilla 2x2 es suficiente o queremos darle más protagonismo visual?</span>
+            </li>
+          </ul>
+        </div>
+        <div class="anim" style="margin-top:24px;">
+          <div class="card card--sm card--accent-lime">
+            <p style="font-size:0.95rem; margin:0;"><strong style="color:#fff;">Para el cliente:</strong> ¿Tienen o pueden conseguir algún video corto (30 a 60 seg) que explique el concepto de entrenamiento cognitivo? Sería el recurso más potente para esta sección.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 11. IMÁGENES ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="label anim">Contenido visual</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:28px;">El contenido visual es el próximo paso crítico</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:14px;">Lo que funciona bien</h4>
+        <ul class="icon-list" style="gap:12px;">
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <span style="font-size:0.9rem;">Fotos de acción grupal (Port St. Lucie): dan escala y credibilidad</span>
+          </li>
+          <li>
+            <i data-lucide="check" style="width:18px; height:18px;"></i>
+            <span style="font-size:0.9rem;">Fotos con LEDs encendidos (verde y rojo): el producto se ve claramente</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:14px;">Preguntas abiertas</h4>
+        <ul class="icon-list" style="gap:12px;">
+          <li>
+            <i data-lucide="help-circle" style="width:18px; height:18px;"></i>
+            <span style="font-size:0.9rem;">¿Tenemos el render 3D del chaleco que estaba siendo elaborado?</span>
+          </li>
+          <li>
+            <i data-lucide="help-circle" style="width:18px; height:18px;"></i>
+            <span style="font-size:0.9rem;">¿Hay fotos disponibles para los testimonios?</span>
+          </li>
+          <li>
+            <i data-lucide="help-circle" style="width:18px; height:18px;"></i>
+            <span style="font-size:0.9rem;">¿Podemos sumar dos o más testimonios reales (incluido el de Sorín)?</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 12. PRÓXIMOS PASOS ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="label anim">Estado y hoja de ruta</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:28px;">¿Dónde estamos y qué sigue?</h2>
+    <div class="split" style="align-items:start; gap:40px;">
+      <div class="anim">
+        <div class="label" style="margin-bottom:16px;">Entregado hoy · Home v1</div>
+        <ul class="checklist">
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Intro con LEDs animados</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Hero con video de fondo y chaleco animado</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Sección de producto (The Vest + The App)</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Sección Neuro con 4 pasos y datos científicos</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> CTA intermedio</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Sección de experiencia y deportes</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Testimonios (simulados, listos para reemplazar)</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Formulario de demo funcional</li>
+          <li><i data-lucide="check" style="width:16px; height:16px;"></i> Switch de idioma ES/EN</li>
+        </ul>
+      </div>
+      <div>
+        <div class="anim">
+          <div class="label" style="margin-bottom:14px;">Próxima entrega · Subpáginas</div>
+          <ul class="icon-list" style="gap:12px; margin-bottom:24px;">
+            <li><i data-lucide="arrow-right" style="width:16px; height:16px;"></i> <span style="font-size:0.9rem;">Ajustes del home según feedback de hoy</span></li>
+            <li><i data-lucide="arrow-right" style="width:16px; height:16px;"></i> <span style="font-size:0.9rem;">Diseño de subpáginas adicionales</span></li>
+            <li><i data-lucide="arrow-right" style="width:16px; height:16px;"></i> <span style="font-size:0.9rem;">Integración de contenido real (fotos, video, screenshot app)</span></li>
+          </ul>
+        </div>
+        <div class="anim">
+          <div class="card card--sm card--accent-lime">
+            <div class="label" style="margin-bottom:14px;">Para cerrar hoy</div>
+            <ul class="icon-list" style="gap:10px;">
+              <li><i data-lucide="circle-dot" style="width:16px; height:16px;"></i> <span style="font-size:0.88rem;">¿El tono visual está alineado con lo que imaginaban?</span></li>
+              <li><i data-lucide="circle-dot" style="width:16px; height:16px;"></i> <span style="font-size:0.88rem;">¿Hay algún dato de neurociencia que quieran incorporar?</span></li>
+              <li><i data-lucide="circle-dot" style="width:16px; height:16px;"></i> <span style="font-size:0.88rem;">¿Qué contenido (fotos, testimonios, datos) está disponible para la próxima etapa?</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Vixon · Primera entrega</span></div>
+</section>
+
+
+<!-- ══════════════ 14. CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="14">
+  <div class="blob blob--lime" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--lime-2" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim" style="font-size:clamp(1.6rem,3.5vw,2.6rem); margin-bottom:16px;">El sitio está diseñado para un visitante con una pregunta</h2>
+    <p class="anim" style="font-family:var(--font-display); font-size:clamp(1.4rem,3vw,2.2rem); letter-spacing:-0.03em; text-transform:uppercase; color:var(--text-primary); margin-bottom:24px;">¿Esto sirve para lo que yo hago?</p>
+    <p class="anim" style="max-width:660px; margin:0 auto 8px; font-size:0.95rem;">Cada decisión de diseño apunta a responder esa pregunta antes de pedirle que actúe. El sistema funciona cuando el visitante llega al formulario habiendo pasado por la demo del producto, el argumento científico y la validación de otros entrenadores.</p>
+    <p class="anim" style="max-width:660px; margin:0 auto 32px; font-size:0.95rem;">En ese punto, pedir una demo es casi obvio.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 15. CHAT ══════════════ -->
+<section class="slide" data-slide="15">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre este proceso?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es NeuroEngine™?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué el tracking negativo?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué ese CTA intermedio?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué viene en la siguiente entrega?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime el proceso</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué fotos faltan?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta presentación. Para consultas directas escribí a contact@yacare.io.
+    </p>
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+// ═══════════════════════════════════════
+// SCROLL HINT
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const currentIndex = Math.round(deck.scrollTop / deck.clientHeight) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+    switch (e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        break;
+      case 'Home': e.preventDefault(); deck.scrollTo({ top: 0, behavior: 'smooth' }); break;
+      case 'End': e.preventDefault(); deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' }); break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      anims.forEach(function(el) {
+        if (entry.isIntersecting) el.classList.add('anim--visible');
+        else el.classList.remove('anim--visible');
+      });
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(function(slide) { animObserver.observe(slide); });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR
+// ═══════════════════════════════════════
+function printPDF() { window.print(); }
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    deck.scrollTo({ top: 13 * deck.clientHeight, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Q&A local
+// ═══════════════════════════════════════
+const QA_ENTRIES = [
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme sobre el proceso de trabajo, las decisiones de diseño, el naming de NeuroEngine™, la arquitectura del sitio, qué viene en la próxima entrega o cualquier otro punto de la presentación.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale', 'ok'],
+    answer: '¡De nada! Si surge otra duda, acá estoy. También podés escribir a contact@yacare.io para hablar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier consulta que surja después, podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'en pocas palabras', 'proceso'],
+    answer: 'Esta presentación muestra el proceso de las primeras dos semanas del rediseño web de Vixon (Home v1). En lugar del proceso clásico, se trabajó de forma iterativa: brief, arquitectura de información, dirección visual y construcción directa en código. Las decisiones principales cubrieron copy (arrancar desde el problema del atleta, no desde el producto), arquitectura del funnel de convicción, paleta de 3 colores (negro, blanco cálido y lima), tipografía con tracking negativo, y el naming de NeuroEngine™. La presentación cierra con preguntas abiertas y los próximos pasos.'
+  },
+  {
+    keywords: ['ayuda', 'help', 'qué puedo preguntar', 'que puedo preguntar', 'opciones', 'qué sabés', 'que sabes'],
+    answer: 'Podés preguntarme sobre: el proceso de trabajo, las decisiones de copy, la arquitectura del funnel, la paleta de colores, la tipografía, las capas del hero, NeuroEngine™, la sección Neuro, las imágenes pendientes, lo que no se incluyó en v1, los próximos pasos, o pedirme un resumen general.'
+  },
+  {
+    keywords: ['neuroengine', 'neuro engine', 'nombre propio', 'naming', 'motor', 'ia de vixon', 'tecnología', 'tecnologia'],
+    answer: 'NeuroEngine™ es el nombre propio del motor de IA de Vixon, elegido para darle identidad a la tecnología que usa el sistema. Los motivos fueron tres: diferenciación (un nombre propio hace la tecnología tangible y propietaria), credibilidad (genera más confianza que "análisis con IA") y narrativa (permite construir una historia progresiva: el chaleco recopila, la app controla, NeuroEngine™ aprende). Aparece en tres momentos: la sección de producto, la sección Neuro y el paso 4 del método. Siempre en contexto de datos, nunca como característica técnica aislada.'
+  },
+  {
+    keywords: ['tracking', 'tipografía', 'tipografia', 'inter', 'dm mono', 'fuente', 'letra', 'uppercase', 'comprimido', 'tracking negativo'],
+    answer: 'Se eligió Inter como fuente principal por ser diseñada para interfaces digitales. La decisión de tracking fue ir al contrario de la tendencia: tracking negativo (-0.035em) en lugar del espaciado amplio habitual en uppercase. Con letras comprimidas, el peso visual aumenta y los títulos ganan autoridad. Es el mismo principio que usan titulares de The Atlantic o campañas gráficas de Nike. DM Mono se usa para etiquetas y datos técnicos, reforzando el carácter científico del producto.'
+  },
+  {
+    keywords: ['paleta', 'colores', 'negro', 'blanco', 'lima', 'd2ff00', 'acento', 'color', 'hex'],
+    answer: 'La paleta tiene tres colores exactos: Negro profundo #060606 (base oscura, evita el efecto "pantalla apagada"), Blanco cálido #F2F2EE (ligeramente amarillento, más legible y menos frío) y Lima #D2FF00 (único acento, remite a LEDs industriales, señalética de alta energía, tecnología orgánica). Tres colores y no más.'
+  },
+  {
+    keywords: ['ritmo', 'fondos', 'secciones', 'oscuro', 'claro', 'alternancia', 'fatiga'],
+    answer: 'Las secciones de la web alternan entre fondo oscuro y claro: Oscuro para Hero, Neuro, CTA y Testimonios; Claro para Producto, Experiencia y Formulario. No es decoración: evita la fatiga visual de una web completamente dark y da respiro entre secciones de alta densidad informativa.'
+  },
+  {
+    keywords: ['hero', 'capas', 'video', 'niebla', 'chaleco', 'animación', 'animacion', '700ms', '700', 'timing'],
+    answer: 'El hero tiene 4 capas con una lógica específica: (1) Video de fondo a opacity 0.22, contexto real y movimiento. (2) Gradiente de legibilidad que asegura que el texto se lea en cualquier frame. (3) Niebla fractal SVG generada con filtros CSS puros, que da profundidad sin ser figurativa. (4) Chaleco animado que arranca apagado y enciende a los 700ms, exactamente cuando el usuario terminó de leer el headline y mira hacia la derecha. El timing de 700ms no es aleatorio: coincide con el ritmo natural de lectura.'
+  },
+  {
+    keywords: ['copy', 'headline', 'faster', 'brain', 'body', 'faster brain', 'faster body', 'problema del atleta', 'mensaje', 'propuesta'],
+    answer: 'La primera decisión importante fue de copy, no de diseño: no arrancar explicando qué es el producto sino arrancar con el problema del atleta. La velocidad de decisión, la reacción bajo presión, el cerebro como músculo que no se entrena. El producto aparece como la respuesta. El resultado en el hero: "Faster Brain. Faster Body." Dos líneas, propuesta clara, sin jerga técnica.'
+  },
+  {
+    keywords: ['arquitectura', 'funnel', 'flow', 'secciones', 'orden', 'estructura', 'cta intermedio', 'cta', 'conversión', 'conversion'],
+    answer: 'La web sigue un funnel de convicción: Intro y Hero (impacto inicial), Producto (explicar el sistema), Neuro (argumento científico), CTA intermedio, Experiencia (amplía el mercado), Testimonios (prueba social), Demo (conversión). La decisión clave es que el CTA intermedio está después de Neuro, no antes. Ese es el momento donde el visitante pasa de "me parece interesante" a "entiendo por qué esto funciona", que es el pico de convicción óptimo para pedir una acción.'
+  },
+  {
+    keywords: ['proceso', 'cómo trabajaron', 'como trabajaron', 'metodología', 'metodologia', 'semanas', 'iterativo', 'claude'],
+    answer: 'En lugar del proceso clásico (investigación, wireframes, diseño, desarrollo), se trabajó de forma iterativa con Claude como motor de diseño y desarrollo. El orden fue: brief con el cliente, arquitectura de información, dirección visual, construcción directa en HTML/CSS visto en browser e iterado en tiempo real, y finalmente copy integrado sobre la estructura. El cliente ve algo real desde la semana 2 y el feedback es sobre algo concreto, no sobre mockups.'
+  },
+  {
+    keywords: ['referentes', 'hyperice', 'whoop', 'oura', 'inspiración', 'inspiracion', 'competencia', 'benchmark'],
+    answer: 'Los referentes visuales usados para la dirección de diseño fueron Hyperice, Whoop y Oura: marcas que combinan tecnología de alto nivel con un tono cercano y deportivo. Este benchmark ayudó a definir la paleta oscura, la tipografía contundente y el equilibrio entre ciencia y emoción.'
+  },
+  {
+    keywords: ['neuro', 'neurociencia', 'científico', 'cientifico', 'publicaciones', 'referencias', 'datos', 'grilla', '2x2'],
+    answer: 'La sección Neuro es el corazón argumental de la web. Tiene respaldo científico real con cuatro publicaciones referenciadas, datos concretos y la integración de NeuroEngine™. El formato actual es una grilla 2x2 con los 4 pasos del método. Las preguntas abiertas son: si hay videos o recursos externos para incorporar, si Vixon tiene datos propios que reemplacen referencias genéricas, y si el formato de grilla es suficiente o necesita más protagonismo visual.'
+  },
+  {
+    keywords: ['fotos', 'imágenes', 'imagenes', 'foto', 'falta', 'render', '3d', 'app', 'screenshot', 'contenido visual'],
+    answer: 'Lo que funciona bien: las fotos de acción grupal de Port St. Lucie (dan escala y credibilidad) y las fotos con LEDs encendidos. Las preguntas abiertas son: si tenemos el render 3D del chaleco que estaba siendo elaborado, si hay fotos disponibles para los testimonios, y si podemos sumar dos o más testimonios reales (incluido el de Sorín).'
+  },
+  {
+    keywords: ['qué no se hizo', 'que no se hizo', 'eliminaron', 'no incluye', 'quiénes somos', 'quienes somos', 'panel', 'variantes'],
+    answer: 'Tres decisiones en negativo en v1: (1) La sección "Quiénes somos" completa se descartó para mantener el foco en producto y conversión, puede sumarse en v2. (2) Las múltiples variantes de la app visual: se construyeron tres pero se fijó "session" como default para no abrumar. (3) El panel de personalización: se usó en desarrollo para probar variantes y se eliminó en producción. Como dice la presentación: cada cosa que no está es una decisión, no una omisión.'
+  },
+  {
+    keywords: ['qué viene', 'que viene', 'próximos pasos', 'proximos pasos', 'siguiente', 'v2', 'subpáginas', 'subpaginas', 'próxima entrega', 'proxima entrega'],
+    answer: 'La próxima entrega incluye tres frentes: ajustes del home según el feedback de la reunión de hoy, diseño de subpáginas adicionales, e integración del contenido real (fotos definitivas, video principal y screenshots de la app). Para arrancar esa etapa, las preguntas clave son: si el tono visual está alineado, si hay datos de neurociencia para incorporar, y cuándo se tiene el render 3D del chaleco y el video principal.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'quiénes son', 'quienes son', 'contacto', 'contact'],
+    answer: 'Yacaré es el estudio de producto digital que desarrolló este proyecto. Para consultas podés escribir a contact@yacare.io o visitar yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el proceso de trabajo, las decisiones de diseño, NeuroEngine™, la arquitectura del sitio o los próximos pasos.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+  let bestMatch = null;
+  let bestScore = 0;
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) score += kwNorm.length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+  setTimeout(function() {
+    typing.remove();
+    const reply = findBestAnswer(text);
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
