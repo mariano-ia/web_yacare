@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/cards/mariano",
+            "destination": "/cards/mariano.html"
+        },
+        {
             "source": "/blog",
             "destination": "https://elpantanoblog.vercel.app/blog"
         },

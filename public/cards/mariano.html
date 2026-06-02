@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  YACARÉ DIGITAL CARD · Mariano Noceti
+  ───────────────────────────────────────────────────────────────
+  Tarjeta digital estática (la "versión propia" de HiHello).
+  URL pública:  https://yacare.io/cards/mariano
+  Foto:         dejá tu foto en /public/cards/assets/mariano.jpg
+                (mientras tanto muestra las iniciales "MN")
+  QR:           incrustados como SVG. Si cambian tus datos hay que
+                regenerarlos (ver /tmp/genqr.mjs o pedírselo a Claude).
+  ═══════════════════════════════════════════════════════════════
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mariano Noceti · Yacaré</title>
+<meta name="description" content="Tarjeta digital de Mariano Noceti, Digital Entrepreneur en Yacaré. Guardá mi contacto en un toque.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Mariano Noceti · Yacaré">
+<meta property="og:description" content="Digital Entrepreneur en Yacaré. Guardá mi contacto en un toque.">
+<meta property="og:url" content="https://yacare.io/cards/mariano">
+<meta property="og:image" content="https://yacare.io/cards/assets/mariano.jpg">
+<meta name="theme-color" content="#000000">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300..700&family=Figtree:ital,wght@0,300..800;1,300..600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #000000;
+  --surface: #0e0e0e;
+  --surface-2: #161616;
+  --line: rgba(255,255,255,0.08);
+  --line-2: rgba(255,255,255,0.16);
+  --text: #ffffff;
+  --text-2: #8d8d8d;
+  --text-3: #5a5a5a;
+  --violet: #8A5EFF;
+  --violet-light: #BCA3FF;
+  --violet-glow: rgba(138,94,255,0.22);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(16px, 4vw, 48px) 16px calc(40px + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(120% 70% at 50% -10%, var(--violet-glow) 0%, transparent 55%),
+    var(--bg);
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* film grain */
+.grain {
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0) }
+  20% { transform: translate(-5%,-8%) }
+  40% { transform: translate(-3%,6%) }
+  60% { transform: translate(4%,-4%) }
+  80% { transform: translate(-2%,7%) }
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: rise 0.7s var(--ease) both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+
+/* ───────── HERO ───────── */
+.hero {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(140% 120% at 85% 0%, rgba(138,94,255,0.28) 0%, transparent 50%),
+    linear-gradient(160deg, #1c1c1c 0%, #0a0a0a 100%);
+  border: 1px solid var(--line);
+  padding: 30px 26px 26px;
+}
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--violet-light);
+  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.hero-eyebrow::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 10px var(--violet);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-size: clamp(2.1rem, 9vw, 2.7rem);
+  margin-bottom: 8px;
+}
+.role { color: var(--text-2); font-size: 1rem; line-height: 1.35; font-weight: 400; }
+.role strong { color: var(--text); font-weight: 600; }
+
+.avatar {
+  position: relative;
+  width: 92px; height: 92px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(150deg, var(--violet) 0%, transparent 55%);
+}
+.avatar-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: grid;
+  place-items: center;
+}
+.avatar-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar-fallback {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--violet-light);
+  letter-spacing: 0.02em;
+}
+
+/* ───────── CONTACT ROWS ───────── */
+.contacts { display: flex; flex-direction: column; gap: 10px; }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.row:hover, .row:active {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+.row-icon {
+  width: 42px; height: 42px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(138,94,255,0.12);
+  color: var(--violet-light);
+}
+.row-icon svg { width: 20px; height: 20px; }
+.row-text { min-width: 0; }
+.row-label { font-size: 0.72rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2px; }
+.row-value { font-size: 1rem; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-arrow { margin-left: auto; color: var(--text-3); flex: 0 0 auto; transition: transform 0.25s var(--ease), color 0.25s; }
+.row:hover .row-arrow { color: var(--violet-light); transform: translateX(3px); }
+
+/* ───────── ACTIONS ───────── */
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 16px 22px;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.2s var(--ease), background 0.25s, border-color 0.25s, color 0.25s;
+}
+.btn svg { width: 19px; height: 19px; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: #fff; color: #000; }
+.btn-primary:hover { background: var(--violet); color: #fff; }
+.actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-ghost { background: transparent; color: #fff; border: 1px solid var(--line-2); }
+.btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.04); }
+
+.footer {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.footer a { color: var(--text-2); border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
+.footer a:hover { color: var(--violet-light); }
+
+/* ───────── QR MODAL ───────── */
+.modal {
+  position: fixed; inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal.open { display: flex; animation: fade 0.25s var(--ease); }
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 26px 24px 22px;
+  text-align: center;
+  animation: pop 0.35s var(--ease);
+}
+@keyframes pop { from { opacity: 0; transform: scale(0.94) translateY(10px) } to { opacity: 1; transform: none } }
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--text-2);
+  background: var(--surface-2);
+  transition: color 0.2s, background 0.2s;
+}
+.modal-close:hover { color: #fff; background: var(--line-2); }
+.modal-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+.modal-sub { font-size: 0.85rem; color: var(--text-2); margin-bottom: 18px; }
+
+.qr-frame {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto 18px;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+}
+.qr-frame svg { width: 100%; height: 100%; display: block; }
+.qr-pane { width: 100%; height: 100%; }
+.qr-pane[hidden] { display: none; }
+.qr-badge {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 17%; height: 17%;
+  background: #fff;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 5px #fff;
+}
+.qr-badge span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--violet);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.toggle {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  margin-bottom: 14px;
+}
+.toggle-btn {
+  padding: 9px 24px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: color 0.2s, background 0.2s;
+}
+.toggle-btn.active { background: #fff; color: #000; }
+.qr-hint { font-size: 0.82rem; color: var(--text-2); line-height: 1.45; min-height: 2.5em; }
+
+/* toast */
+.toast {
+  position: fixed;
+  left: 50%; bottom: calc(28px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(20px);
+  background: #fff; color: #000;
+  font-weight: 600; font-size: 0.9rem;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+  .card, .modal.open, .modal-card { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<main class="card">
+  <!-- HERO -->
+  <header class="hero">
+    <span class="hero-eyebrow">Yacaré</span>
+    <div class="hero-grid">
+      <div>
+        <h1 class="name">Mariano<br>Noceti</h1>
+        <p class="role"><strong>Digital Entrepreneur</strong><br>Fundador de Yacaré</p>
+      </div>
+      <div class="avatar">
+        <div class="avatar-inner">
+          <img src="/cards/assets/mariano.jpg" alt="Mariano Noceti"
+               onerror="this.remove()">
+          <span class="avatar-fallback">MN</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTACTOS -->
+  <section class="contacts">
+    <a class="row" href="mailto:mariano@yacare.io">
+      <span class="row-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </span>
+      <span class="row-text">
+        <span class="row-label">Email</span>
+        <span class="row-value">mariano@yacare.io</span>
+      </span>
+      <span class="row-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+    </a>
+
+    <a class="row" href="tel:+15513713633">
+      <span class="row-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      </span>
+      <span class="row-text">
+        <span class="row-label">Teléfono</span>
+        <span class="row-value">+1 551 371 3633</span>
+      </span>
+      <span class="row-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+    </a>
+
+    <a class="row" href="https://www.linkedin.com/in/mariano-noceti" target="_blank" rel="noopener">
+      <span class="row-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg>
+      </span>
+      <span class="row-text">
+        <span class="row-label">LinkedIn</span>
+        <span class="row-value">mariano-noceti</span>
+      </span>
+      <span class="row-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+    </a>
+
+    <a class="row" href="https://www.instagram.com/mariannoceti" target="_blank" rel="noopener">
+      <span class="row-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="row-text">
+        <span class="row-label">Instagram</span>
+        <span class="row-value">@mariannoceti</span>
+      </span>
+      <span class="row-arrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+    </a>
+  </section>
+
+  <!-- ACCIONES -->
+  <div class="actions">
+    <button class="btn btn-primary" id="saveBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-8 0v2"/><circle cx="12" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      Guardar contacto
+    </button>
+    <div class="actions-row">
+      <button class="btn btn-ghost" id="qrBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 21v.01M21 14v.01M14 21v.01"/></svg>
+        Ver QR
+      </button>
+      <button class="btn btn-ghost" id="shareBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5 8.6 10.5"/></svg>
+        Compartir
+      </button>
+    </div>
+  </div>
+
+  <p class="footer">Tu tarjeta digital, hecha en <a href="https://yacare.io" target="_blank" rel="noopener">yacare.io</a></p>
+</main>
+
+<!-- QR MODAL -->
+<div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-label="Código QR">
+  <div class="modal-card">
+    <button class="modal-close" id="qrClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <h2 class="modal-title">Mariano Noceti</h2>
+    <p class="modal-sub">Apuntá la cámara al código</p>
+
+    <div class="qr-frame">
+      <div class="qr-pane" id="paneOnline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" shape-rendering="crispEdges"><path stroke="#0A0A0A" d="M1 1.5h7m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m1 0h7M1 2.5h1m5 0h1m3 0h1m3 0h2m4 0h4m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m1 0h2m5 0h1m2 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m1 0h3m2 0h1m2 0h1m1 0h3m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m2 0h1m6 0h3m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h1m1 0h1m2 0h4m1 0h2m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h3m2 0h2m1 0h2m4 0h1m1 0h1M3 9.5h2m2 0h3m3 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1M1 10.5h1m4 0h1m3 0h3m1 0h4m1 0h4m1 0h4m2 0h1m2 0h1M1 11.5h2m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m5 0h2m1 0h1m3 0h3M2 12.5h5m2 0h2m1 0h1m1 0h1m1 0h2m1 0h1m4 0h1m3 0h3M1 13.5h1m3 0h1m1 0h1m2 0h1m4 0h3m1 0h4m2 0h2m1 0h2m3 0h1M2 14.5h1m1 0h3m5 0h4m1 0h2m1 0h4m2 0h1m1 0h1m1 0h1M1 15.5h1m1 0h2m1 0h2m2 0h3m2 0h3m2 0h3m2 0h2m1 0h2m1 0h1M3 16.5h2m1 0h1m3 0h2m1 0h4m1 0h1m1 0h1m1 0h2m3 0h2m1 0h4M4 17.5h1m1 0h2m1 0h2m4 0h2m1 0h2m1 0h2m1 0h9M1 18.5h1m3 0h1m5 0h1m3 0h2m2 0h1m1 0h4m1 0h4m1 0h1m1 0h1M1 19.5h1m1 0h1m1 0h1m1 0h3m1 0h3m2 0h3m2 0h2m3 0h2m3 0h2M4 20.5h2m3 0h3m3 0h1m2 0h1m1 0h1m2 0h1m8 0h2M1 21.5h2m3 0h2m3 0h1m9 0h2m7 0h3M1 22.5h3m2 0h1m2 0h1m4 0h1m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m3 0h1m1 0h1M7 23.5h3m2 0h2m2 0h2m1 0h2m2 0h3m1 0h3m3 0h1M2 24.5h3m1 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h3m2 0h3m2 0h2m2 0h1M1 25.5h1m5 0h1m2 0h2m5 0h1m3 0h1m1 0h7m2 0h2M9 26.5h2m1 0h3m1 0h1m1 0h2m1 0h2m2 0h1m3 0h2m1 0h1M1 27.5h7m1 0h1m2 0h2m3 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h3M1 28.5h1m5 0h1m2 0h3m1 0h1m1 0h3m2 0h1m2 0h2m3 0h5M1 29.5h1m1 0h3m1 0h1m2 0h3m1 0h1m1 0h3m1 0h1m2 0h10M1 30.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h2m4 0h1m2 0h1M1 31.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h4m1 0h1m1 0h4m2 0h2M1 32.5h1m5 0h1m5 0h2m2 0h1m4 0h4m1 0h1m5 0h1M1 33.5h7m2 0h1m3 0h2m1 0h8m1 0h4m1 0h1"/></svg></div>
+      <div class="qr-pane" id="paneOffline" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75" shape-rendering="crispEdges"><path stroke="#0A0A0A" d="M1 1.5h7m1 0h1m2 0h1m3 0h1m2 0h2m1 0h3m1 0h1m3 0h2m3 0h5m1 0h1m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m3 0h3m1 0h1m1 0h7M1 2.5h1m5 0h1m1 0h4m6 0h2m7 0h2m1 0h3m8 0h3m2 0h4m1 0h4m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m2 0h5m1 0h1m1 0h5m1 0h3m1 0h2m1 0h1m7 0h2m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m4 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h1m1 0h5m3 0h3m3 0h3m2 0h2m1 0h1m1 0h1m2 0h2m3 0h2m2 0h2m1 0h2m2 0h2m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h7m2 0h1m1 0h1m3 0h1m2 0h2m1 0h5m3 0h3m1 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m4 0h1m2 0h4m6 0h1m3 0h3m1 0h2m1 0h2m1 0h2m1 0h2m1 0h1m3 0h2m5 0h2m3 0h3m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h2m1 0h1m1 0h7m2 0h1m3 0h2m3 0h3m3 0h1m2 0h1m1 0h1m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1M1 9.5h1m1 0h2m1 0h3m1 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h6m2 0h1m3 0h2m2 0h1m1 0h1m2 0h5m3 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m2 0h1m1 0h2M1 10.5h2m1 0h2m2 0h1m3 0h1m2 0h2m1 0h1m1 0h1m3 0h4m5 0h1m3 0h3m1 0h3m4 0h4m5 0h1m2 0h1m2 0h1m5 0h1m1 0h2M1 11.5h2m2 0h1m1 0h1m4 0h2m1 0h1m1 0h4m1 0h1m3 0h1m2 0h2m1 0h4m2 0h1m4 0h4m1 0h5m4 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h2M1 12.5h2m1 0h2m2 0h1m1 0h1m2 0h1m1 0h6m5 0h2m2 0h1m1 0h1m4 0h5m4 0h1m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h2m1 0h2M1 13.5h1m1 0h1m1 0h1m1 0h10m4 0h1m3 0h1m1 0h2m2 0h5m3 0h2m3 0h1m1 0h1m2 0h5m5 0h1m3 0h1m3 0h1m1 0h5M8 14.5h1m1 0h1m2 0h1m4 0h2m3 0h6m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m3 0h3m2 0h2m2 0h1m3 0h4m1 0h1m1 0h1m1 0h3M1 15.5h3m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m5 0h1m1 0h1m3 0h2m4 0h2m2 0h5m1 0h6m3 0h2m1 0h2m1 0h2m2 0h1m1 0h1M1 16.5h1m1 0h1m4 0h3m2 0h1m3 0h3m2 0h1m3 0h3m1 0h1m1 0h1m2 0h5m2 0h1m1 0h4m1 0h1m2 0h1m2 0h2m1 0h4m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1M2 17.5h4m1 0h1m1 0h3m1 0h5m2 0h2m1 0h3m4 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h4m1 0h1m2 0h1m1 0h7m4 0h1m1 0h1m1 0h1M1 18.5h5m3 0h1m2 0h1m3 0h1m3 0h2m2 0h1m1 0h3m1 0h5m4 0h1m2 0h4m1 0h2m1 0h4m2 0h1m3 0h3m1 0h2m4 0h2M4 19.5h1m1 0h2m2 0h4m5 0h2m1 0h5m1 0h2m1 0h2m1 0h1m1 0h2m5 0h1m1 0h4m1 0h1m2 0h1m2 0h1m4 0h1m4 0h2m1 0h1m1 0h3M3 20.5h2m1 0h1m1 0h5m1 0h5m1 0h2m1 0h1m2 0h2m4 0h3m3 0h3m3 0h1m2 0h1m1 0h3m1 0h1m1 0h3m2 0h4m2 0h2m1 0h5M1 21.5h1m1 0h2m1 0h2m1 0h3m1 0h2m1 0h5m1 0h4m2 0h1m2 0h2m6 0h1m1 0h1m2 0h1m2 0h1m1 0h1m6 0h2m1 0h1m1 0h2m1 0h3m1 0h3m1 0h2M4 22.5h2m2 0h2m3 0h2m1 0h2m3 0h1m4 0h1m3 0h1m1 0h1m1 0h1m1 0h3m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h5m5 0h1m2 0h2M2 23.5h2m1 0h4m2 0h2m1 0h2m2 0h5m1 0h1m1 0h2m1 0h3m1 0h2m1 0h1m2 0h1m2 0h2m1 0h3m2 0h2m1 0h1m3 0h1m1 0h3m2 0h1m5 0h3M9 24.5h1m1 0h5m1 0h1m1 0h1m2 0h5m1 0h1m1 0h1m1 0h5m3 0h3m6 0h1m6 0h1m1 0h2m4 0h2m2 0h1m4 0h1M1 25.5h9m6 0h2m2 0h3m2 0h5m1 0h3m2 0h1m1 0h2m1 0h3m1 0h5m1 0h2m1 0h1m4 0h4m1 0h6m1 0h1M1 26.5h1m2 0h2m3 0h4m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m4 0h1m1 0h2m1 0h1m1 0h3m1 0h1m3 0h1m1 0h8m2 0h1m1 0h1m1 0h1m3 0h2m1 0h1M3 27.5h3m1 0h1m1 0h2m1 0h2m3 0h1m3 0h5m1 0h1m1 0h2m1 0h1m2 0h5m1 0h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h2m2 0h1m2 0h4m1 0h1m1 0h1m2 0h1M1 28.5h5m3 0h1m1 0h2m2 0h7m3 0h1m3 0h2m2 0h2m3 0h1m3 0h2m1 0h1m3 0h2m2 0h1m1 0h2m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1M2 29.5h9m1 0h3m4 0h3m1 0h1m1 0h5m5 0h1m3 0h3m2 0h9m2 0h1m3 0h1m2 0h1m2 0h6M4 30.5h2m3 0h2m1 0h2m2 0h1m3 0h3m4 0h3m1 0h4m3 0h1m1 0h2m1 0h1m2 0h2m1 0h2m4 0h4m1 0h2m2 0h2m1 0h1m4 0h2M1 31.5h1m1 0h1m3 0h3m2 0h2m5 0h2m2 0h2m1 0h6m2 0h1m2 0h4m1 0h2m3 0h4m1 0h1m2 0h1m5 0h2m1 0h1m1 0h6M1 32.5h1m1 0h4m3 0h5m1 0h3m2 0h1m1 0h2m1 0h1m1 0h1m2 0h5m1 0h2m1 0h5m4 0h1m3 0h3m3 0h1m4 0h4m1 0h1m3 0h1M6 33.5h4m1 0h1m3 0h2m3 0h1m2 0h2m4 0h1m2 0h1m1 0h2m1 0h3m1 0h2m1 0h1m2 0h4m1 0h3m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1M4 34.5h2m3 0h1m1 0h5m2 0h1m1 0h1m2 0h2m1 0h2m2 0h4m1 0h4m2 0h3m1 0h3m1 0h1m3 0h5m2 0h1m1 0h1m3 0h1m2 0h1m1 0h1M4 35.5h4m2 0h2m1 0h1m3 0h1m2 0h6m1 0h2m1 0h4m1 0h1m3 0h2m1 0h3m4 0h1m1 0h2m5 0h1m1 0h1m1 0h2m1 0h1m3 0h1M3 36.5h4m2 0h5m1 0h4m1 0h1m1 0h3m5 0h1m1 0h1m1 0h2m3 0h1m1 0h5m6 0h1m1 0h2m1 0h2m1 0h2m1 0h1m2 0h2m4 0h1M1 37.5h1m1 0h1m3 0h1m2 0h3m2 0h2m1 0h6m2 0h3m3 0h1m2 0h6m1 0h3m1 0h1m1 0h4m2 0h1m3 0h1m1 0h3m2 0h1m3 0h3m1 0h1M2 38.5h2m2 0h1m3 0h3m1 0h2m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m3 0h2m1 0h1m6 0h2m1 0h1m4 0h4m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h2M1 39.5h4m1 0h2m9 0h1m6 0h3m1 0h5m1 0h3m2 0h3m1 0h1m1 0h3m2 0h4m1 0h4m2 0h1m1 0h2m5 0h4M1 40.5h4m7 0h4m2 0h3m2 0h3m3 0h1m1 0h1m1 0h2m3 0h1m1 0h2m4 0h1m3 0h3m1 0h1m1 0h1m3 0h2m1 0h1m5 0h2m2 0h1M2 41.5h4m1 0h3m1 0h1m6 0h1m1 0h4m2 0h1m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m1 0h1m3 0h1m2 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m1 0h3m2 0h1m2 0h1M3 42.5h3m2 0h2m2 0h3m1 0h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1m1 0h1m2 0h1m5 0h1m2 0h6m1 0h1m1 0h1m1 0h1m1 0h3M3 43.5h5m3 0h1m1 0h1m1 0h1m2 0h1m5 0h4m1 0h2m1 0h2m1 0h2m1 0h2m1 0h2m2 0h1m2 0h2m1 0h3m3 0h1m1 0h1m2 0h1m7 0h1m1 0h1M1 44.5h1m3 0h1m2 0h1m1 0h1m1 0h3m1 0h4m2 0h2m2 0h1m1 0h5m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m2 0h2m1 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h1m1 0h3M1 45.5h1m1 0h1m1 0h10m2 0h1m1 0h1m5 0h5m1 0h1m1 0h1m2 0h2m2 0h3m2 0h5m3 0h1m1 0h2m3 0h1m1 0h2m1 0h6M1 46.5h2m1 0h2m3 0h1m1 0h1m2 0h1m6 0h1m1 0h1m1 0h1m3 0h3m2 0h2m1 0h4m2 0h3m3 0h1m1 0h6m1 0h2m3 0h1m1 0h1m3 0h1m2 0h2M4 47.5h2m1 0h1m1 0h2m4 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m2 0h1m2 0h4m4 0h1m1 0h1m1 0h1m1 0h3M2 48.5h1m2 0h1m3 0h1m1 0h6m3 0h2m1 0h1m1 0h1m3 0h1m2 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m3 0h4m2 0h2m2 0h1m1 0h2m2 0h1m3 0h2m2 0h1M5 49.5h5m3 0h2m3 0h4m1 0h7m2 0h1m1 0h2m4 0h1m4 0h7m1 0h2m4 0h1m2 0h12M2 50.5h2m2 0h1m3 0h2m1 0h1m1 0h2m2 0h4m2 0h2m2 0h1m1 0h8m2 0h1m1 0h1m3 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h6M1 51.5h5m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m3 0h1m4 0h2m1 0h2m1 0h2m1 0h1m1 0h3m1 0h2m2 0h3m2 0h1m3 0h1m1 0h4M1 52.5h1m4 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m1 0h1m4 0h1m1 0h1m1 0h3m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m5 0h1M4 53.5h1m1 0h4m3 0h1m2 0h1m1 0h1m2 0h1m2 0h1m1 0h1m7 0h1m1 0h4m4 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h3m4 0h1m1 0h1m1 0h1m2 0h1M1 54.5h2m3 0h1m2 0h1m2 0h1m1 0h1m5 0h1m1 0h1m2 0h3m4 0h2m1 0h4m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1M2 55.5h3m2 0h1m1 0h1m1 0h1m4 0h2m1 0h4m2 0h1m1 0h1m1 0h4m4 0h2m3 0h4m2 0h3m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m3 0h1M1 56.5h1m1 0h1m1 0h1m2 0h3m3 0h1m4 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m4 0h4m2 0h2m1 0h1m3 0h3m1 0h1m4 0h1m1 0h3m1 0h1M2 57.5h1m2 0h5m1 0h2m5 0h1m1 0h1m1 0h4m5 0h1m1 0h2m1 0h5m2 0h2m1 0h2m5 0h1m2 0h2m1 0h2m4 0h4m1 0h1m1 0h2M3 58.5h2m5 0h1m1 0h1m2 0h7m1 0h2m2 0h1m2 0h2m1 0h2m4 0h4m1 0h1m1 0h2m1 0h1m3 0h2m1 0h2m2 0h1m1 0h1m3 0h5M1 59.5h1m3 0h3m1 0h1m1 0h1m1 0h1m3 0h1m2 0h2m1 0h2m4 0h1m1 0h2m2 0h1m1 0h5m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m3 0h1m1 0h1m2 0h1m2 0h2m1 0h4M2 60.5h2m5 0h1m3 0h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h5m1 0h1m1 0h3m2 0h1m1 0h2m2 0h4m3 0h2m3 0h4m4 0h1m1 0h3m2 0h2M1 61.5h1m1 0h2m1 0h2m2 0h1m1 0h4m1 0h1m5 0h1m4 0h3m1 0h3m1 0h1m4 0h1m4 0h1m1 0h2m1 0h2m3 0h1m2 0h1m6 0h1m1 0h1m2 0h1M3 62.5h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h2m2 0h1m1 0h1m1 0h2m4 0h2m3 0h3m1 0h1m2 0h1m1 0h6m1 0h3m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m1 0h2m1 0h2M1 63.5h2m1 0h1m1 0h2m2 0h1m1 0h1m2 0h3m1 0h1m4 0h1m2 0h2m1 0h7m2 0h4m1 0h1m1 0h1m4 0h1m2 0h4m1 0h1m2 0h1m3 0h1m2 0h1m3 0h1M4 64.5h2m2 0h2m5 0h1m2 0h1m3 0h8m2 0h3m2 0h2m3 0h5m3 0h1m2 0h3m1 0h2m2 0h1m2 0h1m2 0h2m3 0h1M1 65.5h1m3 0h1m1 0h2m1 0h4m2 0h2m2 0h1m1 0h10m3 0h2m2 0h1m5 0h5m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m2 0h8M9 66.5h1m1 0h1m1 0h3m2 0h1m2 0h2m1 0h2m3 0h4m2 0h1m4 0h2m3 0h1m3 0h2m4 0h5m2 0h1m2 0h1m3 0h5M1 67.5h7m1 0h1m1 0h3m1 0h2m1 0h5m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m2 0h3m1 0h1m1 0h2m1 0h4m1 0h1m3 0h2m2 0h1m1 0h1m1 0h2m1 0h1M1 68.5h1m5 0h1m1 0h1m2 0h1m2 0h1m2 0h2m3 0h3m3 0h2m1 0h1m2 0h1m1 0h2m1 0h1m3 0h2m3 0h2m4 0h2m2 0h3m3 0h1m3 0h1m2 0h2M1 69.5h1m1 0h3m1 0h1m5 0h2m9 0h6m1 0h3m1 0h1m6 0h8m1 0h1m2 0h1m1 0h1m1 0h1m2 0h2m2 0h5m1 0h2M1 70.5h1m1 0h3m1 0h1m1 0h11m1 0h2m1 0h1m2 0h1m1 0h2m3 0h1m1 0h1m4 0h7m1 0h4m2 0h5m2 0h1m1 0h3m2 0h1m3 0h1M1 71.5h1m1 0h3m1 0h1m1 0h2m1 0h3m2 0h3m2 0h3m1 0h1m5 0h2m7 0h2m1 0h2m2 0h4m4 0h3m1 0h4m2 0h2m2 0h1m1 0h1M1 72.5h1m5 0h1m2 0h1m1 0h2m4 0h2m1 0h1m1 0h1m2 0h2m1 0h4m1 0h1m6 0h1m3 0h1m3 0h1m1 0h2m1 0h2m1 0h1m3 0h6m3 0h1m2 0h1M1 73.5h7m1 0h2m1 0h4m1 0h1m2 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m3 0h2m1 0h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h3m2 0h1"/></svg></div>
+      <div class="qr-badge" id="qrBadge"><span>Y</span></div>
+    </div>
+
+    <div class="toggle" role="tablist">
+      <button class="toggle-btn active" data-mode="online" id="tgOnline">Online</button>
+      <button class="toggle-btn" data-mode="offline" id="tgOffline">Offline</button>
+    </div>
+    <p class="qr-hint" id="qrHint">Apuntá la cámara y se abre mi tarjeta.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var URL_CARD = "https://yacare.io/cards/mariano";
+
+  // vCard idéntica a la que codifica el QR Offline
+  var VCARD = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    "N:Noceti;Mariano;;;",
+    "FN:Mariano Noceti",
+    "ORG:Yacaré",
+    "TITLE:Digital Entrepreneur",
+    "TEL;TYPE=CELL,VOICE:+15513713633",
+    "EMAIL;TYPE=WORK:mariano@yacare.io",
+    "URL:https://yacare.io",
+    "X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/mariano-noceti",
+    "X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/mariannoceti",
+    "END:VCARD"
+  ].join("\n");
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+
+  // ---- Guardar contacto (.vcf) ----
+  $("saveBtn").addEventListener("click", function () {
+    try {
+      var blob = new Blob([VCARD], { type: "text/vcard;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "Mariano-Noceti.vcf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+      toast("Contacto descargado");
+    } catch (e) {
+      // Fallback iOS antiguo
+      window.location.href = "data:text/vcard;charset=utf-8," + encodeURIComponent(VCARD);
+    }
+  });
+
+  // ---- Compartir ----
+  $("shareBtn").addEventListener("click", async function () {
+    var data = {
+      title: "Mariano Noceti · Yacaré",
+      text: "Esta es mi tarjeta digital.",
+      url: URL_CARD
+    };
+    if (navigator.share) {
+      try { await navigator.share(data); } catch (e) { /* cancelado */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(URL_CARD);
+      toast("Link copiado");
+    } catch (e) {
+      window.prompt("Copiá el link de la tarjeta:", URL_CARD);
+    }
+  });
+
+  // ---- QR modal ----
+  var modal = $("qrModal");
+  function openQR() { modal.classList.add("open"); }
+  function closeQR() { modal.classList.remove("open"); }
+
+  $("qrBtn").addEventListener("click", openQR);
+  $("qrClose").addEventListener("click", closeQR);
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeQR(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeQR(); });
+
+  // ---- Toggle Online / Offline ----
+  var HINTS = {
+    online: "Apuntá la cámara y se abre mi tarjeta.",
+    offline: "Apuntá la cámara y guardás mi contacto al toque. Funciona sin internet."
+  };
+
+  function setMode(mode) {
+    var on = mode === "online";
+    $("paneOnline").hidden = !on;
+    $("paneOffline").hidden = on;
+    // El logo central solo va sobre el QR Online (data corta, no afecta el escaneo).
+    $("qrBadge").style.display = on ? "grid" : "none";
+    $("tgOnline").classList.toggle("active", on);
+    $("tgOffline").classList.toggle("active", !on);
+    $("qrHint").textContent = HINTS[mode];
+  }
+
+  $("tgOnline").addEventListener("click", function () { setMode("online"); });
+  $("tgOffline").addEventListener("click", function () { setMode("offline"); });
+})();
+</script>
+</body>
+</html>
