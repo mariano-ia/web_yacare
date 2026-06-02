@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Brandtrack · Journey Rediseñado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-medium: rgba(255,255,255,0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg-primary); color:var(--text-primary); font-family:var(--font-body); font-size:18px; line-height:1.6; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+h1,h2,h3,h4 { font-family:var(--font-display); text-transform:uppercase; letter-spacing:-0.04em; line-height:1.1; color:var(--text-primary); font-weight:700; margin:0 0 24px 0; }
+p,li { font-family:var(--font-body); line-height:1.6; color:var(--text-secondary); margin:0 0 12px 0; }
+ul,ol { list-style:none; padding:0; margin:0; }
+
+.grain-overlay { position:fixed; top:-50%; left:-50%; width:200%; height:200%; z-index:9999; pointer-events:none; opacity:0.04; animation:grain 8s steps(10) infinite; }
+@keyframes grain { 0%,100%{transform:translate(0,0)} 10%{transform:translate(-5%,-10%)} 20%{transform:translate(-15%,5%)} 30%{transform:translate(7%,-25%)} 40%{transform:translate(-5%,25%)} 50%{transform:translate(-15%,10%)} 60%{transform:translate(15%,0%)} 70%{transform:translate(0%,15%)} 80%{transform:translate(3%,35%)} 90%{transform:translate(-10%,10%)} }
+
+.shimmer-text { background:linear-gradient(to right,#999 0%,#fff 50%,#999 100%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:shine 6s linear infinite; padding-block:0.05em; }
+@keyframes shine { from{background-position:0% center;} to{background-position:-200% center;} }
+
+.blob { position:absolute; border-radius:50%; filter:blur(120px); pointer-events:none; z-index:0; }
+.blob--purple { background:radial-gradient(circle,rgba(138,94,255,0.5) 0%,transparent 70%); width:500px; height:500px; animation:bf1 18s ease-in-out infinite alternate; }
+.blob--magenta { background:radial-gradient(circle,rgba(209,36,157,0.3) 0%,transparent 70%); width:400px; height:400px; animation:bf2 22s ease-in-out infinite alternate; }
+@keyframes bf1 { 0%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-50px) scale(1.1)} 66%{transform:translate(-20px,20px) scale(0.9)} 100%{transform:translate(10px,-30px) scale(1.05)} }
+@keyframes bf2 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-40px,30px) scale(1.15)} 100%{transform:translate(20px,-20px) scale(0.95)} }
+
+@keyframes slide-in { from{opacity:0;transform:translateY(40px);} to{opacity:1;transform:translateY(0);} }
+.anim { opacity:0; transform:translateY(40px); }
+.anim.anim--visible { animation:slide-in 0.8s var(--ease-out) both; }
+.anim.anim--visible:nth-child(1) { animation-delay:0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay:0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay:0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay:0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay:0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay:0.40s; }
+
+.deck { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+.slide { min-height:100vh; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:center; padding:60px 80px; position:relative; overflow:hidden; }
+.slide-content { width:100%; max-width:1100px; margin:0 auto; }
+
+.label { font-family:var(--font-body); font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-muted); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.label::before { content:''; width:24px; height:1px; background:var(--text-muted); }
+
+.card { background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); border-radius:24px; padding:40px; position:relative; overflow:hidden; }
+.card::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.03) 0%,transparent 100%); pointer-events:none; }
+.card--sm { padding:24px; border-radius:16px; }
+.card--xs { padding:16px; border-radius:12px; }
+.card--highlight { border-color:var(--border-medium); }
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#8A63F2,#D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#D1249D,#FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#FF6B6B,#FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#FFB347,#8A63F2); }
+
+.split { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; width:100%; }
+.split--start { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; width:100%; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; width:100%; }
+.grid-4col { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; width:100%; }
+
+.steps { display:flex; gap:20px; width:100%; position:relative; }
+.steps::before { content:''; position:absolute; top:24px; left:24px; right:24px; height:1px; background:var(--border-medium); z-index:0; }
+.step { flex:1; text-align:center; position:relative; z-index:1; }
+.step-num { width:48px; height:48px; border-radius:50%; border:1px solid var(--border-medium); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--text-secondary); background:var(--bg-primary); }
+.step h4 { font-size:1rem; margin-bottom:6px; }
+.step p { font-size:0.78rem; color:var(--text-secondary); }
+
+.icon-list { display:flex; flex-direction:column; gap:18px; }
+.icon-list li { display:flex; align-items:flex-start; gap:14px; font-size:0.95rem; color:var(--text-secondary); }
+.icon-list li i { color:var(--text-muted); flex-shrink:0; margin-top:3px; }
+
+.checklist li { display:flex; align-items:flex-start; gap:12px; font-size:0.95rem; color:var(--text-secondary); padding:10px 0; border-bottom:1px solid var(--border-subtle); }
+.checklist li i { color:var(--text-muted); flex-shrink:0; margin-top:3px; }
+
+.note-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-left:2px solid rgba(255,255,255,0.15); border-radius:12px; padding:16px 20px; margin-top:20px; }
+.note-card p { font-size:0.8rem; color:var(--text-muted); margin:0; line-height:1.6; }
+
+.brand-bar { position:absolute; bottom:28px; left:80px; right:80px; display:flex; justify-content:space-between; align-items:center; font-size:0.65rem; color:var(--text-muted); letter-spacing:0.05em; text-transform:uppercase; font-weight:500; z-index:10; }
+.section-num { font-family:var(--font-display); font-size:10rem; font-weight:700; line-height:0.85; letter-spacing:-0.06em; color:var(--text-muted); opacity:0.08; position:absolute; right:80px; top:50%; transform:translateY(-50%); }
+
+/* Screen image */
+.screen-img { display:flex; align-items:center; justify-content:center; min-height:340px; }
+.screen-img img { max-height:460px; width:auto; border-radius:24px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 12px 48px rgba(0,0,0,0.6); }
+
+/* Trial timeline */
+.trial-step { display:flex; align-items:flex-start; gap:16px; padding:14px 0; border-bottom:1px solid var(--border-subtle); }
+.trial-day { font-family:var(--font-display); font-size:1.4rem; color:var(--text-muted); min-width:52px; letter-spacing:-0.04em; line-height:1; }
+
+/* Scenario pill */
+.scenario-pill { font-size:0.6rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); padding:3px 8px; border:1px solid rgba(255,255,255,0.1); border-radius:99px; display:inline-block; margin-bottom:8px; }
+
+/* Slide variants */
+.slide--cover { text-align:center; position:relative; overflow:hidden; }
+.slide--cover h1 { font-size:clamp(2.5rem,5vw,4rem); margin-bottom:20px; }
+.slide--cover .subtitle { font-size:1.05rem; color:var(--text-secondary); max-width:680px; margin:0 auto 32px; font-weight:300; }
+.slide--cover .meta { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.15em; }
+.cover-logo { height:32px; filter:invert(1); opacity:0.7; margin-bottom:40px; }
+
+.slide--thanks { text-align:center; position:relative; }
+.slide--thanks h2 { font-size:clamp(3rem,6vw,5rem); margin-bottom:16px; }
+.contact-row { display:flex; justify-content:center; gap:40px; margin-top:32px; }
+.contact-item { display:flex; align-items:center; gap:10px; font-size:0.9rem; color:var(--text-secondary); }
+.contact-item i { color:var(--text-muted); }
+
+/* Toolbar */
+.deck-toolbar { position:fixed; top:16px; right:16px; z-index:9998; display:flex; align-items:center; gap:8px; }
+.toolbar-btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 16px; border-radius:999px; border:1px solid var(--border-medium); background:rgba(0,0,0,0.6); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); color:var(--text-secondary); font-family:var(--font-body); font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; cursor:pointer; transition:all 0.3s var(--ease-out); white-space:nowrap; }
+.toolbar-btn:hover { color:var(--text-primary); border-color:var(--text-muted); background:rgba(0,0,0,0.8); }
+.toolbar-btn i { width:14px; height:14px; }
+
+.slide-counter { position:fixed; bottom:28px; right:32px; z-index:9998; font-family:var(--font-body); font-size:0.72rem; font-weight:500; color:var(--text-muted); letter-spacing:0.08em; pointer-events:none; opacity:0.6; }
+
+/* Chat */
+.chat-msg { max-width:85%; padding:12px 18px; border-radius:16px; font-size:0.88rem; line-height:1.55; }
+.chat-msg p { color:var(--text-secondary); margin:0; font-size:0.88rem; }
+.chat-msg--user { align-self:flex-end; background:rgba(255,255,255,0.08); border:1px solid var(--border-medium); }
+.chat-msg--user p { color:var(--text-primary); }
+.chat-msg--assistant { align-self:flex-start; background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); }
+.chat-chip { background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:8px 16px; color:var(--text-secondary); font-family:var(--font-body); font-size:0.78rem; cursor:pointer; transition:all 0.2s var(--ease-out); white-space:nowrap; }
+.chat-chip:hover { color:var(--text-primary); border-color:var(--text-muted); background:rgba(255,255,255,0.05); }
+.chat-typing { align-self:flex-start; padding:12px 18px; font-size:0.85rem; color:var(--text-muted); }
+.chat-typing::after { content:'...'; animation:tdots 1.2s steps(3) infinite; }
+@keyframes tdots { 0%{content:'.';} 33%{content:'..';} 66%{content:'...';} }
+#chat-messages::-webkit-scrollbar { width:4px; }
+#chat-messages::-webkit-scrollbar-track { background:transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background:var(--border-medium); border-radius:4px; }
+
+.scroll-hint { position:fixed; bottom:32px; left:50%; transform:translateX(-50%); z-index:100; display:flex; flex-direction:column; align-items:center; gap:6px; color:var(--text-muted); font-family:var(--font-body); font-size:0.65rem; font-weight:500; text-transform:uppercase; letter-spacing:0.12em; animation:hpulse 2s ease-in-out infinite; transition:opacity 0.6s ease; pointer-events:none; }
+.scroll-hint i { width:20px; height:20px; }
+.scroll-hint.hidden { opacity:0; }
+@keyframes hpulse { 0%,100%{opacity:0.5;transform:translateX(-50%) translateY(0);} 50%{opacity:1;transform:translateX(-50%) translateY(6px);} }
+
+@media(max-width:768px){
+  body { font-size:16px; }
+  .deck { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch; }
+  .slide { min-height:100vh; scroll-snap-align:start; scroll-snap-stop:always; padding:40px 20px; justify-content:center; overflow-y:auto; }
+  .slide-content { max-width:100%; width:100%; }
+  h1 { font-size:1.8rem; } h2 { font-size:1.5rem; } h4 { font-size:0.95rem; } p,li { font-size:0.88rem; }
+  .split,.split--start { grid-template-columns:1fr; gap:24px; }
+  .grid-3 { grid-template-columns:1fr; gap:14px; }
+  .grid-4col { grid-template-columns:1fr 1fr; gap:12px; }
+  .steps { flex-direction:column; gap:16px; }
+  .steps::before { display:none; }
+  .step { text-align:left; display:flex; gap:14px; align-items:flex-start; }
+  .step-num { width:38px; height:38px; min-width:38px; font-size:0.9rem; margin:0; }
+  .step>div { display:flex; flex-direction:column; }
+  .brand-bar,.section-num { display:none; }
+  .slide--cover h1 { font-size:1.9rem; }
+  .cover-logo { height:22px; margin-bottom:20px; }
+  .slide--thanks h2 { font-size:2rem; }
+  .contact-row { flex-direction:column; gap:12px; align-items:center; }
+  .card { padding:18px; border-radius:16px; }
+  .card--sm { padding:14px; border-radius:12px; }
+  .card--xs { padding:12px; border-radius:10px; }
+  .blob { width:200px!important; height:200px!important; }
+  .deck-toolbar { top:10px; right:10px; gap:6px; }
+  .toolbar-btn { padding:6px 10px; font-size:0.58rem; }
+  .slide-counter { display:none; }
+  .screen-img { min-height:200px; }
+  .screen-img img { max-height:320px; }
+  .anim { opacity:1; transform:none; animation:none; }
+}
+
+@media print {
+  .grain-overlay,.blob,.deck-toolbar,.slide-counter,.scroll-hint { display:none!important; }
+  .deck { height:auto; overflow:visible; scroll-snap-type:none; }
+  .slide { min-height:auto; break-inside:avoid; page-break-inside:avoid; scroll-snap-align:none; }
+  .anim { opacity:1!important; transform:none!important; animation:none!important; }
+  #chat-container { display:none!important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="grain-overlay"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg>
+
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()"><i data-lucide="download"></i> PDF</button>
+  <button class="toolbar-btn" onclick="goToChat()"><i data-lucide="message-circle-question"></i> Dudas</button>
+</div>
+
+<div class="slide-counter" id="slide-counter">1 / 11</div>
+<div class="scroll-hint" id="scroll-hint"><span>Desliza</span><i data-lucide="chevron-down"></i></div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════ 1. COVER ══════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px;left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px;right:-50px;"></div>
+  <div class="slide-content" style="position:relative;z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Brandtrack Inbound · Journey Rediseñado</h1>
+    <p class="subtitle anim">Del registro al reproductor: flujo de activación y conversión para el usuario Inbound.</p>
+    <p class="meta anim" style="margin-top:24px;">Yacaré · yacare.io · Confidencial · 2025</p>
+  </div>
+</section>
+
+
+<!-- ══════ 2. EL RECORRIDO DE UN VISTAZO ══════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">El recorrido completo</div>
+    <h2 class="anim" style="font-size:clamp(1.5rem,3vw,2.2rem);max-width:820px;margin-bottom:44px;">Cinco fases, un objetivo: que el usuario entienda el producto y se suscriba</h2>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Onboarding</h4>
+          <p>4 pasos. De la landing a la playlist generada.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Primera llegada</h4>
+          <p>Trigger de bienvenida + panel de guía en topbar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">H1</div>
+        <div>
+          <h4>Programa tu música</h4>
+          <p>Trigger a los 2 min de reproducción.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">H2</div>
+        <div>
+          <h4>Instala el reproductor</h4>
+          <p>Trigger a los 10 min acumulados.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">H3</div>
+        <div>
+          <h4>Conoce los anuncios</h4>
+          <p>Trigger en el día 10 del trial.</p>
+        </div>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:32px;font-size:0.72rem;color:var(--text-muted);text-align:center;">En la presentación final, el flujo completo de pantallas aparece aquí como imagen corrida de izquierda a derecha</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 3. ONBOARDING: DE 9 A 4 ══════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">Onboarding</div>
+    <h2 class="anim" style="font-size:2.2rem;margin-bottom:32px;">Cuatro pasos. Dos minutos. Ya tiene su playlist.</h2>
+    <div class="grid-4col anim">
+      <div class="card card--sm card--accent-1">
+        <div style="font-family:var(--font-display);font-size:2rem;color:var(--text-muted);line-height:1;margin-bottom:12px;letter-spacing:-0.04em;">01</div>
+        <h4 style="font-size:1.05rem;margin-bottom:8px;">Landing</h4>
+        <p style="font-size:0.85rem;">Prueba gratis 14 días, sin tarjeta, se detiene sola.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <div style="font-family:var(--font-display);font-size:2rem;color:var(--text-muted);line-height:1;margin-bottom:12px;letter-spacing:-0.04em;">02</div>
+        <h4 style="font-size:1.05rem;margin-bottom:8px;">Crear cuenta</h4>
+        <p style="font-size:0.85rem;">Formulario mínimo. Ruta futura: Google, Apple o magic link.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <div style="font-family:var(--font-display);font-size:2rem;color:var(--text-muted);line-height:1;margin-bottom:12px;letter-spacing:-0.04em;">03</div>
+        <h4 style="font-size:1.05rem;margin-bottom:8px;">Datos del local</h4>
+        <p style="font-size:0.85rem;">Nombre y ubicaciones. Pre-cargado en 1 zona.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <div style="font-family:var(--font-display);font-size:2rem;color:var(--text-muted);line-height:1;margin-bottom:12px;letter-spacing:-0.04em;">04</div>
+        <h4 style="font-size:1.05rem;margin-bottom:8px;">Tu música con IA</h4>
+        <p style="font-size:0.85rem;">Tipo de negocio + perfil + prompt libre. Tres pasos anteriores fusionados en uno.</p>
+      </div>
+    </div>
+    <div class="note-card anim">
+      <p><strong style="color:var(--text-secondary);">Eliminados del flujo inicial:</strong> Paso de prioridad de usuario y WhatsApp + país. Ambos se capturan post-activación, sin impacto en la conversión.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 4. PRIMERA LLEGADA: WOW MOMENT ══════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="split" style="align-items:stretch;">
+      <div class="screen-img">
+        <img src="screens/slide-14-home.png" alt="Primera llegada: playlist lista">
+      </div>
+      <div>
+        <div class="label anim">Primera llegada</div>
+        <h2 class="anim" style="font-size:1.9rem;margin-bottom:24px;">La playlist ya está creada y asignada a su zona. Solo tiene que explorarla.</h2>
+        <ul class="icon-list anim">
+          <li style="font-size:0.88rem;">
+            <i data-lucide="bell" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">Trigger de bienvenida:</strong> card no bloqueante sobre el dashboard. "Tu playlist está lista. La creamos a partir de lo que nos contaste." CTA: "Ver mi playlist".</div>
+          </li>
+          <li style="font-size:0.88rem;">
+            <i data-lucide="music-2" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">Detalle de la playlist:</strong> tracklist, duración, canciones. El usuario puede reproducir desde el browser. No se reproduce automáticamente.</div>
+          </li>
+          <li style="font-size:0.88rem;">
+            <i data-lucide="layout-dashboard" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">Panel de guía:</strong> icono en la topbar junto al avatar. Muestra los tres hitos con sus estados. Siempre accesible, nunca obligatorio.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 5. HITO 1: PROGRAMA TU MÚSICA ══════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="split" style="align-items:stretch;">
+      <div class="screen-img">
+        <img src="screens/slide-15-hito1.png" alt="Hito 1: programar música">
+      </div>
+      <div>
+        <div class="label anim">Hito 01 · Trigger: 5 min de reproducción</div>
+        <h2 class="anim" style="font-size:1.8rem;margin-bottom:24px;">A los 5 minutos escuchando, la IA le ofrece programar su semana</h2>
+        <ul class="icon-list anim" style="gap:14px;">
+          <li style="font-size:0.85rem;">
+            <i data-lucide="zap" style="width:17px;height:17px;"></i>
+            <div><strong style="color:#fff;font-size:0.85rem;">Trigger contextual:</strong> card no bloqueante. "La IA puede armar tu semana, ¿quieres verla?" CTA: "Generar calendario". Secundario: "Más tarde".</div>
+          </li>
+          <li style="font-size:0.85rem;">
+            <i data-lucide="sliders-horizontal" style="width:17px;height:17px;"></i>
+            <div><strong style="color:#fff;font-size:0.85rem;">Formulario:</strong> horario de apertura y cierre, picos de afluencia y prompt de identidad de marca.</div>
+          </li>
+          <li style="font-size:0.85rem;">
+            <i data-lucide="calendar-check" style="width:17px;height:17px;"></i>
+            <div><strong style="color:#fff;font-size:0.85rem;">Calendario generado:</strong> preview por bloque. Se asigna automáticamente a la zona, igual que la playlist. Botón para cambiar zona.</div>
+          </li>
+          <li style="font-size:0.85rem;">
+            <i data-lucide="check-circle" style="width:17px;height:17px;"></i>
+            <div><strong style="color:#fff;font-size:0.85rem;">Retroalimentación:</strong> "¡Tu música de la semana fue programada con éxito!" El hito 1 se marca como completado en el panel de guía.</div>
+          </li>
+        </ul>
+        <div class="note-card anim">
+          <p><strong style="color:var(--text-secondary);">Si toca "Más tarde":</strong> sin re-trigger automático. El hito queda pendiente en el panel de guía, siempre accesible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 6. HITO 2: INSTALA EL REPRODUCTOR ══════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="split--start" style="gap:48px;">
+      <div class="screen-img" style="min-height:340px;">
+        <img src="screens/slide-16-hito2.png" alt="Hito 2: instalar reproductor">
+      </div>
+      <div>
+        <div class="label anim">Hito 02 · Trigger: 10 min acumulados</div>
+        <h2 class="anim" style="font-size:1.7rem;margin-bottom:20px;">A los 10 minutos reproduciendo, le explicamos que mybrandtrack no es el reproductor</h2>
+        <div class="grid-3 anim" style="gap:12px;margin-bottom:20px;">
+          <div class="card card--xs">
+            <span class="scenario-pill">Escenario 1</span>
+            <h4 style="font-size:0.9rem;margin-bottom:6px;">Sin zona conectada</h4>
+            <p style="font-size:0.78rem;">Copy de descubrimiento + código de zona directo en pantalla.</p>
+          </div>
+          <div class="card card--xs">
+            <span class="scenario-pill">Escenario 2</span>
+            <h4 style="font-size:0.9rem;margin-bottom:6px;">Zonas mixtas</h4>
+            <p style="font-size:0.78rem;">Selector que filtra solo zonas "No instalada". El código aparece al elegir zona.</p>
+          </div>
+          <div class="card card--xs">
+            <span class="scenario-pill">Escenario 3</span>
+            <h4 style="font-size:0.9rem;margin-bottom:6px;">Todas conectadas</h4>
+            <p style="font-size:0.78rem;">Reencuadre del producto. Sin código. CTA: "Abrir Brandtrack App".</p>
+          </div>
+        </div>
+        <ul class="icon-list anim" style="gap:10px;">
+          <li style="font-size:0.82rem;"><i data-lucide="download" style="width:16px;height:16px;"></i><div>Descarga la app en el dispositivo que vaya a sonar en el local.</div></li>
+          <li style="font-size:0.82rem;"><i data-lucide="hash" style="width:16px;height:16px;"></i><div>Introduce el código. El dispositivo queda emparejado con la zona.</div></li>
+          <li style="font-size:0.82rem;"><i data-lucide="check-circle" style="width:16px;height:16px;"></i><div>Confirmación automática: mybrandtrack detecta el emparejamiento. La zona pasa a "En línea". Hito 2 completado.</div></li>
+        </ul>
+        <div class="note-card anim">
+          <p><strong style="color:var(--text-secondary);">Si toca "Ahora no":</strong> el trigger vuelve una vez más en la siguiente sesión si la zona sigue sin conectar. Para el escenario 3 (todas conectadas), vuelve a los 10 minutos acumulados adicionales sin límite.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 7. HITO 3: CONOCE LOS ANUNCIOS ══════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="split" style="align-items:stretch;">
+      <div class="screen-img">
+        <img src="screens/slide-17-hito3.png" alt="Hito 3: anuncios">
+      </div>
+      <div>
+        <div class="label anim">Hito 03 · Trigger: día 10 del trial</div>
+        <h2 class="anim" style="font-size:1.9rem;margin-bottom:24px;">Cerca del día 10, le contamos que su música también puede vender</h2>
+        <ul class="icon-list anim" style="gap:16px;">
+          <li style="font-size:0.88rem;">
+            <i data-lucide="calendar" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">Trigger independiente:</strong> día 10 del trial. No depende de que haya completado los hitos anteriores.</div>
+          </li>
+          <li style="font-size:0.88rem;">
+            <i data-lucide="megaphone" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">El mensaje:</strong> "¿Y si tu música también vendiera?" Entre canciones puedes insertar cuñas con tus promociones. Lo activas y pausas cuando quieras, sin compromiso.</div>
+          </li>
+          <li style="font-size:0.88rem;">
+            <i data-lucide="eye" style="width:18px;height:18px;"></i>
+            <div><strong style="color:#fff;font-size:0.88rem;">Vista previa ilustrativa</strong> de cómo se inserta un anuncio. El ejemplo es ficticio, no son anuncios activos del usuario.</div>
+          </li>
+          <li style="font-size:0.88rem;">
+            <i data-lucide="mouse-pointer-click" style="width:18px;height:18px;"></i>
+            <div>CTA: "Explorar anuncios". Secundario: "Ahora no". Si pasa, el hito queda en estado "disponible" en el panel de guía.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 8. CONVERSIÓN ══════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">Conversión</div>
+    <h2 class="anim" style="font-size:2rem;max-width:860px;margin-bottom:32px;">Al completar los tres hitos, un momento de celebración y un CTA de suscripción</h2>
+    <div class="split anim" style="align-items:start;gap:40px;">
+      <div class="card card--highlight" style="padding:36px;">
+        <div style="margin-bottom:20px;"><i data-lucide="party-popper" style="width:32px;height:32px;color:var(--text-muted);"></i></div>
+        <h4 style="font-size:1.3rem;margin-bottom:10px;">¡Lo has conseguido!</h4>
+        <p style="font-size:0.88rem;margin-bottom:8px;">Has completado todos los pasos y ya conoces todo lo que Brandtrack tiene para ofrecerte.</p>
+        <p style="font-size:0.85rem;margin-bottom:24px;">Ahora saca el máximo partido a tu suscripción: programa tu música, controla tus zonas y monetiza tu tiempo de espera, todo desde un mismo lugar.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:12px 20px;background:#fff;border-radius:99px;text-align:center;">
+            <span style="font-family:var(--font-body);font-size:0.88rem;font-weight:700;color:#000;">Suscribirme ahora</span>
+          </div>
+          <div style="padding:11px 20px;border:1px solid var(--border-medium);border-radius:99px;text-align:center;">
+            <span style="font-family:var(--font-body);font-size:0.88rem;font-weight:600;color:var(--text-secondary);">Ver planes</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:8px;"><span style="width:16px;height:1px;background:var(--text-muted);display:inline-block;"></span>Comunicaciones de vencimiento del trial</p>
+        <div class="trial-step">
+          <span class="trial-day">D10</span>
+          <div>
+            <p style="font-size:0.88rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Notificación en topbar</p>
+            <p style="font-size:0.82rem;margin:0;">"Tu prueba vence en 4 días."</p>
+          </div>
+        </div>
+        <div class="trial-step">
+          <span class="trial-day">D12</span>
+          <div>
+            <p style="font-size:0.88rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Email</p>
+            <p style="font-size:0.82rem;margin:0;">"Tu prueba vence en 2 días."</p>
+          </div>
+        </div>
+        <div class="trial-step" style="border-bottom:none;">
+          <span class="trial-day">D14</span>
+          <div>
+            <p style="font-size:0.88rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Pantalla de conversión</p>
+            <p style="font-size:0.82rem;margin:0;">Antes de perder acceso. Muestra opciones de plan. Pendiente de diseño.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 9. PRÓXIMOS PASOS ══════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="split--start">
+      <div>
+        <div class="label anim">Lo que sigue</div>
+        <h2 class="shimmer-text anim" style="font-size:2.4rem;">Lo que sigue</h2>
+        <p class="anim" style="max-width:340px;margin-top:12px;">Acciones concretas para la siguiente iteración del journey Inbound.</p>
+      </div>
+      <ul class="checklist anim">
+        <li><i data-lucide="arrow-right" style="width:18px;height:18px;"></i>Definir los tiempos exactos de los triggers con datos reales de comportamiento.</li>
+        <li><i data-lucide="arrow-right" style="width:18px;height:18px;"></i>Simplificar el crear cuenta con SSO (Google, Apple o magic link) en la siguiente iteración.</li>
+        <li><i data-lucide="arrow-right" style="width:18px;height:18px;"></i>Definir la estrategia de nurturing por email para los 14 días del trial.</li>
+        <li><i data-lucide="arrow-right" style="width:18px;height:18px;"></i>Explorar notificaciones push como canal de recordatorio para hitos pendientes.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════ 10. GRACIAS ══════ -->
+<section class="slide slide--thanks" data-slide="10">
+  <div class="blob blob--purple" style="top:-150px;right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px;left:-100px;"></div>
+  <div class="slide-content" style="position:relative;z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary);font-size:1.1rem;margin-top:8px;">Brandtrack · Confidencial · 2025</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px;height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px;height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════ 11. CHAT ══════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content" style="display:flex;flex-direction:column;height:100%;max-height:600px;">
+    <div class="anim" style="text-align:center;margin-bottom:24px;">
+      <h2 style="font-size:1.8rem;margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem;max-width:600px;margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+    <div id="chat-container" class="anim" style="flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;border:1px solid var(--border-subtle);border-radius:20px;background:rgba(255,255,255,0.02);overflow:hidden;">
+      <div id="chat-messages" style="flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;">
+        <div id="chat-suggestions" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son las 5 fases?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funciona el Hito 1?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuándo aparece el Hito 2?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué pasa en el día 14?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué se eliminó del onboarding?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime el journey</button>
+        </div>
+      </div>
+      <div style="padding:16px;border-top:1px solid var(--border-subtle);display:flex;gap:12px;align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..." style="flex:1;background:transparent;border:1px solid var(--border-medium);border-radius:999px;padding:12px 20px;color:var(--text-primary);font-family:var(--font-body);font-size:0.9rem;outline:none;" onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary);color:#000;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="send" style="width:18px;height:18px;"></i></button>
+      </div>
+    </div>
+    <p class="anim" style="text-align:center;font-size:0.7rem;color:var(--text-muted);margin-top:12px;">Este asistente responde exclusivamente sobre el contenido de esta presentación. Para consultas formales, escribí a contact@yacare.io.</p>
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+<script>
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) { hintHidden = true; hint.classList.add('hidden'); }
+}, { passive: true });
+
+function updateCounter() {
+  if (isMobile) return;
+  const idx = Math.round(deck.scrollTop / deck.clientHeight) + 1;
+  counterEl.textContent = Math.min(idx, totalSlides) + ' / ' + totalSlides;
+}
+if (!isMobile) { deck.addEventListener('scroll', updateCounter, { passive: true }); updateCounter(); }
+
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    const vh = deck.clientHeight;
+    const cur = Math.round(deck.scrollTop / vh);
+    if (['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)) { e.preventDefault(); if (cur < totalSlides-1) deck.scrollTo({top:(cur+1)*vh,behavior:'smooth'}); }
+    else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); if (cur > 0) deck.scrollTo({top:(cur-1)*vh,behavior:'smooth'}); }
+    else if (e.key==='Home') { e.preventDefault(); deck.scrollTo({top:0,behavior:'smooth'}); }
+    else if (e.key==='End') { e.preventDefault(); deck.scrollTo({top:(totalSlides-1)*vh,behavior:'smooth'}); }
+  });
+}
+
+if (!isMobile) {
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      if (entry.isIntersecting) anims.forEach(el => el.classList.add('anim--visible'));
+      else anims.forEach(el => el.classList.remove('anim--visible'));
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(s => obs.observe(s));
+}
+
+function printPDF() { window.print(); }
+function goToChat() {
+  if (isMobile) { document.getElementById('chat-container')?.scrollIntoView({behavior:'smooth'}); }
+  else { deck.scrollTo({top:10*deck.clientHeight,behavior:'smooth'}); }
+  setTimeout(() => document.getElementById('chat-input')?.focus(), 400);
+}
+
+// ═══ Q&A LOCAL ═══
+const QA = [
+  { k:['hola','buenas','hello','hey','que tal','buenos dias'], a:'¡Hola! Soy el asistente de esta presentación. Podés preguntarme sobre las 5 fases del journey, el onboarding, los hitos, la conversión o los próximos pasos.' },
+  { k:['gracias','thanks','genial','perfecto','excelente','copado'], a:'¡De nada! Si tenés más dudas, estoy acá. También podés escribir a contact@yacare.io.' },
+  { k:['chau','adios','bye','hasta luego'], a:'¡Hasta luego! Para consultas podés escribir a contact@yacare.io.' },
+  { k:['que puedo preguntar','ayuda','help','opciones'], a:'Podés preguntarme sobre: las 5 fases del journey, el onboarding de 4 pasos, la primera llegada y el wow moment, los triggers de cada hito, los 3 escenarios del hito 2, la conversión del día 14 y los próximos pasos.' },
+  { k:['resumen','resumime','de que se trata','en pocas palabras','journey'], a:'Este deck muestra el journey completo del usuario Inbound de Brandtrack. Son 5 fases: onboarding de 4 pasos (2 minutos), primera llegada con playlist IA activa, Hito 1 para programar música (trigger: 2 min), Hito 2 para instalar el reproductor (trigger: 10 min acumulados) y Hito 3 de anuncios (día 10 del trial). Al completar los hitos, aparece un CTA de suscripción. El trial dura 14 días.' },
+  { k:['5 fases','cinco fases','fases','recorrido','vistazo'], a:'Las 5 fases son: (1) Onboarding: 4 pasos, de la landing a la playlist generada. (2) Primera llegada: trigger de bienvenida + panel de guía. (3) Hito 1: programa tu música, trigger a los 2 min de reproducción. (4) Hito 2: instala el reproductor, trigger a los 10 min acumulados. (5) Hito 3: conoce los anuncios, trigger en el día 10 del trial.' },
+  { k:['onboarding','4 pasos','cuatro pasos','registro','crear cuenta','pasos del registro'], a:'El onboarding tiene 4 pasos: (1) Landing con prueba gratis 14 días, sin tarjeta. (2) Crear cuenta con formulario mínimo (ruta futura: Google, Apple o magic link). (3) Datos del local: nombre y ubicaciones, pre-cargado en 1 zona. (4) Tu música con IA: tipo de negocio, perfil y prompt libre. Los 3 pasos de perfilado anteriores fusionados en uno.' },
+  { k:['eliminados','eliminado','que se elimino','que sacaron','prioridad','whatsapp','pais'], a:'Se eliminaron del flujo inicial: el paso de prioridad de usuario y el paso de WhatsApp + país. Ambos se capturan post-activación, sin impacto en la conversión.' },
+  { k:['primera llegada','wow moment','bienvenida','playlist lista','llega','dashboard'], a:'Al llegar por primera vez, el usuario ve una card no bloqueante: "Tu playlist está lista". Puede ver el detalle de la playlist y reproducirla desde el browser. En la topbar, junto al avatar, hay un icono de "Primeros pasos" que muestra los 3 hitos con sus estados, siempre accesible.' },
+  { k:['hito 1','hito1','programa','programar','calendario','semana','5 minutos'], a:'Hito 1: Programa tu música. Trigger: 5 minutos de reproducción acumulada. Aparece una card no bloqueante "La IA puede armar tu semana, ¿quieres verla?". El usuario completa horario, picos de afluencia y prompt de marca. El calendario se genera y asigna automáticamente a su zona. Si toca "Más tarde", el hito queda pendiente en el panel de guía.' },
+  { k:['hito 2','hito2','reproductor','instala','instalacion','app','10 minutos','emparejamiento'], a:'Hito 2: Instala el reproductor. Trigger: 10 minutos acumulados de reproducción. Hay 3 escenarios: (1) Sin zona conectada: código directo en pantalla. (2) Zonas mixtas: selector de zonas sin instalar + código. (3) Todas conectadas: reencuadre del producto, CTA "Abrir Brandtrack App". La confirmación es automática: mybrandtrack detecta el emparejamiento y la zona pasa a "En línea".' },
+  { k:['escenarios','escenario','zonas','conectada','sin zona','mixtas'], a:'El Hito 2 tiene 3 escenarios según el estado de las zonas: Escenario 1 (sin zona conectada): código de emparejamiento directo en pantalla. Escenario 2 (zonas mixtas): selector que filtra solo las zonas sin instalar. Escenario 3 (todas conectadas): no hay código, el copy reencuadra el producto y el CTA es "Abrir Brandtrack App".' },
+  { k:['hito 3','hito3','anuncios','publicidad','monetizar','vendiera','dia 10'], a:'Hito 3: Conoce los anuncios. Trigger: día 10 del trial, independientemente de si completó los otros hitos. El mensaje es "¿Y si tu música también vendiera?" con una vista previa ilustrativa. CTA: "Explorar anuncios". Si pasa, el hito queda en estado "disponible" en el panel de guía.' },
+  { k:['mas tarde','ahora no','no quiere','rechaza','skip'], a:'Si el usuario rechaza un hito: en el Hito 1 ("Más tarde"), sin re-trigger automático, queda pendiente en el panel de guía. En el Hito 2 ("Ahora no"), el trigger vuelve una vez más en la siguiente sesión si la zona sigue sin conectar. En el Hito 3 ("Ahora no"), sin re-trigger, queda como "disponible" en el panel.' },
+  { k:['conversion','suscripcion','suscribir','pagar','plan','lo has conseguido'], a:'Al completar los tres hitos, aparece la pantalla de celebración: "¡Lo has conseguido!" con CTA "Suscribirme ahora" y secundario "Ver planes". También hay comunicaciones de vencimiento: día 10 (notificación topbar), día 12 (email) y día 14 (pantalla de conversión, aún pendiente de diseño).' },
+  { k:['trial','prueba','14 dias','vencimiento','expira','expira'], a:'El trial dura 14 días, sin tarjeta, se detiene sola. Las comunicaciones son: día 10 notificación en topbar "Tu prueba vence en 4 días", día 12 email "Tu prueba vence en 2 días", día 14 pantalla de conversión antes de perder acceso.' },
+  { k:['dia 14','pantalla conversion','pierde acceso'], a:'El día 14 se muestra una pantalla de conversión antes de perder acceso, con opciones de plan. Esta pantalla está aún pendiente de diseño y es el primer próximo paso listado.' },
+  { k:['panel de guia','primeros pasos','panel','topbar','icono'], a:'El panel de guía es un icono en la topbar junto al avatar con el título "Primeros pasos". Muestra los 3 hitos con sus estados (pendiente, activo, completado). El usuario puede abrirlo voluntariamente en cualquier momento. Nunca bloquea el uso del producto.' },
+  { k:['proximos pasos','lo que sigue','siguiente iteracion','sso','nurturing','push'], a:'Los próximos pasos son: definir los tiempos exactos de los triggers con datos reales, añadir SSO (Google, Apple o magic link) para simplificar el crear cuenta, definir la estrategia de nurturing por email para los 14 días del trial, y explorar notificaciones push como canal de recordatorio para hitos pendientes.' },
+  { k:['yacare','yacare io','estudio','quienes','contacto'], a:'Yacaré Studio (yacare.io) diseñó esta propuesta. Para consultas escribí a contact@yacare.io.' }
+];
+
+const FALLBACK = 'No tengo una respuesta específica para eso en esta presentación. Podés reformular la pregunta o consultar directamente a contact@yacare.io. También podés preguntar sobre las fases del journey, los hitos, la conversión o los próximos pasos.';
+
+function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[¿?¡!.,;:]/g,''); }
+
+function findAnswer(q) {
+  const nq = norm(q);
+  let best = null, bestScore = 0;
+  for (const e of QA) {
+    let score = 0;
+    for (const kw of e.k) { const nk = norm(kw); if (nq.includes(nk)) score += nk.length; }
+    if (score > bestScore) { bestScore = score; best = e; }
+  }
+  return bestScore >= 2 ? best.a : FALLBACK;
+}
+
+function askSuggestion(btn) {
+  document.getElementById('chat-suggestions').style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const msgs = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  const um = document.createElement('div');
+  um.className = 'chat-msg chat-msg--user';
+  um.innerHTML = '<p>' + esc(text) + '</p>';
+  msgs.appendChild(um);
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(function() {
+    typing.remove();
+    const am = document.createElement('div');
+    am.className = 'chat-msg chat-msg--assistant';
+    am.innerHTML = '<p>' + esc(findAnswer(text)) + '</p>';
+    msgs.appendChild(am);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+}
+
+function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+</script>
+</body>
+</html>
