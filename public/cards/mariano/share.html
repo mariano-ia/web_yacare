@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  YACARÉ DIGITAL CARD · Mariano Noceti  ·  PANTALLA DE COMPARTIR
+  ───────────────────────────────────────────────────────────────
+  Esto es lo que usás VOS para repartir tu tarjeta: QR + Compartir.
+  El QR Online apunta a tu tarjeta pública (/cards/mariano), el QR
+  Offline trae tu contacto entero (vCard) y se importa sin internet.
+
+  URL:  https://yacare.io/cards/mariano/share
+  Los dos <svg> de QR se inyectan desde el archivo verificado (no
+  copiar a mano: un módulo de menos rompe el escaneo).
+  ═══════════════════════════════════════════════════════════════
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Compartir · Mariano Noceti</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#000000">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300..700&family=Figtree:ital,wght@0,300..800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #000000;
+  --surface: #0e0e0e;
+  --surface-2: #161616;
+  --line: rgba(255,255,255,0.08);
+  --line-2: rgba(255,255,255,0.16);
+  --text: #ffffff;
+  --text-2: #8d8d8d;
+  --text-3: #5a5a5a;
+  --violet: #8A5EFF;
+  --violet-light: #BCA3FF;
+  --violet-glow: rgba(138,94,255,0.22);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(20px, 5vw, 48px) 18px calc(32px + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(120% 70% at 50% 0%, var(--violet-glow) 0%, transparent 55%),
+    var(--bg);
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.grain {
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-5%,-8%)} 40%{transform:translate(-3%,6%)} 60%{transform:translate(4%,-4%)} 80%{transform:translate(-2%,7%)} }
+
+.wrap {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: rise 0.6s var(--ease) both;
+}
+@keyframes rise { from { opacity:0; transform:translateY(16px) } to { opacity:1; transform:none } }
+
+.eyebrow {
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--violet-light);
+  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.eyebrow::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--violet); box-shadow:0 0 10px var(--violet); }
+.title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 7vw, 2rem);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.sub { color: var(--text-2); font-size: 0.92rem; margin-bottom: 24px; }
+
+.qr-frame {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 20px;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 26px;
+  padding: 18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+}
+.qr-frame svg { width: 100%; height: 100%; display: block; }
+.qr-pane { width: 100%; height: 100%; }
+.qr-pane[hidden] { display: none; }
+.qr-badge {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 17%; height: 17%;
+  background: #fff;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 5px #fff;
+}
+.qr-badge span { font-family: var(--font-display); font-weight: 700; color: var(--violet); font-size: 1.2rem; line-height: 1; }
+
+.toggle {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  margin-bottom: 14px;
+}
+.toggle-btn {
+  padding: 9px 26px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: color 0.2s, background 0.2s;
+}
+.toggle-btn.active { background: #fff; color: #000; }
+.view-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--line-2);
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.view-link:hover { color: var(--violet-light); }
+
+@media (prefers-reduced-motion: reduce) { .grain, .wrap { animation: none; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<main class="wrap">
+  <span class="eyebrow">Mi tarjeta</span>
+  <h1 class="title">Mariano Noceti</h1>
+
+  <div class="qr-frame">
+    <div class="qr-pane" id="paneOnline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" shape-rendering="crispEdges"><path stroke="#0A0A0A" d="M1 1.5h7m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h2m1 0h7M1 2.5h1m5 0h1m3 0h1m3 0h2m4 0h4m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m1 0h2m5 0h1m2 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m1 0h3m2 0h1m2 0h1m1 0h3m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m2 0h1m6 0h3m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h1m1 0h1m2 0h4m1 0h2m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h3m2 0h2m1 0h2m4 0h1m1 0h1M3 9.5h2m2 0h3m3 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1M1 10.5h1m4 0h1m3 0h3m1 0h4m1 0h4m1 0h4m2 0h1m2 0h1M1 11.5h2m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m5 0h2m1 0h1m3 0h3M2 12.5h5m2 0h2m1 0h1m1 0h1m1 0h2m1 0h1m4 0h1m3 0h3M1 13.5h1m3 0h1m1 0h1m2 0h1m4 0h3m1 0h4m2 0h2m1 0h2m3 0h1M2 14.5h1m1 0h3m5 0h4m1 0h2m1 0h4m2 0h1m1 0h1m1 0h1M1 15.5h1m1 0h2m1 0h2m2 0h3m2 0h3m2 0h3m2 0h2m1 0h2m1 0h1M3 16.5h2m1 0h1m3 0h2m1 0h4m1 0h1m1 0h1m1 0h2m3 0h2m1 0h4M4 17.5h1m1 0h2m1 0h2m4 0h2m1 0h2m1 0h2m1 0h9M1 18.5h1m3 0h1m5 0h1m3 0h2m2 0h1m1 0h4m1 0h4m1 0h1m1 0h1M1 19.5h1m1 0h1m1 0h1m1 0h3m1 0h3m2 0h3m2 0h2m3 0h2m3 0h2M4 20.5h2m3 0h3m3 0h1m2 0h1m1 0h1m2 0h1m8 0h2M1 21.5h2m3 0h2m3 0h1m9 0h2m7 0h3M1 22.5h3m2 0h1m2 0h1m4 0h1m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m3 0h1m1 0h1M7 23.5h3m2 0h2m2 0h2m1 0h2m2 0h3m1 0h3m3 0h1M2 24.5h3m1 0h1m1 0h1m1 0h3m1 0h2m1 0h1m1 0h3m2 0h3m2 0h2m2 0h1M1 25.5h1m5 0h1m2 0h2m5 0h1m3 0h1m1 0h7m2 0h2M9 26.5h2m1 0h3m1 0h1m1 0h2m1 0h2m2 0h1m3 0h2m1 0h1M1 27.5h7m1 0h1m2 0h2m3 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h3M1 28.5h1m5 0h1m2 0h3m1 0h1m1 0h3m2 0h1m2 0h2m3 0h5M1 29.5h1m1 0h3m1 0h1m2 0h3m1 0h1m1 0h3m1 0h1m2 0h10M1 30.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h2m4 0h1m2 0h1M1 31.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h4m1 0h1m1 0h4m2 0h2M1 32.5h1m5 0h1m5 0h2m2 0h1m4 0h4m1 0h1m5 0h1M1 33.5h7m2 0h1m3 0h2m1 0h8m1 0h4m1 0h1"/></svg></div>
+    <div class="qr-pane" id="paneOffline" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75" shape-rendering="crispEdges"><path stroke="#0A0A0A" d="M1 1.5h7m1 0h1m2 0h1m3 0h1m2 0h2m1 0h3m1 0h1m3 0h2m3 0h5m1 0h1m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m3 0h3m1 0h1m1 0h7M1 2.5h1m5 0h1m1 0h4m6 0h2m7 0h2m1 0h3m8 0h3m2 0h4m1 0h4m2 0h2m1 0h1m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m2 0h5m1 0h1m1 0h5m1 0h3m1 0h2m1 0h1m7 0h2m1 0h1m2 0h2m2 0h3m3 0h1m2 0h1m4 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h1m1 0h5m3 0h3m3 0h3m2 0h2m1 0h1m1 0h1m2 0h2m3 0h2m2 0h2m1 0h2m2 0h2m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h7m2 0h1m1 0h1m3 0h1m2 0h2m1 0h5m3 0h3m1 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m4 0h1m2 0h4m6 0h1m3 0h3m1 0h2m1 0h2m1 0h2m1 0h2m1 0h1m3 0h2m5 0h2m3 0h3m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h2m1 0h1m1 0h7m2 0h1m3 0h2m3 0h3m3 0h1m2 0h1m1 0h1m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1M1 9.5h1m1 0h2m1 0h3m1 0h1m2 0h1m1 0h4m1 0h1m1 0h1m1 0h6m2 0h1m3 0h2m2 0h1m1 0h1m2 0h5m3 0h1m1 0h1m3 0h1m1 0h1m1 0h1m3 0h1m2 0h1m1 0h2M1 10.5h2m1 0h2m2 0h1m3 0h1m2 0h2m1 0h1m1 0h1m3 0h4m5 0h1m3 0h3m1 0h3m4 0h4m5 0h1m2 0h1m2 0h1m5 0h1m1 0h2M1 11.5h2m2 0h1m1 0h1m4 0h2m1 0h1m1 0h4m1 0h1m3 0h1m2 0h2m1 0h4m2 0h1m4 0h4m1 0h5m4 0h2m1 0h1m3 0h1m2 0h1m1 0h1m2 0h2M1 12.5h2m1 0h2m2 0h1m1 0h1m2 0h1m1 0h6m5 0h2m2 0h1m1 0h1m4 0h5m4 0h1m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m4 0h1m1 0h2m1 0h2M1 13.5h1m1 0h1m1 0h1m1 0h10m4 0h1m3 0h1m1 0h2m2 0h5m3 0h2m3 0h1m1 0h1m2 0h5m5 0h1m3 0h1m3 0h1m1 0h5M8 14.5h1m1 0h1m2 0h1m4 0h2m3 0h6m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m3 0h3m2 0h2m2 0h1m3 0h4m1 0h1m1 0h1m1 0h3M1 15.5h3m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m5 0h1m1 0h1m3 0h2m4 0h2m2 0h5m1 0h6m3 0h2m1 0h2m1 0h2m2 0h1m1 0h1M1 16.5h1m1 0h1m4 0h3m2 0h1m3 0h3m2 0h1m3 0h3m1 0h1m1 0h1m2 0h5m2 0h1m1 0h4m1 0h1m2 0h1m2 0h2m1 0h4m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1M2 17.5h4m1 0h1m1 0h3m1 0h5m2 0h2m1 0h3m4 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h4m1 0h1m2 0h1m1 0h7m4 0h1m1 0h1m1 0h1M1 18.5h5m3 0h1m2 0h1m3 0h1m3 0h2m2 0h1m1 0h3m1 0h5m4 0h1m2 0h4m1 0h2m1 0h4m2 0h1m3 0h3m1 0h2m4 0h2M4 19.5h1m1 0h2m2 0h4m5 0h2m1 0h5m1 0h2m1 0h2m1 0h1m1 0h2m5 0h1m1 0h4m1 0h1m2 0h1m2 0h1m4 0h1m4 0h2m1 0h1m1 0h3M3 20.5h2m1 0h1m1 0h5m1 0h5m1 0h2m1 0h1m2 0h2m4 0h3m3 0h3m3 0h1m2 0h1m1 0h3m1 0h1m1 0h3m2 0h4m2 0h2m1 0h5M1 21.5h1m1 0h2m1 0h2m1 0h3m1 0h2m1 0h5m1 0h4m2 0h1m2 0h2m6 0h1m1 0h1m2 0h1m2 0h1m1 0h1m6 0h2m1 0h1m1 0h2m1 0h3m1 0h3m1 0h2M4 22.5h2m2 0h2m3 0h2m1 0h2m3 0h1m4 0h1m3 0h1m1 0h1m1 0h1m1 0h3m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h5m5 0h1m2 0h2M2 23.5h2m1 0h4m2 0h2m1 0h2m2 0h5m1 0h1m1 0h2m1 0h3m1 0h2m1 0h1m2 0h1m2 0h2m1 0h3m2 0h2m1 0h1m3 0h1m1 0h3m2 0h1m5 0h3M9 24.5h1m1 0h5m1 0h1m1 0h1m2 0h5m1 0h1m1 0h1m1 0h5m3 0h3m6 0h1m6 0h1m1 0h2m4 0h2m2 0h1m4 0h1M1 25.5h9m6 0h2m2 0h3m2 0h5m1 0h3m2 0h1m1 0h2m1 0h3m1 0h5m1 0h2m1 0h1m4 0h4m1 0h6m1 0h1M1 26.5h1m2 0h2m3 0h4m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m4 0h1m1 0h2m1 0h1m1 0h3m1 0h1m3 0h1m1 0h8m2 0h1m1 0h1m1 0h1m3 0h2m1 0h1M3 27.5h3m1 0h1m1 0h2m1 0h2m3 0h1m3 0h5m1 0h1m1 0h2m1 0h1m2 0h5m1 0h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h2m2 0h1m2 0h4m1 0h1m1 0h1m2 0h1M1 28.5h5m3 0h1m1 0h2m2 0h7m3 0h1m3 0h2m2 0h2m3 0h1m3 0h2m1 0h1m3 0h2m2 0h1m1 0h2m1 0h1m2 0h2m1 0h2m3 0h3m1 0h1M2 29.5h9m1 0h3m4 0h3m1 0h1m1 0h5m5 0h1m3 0h3m2 0h9m2 0h1m3 0h1m2 0h1m2 0h6M4 30.5h2m3 0h2m1 0h2m2 0h1m3 0h3m4 0h3m1 0h4m3 0h1m1 0h2m1 0h1m2 0h2m1 0h2m4 0h4m1 0h2m2 0h2m1 0h1m4 0h2M1 31.5h1m1 0h1m3 0h3m2 0h2m5 0h2m2 0h2m1 0h6m2 0h1m2 0h4m1 0h2m3 0h4m1 0h1m2 0h1m5 0h2m1 0h1m1 0h6M1 32.5h1m1 0h4m3 0h5m1 0h3m2 0h1m1 0h2m1 0h1m1 0h1m2 0h5m1 0h2m1 0h5m4 0h1m3 0h3m3 0h1m4 0h4m1 0h1m3 0h1M6 33.5h4m1 0h1m3 0h2m3 0h1m2 0h2m4 0h1m2 0h1m1 0h2m1 0h3m1 0h2m1 0h1m2 0h4m1 0h3m1 0h3m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1M4 34.5h2m3 0h1m1 0h5m2 0h1m1 0h1m2 0h2m1 0h2m2 0h4m1 0h4m2 0h3m1 0h3m1 0h1m3 0h5m2 0h1m1 0h1m3 0h1m2 0h1m1 0h1M4 35.5h4m2 0h2m1 0h1m3 0h1m2 0h6m1 0h2m1 0h4m1 0h1m3 0h2m1 0h3m4 0h1m1 0h2m5 0h1m1 0h1m1 0h2m1 0h1m3 0h1M3 36.5h4m2 0h5m1 0h4m1 0h1m1 0h3m5 0h1m1 0h1m1 0h2m3 0h1m1 0h5m6 0h1m1 0h2m1 0h2m1 0h2m1 0h1m2 0h2m4 0h1M1 37.5h1m1 0h1m3 0h1m2 0h3m2 0h2m1 0h6m2 0h3m3 0h1m2 0h6m1 0h3m1 0h1m1 0h4m2 0h1m3 0h1m1 0h3m2 0h1m3 0h3m1 0h1M2 38.5h2m2 0h1m3 0h3m1 0h2m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m3 0h2m1 0h1m6 0h2m1 0h1m4 0h4m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h2M1 39.5h4m1 0h2m9 0h1m6 0h3m1 0h5m1 0h3m2 0h3m1 0h1m1 0h3m2 0h4m1 0h4m2 0h1m1 0h2m5 0h4M1 40.5h4m7 0h4m2 0h3m2 0h3m3 0h1m1 0h1m1 0h2m3 0h1m1 0h2m4 0h1m3 0h3m1 0h1m1 0h1m3 0h2m1 0h1m5 0h2m2 0h1M2 41.5h4m1 0h3m1 0h1m6 0h1m1 0h4m2 0h1m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m1 0h1m3 0h1m2 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m1 0h3m2 0h1m2 0h1M3 42.5h3m2 0h2m2 0h3m1 0h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1m1 0h1m2 0h1m5 0h1m2 0h6m1 0h1m1 0h1m1 0h1m1 0h3M3 43.5h5m3 0h1m1 0h1m1 0h1m2 0h1m5 0h4m1 0h2m1 0h2m1 0h2m1 0h2m1 0h2m2 0h1m2 0h2m1 0h3m3 0h1m1 0h1m2 0h1m7 0h1m1 0h1M1 44.5h1m3 0h1m2 0h1m1 0h1m1 0h3m1 0h4m2 0h2m2 0h1m1 0h5m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m2 0h2m1 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h1m1 0h3M1 45.5h1m1 0h1m1 0h10m2 0h1m1 0h1m5 0h5m1 0h1m1 0h1m2 0h2m2 0h3m2 0h5m3 0h1m1 0h2m3 0h1m1 0h2m1 0h6M1 46.5h2m1 0h2m3 0h1m1 0h1m2 0h1m6 0h1m1 0h1m1 0h1m3 0h3m2 0h2m1 0h4m2 0h3m3 0h1m1 0h6m1 0h2m3 0h1m1 0h1m3 0h1m2 0h2M4 47.5h2m1 0h1m1 0h2m4 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m2 0h1m2 0h4m4 0h1m1 0h1m1 0h1m1 0h3M2 48.5h1m2 0h1m3 0h1m1 0h6m3 0h2m1 0h1m1 0h1m3 0h1m2 0h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m3 0h4m2 0h2m2 0h1m1 0h2m2 0h1m3 0h2m2 0h1M5 49.5h5m3 0h2m3 0h4m1 0h7m2 0h1m1 0h2m4 0h1m4 0h7m1 0h2m4 0h1m2 0h12M2 50.5h2m2 0h1m3 0h2m1 0h1m1 0h2m2 0h4m2 0h2m2 0h1m1 0h8m2 0h1m1 0h1m3 0h1m2 0h2m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h6M1 51.5h5m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m4 0h1m3 0h1m4 0h2m1 0h2m1 0h2m1 0h1m1 0h3m1 0h2m2 0h3m2 0h1m3 0h1m1 0h4M1 52.5h1m4 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m1 0h1m4 0h1m1 0h1m1 0h3m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m5 0h1M4 53.5h1m1 0h4m3 0h1m2 0h1m1 0h1m2 0h1m2 0h1m1 0h1m7 0h1m1 0h4m4 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h3m4 0h1m1 0h1m1 0h1m2 0h1M1 54.5h2m3 0h1m2 0h1m2 0h1m1 0h1m5 0h1m1 0h1m2 0h3m4 0h2m1 0h4m5 0h1m1 0h2m4 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1M2 55.5h3m2 0h1m1 0h1m1 0h1m4 0h2m1 0h4m2 0h1m1 0h1m1 0h4m4 0h2m3 0h4m2 0h3m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m5 0h1m3 0h1M1 56.5h1m1 0h1m1 0h1m2 0h3m3 0h1m4 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m4 0h4m2 0h2m1 0h1m3 0h3m1 0h1m4 0h1m1 0h3m1 0h1M2 57.5h1m2 0h5m1 0h2m5 0h1m1 0h1m1 0h4m5 0h1m1 0h2m1 0h5m2 0h2m1 0h2m5 0h1m2 0h2m1 0h2m4 0h4m1 0h1m1 0h2M3 58.5h2m5 0h1m1 0h1m2 0h7m1 0h2m2 0h1m2 0h2m1 0h2m4 0h4m1 0h1m1 0h2m1 0h1m3 0h2m1 0h2m2 0h1m1 0h1m3 0h5M1 59.5h1m3 0h3m1 0h1m1 0h1m1 0h1m3 0h1m2 0h2m1 0h2m4 0h1m1 0h2m2 0h1m1 0h5m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m3 0h1m1 0h1m2 0h1m2 0h2m1 0h4M2 60.5h2m5 0h1m3 0h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h5m1 0h1m1 0h3m2 0h1m1 0h2m2 0h4m3 0h2m3 0h4m4 0h1m1 0h3m2 0h2M1 61.5h1m1 0h2m1 0h2m2 0h1m1 0h4m1 0h1m5 0h1m4 0h3m1 0h3m1 0h1m4 0h1m4 0h1m1 0h2m1 0h2m3 0h1m2 0h1m6 0h1m1 0h1m2 0h1M3 62.5h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h2m2 0h1m1 0h1m1 0h2m4 0h2m3 0h3m1 0h1m2 0h1m1 0h6m1 0h3m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m1 0h2m1 0h2M1 63.5h2m1 0h1m1 0h2m2 0h1m1 0h1m2 0h3m1 0h1m4 0h1m2 0h2m1 0h7m2 0h4m1 0h1m1 0h1m4 0h1m2 0h4m1 0h1m2 0h1m3 0h1m2 0h1m3 0h1M4 64.5h2m2 0h2m5 0h1m2 0h1m3 0h8m2 0h3m2 0h2m3 0h5m3 0h1m2 0h3m1 0h2m2 0h1m2 0h1m2 0h2m3 0h1M1 65.5h1m3 0h1m1 0h2m1 0h4m2 0h2m2 0h1m1 0h10m3 0h2m2 0h1m5 0h5m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m2 0h8M9 66.5h1m1 0h1m1 0h3m2 0h1m2 0h2m1 0h2m3 0h4m2 0h1m4 0h2m3 0h1m3 0h2m4 0h5m2 0h1m2 0h1m3 0h5M1 67.5h7m1 0h1m1 0h3m1 0h2m1 0h5m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m2 0h3m1 0h1m1 0h2m1 0h4m1 0h1m3 0h2m2 0h1m1 0h1m1 0h2m1 0h1M1 68.5h1m5 0h1m1 0h1m2 0h1m2 0h1m2 0h2m3 0h3m3 0h2m1 0h1m2 0h1m1 0h2m1 0h1m3 0h2m3 0h2m4 0h2m2 0h3m3 0h1m3 0h1m2 0h2M1 69.5h1m1 0h3m1 0h1m5 0h2m9 0h6m1 0h3m1 0h1m6 0h8m1 0h1m2 0h1m1 0h1m1 0h1m2 0h2m2 0h5m1 0h2M1 70.5h1m1 0h3m1 0h1m1 0h11m1 0h2m1 0h1m2 0h1m1 0h2m3 0h1m1 0h1m4 0h7m1 0h4m2 0h5m2 0h1m1 0h3m2 0h1m3 0h1M1 71.5h1m1 0h3m1 0h1m1 0h2m1 0h3m2 0h3m2 0h3m1 0h1m5 0h2m7 0h2m1 0h2m2 0h4m4 0h3m1 0h4m2 0h2m2 0h1m1 0h1M1 72.5h1m5 0h1m2 0h1m1 0h2m4 0h2m1 0h1m1 0h1m2 0h2m1 0h4m1 0h1m6 0h1m3 0h1m3 0h1m1 0h2m1 0h2m1 0h1m3 0h6m3 0h1m2 0h1M1 73.5h7m1 0h2m1 0h4m1 0h1m2 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h2m3 0h2m1 0h2m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h3m2 0h1"/></svg></div>
+    <div class="qr-badge" id="qrBadge"><span>Y</span></div>
+  </div>
+
+  <div class="toggle" role="tablist">
+    <button class="toggle-btn active" data-mode="online" id="tgOnline">Online</button>
+    <button class="toggle-btn" data-mode="offline" id="tgOffline">Offline</button>
+  </div>
+  <a class="view-link" href="/cards/mariano.html">Ver mi tarjeta &rarr;</a>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- Toggle Online / Offline ----
+  function setMode(mode) {
+    var on = mode === "online";
+    $("paneOnline").hidden = !on;
+    $("paneOffline").hidden = on;
+    $("qrBadge").style.display = on ? "grid" : "none"; // logo solo sobre el QR Online
+    $("tgOnline").classList.toggle("active", on);
+    $("tgOffline").classList.toggle("active", !on);
+  }
+  $("tgOnline").addEventListener("click", function () { setMode("online"); });
+  $("tgOffline").addEventListener("click", function () { setMode("offline"); });
+})();
+</script>
+</body>
+</html>

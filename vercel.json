@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/cards/mariano/share",
+            "destination": "/cards/mariano/share.html"
+        },
+        {
             "source": "/cards/mariano",
             "destination": "/cards/mariano.html"
         },
