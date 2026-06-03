@@ -142,6 +142,9 @@ body{
 /* =============================== CARDS =============================
    Planas, hairline, índice y marca de esquina (escuadra). Hover mínimo.*/
 .grid{display:grid;gap:16px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-4 .card{padding:30px 24px}
+.grid-4 .card h3{font-size:1.1rem}
 .grid-3{grid-template-columns:repeat(3,1fr)}
 .grid-2{grid-template-columns:repeat(2,1fr)}
 .card{background:var(--bg);border:1px solid var(--rule);padding:32px 30px;
@@ -301,7 +304,8 @@ body{
 
   .split,.cover-grid{grid-template-columns:1fr;gap:38px}
   .steps,.grid-2,.compare,.checks{grid-template-columns:1fr;gap:16px}
-  .grid-3{grid-template-columns:1fr 1fr;gap:14px}
+  .grid-3,.grid-4{grid-template-columns:1fr 1fr;gap:14px}
+  .grid-4 .card{padding:22px 22px}
   .steps{gap:32px}
   .step{padding:0}
   .escuadra{max-width:190px;margin:0}
@@ -317,7 +321,7 @@ body{
    y el scroll por "El panel" sea corto y legible.                      */
 @media(max-width:560px){
   .slide{padding-left:24px;padding-right:24px}
-  .grid-3,.grid-2,.checks{grid-template-columns:1fr;gap:12px}
+  .grid-3,.grid-4,.grid-2,.checks{grid-template-columns:1fr;gap:12px}
   .card{padding:22px 22px}
   .card .ic{margin-bottom:14px}
   .card h3{font-size:1.06rem;margin-bottom:7px}
@@ -382,9 +386,6 @@ body{
 <div class="bg-grid"></div>
 <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
 
-<div class="toolbar">
-  <button onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-pdf"/></svg>PDF</button>
-</div>
 <div class="counter"><b class="cur">01</b><span class="bar"><i></i></span><span class="tot">11</span></div>
 
 <main class="deck" id="deck">
@@ -522,14 +523,12 @@ body{
     <span class="tag">05 / El panel</span>
     <div class="slide__inner">
       <h2 class="display" data-reveal style="--i:0">Toda la obra, ordenada sola.</h2>
-      <div class="dim" data-reveal style="--i:1;margin:40px 0 46px"><span class="dim__t">06 capacidades</span><span class="dim__l"></span></div>
-      <div class="grid grid-3">
+      <div class="dim" data-reveal style="--i:1;margin:40px 0 46px"><span class="dim__t">04 capacidades</span><span class="dim__l"></span></div>
+      <div class="grid grid-4">
         <div class="card" data-reveal style="--i:2"><span class="idx">01</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-folder"/></svg><h3>Galería por álbumes</h3><p>Fachada, baños, instalación, terminaciones. Cada foto en su lugar.</p></div>
         <div class="card" data-reveal style="--i:3"><span class="idx">02</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-clock"/></svg><h3>Línea de tiempo</h3><p>Fotos, audios, cotizaciones, aprobaciones y pagos, en orden.</p></div>
-        <div class="card" data-reveal style="--i:4"><span class="idx">03</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-truck"/></svg><h3>Vista de proveedores</h3><p>Todo lo conversado con cada uno: cotizaciones, deadlines y entregables.</p></div>
-        <div class="card" data-reveal style="--i:5"><span class="idx">04</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-calendar"/></svg><h3>Calendario</h3><p>Vencimientos, visitas técnicas, fechas de entrega y pagos.</p></div>
-        <div class="card" data-reveal style="--i:6"><span class="idx">05</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-bell"/></svg><h3>Alertas inteligentes</h3><p>“El plomero te debe respuesta hace 5 días.” “Vence la cotización de pintura mañana.”</p></div>
-        <div class="card" data-reveal style="--i:7"><span class="idx">06</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-search"/></svg><h3>Búsqueda total</h3><p>Texto, audios transcriptos y comentarios. Todo encontrable.</p></div>
+        <div class="card" data-reveal style="--i:4"><span class="idx">03</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-calendar"/></svg><h3>Calendario</h3><p>Vencimientos, visitas técnicas, fechas de entrega y pagos.</p></div>
+        <div class="card" data-reveal style="--i:5"><span class="idx">04</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><use href="#i-search"/></svg><h3>Búsqueda total</h3><p>Texto, audios transcriptos y comentarios. Todo encontrable.</p></div>
       </div>
     </div>
   </section>
