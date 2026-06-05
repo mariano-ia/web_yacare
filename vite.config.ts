@@ -1,9 +1,25 @@
+import { existsSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+// Auto-discover every elpantano/*.html (es) and elpantano/en/*.html (en) so the
+// SEO cron only has to drop a file — no need to touch this config per article.
+const elpantanoEntries: [string, string][] = []
+const elpantanoDir = resolve(__dirname, 'elpantano')
+for (const f of readdirSync(elpantanoDir)) {
+    if (f.endsWith('.html')) elpantanoEntries.push([`elpantano/${f.replace(/\.html$/, '')}`, resolve(elpantanoDir, f)])
+}
+const enDir = resolve(elpantanoDir, 'en')
+if (existsSync(enDir)) {
+    for (const f of readdirSync(enDir)) {
+        if (f.endsWith('.html')) elpantanoEntries.push([`elpantano/en/${f.replace(/\.html$/, '')}`, resolve(enDir, f)])
+    }
+}
+const elpantanoInputs = Object.fromEntries(elpantanoEntries)
 
 export default defineConfig({
     plugins: [react()],
@@ -40,8 +56,7 @@ export default defineConfig({
                 contact: resolve(__dirname, 'contact.html'),
                 'privacy-policy': resolve(__dirname, 'privacy-policy.html'),
                 'terms-and-conditions': resolve(__dirname, 'terms-and-conditions.html'),
-                'elpantano/index': resolve(__dirname, 'elpantano/index.html'),
-                'elpantano/la-ia-no-va-a-robar-tu-trabajo': resolve(__dirname, 'elpantano/la-ia-no-va-a-robar-tu-trabajo.html'),
+                ...elpantanoInputs,
                 '404': resolve(__dirname, '404.html'),
             },
         },

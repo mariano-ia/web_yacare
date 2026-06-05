@@ -1,0 +1,58 @@
+{
+  "mia-torres": {
+    "name": "Mia Torres",
+    "initial": "M",
+    "label": "Autora",
+    "label_en": "Author",
+    "role": "Editora de IA",
+    "role_en": "AI Editor",
+    "role_short": "Columnista · IA",
+    "role_short_en": "Columnist · AI",
+    "bio": "Mia Torres cubre inteligencia artificial aplicada y herramientas para equipos de producto. Escribe sobre lo que la IA cambia de verdad en el día a día de las empresas, sin promesas infladas. Antes en Wired en Español y en newsletters de producto. Vive entre Córdoba y Madrid.",
+    "bio_en": "Mia Torres covers applied artificial intelligence and tooling for product teams. She writes about what AI actually changes in the day to day of a business, without inflated promises. Previously at Wired en Español and product newsletters. She splits her time between Córdoba and Madrid.",
+    "bio_short": "Escribe sobre IA aplicada y herramientas de producto, sin promesas infladas.",
+    "bio_short_en": "Writes about applied AI and product tooling, without inflated promises."
+  },
+  "rafa-guerrero": {
+    "name": "Rafa Guerrero",
+    "initial": "R",
+    "label": "Autor",
+    "label_en": "Author",
+    "role": "Columnista · Análisis & Negocios",
+    "role_en": "Columnist · Analysis & Business",
+    "role_short": "Columnista · Negocios",
+    "role_short_en": "Columnist · Business",
+    "bio": "Rafa Guerrero analiza la intersección entre tecnología y negocio: qué adoptan las empresas, qué descartan y por qué. Doce años escribiendo sobre startups, financiamiento y producto en medios de Latinoamérica y España. Le interesa más el caso real que el framework de moda.",
+    "bio_en": "Rafa Guerrero covers the intersection of technology and business: what companies adopt, what they drop, and why. Twelve years writing about startups, funding and product across Latin America and Spain. He cares more about the real case than the framework of the month.",
+    "bio_short": "Analiza la intersección entre tecnología y negocio en startups y pymes.",
+    "bio_short_en": "Covers the intersection of technology and business in startups and SMBs."
+  },
+  "valentina-cruz": {
+    "name": "Valentina Cruz",
+    "initial": "V",
+    "label": "Autora",
+    "label_en": "Author",
+    "role": "Columnista · Opinión & Cultura",
+    "role_en": "Columnist · Opinion & Culture",
+    "role_short": "Columnista · Opinión",
+    "role_short_en": "Columnist · Opinion",
+    "bio": "Valentina Cruz escribe sobre tecnología, trabajo y las estructuras de poder que la IA no va a cambiar sola. Periodista con 12 años de experiencia en medios digitales. Antes en El País Tech y MIT Technology Review en Español. Vive en Buenos Aires, piensa en varios idiomas a la vez.",
+    "bio_en": "Valentina Cruz writes about technology, work and the power structures that AI will not change on its own. A journalist with 12 years in digital media. Previously at El País Tech and MIT Technology Review en Español. She lives in Buenos Aires and thinks in several languages at once.",
+    "bio_short": "Escribe sobre tecnología, trabajo y las estructuras de poder que la IA no cambia sola.",
+    "bio_short_en": "Writes about technology, work and the power structures AI will not change on its own."
+  },
+  "tomas-mendez": {
+    "name": "Tomás Mendez",
+    "initial": "T",
+    "label": "Autor",
+    "label_en": "Author",
+    "role": "Columnista · Tecnología",
+    "role_en": "Columnist · Technology",
+    "role_short": "Columnista · Tecnología",
+    "role_short_en": "Columnist · Technology",
+    "bio": "Tomás Mendez escribe sobre diseño de producto, sistemas y la artesanía de construir software que la gente usa. Diez años entre estudios de diseño y equipos de ingeniería. Cree que la mejor tecnología es la que no se nota.",
+    "bio_en": "Tomás Mendez writes about product design, systems and the craft of building software people actually use. Ten years between design studios and engineering teams. He believes the best technology is the kind you do not notice.",
+    "bio_short": "Escribe sobre diseño de producto, sistemas y la artesanía de construir software.",
+    "bio_short_en": "Writes about product design, systems and the craft of building software."
+  }
+}

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI MVP: What to Build First to Validate Your Startup · Yacaré Blog</title>
+    <meta name="description" content="Learn how to define the minimum scope of an AI MVP to validate your startup without overbuilding. Concrete examples of what to include and what to leave out.">
+    <link rel="canonical" href="https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/mvp-con-ia-que-construir-primero.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/mvp-con-ia-que-construir-primero.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI MVP: What to Build First to Validate Your Startup">
+    <meta property="og:description" content="Before investing months in development, you need to know whether your core hypothesis makes sense. This guide helps you define the minimum scope of an AI product and understand what to leave out from day one.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Rafa Guerrero">
+    <meta property="article:published_time" content="2026-06-05">
+    <meta property="article:section" content="Business">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI MVP: What to Build First to Validate Your Startup">
+    <meta name="twitter:description" content="Before investing months in development, you need to know whether your core hypothesis makes sense. This guide helps you define the minimum scope of an AI product and understand what to leave out from day one.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "en",
+  "headline": "AI MVP: What to Build First to Validate Your Startup",
+  "description": "Learn how to define the minimum scope of an AI MVP to validate your startup without overbuilding. Concrete examples of what to include and what to leave out.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Rafa Guerrero"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "articleSection": "Business",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Business",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI MVP: What to Build First",
+      "item": "https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does it take to build an AI MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the scope, but a well-trimmed MVP can be ready in four to eight weeks with a small team. If the estimate exceeds that range, there are almost always features that can be postponed without affecting the core validation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need my own data to launch an AI MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. Many MVPs run on pretrained models accessible via API, with no need for proprietary data from the start. What matters is designing the MVP in a way that lets you capture useful data to improve the model in future iterations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should AI not be included in the MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When AI is not part of the central hypothesis you are validating. If you can test the value of your product with a simpler solution, do that first. Adding AI before validating the business model adds complexity and cost without guaranteeing additional learning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Wizard of Oz technique in an AI MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a tactic where you simulate the intelligent functionality with manual work, without automating it yet. The user experiences the product as if the AI were running, while you operate behind the scenes. It is useful for validating whether the proposition has value before investing in the full technical build."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/en/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--tecnologia">Technology</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--cultura">Culture</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--opinion">Opinion</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--ia">AI</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--analisis">Analysis</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--negocios">Business</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Search the blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Search">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC to close</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Breadcrumb">
+            <a href="/elpantano/en/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/en/">Business</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>AI MVP: What to Build First</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/en/" class="ep-cat ep-cat--negocios">Business</a>
+            </div>
+
+            <h1 class="ep-article-head__title">AI MVP: What to Build First to Validate Your Startup</h1>
+
+            <p class="ep-article-head__standfirst">
+                Before investing months in development, you need to know whether your core hypothesis makes sense. This guide helps you define the minimum scope of an AI product and understand what to leave out from day one.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/en/" class="ep-article-head__author" aria-label="Rafa Guerrero">
+                    <div class="ep-article-head__avatar" aria-hidden="true">R</div>
+                    <span class="ep-article-head__author-name">Rafa Guerrero</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-05">June 5, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">6 min read</span>
+
+                <div class="ep-article-head__share" aria-label="Share article">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="introduccion">The Most Common Mistake When Starting with AI</h2>
+                    <p>Many founders arrive with an idea involving artificial intelligence and immediately design the complete product: personalized recommendations, predictive analytics, chained automations, and a real-time metrics dashboard. All of that before knowing whether anyone will pay for the most basic feature.</p>
+                    <p>An AI MVP is no different from any other minimum viable product in its essence: its only job is to confirm or refute the central hypothesis of your business. AI is a means, not the goal. If you lose sight of that, you will build technology without a market.</p>
+                    <p>This article helps you decide what goes into the first version and, above all, what does not go in yet. If you already know you want support for that process, the <a href="/services/mvp-jumpstarter.html">Yacaré MVP Jumpstarter service</a> is designed exactly for that.</p>
+                    <div class="ep-pullquote"><p>An AI MVP has one job: to confirm or refute the central hypothesis of your business.</p></div>
+                    <h2 id="hipotesis-central">Start with the Hypothesis, Not the Technology</h2>
+                    <p>Before choosing what to build, you need to write in one sentence what belief you are testing. For example: &quot;Logistics SMBs will pay for a system that automatically classifies their customer complaints and suggests responses.&quot; That is your hypothesis. Everything else is noise until you validate it.</p>
+                    <p>AI enters the picture only when it is the part that solves the core problem. If your hypothesis says users will pay for an intelligent recommendation, then the recommendation model belongs in the MVP. If AI appears as a nice-to-have or a future differentiator, you can validate without it first.</p>
+                    <p>A useful filtering question: can someone experience the core value of the product if I remove the AI? If the answer is yes, consider validating the business model with a simpler version before adding the intelligent component. You will save time and money.</p>
+                    <h2 id="que-incluir">What a Well-Scoped AI MVP Includes</h2>
+                    <p>An AI MVP should have exactly one intelligent capability working end to end. Not two, not three. One. That capability must be the one that solves the main problem your user cannot solve another way with the same effort.</p>
+                    <p>In addition to that core capability, you need the bare minimum for the user to actually experience it: a data input flow, some way to display the result, and a mechanism for you to collect feedback. Nothing more. No usage history, no advanced personalization, no secondary integrations.</p>
+                    <p>The technology stack does not need to be sophisticated either. Many AI MVPs run on language models accessible via API, without training anything from scratch. If you want to explore accessible options for your team, the article on <a href="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">how to apply AI in an SMB without a technical team</a> offers a concrete starting point.</p>
+                    <h2 id="que-dejar-afuera">What to Leave Out (Even If It Hurts)</h2>
+                    <p>The list of what does not belong in the MVP is usually longer than the list of what does. Some common examples of features founders want to include from day one but should postpone: per-user personalization, models trained on proprietary data, advanced analytics dashboards, multilanguage support, roles and permissions, and any third-party integrations that are not strictly necessary for the test.</p>
+                    <p>Another frequent candidate to cut is model accuracy. In an MVP, a model that works well 80 percent of the time is usually enough to validate whether users value the proposition. Chasing 95 percent accuracy before you have ten real users means optimizing something you do not yet know matters.</p>
+                    <p>It is also valid to simulate part of the AI with manual work in early iterations. This tactic, known as the Wizard of Oz technique, lets you test the experience without building all the automated logic. If users respond well, then you invest in automation.</p>
+                    <h2 id="como-priorizar">How to Prioritize What You Do Build</h2>
+                    <p>Once you are clear on what your MVP solves, use a simple criterion to prioritize each candidate feature: is this piece necessary for the user to experience the core value and give you useful feedback? If the answer is not a clear yes, it falls outside the scope of the first version.</p>
+                    <p>For AI products there is an additional consideration: data. You need to make sure the MVP allows you to capture the data you will need to improve the model in future iterations. That does deserve to be there from day one, even with a simple structure.</p>
+                    <p>Prioritization also requires honesty about timelines. A well-scoped AI MVP can be ready in weeks, not months. If the scope you are considering requires more than eight weeks with a small team, there is almost always something that can be removed.</p>
+                    <h2 id="proximos-pasos">How to Move Forward Without Losing Focus</h2>
+                    <p>Defining the minimum scope is the most important decision you will make during the validation stage. An inflated scope will cost you time, money, and often clarity about what worked and what did not.</p>
+                    <p>Validating an AI startup does not require a team of data scientists or months of development. It requires a clear hypothesis, an honestly trimmed scope, and real users willing to give you feedback. Everything else comes later.</p>
+                    <p>If you want to go from concept to a working product without inflating the scope, the <a href="/services/mvp-jumpstarter.html">Yacaré MVP Jumpstarter service</a> is designed to support you through that process: from definition all the way to your first real users.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">Tell us your idea and let's work together with Yacaré's MVP Jumpstarter service to define the right scope and reach your first users without overbuilding.</p>
+                        <a href="/services/mvp-jumpstarter.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Explore MVP Jumpstarter &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Frequently asked questions</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How long does it take to build an AI MVP?</summary>
+                        <p>It depends on the scope, but a well-trimmed MVP can be ready in four to eight weeks with a small team. If the estimate exceeds that range, there are almost always features that can be postponed without affecting the core validation.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Do I need my own data to launch an AI MVP?</summary>
+                        <p>Not necessarily. Many MVPs run on pretrained models accessible via API, with no need for proprietary data from the start. What matters is designing the MVP in a way that lets you capture useful data to improve the model in future iterations.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">When should AI not be included in the MVP?</summary>
+                        <p>When AI is not part of the central hypothesis you are validating. If you can test the value of your product with a simpler solution, do that first. Adding AI before validating the business model adds complexity and cost without guaranteeing additional learning.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">What is the Wizard of Oz technique in an AI MVP?</summary>
+                        <p>It is a tactic where you simulate the intelligent functionality with manual work, without automating it yet. The user experiences the product as if the AI were running, while you operate behind the scenes. It is useful for validating whether the proposition has value before investing in the full technical build.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">R</div>
+                        <div>
+                            <div class="ep-author-mini__name">Rafa Guerrero</div>
+                            <div class="ep-author-mini__role">Columnist · Business</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Covers the intersection of technology and business in startups and SMBs.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">In this article</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#introduccion">The Most Common Mistake When Starting with AI</a></li>
+                        <li><a href="#hipotesis-central">Start with the Hypothesis, Not the Technology</a></li>
+                        <li><a href="#que-incluir">What a Well-Scoped AI MVP Includes</a></li>
+                        <li><a href="#que-dejar-afuera">What to Leave Out (Even If It Hurts)</a></li>
+                        <li><a href="#como-priorizar">How to Prioritize What You Do Build</a></li>
+                        <li><a href="#proximos-pasos">How to Move Forward Without Losing Focus</a></li>
+                        <li><a href="#preguntas-frecuentes">Frequently asked questions</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/en/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Back to the blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">R</div>
+                <div>
+                    <div class="ep-author-card__label">Author</div>
+                    <div class="ep-author-card__name">Rafa Guerrero</div>
+                    <div class="ep-author-card__role">Columnist · Business</div>
+                    <p class="ep-author-card__bio">
+                        Rafa Guerrero covers the intersection of technology and business: what companies adopt, what they drop, and why. Twelve years writing about startups, funding and product across Latin America and Spain. He cares more about the real case than the framework of the month.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">More from the blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">AI</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">How to Apply Artificial Intelligence in Your SMB Without a Technical Team</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">A practical guide for SMB owners and startup founders who want to use AI today: what you can do with existing tools, what requires real development, and how to take the first step without hiring engineers.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 5, 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/en/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">Yacaré's blog. Ideas on product, AI and business for people who build.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Sections</div>
+                    <a href="/elpantano/en/" class="ep-footer__link">Technology</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Culture</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Opinion</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">AI</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Analysis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">About</a>
+                    <a href="/services.html" class="ep-footer__link">Services</a>
+                    <a href="/work.html" class="ep-footer__link">Work</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Connect</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contact</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacy</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Terms</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">A blog by</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{TITLE}}{{TITLE_SUFFIX}}</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{{HREFLANG}}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{OG_TITLE}}">
+    <meta property="og:description" content="{{OG_DESCRIPTION}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{CANONICAL}}">
+    <meta property="og:image" content="{{OG_IMAGE}}">
+    <meta property="og:locale" content="{{OG_LOCALE}}">
+    <meta property="article:author" content="{{AUTHOR_NAME}}">
+    <meta property="article:published_time" content="{{DATE_ISO}}">
+    <meta property="article:section" content="{{CATEGORY}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{OG_TITLE}}">
+    <meta name="twitter:description" content="{{OG_DESCRIPTION}}">
+    <meta name="twitter:image" content="{{OG_IMAGE}}">
+
+    <!-- Structured data -->
+    {{JSONLD}}
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="{{BRAND}}">
+        <div class="ep-nav__inner">
+            <a href="{{HUB_URL}}" class="ep-nav__logo">{{BRAND}}</a>
+            <div class="ep-nav__cats">
+{{NAV_CATS}}
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="{{T_SEARCH}}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="{{T_MENU}}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="{{T_SEARCH}}">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="{{T_SEARCH_PH}}" id="epSearchInput"
+                autocomplete="off" aria-label="{{T_SEARCH}}">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="{{T_CLOSE}}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">{{T_SEARCH_HINT}}</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="{{T_BREADCRUMB}}">
+            <a href="{{HUB_URL}}">{{BRAND}}</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="{{HUB_URL}}">{{CATEGORY}}</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>{{BREADCRUMB_TITLE}}</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="{{HUB_URL}}" class="ep-cat ep-cat--{{CATEGORY_CLASS}}">{{CATEGORY}}</a>
+            </div>
+
+            <h1 class="ep-article-head__title">{{TITLE}}</h1>
+
+            <p class="ep-article-head__standfirst">
+                {{STANDFIRST}}
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="{{HUB_URL}}" class="ep-article-head__author" aria-label="{{AUTHOR_NAME}}">
+                    <div class="ep-article-head__avatar" aria-hidden="true">{{AUTHOR_INITIAL}}</div>
+                    <span class="ep-article-head__author-name">{{AUTHOR_NAME}}</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="{{DATE_ISO}}">{{DATE_DISPLAY}}</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">{{READING_TIME}} {{T_READMIN}}</span>
+
+                <div class="ep-article-head__share" aria-label="{{T_SHARE}}">
+                    <a href="https://twitter.com/intent/tweet?url={{CANONICAL}}"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{CANONICAL}}"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+{{PROSE}}
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">{{AUTHOR_INITIAL}}</div>
+                        <div>
+                            <div class="ep-author-mini__name">{{AUTHOR_NAME}}</div>
+                            <div class="ep-author-mini__role">{{AUTHOR_ROLE}}</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">{{AUTHOR_BIO_SHORT}}</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">{{T_TOC_HEAD}}</div>
+                    <ul class="ep-toc__list">
+{{TOC}}
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="{{HUB_URL}}" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        {{T_BACK}}
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">{{AUTHOR_INITIAL}}</div>
+                <div>
+                    <div class="ep-author-card__label">{{AUTHOR_LABEL}}</div>
+                    <div class="ep-author-card__name">{{AUTHOR_NAME}}</div>
+                    <div class="ep-author-card__role">{{AUTHOR_ROLE}}</div>
+                    <p class="ep-author-card__bio">
+                        {{AUTHOR_BIO}}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">{{T_MORE}}</span>
+            </div>
+
+            <div class="ep-card-grid">
+{{RELATED}}
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="{{HUB_URL}}" class="ep-footer__logo">{{BRAND}}</a>
+                    <p class="ep-footer__tagline">{{FOOTER_TAGLINE}}</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">{{T_FOOTER_SECTIONS}}</div>
+{{FOOTER_CATS}}
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">{{T_FOOTER_ABOUT}}</a>
+                    <a href="/services.html" class="ep-footer__link">{{T_FOOTER_SERVICES}}</a>
+                    <a href="/work.html" class="ep-footer__link">{{T_FOOTER_WORK}}</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">{{T_FOOTER_CONNECT}}</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">{{T_FOOTER_CONTACT}}</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">{{T_FOOTER_PRIVACY}}</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">{{T_FOOTER_TERMS}}</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">{{T_FOOTER_BY}}</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+{
+  "site": {
+    "name": "El Pantano",
+    "base_url": "https://yacare.io",
+    "section_path": "/elpantano",
+    "agency": "Yacaré"
+  },
+  "categories": {
+    "tecnologia": "Tecnología",
+    "cultura": "Cultura",
+    "opinion": "Opinión",
+    "ia": "IA",
+    "analisis": "Análisis",
+    "negocios": "Negocios"
+  },
+  "services": {
+    "discovery-sprint": {
+      "name": "Discovery Sprint",
+      "url": "/services/discovery-sprint.html",
+      "pitch": "una semana para validar la idea, alinear al equipo y salir con un plan claro antes de gastar en desarrollo."
+    },
+    "mvp-jumpstarter": {
+      "name": "MVP Jumpstarter",
+      "url": "/services/mvp-jumpstarter.html",
+      "pitch": "del concepto a un producto funcional y listo para los primeros usuarios, sin inflar el alcance."
+    },
+    "product-growth": {
+      "name": "Product Growth",
+      "url": "/services/product-growth.html",
+      "pitch": "iteración continua sobre datos reales para que el producto crezca después del lanzamiento."
+    }
+  },
+  "defaults": {
+    "model": "claude-opus-4-8",
+    "min_words": 900,
+    "max_words": 1400,
+    "image_provider": "pollinations"
+  },
+  "topics": [
+    {
+      "slug": "como-aplicar-ia-en-una-pyme-sin-equipo-tecnico",
+      "title_hint": "Cómo aplicar inteligencia artificial en una pyme sin un equipo técnico",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "discovery-sprint",
+      "angle": "Guía práctica y desmitificadora para dueños de pymes: qué se puede hacer hoy con herramientas existentes, qué requiere desarrollo, y cómo decidir el primer paso sin contratar un equipo de ingeniería.",
+      "keywords": [
+        "ia para pymes",
+        "inteligencia artificial empresas pequeñas",
+        "aplicar ia negocio"
+      ],
+      "status": "done"
+    },
+    {
+      "slug": "mvp-con-ia-que-construir-primero",
+      "title_hint": "MVP con IA: qué construir primero para validar tu startup",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "angle": "Cómo definir el alcance mínimo de un producto con IA para validar la hipótesis central sin construir de más. Ejemplos de qué dejar afuera.",
+      "keywords": [
+        "mvp con ia",
+        "validar startup ia",
+        "producto minimo viable inteligencia artificial"
+      ],
+      "status": "done"
+    },
+    {
+      "slug": "que-es-un-discovery-sprint-producto-ia",
+      "title_hint": "Qué es un discovery sprint y por qué tu producto de IA lo necesita",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "angle": "Explicar el discovery sprint como herramienta para reducir riesgo antes de invertir en desarrollo de un producto con IA. Qué se hace cada día, qué entregables salen.",
+      "keywords": [
+        "discovery sprint",
+        "design sprint ia",
+        "validar idea producto"
+      ],
+      "status": "done"
+    },
+    {
+      "slug": "automatizacion-con-ia-para-pymes-por-donde-empezar",
+      "title_hint": "Automatización con IA para pymes: por dónde empezar sin morir en el intento",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "discovery-sprint",
+      "angle": "Mapa de procesos que conviene automatizar primero en una pyme, cómo priorizar por impacto y esfuerzo, y errores típicos al empezar.",
+      "keywords": [
+        "automatizacion ia pymes",
+        "automatizar procesos inteligencia artificial",
+        "ia para empresas"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "chatbots-atencion-cliente-con-ia-cuando-conviene",
+      "title_hint": "Chatbots de atención al cliente con IA: cuándo conviene y cuándo no",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "mvp-jumpstarter",
+      "angle": "Análisis honesto de cuándo un chatbot con IA suma y cuándo arruina la experiencia. Criterios de decisión y qué medir.",
+      "keywords": [
+        "chatbot ia atencion cliente",
+        "chatbot inteligencia artificial empresa",
+        "asistente virtual ia"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "como-validar-idea-de-producto-con-ia",
+      "title_hint": "Cómo validar una idea de producto con IA antes de programar una línea",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "angle": "Métodos para testear demanda y viabilidad de un producto con IA usando prototipos, landing tests y entrevistas, antes de escribir código.",
+      "keywords": [
+        "validar idea producto",
+        "validar producto ia",
+        "investigacion de mercado startup"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "ia-generativa-para-equipos-de-producto",
+      "title_hint": "IA generativa para equipos de producto: casos reales más allá del hype",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "product-growth",
+      "angle": "Usos concretos de IA generativa dentro de un equipo de producto (research, prototipado, soporte) con resultados medibles y límites claros.",
+      "keywords": [
+        "ia generativa producto",
+        "ia equipos de producto",
+        "casos uso ia generativa"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "del-prototipo-al-mvp-primer-producto-con-ia",
+      "title_hint": "Del prototipo al MVP: cómo construir tu primer producto con IA",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "angle": "El camino del prototipo validado al MVP en producción: decisiones técnicas, alcance, y cómo no romper el presupuesto.",
+      "keywords": [
+        "prototipo a mvp",
+        "construir mvp ia",
+        "primer producto inteligencia artificial"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "cuanto-cuesta-desarrollar-producto-con-ia-startup",
+      "title_hint": "Cuánto cuesta desarrollar un producto con IA para una startup",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "angle": "Desglose realista de los costos de construir un producto con IA: equipo, modelos, infraestructura, mantenimiento. Rangos y palancas de costo.",
+      "keywords": [
+        "cuanto cuesta producto ia",
+        "costo desarrollo software ia",
+        "presupuesto mvp startup"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "ia-para-analisis-de-datos-en-pymes",
+      "title_hint": "IA para análisis de datos en pymes: convertir números en decisiones",
+      "category": "analisis",
+      "author": "rafa-guerrero",
+      "service": "product-growth",
+      "angle": "Cómo una pyme puede usar IA para pasar de planillas a decisiones, qué datos hacen falta, y cómo empezar con lo que ya se tiene.",
+      "keywords": [
+        "ia analisis de datos",
+        "analitica para pymes",
+        "datos decisiones negocio"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "errores-comunes-al-aplicar-ia-en-una-empresa",
+      "title_hint": "Errores comunes al aplicar IA en una empresa (y cómo evitarlos)",
+      "category": "analisis",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "angle": "Los errores que más se repiten al adoptar IA: empezar por la herramienta y no el problema, no medir, automatizar el caos. Cómo prevenirlos.",
+      "keywords": [
+        "errores ia empresa",
+        "adoptar ia negocio",
+        "implementar inteligencia artificial"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "construir-o-comprar-solucion-de-ia",
+      "title_hint": "Cómo elegir entre construir o comprar una solución de IA",
+      "category": "analisis",
+      "author": "mia-torres",
+      "service": "discovery-sprint",
+      "angle": "Marco de decisión build vs buy para IA: cuándo conviene una herramienta lista, cuándo desarrollo a medida, y los costos ocultos de cada opción.",
+      "keywords": [
+        "construir o comprar software",
+        "build vs buy ia",
+        "solucion ia a medida"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "ia-en-ecommerce-recomendaciones-busqueda-retencion",
+      "title_hint": "IA en e-commerce: recomendaciones, búsqueda y retención",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "product-growth",
+      "angle": "Dónde la IA mueve la aguja en un e-commerce: búsqueda, recomendaciones, retención y soporte. Qué priorizar según el tamaño de la tienda.",
+      "keywords": [
+        "ia ecommerce",
+        "recomendaciones inteligencia artificial tienda",
+        "ia retencion clientes"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "producto-con-ia-como-medir-si-funciona",
+      "title_hint": "Producto con IA: cómo medir si realmente está funcionando",
+      "category": "analisis",
+      "author": "mia-torres",
+      "service": "product-growth",
+      "angle": "Métricas para un producto con IA más allá de la precisión del modelo: adopción, retención, valor percibido. Cómo armar el tablero correcto.",
+      "keywords": [
+        "metricas producto ia",
+        "medir producto inteligencia artificial",
+        "kpis ia"
+      ],
+      "status": "pending"
+    },
+    {
+      "slug": "roadmap-de-ia-para-startup-primeros-90-dias",
+      "title_hint": "Roadmap de IA para una startup: los primeros 90 días",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "angle": "Plan concreto de 90 días para incorporar IA en una startup: del diagnóstico al primer caso en producción, con hitos por semana.",
+      "keywords": [
+        "roadmap ia startup",
+        "plan de ia empresa",
+        "estrategia inteligencia artificial"
+      ],
+      "status": "pending"
+    }
+  ],
+  "published": [
+    {
+      "slug": "que-es-un-discovery-sprint-producto-ia",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "date": "2026-06-05",
+      "reading_time": 6,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Discovery sprint: validá tu idea de IA antes de invertir",
+        "en": "Discovery sprint: validate your AI idea before you invest"
+      },
+      "standfirst": {
+        "es": "Un discovery sprint comprime semanas de incertidumbre en cinco días de trabajo concreto. Antes de gastar en desarrollo, este proceso te ayuda a saber si tu idea vale la pena y cómo ejecutarla.",
+        "en": "A discovery sprint compresses weeks of uncertainty into five days of concrete work. Before spending on development, this process helps you find out whether your idea is worth pursuing and how to execute it."
+      }
+    },
+    {
+      "slug": "mvp-con-ia-que-construir-primero",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "date": "2026-06-05",
+      "reading_time": 6,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "MVP con IA: qué construir primero para validar tu startup",
+        "en": "AI MVP: What to Build First to Validate Your Startup"
+      },
+      "standfirst": {
+        "es": "Antes de invertir meses en desarrollo, necesitás saber si tu hipótesis central tiene sentido. Esta guía te ayuda a definir el alcance mínimo de un producto con IA y a entender qué dejar afuera desde el primer día.",
+        "en": "Before investing months in development, you need to know whether your core hypothesis makes sense. This guide helps you define the minimum scope of an AI product and understand what to leave out from day one."
+      }
+    },
+    {
+      "slug": "como-aplicar-ia-en-una-pyme-sin-equipo-tecnico",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "discovery-sprint",
+      "date": "2026-06-05",
+      "reading_time": 6,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Cómo aplicar inteligencia artificial en tu pyme sin un equipo técnico",
+        "en": "How to Apply Artificial Intelligence in Your SMB Without a Technical Team"
+      },
+      "standfirst": {
+        "es": "Una guía práctica para dueños de pymes y fundadores que quieren usar IA hoy: qué podés hacer con herramientas existentes, qué requiere desarrollo real y cómo dar el primer paso sin contratar ingenieros.",
+        "en": "A practical guide for SMB owners and startup founders who want to use AI today: what you can do with existing tools, what requires real development, and how to take the first step without hiring engineers."
+      }
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{HUB_TITLE}}</title>
+    <meta name="description" content="{{HUB_META}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{{HREFLANG}}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{BRAND}} · Yacaré">
+    <meta property="og:description" content="{{HUB_META}}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{CANONICAL}}">
+    <meta property="og:image" content="{{OG_IMAGE}}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <nav class="ep-nav" role="navigation" aria-label="{{BRAND}}">
+        <div class="ep-nav__inner">
+            <a href="{{HUB_URL}}" class="ep-nav__logo">{{BRAND}}</a>
+            <div class="ep-nav__cats">
+{{NAV_CATS}}
+            </div>
+            <div class="ep-nav__actions">
+                <a href="{{LANG_SWITCH_URL}}" class="ep-nav__cat" style="border:1px solid var(--border-subtle, rgba(255,255,255,0.15)); border-radius: var(--radius-pill, 9999px); padding: .25rem .7rem;">{{LANG_SWITCH_LABEL}}</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header style="max-width: var(--container-narrow, 900px); margin: 0 auto; padding: var(--space-8, 120px) var(--container-padding, 32px) var(--space-5, 32px);">
+            <h1 class="text-hero-gradient" style="font-size: var(--fs-h1-internal, 4rem); line-height: 1; margin: 0 0 var(--space-3, 16px);">{{BRAND}}</h1>
+            <p style="font-size: var(--fs-body-lg, 1.25rem); opacity: .7; margin: 0; max-width: 60ch;">{{HUB_TAGLINE}}</p>
+        </header>
+
+        <div style="max-width: var(--container-narrow, 900px); margin: 0 auto; padding: 0 var(--container-padding, 32px) var(--space-8, 120px);">
+{{HERO}}
+
+            <div class="ep-card-grid" style="margin-top: var(--space-6, 48px);">
+{{GRID}}
+            </div>
+        </div>
+    </main>
+
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="{{HUB_URL}}" class="ep-footer__logo">{{BRAND}}</a>
+                    <p class="ep-footer__tagline">{{FOOTER_TAGLINE}}</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">{{T_FOOTER_SECTIONS}}</div>
+{{FOOTER_CATS}}
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">{{T_FOOTER_ABOUT}}</a>
+                    <a href="/services.html" class="ep-footer__link">{{T_FOOTER_SERVICES}}</a>
+                    <a href="/work.html" class="ep-footer__link">{{T_FOOTER_WORK}}</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">{{T_FOOTER_CONNECT}}</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener" class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener" class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">{{T_FOOTER_CONTACT}}</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">{{T_FOOTER_BY}}</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

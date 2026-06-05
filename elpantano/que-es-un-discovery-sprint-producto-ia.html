@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Discovery sprint: validá tu idea de IA antes de invertir · Blog de Yacaré</title>
+    <meta name="description" content="Qué es un discovery sprint, cómo funciona día a día y por qué es la forma más inteligente de validar un producto con IA antes de gastar en desarrollo.">
+    <link rel="canonical" href="https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/que-es-un-discovery-sprint-producto-ia.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Discovery sprint: validá tu idea de IA antes de invertir">
+    <meta property="og:description" content="Un discovery sprint comprime semanas de incertidumbre en cinco días de trabajo concreto. Antes de gastar en desarrollo, este proceso te ayuda a saber si tu idea vale la pena y cómo ejecutarla.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="es_AR">
+    <meta property="article:author" content="Rafa Guerrero">
+    <meta property="article:published_time" content="2026-06-05">
+    <meta property="article:section" content="Negocios">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Discovery sprint: validá tu idea de IA antes de invertir">
+    <meta name="twitter:description" content="Un discovery sprint comprime semanas de incertidumbre en cinco días de trabajo concreto. Antes de gastar en desarrollo, este proceso te ayuda a saber si tu idea vale la pena y cómo ejecutarla.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "es",
+  "headline": "Discovery sprint: validá tu idea de IA antes de invertir",
+  "description": "Qué es un discovery sprint, cómo funciona día a día y por qué es la forma más inteligente de validar un producto con IA antes de gastar en desarrollo.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Rafa Guerrero"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "articleSection": "Negocios",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Negocios",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Discovery sprint para productos con IA",
+      "item": "https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Un discovery sprint reemplaza la investigación de usuarios?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El sprint usa técnicas de investigación, pero no reemplaza un proceso de research más largo si el problema es complejo o el mercado es nuevo. Es una herramienta para tomar decisiones rápidas con información suficiente, no para hacer etnografía. Si el contexto lo requiere, el sprint puede incluir una fase de research previa."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hace falta tener conocimientos técnicos para participar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No es necesario. El sprint está diseñado para que personas con distintos perfiles, negocio, diseño y tecnología, trabajen juntas sin que ninguna disciplina domine a las otras. Lo importante es que el equipo tenga conocimiento del problema y capacidad para tomar decisiones durante la semana."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si al final del sprint la idea no valida?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Eso es un resultado válido y valioso. Descubrir que una idea no funciona en una semana de trabajo es mucho mejor que descubrirlo después de meses de desarrollo. El sprint te da argumentos para pivotar con claridad o para decidir no continuar sin haber gastado de más."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El discovery sprint sirve si ya tengo un producto en marcha?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, pero el foco cambia. En ese caso se usa para evaluar una nueva funcionalidad, explorar si la IA puede mejorar algo existente, o redefinir la dirección del producto cuando los resultados actuales no son los esperados. La estructura es la misma; lo que varía es el punto de partida."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--tecnologia">Tecnología</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--cultura">Cultura</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--opinion">Opinión</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--ia">IA</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--analisis">Análisis</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--negocios">Negocios</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Buscar">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menú">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Buscar">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Buscar en el blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Buscar">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC para cerrar</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Ubicación">
+            <a href="/elpantano/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/">Negocios</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>Discovery sprint para productos con IA</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/" class="ep-cat ep-cat--negocios">Negocios</a>
+            </div>
+
+            <h1 class="ep-article-head__title">Discovery sprint: validá tu idea de IA antes de invertir</h1>
+
+            <p class="ep-article-head__standfirst">
+                Un discovery sprint comprime semanas de incertidumbre en cinco días de trabajo concreto. Antes de gastar en desarrollo, este proceso te ayuda a saber si tu idea vale la pena y cómo ejecutarla.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/" class="ep-article-head__author" aria-label="Rafa Guerrero">
+                    <div class="ep-article-head__avatar" aria-hidden="true">R</div>
+                    <span class="ep-article-head__author-name">Rafa Guerrero</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-05">5 de junio, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">6 min de lectura</span>
+
+                <div class="ep-article-head__share" aria-label="Compartir artículo">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="introduccion">El problema de arrancar sin validar</h2>
+                    <p>Muchos proyectos de producto con inteligencia artificial arrancan de la misma manera: alguien tiene una idea, el equipo se entusiasma, y en pocas semanas ya hay wireframes, reuniones con desarrolladores y presupuestos sobre la mesa. El problema es que nadie todavía sabe si esa idea resuelve un problema real o si la IA es la herramienta correcta para resolverlo.</p>
+                    <p>Construir sin validar no es audacia: es el camino más rápido hacia el desperdicio. Un <a href="/services/discovery-sprint.html">discovery sprint</a> existe precisamente para interrumpir ese ciclo antes de que sea costoso. Es una semana de trabajo intenso y estructurado que termina con respuestas concretas, no con más preguntas.</p>
+                    <p>Este artículo explica qué es un discovery sprint, qué pasa cada día y qué entregables te llevás al final. Si estás pensando en construir un producto con IA, esto es lo primero que necesitás leer.</p>
+                    <div class="ep-pullquote"><p>Construir sin validar no es audacia: es el camino más rápido hacia el desperdicio.</p></div>
+                    <h2 id="que-es-un-discovery-sprint">Qué es un discovery sprint y de dónde viene</h2>
+                    <p>El discovery sprint es una metodología de trabajo concentrada, inspirada en el design sprint original de Google Ventures pero adaptada a la etapa de definición de producto. No se trata de prototipar una interfaz en cinco días: se trata de entender el problema, mapear las opciones y tomar decisiones antes de escribir una sola línea de código.</p>
+                    <p>En el contexto de productos con IA, este proceso es especialmente valioso. La inteligencia artificial agrega una variable técnica que puede escalar costos y complejidad de forma imprevista. Sin un análisis previo, es muy fácil comprometerse con una arquitectura equivocada o con una funcionalidad que los usuarios no necesitan.</p>
+                    <p>Un buen discovery sprint no te dice qué construir: te dice si vale la pena construirlo y, si la respuesta es sí, te da el mapa para hacerlo bien. Es la diferencia entre apostar a ciegas y tomar una decisión informada.</p>
+                    <h2 id="cuando-conviene-y-cuando-no">Cuándo conviene hacerlo y cuándo no</h2>
+                    <p>Un discovery sprint conviene cuando tenés una idea de producto pero todavía no arrancaste el desarrollo, cuando tu equipo tiene visiones distintas sobre qué construir primero, o cuando querés incorporar IA pero no tenés claro si el problema justifica esa inversión. También es útil si ya tenés algo construido pero sentís que la dirección no está bien definida.</p>
+                    <p>No conviene si ya comprometiste un roadmap con fechas inamovibles y no hay margen para cambiar el rumbo. En ese caso, el sprint puede generar frustración porque vas a descubrir cosas que no podés implementar. Tampoco tiene sentido si el problema ya fue validado con usuarios reales y solo falta ejecutar.</p>
+                    <p>Si estás en la etapa de exploración, antes de hablar de tecnología específica, este proceso fue diseñado para vos. Si querés entender mejor cuándo la IA realmente suma valor, el artículo sobre <a href="https://yacare.io/elpantano/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">cómo aplicar inteligencia artificial en tu pyme sin un equipo técnico</a> es un buen punto de partida.</p>
+                    <h2 id="que-pasa-cada-dia">Qué pasa cada día del sprint</h2>
+                    <p><strong>Día 1: entender.</strong> El equipo mapea el problema desde cero: quién lo tiene, cuándo aparece, qué intentaron antes para resolverlo. Se revisa la información disponible, se identifican los supuestos más riesgosos y se define el foco de la semana. Nada de soluciones todavía.</p>
+                    <p><strong>Día 2: explorar.</strong> Acá se traen referentes, casos similares y posibilidades técnicas. Para productos con IA, este día incluye una evaluación honesta de qué puede hacer la tecnología y qué no. Es el momento de ampliar antes de empezar a cerrar.</p>
+                    <p><strong>Día 3: decidir.</strong> El equipo converge. Se elige una dirección única sobre la que trabajar el resto de la semana. Esto implica dejar afuera ideas que pueden ser buenas pero que no son el foco ahora. La capacidad de descartar es tan importante como la de generar.</p>
+                    <p><strong>Día 4: prototipar.</strong> No se construye el producto: se construye algo lo suficientemente concreto para que una persona externa pueda entenderlo y reaccionar. Puede ser un flujo de pantallas, un storyboard o un prototipo navegable simple, dependiendo del tipo de producto.</p>
+                    <p><strong>Día 5: validar.</strong> Se hacen entrevistas cortas con usuarios o con personas que representan al público objetivo. Las reacciones de esas conversaciones alimentan las conclusiones del sprint. Al final del día, el equipo tiene datos reales, no suposiciones.</p>
+                    <h2 id="entregables">Qué entregables salís con el sprint</h2>
+                    <p>Al terminar la semana, no te llevás un producto funcionando, sino algo más valioso en esta etapa: claridad. Los entregables típicos de un <a href="/services/discovery-sprint.html">discovery sprint</a> incluyen una definición del problema validada con usuarios, un mapa de las funcionalidades prioritarias, una evaluación de la viabilidad técnica con IA y un plan de siguiente paso con criterios claros para avanzar o pivotar.</p>
+                    <p>Estos entregables sirven para alinear al equipo interno, para presentar a inversores con argumentos sólidos y para briefear a un equipo de desarrollo sin ambigüedades. El costo de una semana de discovery es siempre menor al costo de semanas de desarrollo en la dirección equivocada.</p>
+                    <p>Si después del sprint la decisión es construir un MVP, el artículo sobre <a href="https://yacare.io/elpantano/mvp-con-ia-que-construir-primero.html">qué construir primero para validar tu startup</a> te va a ayudar a priorizar qué va en esa primera versión y qué puede esperar.</p>
+                    <div class="ep-pullquote"><p>El costo de una semana de discovery es siempre menor al costo de semanas de desarrollo en la dirección equivocada.</p></div>
+                    <h2 id="como-prepararse">Cómo prepararse para que el sprint funcione</h2>
+                    <p>El sprint requiere foco real del equipo. Si los participantes llegan con la cabeza en otras reuniones o con disponibilidad parcial, los resultados se resienten. Idealmente, las personas clave bloquean su agenda durante la semana y tratan el proceso como una prioridad, no como un evento paralelo.</p>
+                    <p>Antes de arrancar, conviene tener ordenada la información disponible: datos de usuarios si existen, intentos anteriores de resolver el problema, y cualquier referencia del mercado que sea relevante. No hace falta que esté perfecta, pero sí accesible.</p>
+                    <p>El equipo facilitador se encarga de la estructura y de mantener el proceso en curso. Tu rol como fundador o dueño del negocio es traer el conocimiento profundo del problema y tomar decisiones cuando el proceso las pide. Esa combinación es la que hace que el sprint funcione.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">Si querés validar tu idea de producto con IA antes de invertir en desarrollo, trabajemos juntos en un [discovery sprint](/services/discovery-sprint.html) con Yacaré.</p>
+                        <a href="/services/discovery-sprint.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Conocé Discovery Sprint &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Un discovery sprint reemplaza la investigación de usuarios?</summary>
+                        <p>No. El sprint usa técnicas de investigación, pero no reemplaza un proceso de research más largo si el problema es complejo o el mercado es nuevo. Es una herramienta para tomar decisiones rápidas con información suficiente, no para hacer etnografía. Si el contexto lo requiere, el sprint puede incluir una fase de research previa.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Hace falta tener conocimientos técnicos para participar?</summary>
+                        <p>No es necesario. El sprint está diseñado para que personas con distintos perfiles, negocio, diseño y tecnología, trabajen juntas sin que ninguna disciplina domine a las otras. Lo importante es que el equipo tenga conocimiento del problema y capacidad para tomar decisiones durante la semana.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Qué pasa si al final del sprint la idea no valida?</summary>
+                        <p>Eso es un resultado válido y valioso. Descubrir que una idea no funciona en una semana de trabajo es mucho mejor que descubrirlo después de meses de desarrollo. El sprint te da argumentos para pivotar con claridad o para decidir no continuar sin haber gastado de más.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿El discovery sprint sirve si ya tengo un producto en marcha?</summary>
+                        <p>Sí, pero el foco cambia. En ese caso se usa para evaluar una nueva funcionalidad, explorar si la IA puede mejorar algo existente, o redefinir la dirección del producto cuando los resultados actuales no son los esperados. La estructura es la misma; lo que varía es el punto de partida.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">R</div>
+                        <div>
+                            <div class="ep-author-mini__name">Rafa Guerrero</div>
+                            <div class="ep-author-mini__role">Columnista · Negocios</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Analiza la intersección entre tecnología y negocio en startups y pymes.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">En este artículo</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#introduccion">El problema de arrancar sin validar</a></li>
+                        <li><a href="#que-es-un-discovery-sprint">Qué es un discovery sprint y de dónde viene</a></li>
+                        <li><a href="#cuando-conviene-y-cuando-no">Cuándo conviene hacerlo y cuándo no</a></li>
+                        <li><a href="#que-pasa-cada-dia">Qué pasa cada día del sprint</a></li>
+                        <li><a href="#entregables">Qué entregables salís con el sprint</a></li>
+                        <li><a href="#como-prepararse">Cómo prepararse para que el sprint funcione</a></li>
+                        <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Volver al blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">R</div>
+                <div>
+                    <div class="ep-author-card__label">Autor</div>
+                    <div class="ep-author-card__name">Rafa Guerrero</div>
+                    <div class="ep-author-card__role">Columnista · Negocios</div>
+                    <p class="ep-author-card__bio">
+                        Rafa Guerrero analiza la intersección entre tecnología y negocio: qué adoptan las empresas, qué descartan y por qué. Doce años escribiendo sobre startups, financiamiento y producto en medios de Latinoamérica y España. Le interesa más el caso real que el framework de moda.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">Más del blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/mvp-con-ia-que-construir-primero.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Negocios</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">MVP con IA: qué construir primero para validar tu startup</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Antes de invertir meses en desarrollo, necesitás saber si tu hipótesis central tiene sentido. Esta guía te ayuda a definir el alcance mínimo de un producto con IA y a entender qué dejar afuera desde el primer día.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">5 jun 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Cómo aplicar inteligencia artificial en tu pyme sin un equipo técnico</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Una guía práctica para dueños de pymes y fundadores que quieren usar IA hoy: qué podés hacer con herramientas existentes, qué requiere desarrollo real y cómo dar el primer paso sin contratar ingenieros.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">5 jun 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">El blog de Yacaré. Ideas sobre producto, IA y negocios para quienes construyen.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Secciones</div>
+                    <a href="/elpantano/" class="ep-footer__link">Tecnología</a>
+                    <a href="/elpantano/" class="ep-footer__link">Cultura</a>
+                    <a href="/elpantano/" class="ep-footer__link">Opinión</a>
+                    <a href="/elpantano/" class="ep-footer__link">IA</a>
+                    <a href="/elpantano/" class="ep-footer__link">Análisis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">Nosotros</a>
+                    <a href="/services.html" class="ep-footer__link">Servicios</a>
+                    <a href="/work.html" class="ep-footer__link">Trabajos</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Conectar</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contacto</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacidad</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Términos</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">Un blog de</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

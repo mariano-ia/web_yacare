@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How to Apply Artificial Intelligence in Your SMB Without a Technical Team · Yacaré Blog</title>
+    <meta name="description" content="Practical AI guide for SMBs: what you can implement today, what requires development, and how to decide your first step without an in-house technical team.">
+    <link rel="canonical" href="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="How to Apply Artificial Intelligence in Your SMB Without a Technical Team">
+    <meta property="og:description" content="A practical guide for SMB owners and startup founders who want to use AI today: what you can do with existing tools, what requires real development, and how to take the first step without hiring engineers.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Mia Torres">
+    <meta property="article:published_time" content="2026-06-05">
+    <meta property="article:section" content="AI">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Apply Artificial Intelligence in Your SMB Without a Technical Team">
+    <meta name="twitter:description" content="A practical guide for SMB owners and startup founders who want to use AI today: what you can do with existing tools, what requires real development, and how to take the first step without hiring engineers.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "en",
+  "headline": "How to Apply Artificial Intelligence in Your SMB Without a Technical Team",
+  "description": "Practical AI guide for SMBs: what you can implement today, what requires development, and how to decide your first step without an in-house technical team.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Mia Torres"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "articleSection": "AI",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI for SMBs Without a Technical Team",
+      "item": "https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does an SMB need its own technical team to use AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, in most cases. There is an important difference between using existing AI tools and developing custom solutions. To get started, adopting already available tools and configuring them well is almost always enough. Having an in-house technical team makes sense when processes are highly specific and generic tools fall short."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to implement AI in an SMB?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on where you are starting. Testing existing tools can cost anywhere from zero to one hundred dollars per month. Custom development, such as a chatbot integrated with your systems or a personalized model, can start at several thousand dollars. That is why it is important to validate the use case before committing budget to development."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know if a process is a good candidate for AI automation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Look for three characteristics: it repeats frequently, the process is well defined, and the cost of an error is low or recoverable. If all three apply, it is worth testing. If the process is irregular, has many exceptions, or an error could create a serious problem, it is worth taking more time before automating."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the tool we adopt does not work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That is a valid outcome, as long as you defined upfront what you expected to achieve. The important thing is not to invest months of development without validating first. Quick tests with existing tools let you rule out ideas in days, not weeks or months. That learning also has value."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/en/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--tecnologia">Technology</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--cultura">Culture</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--opinion">Opinion</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--ia">AI</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--analisis">Analysis</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--negocios">Business</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Search the blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Search">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC to close</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Breadcrumb">
+            <a href="/elpantano/en/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/en/">AI</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>AI for SMBs Without a Technical Team</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/en/" class="ep-cat ep-cat--ia">AI</a>
+            </div>
+
+            <h1 class="ep-article-head__title">How to Apply Artificial Intelligence in Your SMB Without a Technical Team</h1>
+
+            <p class="ep-article-head__standfirst">
+                A practical guide for SMB owners and startup founders who want to use AI today: what you can do with existing tools, what requires real development, and how to take the first step without hiring engineers.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/en/" class="ep-article-head__author" aria-label="Mia Torres">
+                    <div class="ep-article-head__avatar" aria-hidden="true">M</div>
+                    <span class="ep-article-head__author-name">Mia Torres</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-05">June 5, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">6 min read</span>
+
+                <div class="ep-article-head__share" aria-label="Share article">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="introduccion">AI Has Already Reached SMBs, Just Not the Way It Was Sold to You</h2>
+                    <p>The usual conversation about artificial intelligence mixes large-corporation case studies with promises of total automation. For an SMB with ten employees and a tight budget, that narrative creates more confusion than clarity. The real question is not whether AI will transform the world: it is what you can do, with the resources you have, in the next ninety days.</p>
+                    <p>The good news is that today there is an important difference between <em>using</em> AI and <em>developing</em> AI. Most SMBs do not need to build anything: they need to choose the right tools to adopt and in what order. This article helps you make that decision with concrete information, no inflated promises.</p>
+                    <div class="ep-pullquote"><p>The real question is not whether AI will transform the world: it is what you can do, with the resources you have, in the next ninety days.</p></div>
+                    <h2 id="que-podes-hacer-hoy">What You Can Do Today With Existing Tools</h2>
+                    <p>There is a category of applications that requires no custom development: you simply adopt a tool, configure it, and start using it. This category includes writing assistants for emails and content, automatic meeting summaries, draft generation for sales proposals, and basic classification of incoming inquiries.</p>
+                    <p>Tools like ChatGPT, Claude, or Gemini work well for these tasks if you know how to write clear instructions. The limitation is that they operate generically: they do not know your business, your tone, or your client history unless you explain it to them every time. That carries a time cost worth considering.</p>
+                    <p>Another group of tools handles more specific tasks: Notion AI for organizing internal documentation, Fireflies or Otter for transcribing meetings, Zapier with AI for connecting systems without coding. These options have accessible pricing tiers and can be evaluated in a week without committing significant budget.</p>
+                    <p>The criterion for starting here is simple: if the task is repetitive, consumes time from someone with a good salary, and does not require complex judgment, there is probably a tool that partially solves it today.</p>
+                    <h2 id="que-requiere-desarrollo">What Requires Real Development and When It Is Worth It</h2>
+                    <p>There are cases where generic tools are not enough. If you need AI to access your historical data, talk to your systems, make decisions inside your workflow, or learn from your specific operation, that is when you need custom development.</p>
+                    <p>Some concrete examples: a chatbot that answers questions about your catalog with real-time updated pricing, a system that classifies and prioritizes support tickets according to your own criteria, or a model that analyzes your sales and detects patterns you cannot see in a spreadsheet. These projects have real value, but they also carry cost, time, and implementation risk.</p>
+                    <p>The most common mistake in SMBs is jumping into this type of project without validating the problem first. Budget gets committed to development and then it turns out the process meant to be automated had exceptions nobody had documented, or the team never adopted the tool. Before committing budget to development, it is worth taking time to clarify exactly what will be built and for whom.</p>
+                    <h2 id="como-decidir-el-primer-paso">How to Decide Your First Step Without Getting Lost in Analysis</h2>
+                    <p>The biggest obstacle to applying AI in an SMB is not technical: it is prioritization. There are too many options and too few hours to evaluate them. A simple framework for getting organized is to ask three questions for each opportunity you identify: how much time does someone lose on this today, how well defined is the process, and what happens if the AI gets it wrong.</p>
+                    <p>The best first applications are those where volume is high, the process is clear, and the cost of an error is low. An email draft that you review yourself has almost zero error cost. A system that automatically approves credit has a high error cost and requires much more care in its design.</p>
+                    <p>Once the use case is defined, the next step is to validate it before investing. That means manually testing the idea for a week to see if it works, talking to the people who will use the tool, and estimating the real time savings in hours. Many AI projects get canceled after months of development because nobody did this validation upfront.</p>
+                    <p>If you want to accelerate that validation process with guidance, the <a href="/services/discovery-sprint.html">Yacaré Discovery Sprint</a> is designed exactly for this: in one week we work with you to identify the right opportunity, align the team, and leave with a clear plan before spending on development.</p>
+                    <h2 id="errores-frecuentes">Common Mistakes Worth Avoiding</h2>
+                    <p>The first is automating a broken process. If your customer service flow is chaotic, adding a chatbot on top only makes errors scale faster. Before automating, you need to understand and simplify the process.</p>
+                    <p>The second mistake is underestimating the habit change. Adopting a new tool requires that the people who will use it understand why their work is changing and how it makes their lives easier. Without that conversation, the most sophisticated tool ends up unused within three weeks.</p>
+                    <p>The third is measuring success poorly. If the goal was to save two hours of administrative work per week and the tool saves forty minutes, that is not a failure: it is information. What is a problem is not having defined any metric before starting, because then there is no way to know whether it worked.</p>
+                    <h2 id="por-donde-empezar">A Concrete Path to Get Started This Week</h2>
+                    <p>First, list three tasks that repeat in your operation and currently consume time without adding differential value. They can be internal (reports, summaries, information classification) or external (responses to frequent inquiries, lead follow-up, content generation).</p>
+                    <p>Second, for each one evaluate whether a generic tool exists that you can try for free or at low cost this week. If it exists, test it for five days and measure how much time it actually saves you. If it does not exist or the process requires integration with your systems, note it as a candidate for a development project.</p>
+                    <p>Third, with that information in hand, you have enough to make an informed decision: adopt an existing tool, commission custom development, or discard the idea because the effort does not justify the benefit. That three-step process, done well, is worth more than any consulting firm that sells you a digital transformation roadmap without knowing your business.</p>
+                    <p>If you want to do it with structure and without improvising, you can read more about this approach at <a href="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">how to apply AI in an SMB without a technical team</a> or talk to us directly.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">If you want to identify where AI can add real value to your business and leave with a concrete plan in one week, the [Yacaré Discovery Sprint](/services/discovery-sprint.html) is designed to guide you through that process.</p>
+                        <a href="/services/discovery-sprint.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Explore Discovery Sprint &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Frequently asked questions</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Does an SMB need its own technical team to use AI?</summary>
+                        <p>No, in most cases. There is an important difference between using existing AI tools and developing custom solutions. To get started, adopting already available tools and configuring them well is almost always enough. Having an in-house technical team makes sense when processes are highly specific and generic tools fall short.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How much does it cost to implement AI in an SMB?</summary>
+                        <p>It depends on where you are starting. Testing existing tools can cost anywhere from zero to one hundred dollars per month. Custom development, such as a chatbot integrated with your systems or a personalized model, can start at several thousand dollars. That is why it is important to validate the use case before committing budget to development.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How do I know if a process is a good candidate for AI automation?</summary>
+                        <p>Look for three characteristics: it repeats frequently, the process is well defined, and the cost of an error is low or recoverable. If all three apply, it is worth testing. If the process is irregular, has many exceptions, or an error could create a serious problem, it is worth taking more time before automating.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">What happens if the tool we adopt does not work?</summary>
+                        <p>That is a valid outcome, as long as you defined upfront what you expected to achieve. The important thing is not to invest months of development without validating first. Quick tests with existing tools let you rule out ideas in days, not weeks or months. That learning also has value.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">M</div>
+                        <div>
+                            <div class="ep-author-mini__name">Mia Torres</div>
+                            <div class="ep-author-mini__role">Columnist · AI</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Writes about applied AI and product tooling, without inflated promises.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">In this article</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#introduccion">AI Has Already Reached SMBs, Just Not the Way It Was Sold to You</a></li>
+                        <li><a href="#que-podes-hacer-hoy">What You Can Do Today With Existing Tools</a></li>
+                        <li><a href="#que-requiere-desarrollo">What Requires Real Development and When It Is Worth It</a></li>
+                        <li><a href="#como-decidir-el-primer-paso">How to Decide Your First Step Without Getting Lost in Analysis</a></li>
+                        <li><a href="#errores-frecuentes">Common Mistakes Worth Avoiding</a></li>
+                        <li><a href="#por-donde-empezar">A Concrete Path to Get Started This Week</a></li>
+                        <li><a href="#preguntas-frecuentes">Frequently asked questions</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/en/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Back to the blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">M</div>
+                <div>
+                    <div class="ep-author-card__label">Author</div>
+                    <div class="ep-author-card__name">Mia Torres</div>
+                    <div class="ep-author-card__role">Columnist · AI</div>
+                    <p class="ep-author-card__bio">
+                        Mia Torres covers applied artificial intelligence and tooling for product teams. She writes about what AI actually changes in the day to day of a business, without inflated promises. Previously at Wired en Español and product newsletters. She splits her time between Córdoba and Madrid.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">More from the blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <!-- no related yet -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/en/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">Yacaré's blog. Ideas on product, AI and business for people who build.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Sections</div>
+                    <a href="/elpantano/en/" class="ep-footer__link">Technology</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Culture</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Opinion</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">AI</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Analysis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">About</a>
+                    <a href="/services.html" class="ep-footer__link">Services</a>
+                    <a href="/work.html" class="ep-footer__link">Work</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Connect</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contact</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacy</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Terms</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">A blog by</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

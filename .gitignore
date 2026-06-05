@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Secrets + SEO pipeline runtime state
+.env
+seo-pipeline/.last_run
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
