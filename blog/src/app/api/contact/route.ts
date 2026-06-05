@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Email-only: Yacaré no longer stores contacts in Supabase (the elpantano
+// project was vacated). Submissions are delivered via Resend.
 export async function POST(req: NextRequest) {
     try {
         const { name, email, company, budget, message } = await req.json();
@@ -19,44 +21,27 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Save to Supabase
-        const { createClient } = await import("@supabase/supabase-js");
-        const sb = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_ROLE_KEY!
-        );
-
-        const { error: dbError } = await sb.from("contacts").insert({
-            name,
-            email,
-            company: company || null,
-            budget: budget || null,
-            message,
-        });
-
-        if (dbError) {
-            console.error("[contact] DB error:", dbError);
+        const resendKey = process.env.RESEND_API_KEY;
+        if (!resendKey) {
+            console.error("[contact] RESEND_API_KEY not set — cannot deliver contact");
             return NextResponse.json(
-                { success: false, error: "Error saving contact" },
+                { success: false, error: "Email not configured" },
                 { status: 500 }
             );
         }
 
-        // Send email notification via Resend
-        const resendKey = process.env.RESEND_API_KEY;
-        if (resendKey) {
-            try {
-                await fetch("https://api.resend.com/emails", {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${resendKey}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        from: "Yacaré Web <noreply@yacare.io>",
-                        to: ["mariano@yacare.io"],
-                        subject: `Nuevo contacto: ${name}`,
-                        html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
+        const resp = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${resendKey}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                from: "Yacaré Web <noreply@yacare.io>",
+                to: ["mariano@yacare.io"],
+                reply_to: email,
+                subject: `Nuevo contacto: ${name}`,
+                html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
 <h2 style="margin:0 0 16px">Nuevo contacto desde yacare.io</h2>
 <table style="width:100%;border-collapse:collapse">
 <tr><td style="padding:8px 0;color:#666;width:100px">Nombre</td><td style="padding:8px 0"><strong>${name}</strong></td></tr>
@@ -69,14 +54,16 @@ ${budget ? `<tr><td style="padding:8px 0;color:#666">Budget</td><td style="paddi
 <p style="margin:0;white-space:pre-wrap">${message}</p>
 </div>
 </div>`,
-                    }),
-                });
-            } catch (emailErr) {
-                console.error("[contact] Resend error:", emailErr);
-                // Don't fail the request — contact is already saved
-            }
-        } else {
-            console.warn("[contact] RESEND_API_KEY not set — skipping email notification");
+            }),
+        });
+
+        if (!resp.ok) {
+            const text = await resp.text();
+            console.error("[contact] Resend error:", resp.status, text);
+            return NextResponse.json(
+                { success: false, error: "Error sending message" },
+                { status: 500 }
+            );
         }
 
         return NextResponse.json({ success: true });

@@ -26,3 +26,6 @@ seo-pipeline/.last_run
 *.njsproj
 *.sln
 *.sw?
+
+# Local Supabase backups (PII, never commit)
+supabase-backup/

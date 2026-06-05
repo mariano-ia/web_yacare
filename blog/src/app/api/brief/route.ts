@@ -137,30 +137,8 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const { createClient } = await import("@supabase/supabase-js");
-        const sb = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_ROLE_KEY!
-        );
-
-        const { error: dbError } = await sb.from("briefs").insert({
-            brief_slug: payload.brief_slug,
-            client_name: payload.client_name || null,
-            respondent_name: payload.respondent.name,
-            respondent_email: payload.respondent.email,
-            respondent_role: payload.respondent.role || null,
-            project: payload.project,
-            answers: { sections: payload.sections },
-        });
-
-        if (dbError) {
-            console.error("[brief] DB error:", dbError);
-            return NextResponse.json(
-                { success: false, error: "Error saving brief" },
-                { status: 500 }
-            );
-        }
-
+        // Email-only: Yacaré no longer stores briefs in Supabase (the elpantano
+        // project was vacated). Submissions are delivered via Resend.
         const resendKey = process.env.RESEND_API_KEY;
         if (resendKey) {
             const internalSubject = payload.client_name
