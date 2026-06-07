@@ -105,7 +105,7 @@
         "chatbot inteligencia artificial empresa",
         "asistente virtual ia"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "como-validar-idea-de-producto-con-ia",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "chatbots-atencion-cliente-con-ia-cuando-conviene",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "mvp-jumpstarter",
+      "date": "2026-06-07",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Chatbots de IA: cuándo conviene y cuándo no",
+        "en": "AI Chatbots: When They Make Sense and When They Don't"
+      },
+      "standfirst": {
+        "es": "Un chatbot con inteligencia artificial puede aliviar a tu equipo de atención o arruinar la experiencia de tus clientes. La diferencia está en saber cuándo usarlo. Acá te damos criterios concretos para decidir y qué medir.",
+        "en": "An AI chatbot can take pressure off your support team or wreck your customer experience. The difference comes down to knowing when to use one. Here we give you concrete criteria to decide and what to measure."
+      }
+    },
     {
       "slug": "automatizacion-con-ia-para-pymes-por-donde-empezar",
       "category": "ia",
