@@ -133,7 +133,7 @@
         "ia equipos de producto",
         "casos uso ia generativa"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "del-prototipo-al-mvp-primer-producto-con-ia",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "ia-generativa-para-equipos-de-producto",
+      "category": "ia",
+      "author": "mia-torres",
+      "service": "product-growth",
+      "date": "2026-06-09",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "IA generativa para equipos de producto",
+        "en": "Generative AI for Product Teams"
+      },
+      "standfirst": {
+        "es": "Dónde la IA generativa ayuda de verdad a un equipo de producto, con resultados medibles y los límites que nadie te cuenta.",
+        "en": "Where generative AI actually helps a product team, with measurable results and the limits nobody tells you about."
+      }
+    },
     {
       "slug": "como-validar-idea-de-producto-con-ia",
       "category": "negocios",
