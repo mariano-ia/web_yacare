@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Del prototipo al MVP: tu primer producto con IA · Blog de Yacaré</title>
+    <meta name="description" content="Guía práctica para pasar de un prototipo validado a un MVP con IA en producción: decisiones de alcance, tecnología y presupuesto sin sorpresas para tu startup.">
+    <link rel="canonical" href="https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/del-prototipo-al-mvp-primer-producto-con-ia.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Del prototipo al MVP: tu primer producto con IA">
+    <meta property="og:description" content="Un prototipo validado no es un producto. Te contamos cómo cruzar ese puente con decisiones técnicas sensatas, alcance acotado y un presupuesto que no se descontrola.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="es_AR">
+    <meta property="article:author" content="Rafa Guerrero">
+    <meta property="article:published_time" content="2026-06-10">
+    <meta property="article:section" content="Negocios">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Del prototipo al MVP: tu primer producto con IA">
+    <meta name="twitter:description" content="Un prototipo validado no es un producto. Te contamos cómo cruzar ese puente con decisiones técnicas sensatas, alcance acotado y un presupuesto que no se descontrola.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "es",
+  "headline": "Del prototipo al MVP: tu primer producto con IA",
+  "description": "Guía práctica para pasar de un prototipo validado a un MVP con IA en producción: decisiones de alcance, tecnología y presupuesto sin sorpresas para tu startup.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Rafa Guerrero"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-10",
+  "dateModified": "2026-06-10",
+  "articleSection": "Negocios",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Negocios",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "De prototipo a MVP con IA",
+      "item": "https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda pasar de un prototipo a un MVP con IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del alcance, pero un MVP enfocado en un solo flujo suele tomar entre cuatro y diez semanas. Cuanto más acotado el alcance, más rápido y barato. Querer incluir muchas funcionalidades de IA a la vez es lo que más alarga los plazos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Conviene entrenar un modelo propio o usar una API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para un MVP casi siempre conviene usar una API de un proveedor comercial. Es más rápido de implementar, no requiere infraestructura compleja y te permite validar el producto antes de invertir en algo a medida. Entrenar un modelo propio recién tiene sentido cuando tenés volumen, datos y una ventaja clara que justifique el costo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si la IA da respuestas incorrectas a mis usuarios?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es algo que va a ocurrir, así que el MVP debe estar preparado. Necesitás caminos alternativos para cuando el modelo falla, mensajes claros al usuario y registro de esos errores para mejorar. Un producto que asume que la IA siempre acierta termina rompiendo la confianza de sus primeros usuarios."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo controlo el costo mensual de un producto con IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Definí límites de uso por usuario, elegí el modelo más barato que cumpla cada tarea y cacheá respuestas cuando sea posible. Medir el costo por consulta desde el inicio te permite ajustar antes de que la factura crezca. Una arquitectura pensada para esto puede reducir el gasto a la mitad sin afectar la experiencia."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--tecnologia">Tecnología</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--cultura">Cultura</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--opinion">Opinión</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--ia">IA</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--analisis">Análisis</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--negocios">Negocios</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Buscar">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menú">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Buscar">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Buscar en el blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Buscar">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC para cerrar</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Ubicación">
+            <a href="/elpantano/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/">Negocios</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>De prototipo a MVP con IA</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/" class="ep-cat ep-cat--negocios">Negocios</a>
+            </div>
+
+            <h1 class="ep-article-head__title">Del prototipo al MVP: tu primer producto con IA</h1>
+
+            <p class="ep-article-head__standfirst">
+                Un prototipo validado no es un producto. Te contamos cómo cruzar ese puente con decisiones técnicas sensatas, alcance acotado y un presupuesto que no se descontrola.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/" class="ep-article-head__author" aria-label="Rafa Guerrero">
+                    <div class="ep-article-head__avatar" aria-hidden="true">R</div>
+                    <span class="ep-article-head__author-name">Rafa Guerrero</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-10">10 de junio, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">7 min de lectura</span>
+
+                <div class="ep-article-head__share" aria-label="Compartir artículo">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="prototipo-no-es-producto">Un prototipo no es un producto</h2>
+                    <p>Muchos equipos confunden un prototipo funcional con un producto listo para usuarios reales. El prototipo sirve para responder una pregunta: ¿esto resuelve un problema que alguien tiene? El MVP responde otra: ¿podemos entregar esa solución de forma confiable, repetida y a un costo razonable?</p>
+                    <p>La diferencia importa porque el salto entre ambos consume tiempo y plata. Un prototipo puede vivir con datos falsos, flujos rotos y un modelo de IA que acierta a veces. Un MVP necesita manejar errores, proteger datos y dar resultados consistentes frente a usuarios que no perdonan.</p>
+                    <p>Antes de avanzar, conviene tener un prototipo de verdad validado. Si todavía estás en esa etapa, te recomendamos leer <a href="https://yacare.io/elpantano/como-validar-idea-de-producto-con-ia.html">cómo validar una idea de producto con IA sin código</a> y considerar un <a href="https://yacare.io/elpantano/que-es-un-discovery-sprint-producto-ia.html">discovery sprint</a> para no construir sobre una hipótesis floja.</p>
+                    <div class="ep-pullquote"><p>El prototipo demuestra que la idea sirve. El MVP demuestra que podés entregarla.</p></div>
+                    <h2 id="definir-alcance">Definir el alcance: la decisión más cara</h2>
+                    <p>La trampa más común al construir tu primer producto con IA es querer incluir todo lo que el prototipo insinuó como posible. Cada feature suma costo de desarrollo, mantenimiento y, con IA, costo de inferencia que se paga cada vez que un usuario la usa.</p>
+                    <p>Recomendamos elegir un solo flujo central, el que genera el valor más claro, y construirlo bien. Si tu prototipo mostraba cinco capacidades de IA, probablemente el MVP necesite una o dos. El resto puede esperar a tener usuarios reales que confirmen qué piden de verdad.</p>
+                    <p>Para ordenar esa decisión escribimos <a href="https://yacare.io/elpantano/mvp-con-ia-que-construir-primero.html">qué construir primero en un MVP con IA</a>. La regla práctica: si una funcionalidad no se puede explicar en una oración como beneficio para el usuario, probablemente no entra en la primera versión.</p>
+                    <h2 id="decisiones-tecnicas">Decisiones técnicas que conviene tomar temprano</h2>
+                    <p>La primera pregunta técnica suele ser si usar modelos de IA por API (como los de proveedores comerciales) o entrenar algo propio. Para un MVP, casi siempre conviene la API: es más rápido, más barato de arrancar y te deja enfocarte en el producto en vez de en infraestructura de machine learning.</p>
+                    <p>La segunda decisión es cómo manejar los casos en que la IA falla, porque va a fallar. Necesitás pensar qué pasa cuando el modelo no entiende, devuelve algo incorrecto o tarda demasiado. Un buen MVP tiene caminos alternativos claros, no una pantalla en blanco.</p>
+                    <p>La tercera es la observabilidad: registrar qué pide el usuario, qué responde el modelo y cuánto cuesta. Sin esos datos vas a estar a ciegas para mejorar. Si tu equipo recién arranca con estas herramientas, <a href="https://yacare.io/elpantano/ia-generativa-para-equipos-de-producto.html">IA generativa para equipos de producto</a> te da el contexto base.</p>
+                    <div class="ep-pullquote"><p>Con IA, lo que define un buen producto no es cuando acierta, sino qué hace cuando se equivoca.El placeholder</p></div>
+                    <h2 id="cuidar-presupuesto">Cómo no romper el presupuesto</h2>
+                    <p>El costo de un MVP con IA tiene dos partes: construirlo una vez y operarlo todos los meses. La segunda es la que sorprende a los fundadores, porque cada llamada a un modelo cuesta dinero y ese costo crece con cada usuario.</p>
+                    <p>Para controlarlo, definí límites desde el día uno: cuántas consultas por usuario, qué modelo usás para cada tarea (los más potentes son más caros y no siempre hacen falta) y dónde podés cachear respuestas. Una buena arquitectura puede reducir la factura mensual a la mitad sin que el usuario note diferencia.</p>
+                    <p>Sé honesto con vos mismo sobre el ROI. Si la IA no reduce un costo real o no habilita un ingreso concreto, quizás no necesites un modelo y sí una automatización más simple. Sobre eso escribimos <a href="https://yacare.io/elpantano/automatizacion-con-ia-para-pymes-por-donde-empezar.html">por dónde empezar con automatización con IA para pymes</a>.</p>
+                    <h2 id="cuando-no-conviene">Cuándo no conviene avanzar al MVP todavía</h2>
+                    <p>No todo prototipo merece convertirse en MVP. Si la validación fue tibia, con usuarios que dijeron 'qué interesante' pero nunca volvieron, el problema no se arregla con más desarrollo. Conviene volver al descubrimiento antes de invertir.</p>
+                    <p>También conviene frenar si la pieza de IA no es central. A veces un chatbot o un modelo es un capricho técnico y el producto funcionaría igual o mejor sin él. Para ese caso específico escribimos sobre <a href="https://yacare.io/elpantano/chatbots-atencion-cliente-con-ia-cuando-conviene.html">cuándo conviene un chatbot de IA y cuándo no</a>.</p>
+                    <p>Y si no tenés equipo técnico, no significa que estés afuera, pero sí que necesitás un socio que te acompañe. En <a href="https://yacare.io/elpantano/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">cómo aplicar IA en una pyme sin equipo técnico</a> explicamos rutas posibles según el punto de partida.</p>
+                    <h2 id="camino-recomendado">Un camino realista de prototipo a producción</h2>
+                    <p>El recorrido que recomendamos es corto y ordenado: validar la idea, acotar el alcance a un flujo, construir ese flujo con manejo de errores y observabilidad, y recién después agregar features con datos de usuarios reales en la mano. Cada etapa reduce la incertidumbre de la siguiente.</p>
+                    <p>La clave es resistir la tentación de saltar pasos. Un MVP que llega rápido pero falla en producción cuesta más caro que uno que sale dos semanas después y funciona. La velocidad sirve cuando no compromete la confianza de tus primeros usuarios.</p>
+                    <p>En Yacaré construimos esta etapa con el <a href="/services/mvp-jumpstarter.html">MVP Jumpstarter</a>: llevamos tu concepto a un producto funcional y listo para los primeros usuarios, sin inflar el alcance ni el presupuesto.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">Si tenés un prototipo validado y querés llevarlo a producción, construyamos juntos tu MVP con el MVP Jumpstarter de Yacaré.</p>
+                        <a href="/services/mvp-jumpstarter.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Conocé MVP Jumpstarter &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Cuánto tarda pasar de un prototipo a un MVP con IA?</summary>
+                        <p>Depende del alcance, pero un MVP enfocado en un solo flujo suele tomar entre cuatro y diez semanas. Cuanto más acotado el alcance, más rápido y barato. Querer incluir muchas funcionalidades de IA a la vez es lo que más alarga los plazos.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Conviene entrenar un modelo propio o usar una API?</summary>
+                        <p>Para un MVP casi siempre conviene usar una API de un proveedor comercial. Es más rápido de implementar, no requiere infraestructura compleja y te permite validar el producto antes de invertir en algo a medida. Entrenar un modelo propio recién tiene sentido cuando tenés volumen, datos y una ventaja clara que justifique el costo.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Qué pasa si la IA da respuestas incorrectas a mis usuarios?</summary>
+                        <p>Es algo que va a ocurrir, así que el MVP debe estar preparado. Necesitás caminos alternativos para cuando el modelo falla, mensajes claros al usuario y registro de esos errores para mejorar. Un producto que asume que la IA siempre acierta termina rompiendo la confianza de sus primeros usuarios.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Cómo controlo el costo mensual de un producto con IA?</summary>
+                        <p>Definí límites de uso por usuario, elegí el modelo más barato que cumpla cada tarea y cacheá respuestas cuando sea posible. Medir el costo por consulta desde el inicio te permite ajustar antes de que la factura crezca. Una arquitectura pensada para esto puede reducir el gasto a la mitad sin afectar la experiencia.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">R</div>
+                        <div>
+                            <div class="ep-author-mini__name">Rafa Guerrero</div>
+                            <div class="ep-author-mini__role">Columnista · Negocios</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Analiza la intersección entre tecnología y negocio en startups y pymes.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">En este artículo</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#prototipo-no-es-producto">Un prototipo no es un producto</a></li>
+                        <li><a href="#definir-alcance">Definir el alcance: la decisión más cara</a></li>
+                        <li><a href="#decisiones-tecnicas">Decisiones técnicas que conviene tomar temprano</a></li>
+                        <li><a href="#cuidar-presupuesto">Cómo no romper el presupuesto</a></li>
+                        <li><a href="#cuando-no-conviene">Cuándo no conviene avanzar al MVP todavía</a></li>
+                        <li><a href="#camino-recomendado">Un camino realista de prototipo a producción</a></li>
+                        <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Volver al blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">R</div>
+                <div>
+                    <div class="ep-author-card__label">Autor</div>
+                    <div class="ep-author-card__name">Rafa Guerrero</div>
+                    <div class="ep-author-card__role">Columnista · Negocios</div>
+                    <p class="ep-author-card__bio">
+                        Rafa Guerrero analiza la intersección entre tecnología y negocio: qué adoptan las empresas, qué descartan y por qué. Doce años escribiendo sobre startups, financiamiento y producto en medios de Latinoamérica y España. Le interesa más el caso real que el framework de moda.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">Más del blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/ia-generativa-para-equipos-de-producto.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">IA generativa para equipos de producto</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Dónde la IA generativa ayuda de verdad a un equipo de producto, con resultados medibles y los límites que nadie te cuenta.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">9 jun 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/como-validar-idea-de-producto-con-ia.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Negocios</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Validar una idea de producto con IA sin código</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Antes de contratar developers o lanzar un proyecto con IA, hay formas baratas y rápidas de saber si tu idea tiene demanda real. Acá te las contamos.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">8 jun 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/chatbots-atencion-cliente-con-ia-cuando-conviene.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">IA</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Chatbots de IA: cuándo conviene y cuándo no</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Un chatbot con inteligencia artificial puede aliviar a tu equipo de atención o arruinar la experiencia de tus clientes. La diferencia está en saber cuándo usarlo. Acá te damos criterios concretos para decidir y qué medir.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">7 jun 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">El blog de Yacaré. Ideas sobre producto, IA y negocios para quienes construyen.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Secciones</div>
+                    <a href="/elpantano/" class="ep-footer__link">Tecnología</a>
+                    <a href="/elpantano/" class="ep-footer__link">Cultura</a>
+                    <a href="/elpantano/" class="ep-footer__link">Opinión</a>
+                    <a href="/elpantano/" class="ep-footer__link">IA</a>
+                    <a href="/elpantano/" class="ep-footer__link">Análisis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">Nosotros</a>
+                    <a href="/services.html" class="ep-footer__link">Servicios</a>
+                    <a href="/work.html" class="ep-footer__link">Trabajos</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Conectar</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contacto</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacidad</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Términos</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">Un blog de</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -147,7 +147,7 @@
         "construir mvp ia",
         "primer producto inteligencia artificial"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "cuanto-cuesta-desarrollar-producto-con-ia-startup",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "del-prototipo-al-mvp-primer-producto-con-ia",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "date": "2026-06-10",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Del prototipo al MVP: tu primer producto con IA",
+        "en": "From Prototype to MVP: Your First AI Product"
+      },
+      "standfirst": {
+        "es": "Un prototipo validado no es un producto. Te contamos cómo cruzar ese puente con decisiones técnicas sensatas, alcance acotado y un presupuesto que no se descontrola.",
+        "en": "A validated prototype is not a product. Here's how to cross that bridge with sensible technical decisions, a tight scope, and a budget that won't spiral out of control."
+      }
+    },
     {
       "slug": "ia-generativa-para-equipos-de-producto",
       "category": "ia",
