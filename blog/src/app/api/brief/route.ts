@@ -69,20 +69,6 @@ ${sectionsHtml || '<p style="color:#888">No se respondió ninguna pregunta opcio
 </div>`;
 }
 
-function renderConfirmationHtml(p: Payload): string {
-    const firstName = p.respondent.name.split(" ")[0] || p.respondent.name;
-    return `<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:560px;margin:0 auto;color:#222;line-height:1.6">
-<h2 style="margin:0 0 16px;color:#000">Recibimos tu brief</h2>
-<p style="margin:0 0 16px">Hola ${escapeHtml(firstName)}, gracias por tomarte el tiempo de completar el brief de <strong>${escapeHtml(p.project)}</strong>.</p>
-<p style="margin:0 0 16px">Ya lo estamos revisando con el equipo. Te escribimos en las próximas 24 a 48 horas con los siguientes pasos.</p>
-<p style="margin:0 0 24px">Mientras tanto, si surge algo urgente, escribinos a <a href="mailto:contact@yacare.io" style="color:#000">contact@yacare.io</a>.</p>
-<div style="margin:24px 0 0;padding:16px 0;border-top:1px solid #eee;color:#888;font-size:13px">
-  Yacaré<br>
-  <a href="https://yacare.io" style="color:#888">yacare.io</a>
-</div>
-</div>`;
-}
-
 async function sendEmail(
     resendKey: string,
     to: string[],
@@ -137,40 +123,33 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Email-only: Yacaré no longer stores briefs in Supabase (the elpantano
-        // project was vacated). Submissions are delivered via Resend.
+        // Email-only delivery. Yacaré does not store briefs anywhere (no
+        // Supabase). The brief is sent solely as one internal email to the team
+        // (Mariano + Martín) via Resend. The respondent gets NO confirmation
+        // email: their only acknowledgement is the on-screen success screen.
         const resendKey = process.env.RESEND_API_KEY;
-        if (resendKey) {
-            const internalSubject = payload.client_name
-                ? `Nuevo brief: ${payload.client_name} (${payload.respondent.name})`
-                : `Nuevo brief de ${payload.respondent.name}`;
-            const confirmationSubject = `Recibimos tu brief de ${payload.project}`;
-
-            const results = await Promise.allSettled([
-                sendEmail(
-                    resendKey,
-                    INTERNAL_RECIPIENTS,
-                    internalSubject,
-                    renderInternalHtml(payload),
-                    payload.respondent.email
-                ),
-                sendEmail(
-                    resendKey,
-                    [payload.respondent.email],
-                    confirmationSubject,
-                    renderConfirmationHtml(payload)
-                ),
-            ]);
-
-            results.forEach((r, i) => {
-                if (r.status === "rejected") {
-                    const label = i === 0 ? "internal" : "confirmation";
-                    console.error(`[brief] ${label} email failed:`, r.reason);
-                }
-            });
-        } else {
-            console.warn("[brief] RESEND_API_KEY not set, skipping emails");
+        if (!resendKey) {
+            console.error("[brief] RESEND_API_KEY not set, cannot deliver brief");
+            return NextResponse.json(
+                { success: false, error: "Email not configured" },
+                { status: 500 }
+            );
         }
+
+        const internalSubject = payload.client_name
+            ? `Nuevo brief: ${payload.client_name} (${payload.respondent.name})`
+            : `Nuevo brief de ${payload.respondent.name}`;
+
+        // Email is the only delivery channel (no DB fallback), so a failure must
+        // surface as a non-200. The form retries on a non-ok response instead of
+        // silently losing the brief.
+        await sendEmail(
+            resendKey,
+            INTERNAL_RECIPIENTS,
+            internalSubject,
+            renderInternalHtml(payload),
+            payload.respondent.email
+        );
 
         return NextResponse.json({ success: true });
     } catch (err) {
