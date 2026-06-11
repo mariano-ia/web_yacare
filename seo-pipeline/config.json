@@ -161,7 +161,7 @@
         "costo desarrollo software ia",
         "presupuesto mvp startup"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "ia-para-analisis-de-datos-en-pymes",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "cuanto-cuesta-desarrollar-producto-con-ia-startup",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "mvp-jumpstarter",
+      "date": "2026-06-11",
+      "reading_time": 8,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Cuánto cuesta un producto con IA: guía real",
+        "en": "How Much an AI Product Costs: A Real Guide"
+      },
+      "standfirst": {
+        "es": "Un desglose honesto de lo que pagás al construir un producto con inteligencia artificial: equipo, modelos, infraestructura y mantenimiento, con rangos y las palancas que mueven el presupuesto.",
+        "en": "An honest breakdown of what you pay when building a product with artificial intelligence: team, models, infrastructure and maintenance, with ranges and the levers that move your budget."
+      }
+    },
     {
       "slug": "del-prototipo-al-mvp-primer-producto-con-ia",
       "category": "negocios",
