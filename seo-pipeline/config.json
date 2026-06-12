@@ -175,7 +175,7 @@
         "analitica para pymes",
         "datos decisiones negocio"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "errores-comunes-al-aplicar-ia-en-una-empresa",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "ia-para-analisis-de-datos-en-pymes",
+      "category": "analisis",
+      "author": "rafa-guerrero",
+      "service": "product-growth",
+      "date": "2026-06-12",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "IA para analisis de datos en pymes",
+        "en": "AI for Data Analysis in Small and Midsize Businesses"
+      },
+      "standfirst": {
+        "es": "Como una pyme puede pasar de planillas dispersas a decisiones concretas usando inteligencia artificial, empezando con los datos que ya tiene.",
+        "en": "How an SMB can move from scattered spreadsheets to concrete decisions using artificial intelligence, starting with the data it already has."
+      }
+    },
     {
       "slug": "cuanto-cuesta-desarrollar-producto-con-ia-startup",
       "category": "negocios",
