@@ -189,7 +189,7 @@
         "adoptar ia negocio",
         "implementar inteligencia artificial"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "construir-o-comprar-solucion-de-ia",
@@ -203,7 +203,7 @@
         "build vs buy ia",
         "solucion ia a medida"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "ia-en-ecommerce-recomendaciones-busqueda-retencion",
@@ -217,7 +217,7 @@
         "recomendaciones inteligencia artificial tienda",
         "ia retencion clientes"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "producto-con-ia-como-medir-si-funciona",
@@ -249,6 +249,66 @@
     }
   ],
   "published": [
+    {
+      "slug": "ia-en-ecommerce-recomendaciones-busqueda-retencion",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "product-growth",
+      "date": "2026-06-15",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "IA en e-commerce: dónde mueve la aguja",
+        "en": "AI in e-commerce: where it moves the needle"
+      },
+      "standfirst": {
+        "es": "Búsqueda, recomendaciones, retención y soporte: dónde aplicar inteligencia artificial en tu tienda y qué priorizar según su tamaño.",
+        "en": "Search, recommendations, retention, and support: where to apply artificial intelligence in your store and what to prioritize based on its size."
+      }
+    },
+    {
+      "slug": "construir-o-comprar-solucion-de-ia",
+      "category": "analisis",
+      "author": "mia-torres",
+      "service": "discovery-sprint",
+      "date": "2026-06-15",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Construir o comprar una solucion de IA",
+        "en": "Build or Buy an AI Solution"
+      },
+      "standfirst": {
+        "es": "Antes de gastar en desarrollo, conviene saber cuando una herramienta lista alcanza y cuando necesitas algo a medida. Un marco simple para decidir build vs buy en IA.",
+        "en": "Before you spend on development, it pays to know when an off the shelf tool is enough and when you need something custom. A simple framework for deciding build vs buy in AI."
+      }
+    },
+    {
+      "slug": "errores-comunes-al-aplicar-ia-en-una-empresa",
+      "category": "analisis",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "date": "2026-06-15",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Errores comunes al aplicar IA en una empresa",
+        "en": "Common Mistakes When Applying AI in a Company"
+      },
+      "standfirst": {
+        "es": "Los tropiezos que más se repiten al adoptar IA no son técnicos: son de enfoque. Acá los desarmamos uno por uno y mostramos cómo evitarlos antes de gastar tiempo y plata.",
+        "en": "The most repeated stumbles when adopting AI are not technical: they are about approach. Here we break them down one by one and show how to avoid them before you spend time and money."
+      }
+    },
     {
       "slug": "ia-para-analisis-de-datos-en-pymes",
       "category": "analisis",

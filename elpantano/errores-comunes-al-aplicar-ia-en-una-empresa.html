@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Errores comunes al aplicar IA en una empresa · Blog de Yacaré</title>
+    <meta name="description" content="Los errores más comunes al aplicar IA en una empresa y cómo evitarlos: empezar por el problema, medir resultados y no automatizar el caos. Guía práctica.">
+    <link rel="canonical" href="https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/errores-comunes-al-aplicar-ia-en-una-empresa.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Errores comunes al aplicar IA en una empresa">
+    <meta property="og:description" content="Los tropiezos que más se repiten al adoptar IA no son técnicos: son de enfoque. Acá los desarmamos uno por uno y mostramos cómo evitarlos antes de gastar tiempo y plata.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="es_AR">
+    <meta property="article:author" content="Rafa Guerrero">
+    <meta property="article:published_time" content="2026-06-15">
+    <meta property="article:section" content="Análisis">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Errores comunes al aplicar IA en una empresa">
+    <meta name="twitter:description" content="Los tropiezos que más se repiten al adoptar IA no son técnicos: son de enfoque. Acá los desarmamos uno por uno y mostramos cómo evitarlos antes de gastar tiempo y plata.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "es",
+  "headline": "Errores comunes al aplicar IA en una empresa",
+  "description": "Los errores más comunes al aplicar IA en una empresa y cómo evitarlos: empezar por el problema, medir resultados y no automatizar el caos. Guía práctica.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Rafa Guerrero"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "articleSection": "Análisis",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Análisis",
+      "item": "https://yacare.io/elpantano/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Errores al aplicar IA",
+      "item": "https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el error más caro al adoptar IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Empezar por la herramienta en vez del problema. Cuando comprás tecnología sin un problema concreto que resolver, terminás adaptando el negocio a la herramienta en lugar de lo contrario. Eso desperdicia presupuesto y tiempo del equipo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo sé si mi empresa está lista para implementar IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si podés nombrar un problema concreto, cuánto te cuesta hoy y cómo medirías la mejora, estás en buen punto de partida. Si todavía no podés, conviene frenar y ordenar eso primero. Un proceso de discovery ayuda a llegar a esas respuestas en pocos días."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hace falta un equipo técnico para empezar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No para los primeros pasos. Podés validar ideas con prototipos rápidos y herramientas sin código, y sumar perfiles técnicos cuando el proyecto lo justifique. Lo escribimos en detalle en nuestra nota sobre aplicar IA en una pyme sin equipo técnico."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Conviene automatizar un proceso desordenado con IA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Automatizar el caos solo lo hace más rápido y más caro. Primero ordená y documentá el proceso, identificá las excepciones y recién después evaluá automatizarlo."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--tecnologia">Tecnología</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--cultura">Cultura</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--opinion">Opinión</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--ia">IA</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--analisis">Análisis</a>
+                <a href="/elpantano/" class="ep-nav__cat ep-nav__cat--negocios">Negocios</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Buscar">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menú">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Buscar">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Buscar en el blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Buscar">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC para cerrar</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Ubicación">
+            <a href="/elpantano/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/">Análisis</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>Errores al aplicar IA</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/" class="ep-cat ep-cat--analisis">Análisis</a>
+            </div>
+
+            <h1 class="ep-article-head__title">Errores comunes al aplicar IA en una empresa</h1>
+
+            <p class="ep-article-head__standfirst">
+                Los tropiezos que más se repiten al adoptar IA no son técnicos: son de enfoque. Acá los desarmamos uno por uno y mostramos cómo evitarlos antes de gastar tiempo y plata.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/" class="ep-article-head__author" aria-label="Rafa Guerrero">
+                    <div class="ep-article-head__avatar" aria-hidden="true">R</div>
+                    <span class="ep-article-head__author-name">Rafa Guerrero</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-15">15 de junio, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">7 min de lectura</span>
+
+                <div class="ep-article-head__share" aria-label="Compartir artículo">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/errores-comunes-al-aplicar-ia-en-una-empresa.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="introduccion">Por qué la mayoría de los proyectos de IA arrancan torcidos</h2>
+                    <p>La adopción de IA suele empezar con entusiasmo y terminar con frustración. No porque la tecnología falle, sino porque el proyecto nunca tuvo un problema claro que resolver. La herramienta llega antes que la pregunta.</p>
+                    <p>En este artículo repasamos los <strong>errores más comunes al adoptar IA en un negocio</strong> y, sobre todo, cómo prevenirlos. No vamos a hablar de modelos ni de arquitecturas: vamos a hablar de decisiones de gestión, que es donde se gana o se pierde la inversión.</p>
+                    <p>Si estás evaluando <em>implementar inteligencia artificial</em> en tu empresa, conviene leer esto antes de contratar a nadie o pagar una licencia. La mayoría de estos errores se evitan con preguntas, no con presupuesto.</p>
+                    <div class="ep-pullquote"><p>La tecnología rara vez falla. Lo que falla es el problema que nunca definimos.</p></div>
+                    <h2 id="empezar-por-la-herramienta">Error 1: empezar por la herramienta y no por el problema</h2>
+                    <p>El patrón es siempre parecido. Alguien ve una demo impresionante, se entusiasma y pregunta cómo meterla en la empresa. El orden está invertido: primero la solución, después la búsqueda desesperada de un problema que justifique haberla comprado.</p>
+                    <p>La IA es un medio, no un objetivo. Antes de elegir tecnología, necesitás responder qué tarea concreta querés mejorar, cuánto cuesta hoy hacerla mal y qué cambiaría si la resolvieras. Si no podés contestar eso en una frase, todavía no estás listo para comprar nada.</p>
+                    <p>La forma de evitarlo es ordenar la conversación alrededor del negocio. Un <a href="/services/discovery-sprint.html">Discovery Sprint</a> sirve justamente para eso: una semana para poner el problema en el centro, alinear al equipo y salir con un plan antes de gastar en desarrollo. Empezar por ahí ahorra meses de trabajo en la dirección equivocada.</p>
+                    <h2 id="no-medir-resultados">Error 2: no medir y no saber si funcionó</h2>
+                    <p>Muchos proyectos de IA se lanzan sin una métrica de éxito definida. Cuando alguien pregunta si está funcionando, la respuesta es una sensación, no un número. Así es imposible justificar la inversión o decidir si conviene seguir.</p>
+                    <p>Antes de implementar, definí qué vas a medir y cuál es el valor de partida. Puede ser tiempo de respuesta, horas ahorradas, tasa de error o conversión. Lo importante es tener un <em>antes</em> para comparar contra el <em>después</em>, idealmente con un grupo de control si el volumen lo permite.</p>
+                    <p>Medir también te protege del autoengaño. Una herramienta puede parecer útil y no mover ninguna aguja real. Si querés ver cómo se aplica esto en un caso concreto, sirve revisar nuestra nota sobre <a href="https://yacare.io/elpantano/ia-para-analisis-de-datos-en-pymes.html">IA para análisis de datos en pymes</a>, donde el resultado tiene que poder leerse en un tablero, no en una intuición.</p>
+                    <h2 id="automatizar-el-caos">Error 3: automatizar el caos en vez de ordenarlo</h2>
+                    <p>Si un proceso es desprolijo, automatizarlo con IA lo vuelve un caos más rápido y más caro. La tecnología amplifica lo que ya existe: si los datos están sucios o las reglas no están claras, vas a escalar el problema, no a resolverlo.</p>
+                    <p>Antes de automatizar, conviene mapear el proceso tal como funciona hoy, con sus excepciones y sus partes manuales. Muchas veces ese ejercicio revela que el verdadero arreglo es organizativo y que la IA recién entra después. Ordenar primero, automatizar después.</p>
+                    <p>Esto vale especialmente para quienes recién empiezan. Si estás dando los primeros pasos, te recomendamos leer <a href="https://yacare.io/elpantano/automatizacion-con-ia-para-pymes-por-donde-empezar.html">automatización con IA para pymes: por dónde empezar</a>, donde el foco está en elegir un proceso simple y estable antes de subir la apuesta.</p>
+                    <h2 id="sobreestimar-y-saltear-validacion">Error 4: prometer demasiado y saltear la validación</h2>
+                    <p>Otro error frecuente es vender el proyecto puertas adentro con promesas infladas. Cuando la IA no entrega el milagro prometido, todo el esfuerzo queda quemado, incluso las partes que sí funcionaban. La expectativa mal calibrada hunde proyectos buenos.</p>
+                    <p>La cura es validar barato y temprano. Antes de construir un producto completo, podés probar la hipótesis con prototipos rápidos o incluso sin código, como contamos en <a href="https://yacare.io/elpantano/como-validar-idea-de-producto-con-ia.html">validar una idea de producto con IA sin código</a>. El objetivo es aprender, no impresionar.</p>
+                    <p>Conviene también ser honesto sobre los límites. Hay tareas donde la IA todavía falla seguido o resulta más cara que una solución tradicional. Saber <strong>cuándo no conviene</strong> es tan valioso como saber cuándo sí, y eso lo discutimos en <a href="https://yacare.io/elpantano/chatbots-atencion-cliente-con-ia-cuando-conviene.html">chatbots de IA: cuándo conviene y cuándo no</a>.</p>
+                    <h2 id="como-evitarlos">Cómo evitarlos: un camino sensato</h2>
+                    <p>Los cuatro errores comparten una raíz: la falta de un plan antes de invertir. La buena noticia es que se previenen con disciplina, no con más presupuesto. Empezá por el problema, definí cómo vas a medir, ordená el proceso y validá en chico antes de escalar.</p>
+                    <p>Un orden razonable es: entender el problema, validar la hipótesis, construir un MVP acotado y recién ahí pensar en escalar. Si te interesa cómo se ve ese recorrido, mirá <a href="https://yacare.io/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html">del prototipo al MVP</a> y tené a mano la guía de <a href="https://yacare.io/elpantano/cuanto-cuesta-desarrollar-producto-con-ia-startup.html">cuánto cuesta un producto con IA</a> para presupuestar con los pies en la tierra.</p>
+                    <p>No necesitás un equipo técnico interno para arrancar bien. Necesitás claridad sobre qué resolver y con quién hacerlo. Esa claridad es la que distingue un proyecto de IA que genera valor de uno que solo genera facturas.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">Si querés evitar estos errores antes de invertir, trabajemos juntos en un Discovery Sprint para validar tu proyecto de IA con un plan claro.</p>
+                        <a href="/services/discovery-sprint.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Conocé Discovery Sprint &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Cuál es el error más caro al adoptar IA?</summary>
+                        <p>Empezar por la herramienta en vez del problema. Cuando comprás tecnología sin un problema concreto que resolver, terminás adaptando el negocio a la herramienta en lugar de lo contrario. Eso desperdicia presupuesto y tiempo del equipo.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Cómo sé si mi empresa está lista para implementar IA?</summary>
+                        <p>Si podés nombrar un problema concreto, cuánto te cuesta hoy y cómo medirías la mejora, estás en buen punto de partida. Si todavía no podés, conviene frenar y ordenar eso primero. Un proceso de discovery ayuda a llegar a esas respuestas en pocos días.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Hace falta un equipo técnico para empezar?</summary>
+                        <p>No para los primeros pasos. Podés validar ideas con prototipos rápidos y herramientas sin código, y sumar perfiles técnicos cuando el proyecto lo justifique. Lo escribimos en detalle en nuestra nota sobre aplicar IA en una pyme sin equipo técnico.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">¿Conviene automatizar un proceso desordenado con IA?</summary>
+                        <p>No. Automatizar el caos solo lo hace más rápido y más caro. Primero ordená y documentá el proceso, identificá las excepciones y recién después evaluá automatizarlo.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">R</div>
+                        <div>
+                            <div class="ep-author-mini__name">Rafa Guerrero</div>
+                            <div class="ep-author-mini__role">Columnista · Negocios</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Analiza la intersección entre tecnología y negocio en startups y pymes.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">En este artículo</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#introduccion">Por qué la mayoría de los proyectos de IA arrancan torcidos</a></li>
+                        <li><a href="#empezar-por-la-herramienta">Error 1: empezar por la herramienta y no por el problema</a></li>
+                        <li><a href="#no-medir-resultados">Error 2: no medir y no saber si funcionó</a></li>
+                        <li><a href="#automatizar-el-caos">Error 3: automatizar el caos en vez de ordenarlo</a></li>
+                        <li><a href="#sobreestimar-y-saltear-validacion">Error 4: prometer demasiado y saltear la validación</a></li>
+                        <li><a href="#como-evitarlos">Cómo evitarlos: un camino sensato</a></li>
+                        <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Volver al blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">R</div>
+                <div>
+                    <div class="ep-author-card__label">Autor</div>
+                    <div class="ep-author-card__name">Rafa Guerrero</div>
+                    <div class="ep-author-card__role">Columnista · Negocios</div>
+                    <p class="ep-author-card__bio">
+                        Rafa Guerrero analiza la intersección entre tecnología y negocio: qué adoptan las empresas, qué descartan y por qué. Doce años escribiendo sobre startups, financiamiento y producto en medios de Latinoamérica y España. Le interesa más el caso real que el framework de moda.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">Más del blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/ia-para-analisis-de-datos-en-pymes.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Análisis</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">IA para analisis de datos en pymes</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Como una pyme puede pasar de planillas dispersas a decisiones concretas usando inteligencia artificial, empezando con los datos que ya tiene.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">12 jun 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/cuanto-cuesta-desarrollar-producto-con-ia-startup.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Negocios</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Cuánto cuesta un producto con IA: guía real</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Un desglose honesto de lo que pagás al construir un producto con inteligencia artificial: equipo, modelos, infraestructura y mantenimiento, con rangos y las palancas que mueven el presupuesto.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">11 jun 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/del-prototipo-al-mvp-primer-producto-con-ia.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Negocios</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Del prototipo al MVP: tu primer producto con IA</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Un prototipo validado no es un producto. Te contamos cómo cruzar ese puente con decisiones técnicas sensatas, alcance acotado y un presupuesto que no se descontrola.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">10 jun 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">El blog de Yacaré. Ideas sobre producto, IA y negocios para quienes construyen.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Secciones</div>
+                    <a href="/elpantano/" class="ep-footer__link">Tecnología</a>
+                    <a href="/elpantano/" class="ep-footer__link">Cultura</a>
+                    <a href="/elpantano/" class="ep-footer__link">Opinión</a>
+                    <a href="/elpantano/" class="ep-footer__link">IA</a>
+                    <a href="/elpantano/" class="ep-footer__link">Análisis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">Nosotros</a>
+                    <a href="/services.html" class="ep-footer__link">Servicios</a>
+                    <a href="/work.html" class="ep-footer__link">Trabajos</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Conectar</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contacto</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacidad</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Términos</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">Un blog de</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/logo_yacare.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
