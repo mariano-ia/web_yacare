@@ -231,7 +231,7 @@
         "medir producto inteligencia artificial",
         "kpis ia"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "slug": "roadmap-de-ia-para-startup-primeros-90-dias",
@@ -249,6 +249,26 @@
     }
   ],
   "published": [
+    {
+      "slug": "producto-con-ia-como-medir-si-funciona",
+      "category": "analisis",
+      "author": "mia-torres",
+      "service": "product-growth",
+      "date": "2026-06-16",
+      "reading_time": 7,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Métricas de producto con IA: cómo medir si funciona",
+        "en": "Product Metrics for AI: How to Measure If It Works"
+      },
+      "standfirst": {
+        "es": "La precisión del modelo no te dice si el producto sirve. Te mostramos qué métricas mirar de verdad y cómo armar un tablero que refleje el valor real para tus usuarios.",
+        "en": "Model accuracy doesn't tell you if the product is useful. We show you which metrics to actually watch and how to build a dashboard that reflects real value for your users."
+      }
+    },
     {
       "slug": "ia-en-ecommerce-recomendaciones-busqueda-retencion",
       "category": "negocios",
