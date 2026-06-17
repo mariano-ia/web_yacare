@@ -245,10 +245,30 @@
         "plan de ia empresa",
         "estrategia inteligencia artificial"
       ],
-      "status": "pending"
+      "status": "done"
     }
   ],
   "published": [
+    {
+      "slug": "roadmap-de-ia-para-startup-primeros-90-dias",
+      "category": "negocios",
+      "author": "rafa-guerrero",
+      "service": "discovery-sprint",
+      "date": "2026-06-17",
+      "reading_time": 8,
+      "langs": [
+        "es",
+        "en"
+      ],
+      "title": {
+        "es": "Roadmap de IA para una startup en 90 días",
+        "en": "A 90 Day AI Roadmap for Your Startup"
+      },
+      "standfirst": {
+        "es": "Un plan concreto, semana por semana, para pasar del diagnóstico al primer caso de IA en producción sin quemar plata ni tiempo.",
+        "en": "A concrete, week by week plan to go from diagnosis to your first AI use case in production without burning cash or time."
+      }
+    },
     {
       "slug": "producto-con-ia-como-medir-si-funciona",
       "category": "analisis",
