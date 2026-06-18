@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Port St. Lucie SC · Rediseño web — Avance semana 1</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.jtbd-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .slide-content { max-width: 100%; width: 100%; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step > div { display: flex; flex-direction: column; }
+  .stat-number { font-size: 2.5rem; }
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .blob { width: 200px !important; height: 200px !important; }
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+  .slide-counter { display: none; }
+  #chat-container { border-radius: 16px; }
+  .anim { opacity: 1; transform: none; animation: none; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter -->
+<div class="slide-counter" id="slide-counter">1 / 15</div>
+
+<!-- Scroll hint -->
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Rediseño web</h1>
+    <p class="subtitle anim">Port St. Lucie SC — Etapa 1: Descubrimiento<br>Avance de la semana 1</p>
+    <p class="meta anim" style="margin-top:24px;">Junio 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. WHAT WE DID THIS WEEK ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">Resumen semana 1</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Lo que hicimos esta semana</h2>
+    <p class="anim" style="max-width:800px; margin-bottom:36px;">La Etapa 1 se enfoca en entender quién llega al sitio y qué necesita resolver. Esta semana cerramos el trabajo de descubrimiento: contexto del club, perfil de usuario y los trabajos que el sitio tiene que ayudar a hacer.</p>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Contexto del club</h4>
+          <p>Entender PSL SC como proyecto, sus pilares y lo que representa para la Treasure Coast.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>User Persona</h4>
+          <p>Definir el perfil del hincha principal: quién es, qué lo mueve y qué necesita ver.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Jobs to Be Done</h4>
+          <p>Mapear las 4 tareas que alguien viene a resolver cuando entra al sitio.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <h4>Prioridades del sitio</h4>
+          <p>Definir qué tiene que habilitar el sitio, ordenado por importancia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. MORE THAN A CLUB ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Contexto</div>
+        <h2 class="anim" style="font-size:2.2rem;">Más que un club</h2>
+        <p class="anim" style="margin-top:16px;">Port St. Lucie SC es el primer club de fútbol profesional de la ciudad. Un proyecto integral que combina equipo profesional, academia de desarrollo juvenil, centro de alto rendimiento y estadio propio.</p>
+        <p class="anim">El fútbol es el vehículo. El objetivo es construir una institución que represente a la Treasure Coast por generaciones, que genere oportunidades para los jóvenes y le dé a la ciudad una identidad futbolística de la que sentirse orgullosa.</p>
+      </div>
+      <div class="anim">
+        <div class="grid-2x2" style="gap:16px;">
+          <div class="card card--sm card--accent-1">
+            <h4 style="font-size:1rem; margin-bottom:8px;">Equipo profesional</h4>
+            <p style="font-size:0.9rem;">Debut en USL League One en 2027.</p>
+          </div>
+          <div class="card card--sm card--accent-2">
+            <h4 style="font-size:1rem; margin-bottom:8px;">Academia juvenil</h4>
+            <p style="font-size:0.9rem;">Programa de desarrollo para jóvenes futbolistas.</p>
+          </div>
+          <div class="card card--sm card--accent-3">
+            <h4 style="font-size:1rem; margin-bottom:8px;">Alto rendimiento</h4>
+            <p style="font-size:0.9rem;">Centro de entrenamiento pensado para la excelencia.</p>
+          </div>
+          <div class="card card--sm card--accent-4">
+            <h4 style="font-size:1rem; margin-bottom:8px;">Estadio propio</h4>
+            <p style="font-size:0.9rem;">Punto de encuentro comunitario para la ciudad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. DIVIDER: THE FAN ══════════════ -->
+<section class="slide slide--divider" data-slide="4">
+  <div class="section-num">02</div>
+  <div class="slide-content">
+    <div class="label anim">Investigación de usuario</div>
+    <h2 class="shimmer-text anim">El hincha</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; max-width:600px; margin:0 auto;">Quién llega al sitio y qué necesita ver en los primeros segundos.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 5. USER PERSONA ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">User Persona principal</div>
+        <h2 class="anim" style="font-size:2.4rem;">Marco, 35</h2>
+        <p class="anim" style="margin-top:16px; font-size:1.05rem;">Vive en Port St. Lucie hace más de diez años. Trabaja en construcción o salud. Tiene raíces latinoamericanas, habla español en casa. Tiene un hijo que juega al fútbol.</p>
+        <p class="anim">Conoce el juego, pero nunca tuvo dónde vivirlo en vivo cerca de casa. Entra al sitio con entusiasmo y escepticismo a la vez: quiere creer, pero necesita que le demuestren que el proyecto es real.</p>
+      </div>
+      <div>
+        <div class="card anim" style="padding:32px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Lo que lo define</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="heart" style="width:18px; height:18px;"></i>
+              <div>Creció viendo fútbol, tiene un club de origen</div>
+            </li>
+            <li>
+              <i data-lucide="users" style="width:18px; height:18px;"></i>
+              <div>El fútbol de su hijo es parte central de su vida familiar</div>
+            </li>
+            <li>
+              <i data-lucide="alert-triangle" style="width:18px; height:18px;"></i>
+              <div>Ha visto proyectos en la ciudad que no llegaron a ningún lado</div>
+            </li>
+            <li>
+              <i data-lucide="megaphone" style="width:18px; height:18px;"></i>
+              <div>Si lo convencen, se convierte en el mejor embajador del club</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. DIVIDER: JTBD ══════════════ -->
+<section class="slide slide--divider" data-slide="6">
+  <div class="section-num">03</div>
+  <div class="slide-content">
+    <div class="label anim">Jobs to Be Done</div>
+    <h2 class="shimmer-text anim">4 cosas que Marco<br>necesita resolver</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.05rem; max-width:600px; margin:0 auto;">Cada JTBD tiene un flujo de tarea, user stories y un punto de quiebre donde el sitio lo puede perder.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 7. JTBD 1 ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="jtbd-tag anim">JTBD 1 de 4</div>
+        <h2 class="anim" style="font-size:2.2rem;">Verificar que el proyecto es real</h2>
+        <p class="anim" style="margin-top:12px; font-size:1rem;">Llega desde redes o búsqueda. Entra al home. Necesita credibilidad en los primeros segundos. Busca los renders del estadio, quiénes están detrás, que el equipo ya compite.</p>
+        <div class="anim" style="margin-top:24px; padding:20px; border-left:2px solid var(--border-medium);">
+          <p style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Punto de quiebre</p>
+          <p style="font-size:0.95rem; margin:0;">Si el home no transmite seriedad de entrada, Marco se va antes de llegar a cualquier sección.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">User stories</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="image" style="width:18px; height:18px;"></i>
+              <div>Quiero ver los renders del estadio para creer que esto realmente está pasando.</div>
+            </li>
+            <li>
+              <i data-lucide="shield-check" style="width:18px; height:18px;"></i>
+              <div>Quiero leer quiénes están detrás del club para confiar en que hay gente seria conduciéndolo.</div>
+            </li>
+            <li>
+              <i data-lucide="trophy" style="width:18px; height:18px;"></i>
+              <div>Quiero ver que el equipo ya está compitiendo, no solo una promesa a futuro.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. JTBD 2 ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="jtbd-tag anim">JTBD 2 de 4</div>
+        <h2 class="anim" style="font-size:2.2rem;">Entender cómo sumarse hoy</h2>
+        <p class="anim" style="margin-top:12px; font-size:1rem;">Llega con contexto previo. Busca una acción concreta disponible ahora. Encuentra ticket deposit, merch oficial, registro o campaña activa. Completa el formulario y recibe confirmación que lo hace sentir parte.</p>
+        <div class="anim" style="margin-top:24px; padding:20px; border-left:2px solid var(--border-medium);">
+          <p style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Punto de quiebre</p>
+          <p style="font-size:0.95rem; margin:0;">Si no encuentra una acción concreta disponible hoy, asume que es muy pronto y se va sin dejar ningún dato.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">User stories</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="ticket" style="width:18px; height:18px;"></i>
+              <div>Quiero saber si puedo reservar o depositar por tickets para 2027 para asegurar mi lugar desde ahora.</div>
+            </li>
+            <li>
+              <i data-lucide="zap" style="width:18px; height:18px;"></i>
+              <div>Quiero entender qué campañas o iniciativas están activas hoy, además de esperar.</div>
+            </li>
+            <li>
+              <i data-lucide="bell" style="width:18px; height:18px;"></i>
+              <div>Quiero poder dejar mis datos para que me avisen cuando abra la venta oficial.</div>
+            </li>
+            <li>
+              <i data-lucide="shopping-bag" style="width:18px; height:18px;"></i>
+              <div>Quiero poder comprar merch oficial del club para sentir que ya soy parte antes del primer partido.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. EL MERCH COMO PRIMER GESTO ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Hallazgo del descubrimiento</div>
+        <h2 class="anim" style="font-size:2.1rem;">El merch como primer gesto de pertenencia</h2>
+        <p class="anim" style="margin-top:16px;">Antes del primer partido, la camiseta es el objeto más concreto que el club puede poner en manos de alguien. Quien la usa en la ciudad está haciendo trabajo de comunidad sin saberlo.</p>
+      </div>
+      <div>
+        <div class="card card--sm card--accent-1 anim" style="margin-bottom:16px;">
+          <h4 style="font-size:1rem; margin-bottom:12px;">Por qué importa en esta etapa</h4>
+          <ul class="icon-list">
+            <li style="font-size:0.9rem;">
+              <i data-lucide="zap" style="width:16px; height:16px;"></i>
+              <div>Es una acción disponible hoy, sin esperar al debut profesional</div>
+            </li>
+            <li style="font-size:0.9rem;">
+              <i data-lucide="eye" style="width:16px; height:16px;"></i>
+              <div>Genera identidad visible en la ciudad antes de que haya tribunas</div>
+            </li>
+            <li style="font-size:0.9rem;">
+              <i data-lucide="trending-up" style="width:16px; height:16px;"></i>
+              <div>Responde a una necesidad real de facturación del club</div>
+            </li>
+            <li style="font-size:0.9rem;">
+              <i data-lucide="megaphone" style="width:16px; height:16px;"></i>
+              <div>Convierte al hincha en embajador físico del proyecto</div>
+            </li>
+          </ul>
+        </div>
+        <div class="card card--sm card--accent-2 anim">
+          <h4 style="font-size:1rem; margin-bottom:10px;">Implicancia para el sitio</h4>
+          <p style="font-size:0.9rem;">La tienda oficial no es una sección secundaria. Tiene que estar presente desde el home como una de las formas concretas de sumarse hoy, junto con el ticket deposit y el registro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. JTBD 3 ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="jtbd-tag anim">JTBD 3 de 4</div>
+        <h2 class="anim" style="font-size:2.2rem;">Encontrar un lugar para su hijo</h2>
+        <p class="anim" style="margin-top:12px; font-size:1rem;">Escucha hablar de la academia. Entra al sitio. Navega a la sección Academy. Entiende el modelo, las edades, los valores. Busca tryouts o inscripciones abiertas. Completa el formulario de interés.</p>
+        <div class="anim" style="margin-top:24px; padding:20px; border-left:2px solid var(--border-medium);">
+          <p style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Punto de quiebre</p>
+          <p style="font-size:0.95rem; margin:0;">Si la academia se ve como sección secundaria o el flujo no es claro, Marco no avanza.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">User stories</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="book-open" style="width:18px; height:18px;"></i>
+              <div>Quiero entender cómo funciona la academia y a qué edades está dirigida para evaluar si mi hijo puede participar.</div>
+            </li>
+            <li>
+              <i data-lucide="calendar" style="width:18px; height:18px;"></i>
+              <div>Quiero saber si hay tryouts o inscripciones abiertas para anotarlo antes de que se cierren los cupos.</div>
+            </li>
+            <li>
+              <i data-lucide="star" style="width:18px; height:18px;"></i>
+              <div>Quiero sentir que la academia es parte central del club, no un programa secundario.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. JTBD 4 ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="jtbd-tag anim">JTBD 4 de 4</div>
+        <h2 class="anim" style="font-size:2.2rem;">Tener algo concreto para compartir</h2>
+        <p class="anim" style="margin-top:12px; font-size:1rem;">Ya está convencido. Quiere contárselo a alguien. Busca un link o sección que se sostenga sola. Lo manda por WhatsApp. Quien lo recibe entiende el proyecto sin necesitar contexto previo.</p>
+        <div class="anim" style="margin-top:24px; padding:20px; border-left:2px solid var(--border-medium);">
+          <p style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Punto de quiebre</p>
+          <p style="font-size:0.95rem; margin:0;">Si el sitio solo funciona como experiencia completa y no tiene secciones que comuniquen bien de manera aislada, Marco no tiene nada concreto para mandar.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">User stories</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="share-2" style="width:18px; height:18px;"></i>
+              <div>Quiero poder compartir fácilmente el sitio o una sección específica para que otros entiendan de qué se trata.</div>
+            </li>
+            <li>
+              <i data-lucide="map-pin" style="width:18px; height:18px;"></i>
+              <div>Quiero encontrar información sobre el impacto del club en la comunidad para convencer a otros padres y vecinos.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 12. SITE PRIORITIES ══════════════ -->
+<section class="slide" data-slide="12">
+  <div class="slide-content">
+    <div class="label anim">Estrategia del sitio</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:32px;">Las acciones prioritarias del sitio</h2>
+    <p class="anim" style="max-width:700px; margin-bottom:36px;">Qué tiene que poder hacer quien visita el sitio, ordenado por prioridad:</p>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <p style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Prioridad 1</p>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Conocer y comprender el proyecto</h4>
+        <p style="font-size:0.9rem;">Entender qué es Port St. Lucie SC, qué está construyendo y por qué importa.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <p style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Prioridad 2</p>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Registrarse para recibir novedades</h4>
+        <p style="font-size:0.9rem;">Dejar los datos para estar al tanto cuando llegue el próximo hito.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <p style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Prioridad 3</p>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Participar en campañas activas</h4>
+        <p style="font-size:0.9rem;">Sumarse a tryouts de la Academia, eventos, Ticket Deposits y otras iniciativas en curso.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <p style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Prioridades 4 a 6</p>
+        <h4 style="font-size:1.1rem; margin-bottom:8px;">Entradas, noticias, comunidad</h4>
+        <p style="font-size:0.9rem;">Comprar entradas o productos oficiales, informarse sobre el club y sentirse parte de la comunidad.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 13. NEXT STEPS ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Próximo paso</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem;">Etapa 2: Estrategia</h2>
+        <p class="anim" style="margin-top:16px;">Con el usuario y sus necesidades definidos, el proyecto avanza hacia la estrategia. Esta etapa convierte los hallazgos del descubrimiento en arquitectura concreta y dirección narrativa.</p>
+      </div>
+      <div>
+        <ul class="checklist anim">
+          <li>
+            <i data-lucide="search" style="width:18px; height:18px;"></i>
+            Benchmark de clubes y sitios afines que resuelven problemas similares
+          </li>
+          <li>
+            <i data-lucide="flag" style="width:18px; height:18px;"></i>
+            Definición de los pilares narrativos del club
+          </li>
+          <li>
+            <i data-lucide="layout" style="width:18px; height:18px;"></i>
+            Arquitectura del sitio y scope de páginas
+          </li>
+          <li>
+            <i data-lucide="check-circle" style="width:18px; height:18px;"></i>
+            Revisión conjunta con el cliente antes de avanzar al diseño
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 13. THANK YOU ══════════════ -->
+<section class="slide slide--thanks" data-slide="14">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Listos para arrancar la Etapa 2 cuando Port St. Lucie SC lo decida.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 14. CHAT ══════════════ -->
+<section class="slide" data-slide="15">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre este avance?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale al asistente lo que quieras sobre el trabajo de la semana 1.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Quién es Marco?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son los JTBDs?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué cubre la Etapa 2?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la semana 1</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son las prioridades del sitio?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es PSL SC?</button>
+        </div>
+      </div>
+
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de este avance. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+    switch (e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      if (entry.isIntersecting) {
+        anims.forEach(function(el) { el.classList.add('anim--visible'); });
+      } else {
+        anims.forEach(function(el) { el.classList.remove('anim--visible'); });
+      }
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(function(slide) { animObserver.observe(slide); });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR
+// ═══════════════════════════════════════
+function printPDF() { window.print(); }
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: 14 * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A
+// ═══════════════════════════════════════
+const QA_ENTRIES = [
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen dia', 'buenos dias', 'hey'],
+    answer: '¡Hola! Soy el asistente de este avance. Podés preguntarme sobre el trabajo de descubrimiento, el user persona, los JTBDs, las prioridades del sitio o qué viene en la Etapa 2.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre el avance, estoy acá. También podés escribir al equipo a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después podés volver a preguntar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'de que se trata', 'que hicieron', 'semana 1', 'esta semana', 'que paso'],
+    answer: 'La semana 1 de la Etapa 1 (Descubrimiento) cubrió 4 áreas: (1) Contexto del club: entender PSL SC como proyecto, sus 4 pilares y su misión comunitaria. (2) User Persona principal: Marco, 35 años, raíces latinoamericanas, hijo que juega al fútbol. (3) Jobs to Be Done: 4 tareas que Marco necesita resolver en el sitio, cada una con su flujo, user stories y punto de quiebre. (4) Prioridades del sitio: 6 acciones ordenadas que el sitio tiene que habilitar.'
+  },
+  {
+    keywords: ['que puedo preguntar', 'ayuda', 'help', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: quién es Marco y qué lo define, los 4 Jobs to Be Done, las prioridades rankeadas del sitio, qué es PSL SC, qué cubre la Etapa 2 o pedirme un resumen de la semana 1.'
+  },
+  {
+    keywords: ['marco', 'persona', 'usuario', 'hincha', 'quien es', 'perfil'],
+    answer: 'Marco es el User Persona principal definido en la semana 1. Tiene 35 años, vive en Port St. Lucie hace más de diez años, trabaja en construcción o salud, tiene raíces latinoamericanas, habla español en casa y tiene un hijo que juega al fútbol. Entra al sitio con entusiasmo pero necesita que le demuestren que el proyecto es real. Si lo convencen, se convierte en el mejor embajador del club.'
+  },
+  {
+    keywords: ['jtbd', 'jobs to be done', 'tareas', 'necesidades', '4 cosas', 'trabajos'],
+    answer: 'Los 4 Jobs to Be Done son: (1) Verificar que el proyecto es real: necesita señales de credibilidad, renders del estadio y prueba de que el equipo ya compite. (2) Entender cómo sumarse hoy: necesita una acción concreta disponible ahora (deposit, registro, campaña). (3) Encontrar un lugar para su hijo: necesita que la academia se vea central y tenga un flujo de inscripción claro. (4) Tener algo concreto para compartir: necesita secciones que comuniquen bien el proyecto de manera aislada, para mandar por WhatsApp.'
+  },
+  {
+    keywords: ['verificar', 'real', 'credibilidad', 'jtbd 1', 'primer jtbd', 'primer trabajo'],
+    answer: 'JTBD 1: Verificar que el proyecto es real. Marco llega desde redes o búsqueda, entra al home y necesita credibilidad en los primeros segundos. Busca los renders del estadio, quiénes están detrás y que el equipo ya compite. Punto de quiebre: si el home no transmite seriedad de entrada, se va antes de llegar a cualquier sección.'
+  },
+  {
+    keywords: ['sumarse', 'unirse', 'ticket', 'deposit', 'campana', 'jtbd 2', 'segundo jtbd'],
+    answer: 'JTBD 2: Entender cómo sumarse hoy. Marco llega con contexto previo y busca una acción concreta disponible ahora (ticket deposit, registro o campaña activa). Punto de quiebre: si no encuentra nada concreto disponible hoy, asume que es muy pronto y se va sin dejar ningún dato.'
+  },
+  {
+    keywords: ['academia', 'hijo', 'tryout', 'inscripcion', 'jtbd 3', 'tercer jtbd'],
+    answer: 'JTBD 3: Encontrar un lugar para su hijo en la academia. Marco escucha hablar de la academia, entra al sitio, necesita entender el modelo, las edades y los valores, y encontrar inscripciones abiertas. Punto de quiebre: si la academia se ve como sección secundaria o el flujo no es claro, Marco no avanza.'
+  },
+  {
+    keywords: ['compartir', 'whatsapp', 'mandar', 'jtbd 4', 'cuarto jtbd', 'difundir'],
+    answer: 'JTBD 4: Tener algo concreto para compartir. Marco ya está convencido y quiere contárselo a alguien. Necesita un link o sección que se sostenga sola y comunique el proyecto sin contexto previo. Punto de quiebre: si el sitio solo funciona como experiencia completa y ninguna sección comunica bien de manera aislada, Marco no tiene nada concreto para mandar.'
+  },
+  {
+    keywords: ['prioridad', 'prioridades', 'sitio', 'acciones', 'orden', 'ranking'],
+    answer: 'Las 6 prioridades del sitio en orden: (1) Conocer y comprender el proyecto. (2) Registrarse para recibir novedades. (3) Participar en campañas activas (Academia, eventos, Ticket Deposits). (4) Comprar entradas o productos oficiales. (5) Informarse sobre noticias y actividades del club. (6) Sentirse parte de la comunidad.'
+  },
+  {
+    keywords: ['psl', 'port st lucie', 'club', 'que es', 'proyecto'],
+    answer: 'Port St. Lucie SC es el primer club de fútbol profesional de la ciudad. Combina equipo profesional (debut en USL League One en 2027), academia de desarrollo juvenil, centro de alto rendimiento y estadio propio. La misión es construir una institución que represente a la Treasure Coast por generaciones y le dé a la ciudad una identidad futbolística.'
+  },
+  {
+    keywords: ['etapa 2', 'siguiente', 'proximo paso', 'estrategia', 'que sigue', 'que viene'],
+    answer: 'La Etapa 2 es Estrategia. Con el usuario y sus necesidades definidos, cubre: (1) Benchmark de clubes y sitios afines que resuelven problemas similares. (2) Definición de los pilares narrativos del club. (3) Arquitectura del sitio y scope de páginas. (4) Revisión conjunta con el cliente antes de avanzar al diseño.'
+  },
+  {
+    keywords: ['usl', 'liga', 'profesional', '2027', 'debut', 'competicion'],
+    answer: 'Port St. Lucie SC debuta en USL League One en 2027. Esto ya forma parte de las señales de credibilidad que Marco necesita ver en el sitio (JTBD 1): prueba de que el equipo ya está compitiendo, no solo una promesa a futuro.'
+  },
+  {
+    keywords: ['yacare', 'studio', 'equipo', 'contacto', 'quien hizo'],
+    answer: 'Este avance fue preparado por Yacaré Studio (yacare.io). Para consultas o seguimiento escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['punto de quiebre', 'quiebre', 'perder', 'abandona', 'se va', 'drop off'],
+    answer: 'Cada JTBD tiene un punto de quiebre donde el sitio puede perder a Marco. (1) Si el home no transmite seriedad de entrada. (2) Si no hay una acción concreta disponible hoy. (3) Si la academia se ve secundaria o el flujo es confuso. (4) Si ninguna sección comunica bien el proyecto de manera aislada.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de este avance. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre Marco, los JTBDs, las prioridades del sitio o qué cubre la Etapa 2.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[?!.,;:]/g, '');
+  let bestMatch = null;
+  let bestScore = 0;
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) score += kwNorm.length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+  setTimeout(function() {
+    typing.remove();
+    const reply = findBestAnswer(text);
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
