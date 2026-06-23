@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Port St. Lucie SC · Rediseño web — Avance semana 2 (Estrategia)</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+/* Pilares — lista numerada vertical */
+.pillars { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.pillar-row {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 16px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  position: relative; overflow: hidden;
+}
+.pillar-row::after { content:''; position:absolute; top:0; left:0; bottom:0; width:2px; }
+.pillar-row.p1::after { background:linear-gradient(180deg, #8A63F2, #D1249D); }
+.pillar-row.p2::after { background:linear-gradient(180deg, #D1249D, #FF6B6B); }
+.pillar-row.p3::after { background:linear-gradient(180deg, #FF6B6B, #FFB347); }
+.pillar-row.p4::after { background:linear-gradient(180deg, #FFB347, #8A63F2); }
+.pillar-row.p5::after { background:linear-gradient(180deg, #8A63F2, #D1249D); }
+.pillar-num {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.6rem; line-height: 1; color: var(--text-muted);
+  min-width: 34px;
+}
+.pillar-row h4 { font-size: 1.1rem; margin: 0 0 4px 0; }
+.pillar-row p { font-size: 0.9rem; margin: 0; color: var(--text-secondary); }
+
+/* Home arc — grilla compacta */
+.arc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; width: 100%; }
+.arc-item {
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.arc-num {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.1rem; color: var(--text-muted); min-width: 22px;
+}
+.arc-item h4 { font-size: 0.98rem; margin: 0; }
+.arc-item .arc-tag { font-size: 0.72rem; color: var(--text-muted); display:block; margin-top: 2px; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Nav mockup */
+.nav-mock {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding: 16px 28px;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.02);
+}
+.nav-mock .nav-items { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+.nav-mock .nav-crest { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+.nav-mock .nav-link { font-size: 0.82rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+.nav-mock .nav-more { font-size: 0.82rem; color: var(--text-muted); }
+.nav-mock .nav-cta {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 8px 18px; white-space: nowrap;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.jtbd-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .slide-content { max-width: 100%; width: 100%; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .arc-grid { grid-template-columns: 1fr; gap: 4px; }
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step > div { display: flex; flex-direction: column; }
+  .stat-number { font-size: 2.5rem; }
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+  .nav-mock { border-radius: 20px; padding: 14px 18px; }
+  .nav-mock .nav-items { gap: 14px; }
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .blob { width: 200px !important; height: 200px !important; }
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+  .slide-counter { display: none; }
+  #chat-container { border-radius: 16px; }
+  .anim { opacity: 1; transform: none; animation: none; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter -->
+<div class="slide-counter" id="slide-counter">1 / 20</div>
+
+<!-- Scroll hint -->
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Estrategia</h1>
+    <p class="subtitle anim">Port St. Lucie SC · Etapa 2: Estrategia<br>Avance de la semana 2</p>
+    <p class="meta anim" style="margin-top:24px;">Junio 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. LO QUE HICIMOS ESTA SEMANA ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">Resumen semana 2</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Lo que hicimos esta semana</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:36px;">Con Marco y sus necesidades ya definidos en el descubrimiento, esta semana ordenamos qué se cuenta y cómo se estructura el sitio. Tres entregables encadenados: un benchmark que funciona como argumento, los pilares narrativos del club y la arquitectura del sitio.</p>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Benchmark de referencia</h4>
+          <p>Cómo otros clubes resuelven los mismos problemas: qué patrones funcionan y qué evitar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Pilares narrativos</h4>
+          <p>Las ideas fuerza que ordenan todo lo que el club comunica.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Arquitectura del sitio</h4>
+          <p>La jerarquía de páginas y la home pensada como un arco narrativo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. DIVIDER 01: BENCHMARK ══════════════ -->
+<section class="slide slide--divider" data-slide="3">
+  <div class="section-num">01</div>
+  <div class="slide-content">
+    <div class="label anim">Entregable 1</div>
+    <h2 class="shimmer-text anim">El benchmark</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; max-width:620px; margin:0 auto;">No es inspiración estética. Es el argumento que respalda cada decisión de arquitectura.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 4. CÓMO LO HICIMOS (rigor) ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">Cómo lo hicimos</div>
+    <h2 class="anim" style="font-size:2.2rem; margin-bottom:16px;">Mirar el mercado con método</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:36px;">Analizamos clubes y sitios afines en seis ligas, leyéndolos como máquinas de fanbase y monetización, no como equipos. Cada cifra fuerte se intentó refutar antes de usarla, así que la propuesta se apoya en datos verificados.</p>
+    <div class="grid-4 anim">
+      <div>
+        <div class="stat-number">40</div>
+        <div class="stat-label">Fuentes analizadas</div>
+      </div>
+      <div>
+        <div class="stat-number">6</div>
+        <div class="stat-label">Ligas, de USL One a Premier</div>
+      </div>
+      <div>
+        <div class="stat-number">48</div>
+        <div class="stat-label">Afirmaciones chequeadas</div>
+      </div>
+      <div>
+        <div class="stat-number">4</div>
+        <div class="stat-label">Mitos descartados</div>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:32px; font-size:0.9rem; color:var(--text-muted); max-width:760px;">Descartamos datos que circulaban mal (entre ellos el mito de los 16 millones de espectadores de Wrexham). Solo usamos lo confirmado; lo reportado pero no verificado quedó marcado como tal.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. EL TECHO DE USL ONE ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">Hallazgo principal</div>
+    <h2 class="anim" style="font-size:2.1rem; margin-bottom:16px;">El techo de USL One es bajo y parejo</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:32px;">Hasta el campeón vigente y los clubes con récords de asistencia viven en un template apenas tuneado, ticket-first y sin storytelling. La buena noticia: superar ese piso es casi gratis, es esfuerzo de diseño y no de presupuesto.</p>
+    <div class="grid-2x2 anim" style="grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Spokane Velocity · el piso</h4>
+        <p style="font-size:0.92rem;">Template stock, cero storytelling, merch como link de texto invisible. Es, palabra por palabra, el "no sentís nada" que describe Diego sobre el sitio actual.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Union Omaha · el piso alto</h4>
+        <p style="font-size:0.92rem;">Campeón en 2021 y 2024. Aun así comunica su futuro con un banner de texto. Ganar no alcanza para tener buena web: con esa ejecución, el masterplan de PSLSC seguiría invisible.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. NUESTRO ESPEJO: HEARTS OF PINE ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La vara hacia arriba</div>
+        <h2 class="anim" style="font-size:2.1rem;">Nuestro espejo: Portland Hearts of Pine</h2>
+        <p class="anim" style="margin-top:16px;">Club de expansión sin historia. En su año inaugural hizo exactamente lo que PSLSC necesita: convertir el storytelling pre-lanzamiento en plata y en score de liga.</p>
+        <div class="anim" style="margin-top:24px; padding:20px; border-left:2px solid var(--border-medium);">
+          <p style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Por qué es el caso número uno</p>
+          <p style="font-size:0.95rem; margin:0;">Mismo punto de partida que nosotros: expansión, sin historia, pre-debut. Demuestra que el camino funciona, y deja claro hacia dónde subir el listón.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:32px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Lo que logró en su año uno</p>
+          <ul class="icon-list">
+            <li>
+              <i data-lucide="users" style="width:18px; height:18px;"></i>
+              <div>5.811 de asistencia promedio, lo más alto de la liga por más de un tercio.</div>
+            </li>
+            <li>
+              <i data-lucide="shopping-bag" style="width:18px; height:18px;"></i>
+              <div>Vendió más merch que todos los demás clubes de la liga juntos.</div>
+            </li>
+            <li>
+              <i data-lucide="award" style="width:18px; height:18px;"></i>
+              <div>Barrió los premios de marketing, producto y PR de la propia USL.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. PATRONES QUE FUNCIONAN ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">Qué robar del mercado</div>
+    <h2 class="shimmer-text anim" style="font-size:2.1rem; margin-bottom:28px;">Cuatro patrones que separan a los que generan algo</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Masterplan como evento</h4>
+        <p style="font-size:0.92rem;">La visión se lanza como un reveal con fecha hito, no se publica como página About. Birmingham movió plata antes de tener estadio.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Funnel de fundadores</h4>
+        <p style="font-size:0.92rem;">Depósito reembolsable más estatus de fundador de por vida que cierra con el primer partido. St. Louis: más de 60.000 depósitos para 22.500 butacas.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Merch como línea narrativa</h4>
+        <p style="font-size:0.92rem;">No un catálogo escondido: drops contados como eventos. La bufanda y la primera camiseta como objetos de identidad.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">Estadio y camiseta como experiencia</h4>
+        <p style="font-size:0.92rem;">El estadio es el mayor diferenciador físico, y ningún sitio lo traduce. Real Madrid prueba que el estadio experiencia convierte.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. EL HUECO QUE NADIE OCUPÓ ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La oportunidad</div>
+        <h2 class="anim" style="font-size:2.1rem;">Un hueco que nadie en la liga ocupó</h2>
+        <p class="anim" style="margin-top:16px;">El estadio y la camiseta como experiencia digital. PSLSC tiene un estadio ya aprobado, hoy invisible. Y la tienda del propio Wrexham, el referente del cliente, es 2D plana, sin 3D.</p>
+        <p class="anim" style="margin-top:14px; font-size:0.95rem; color:var(--text-muted);">No hace falta ser más grande que la liga para parecerlo. Alcanza con ser el único que cuenta bien su historia y deja comprarla.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--sm card--accent-1" style="margin-bottom:16px;">
+          <h4 style="font-size:1.05rem; margin-bottom:10px;">Estadio 3D navegable</h4>
+          <p style="font-size:0.92rem;">Entrás al estadio aprobado y desde ahí reservás el depósito, viviéndolo. Ningún club de USL One lo hizo.</p>
+        </div>
+        <div class="card card--sm card--accent-2">
+          <h4 style="font-size:1.05rem; margin-bottom:10px;">Camiseta 3D girando</h4>
+          <p style="font-size:0.92rem;">Con la camiseta 3D, PSLSC supera literalmente al referente número uno del mundo: hasta la tienda de Wrexham es plana.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. DE QUIÉN TOMAMOS QUÉ ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">El argumento detrás de la arquitectura</div>
+    <h2 class="anim" style="font-size:2.1rem; margin-bottom:28px;">De quién tomamos qué</h2>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1rem; margin-bottom:8px;">Hearts of Pine</h4>
+        <p style="font-size:0.88rem;">Espejo casi exacto: la arquitectura narrativa de fundación.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1rem; margin-bottom:8px;">Birmingham City</h4>
+        <p style="font-size:0.88rem;">El masterplan invisible hecho visible como evento.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1rem; margin-bottom:8px;">San Diego FC · St. Louis</h4>
+        <p style="font-size:0.88rem;">El funnel de fundador y el depósito de por vida.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1rem; margin-bottom:8px;">Wrexham</h4>
+        <p style="font-size:0.88rem;">La narrativa de nacimiento como producto. Su web, no.</p>
+      </div>
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1rem; margin-bottom:8px;">Tottenham · Real Madrid</h4>
+        <p style="font-size:0.88rem;">El estadio como destino navegable que convierte.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1rem; margin-bottom:8px;">Athletic · Barça</h4>
+        <p style="font-size:0.88rem;">La identidad local y el nombre tribu como pertenencia.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. DIVIDER 02: PILARES ══════════════ -->
+<section class="slide slide--divider" data-slide="10">
+  <div class="section-num">02</div>
+  <div class="slide-content">
+    <div class="label anim">Entregable 2</div>
+    <h2 class="shimmer-text anim">Los pilares narrativos</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; max-width:640px; margin:0 auto;">Las ideas fuerza que ordenan todo lo que el club comunica. De acá sale la jerarquía de contenido.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11. LOS 5 PILARES ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="label anim">El esqueleto narrativo</div>
+    <h2 class="anim" style="font-size:2rem; margin-bottom:24px;">Cinco pilares para hacer sentir y convertir</h2>
+    <div class="pillars anim">
+      <div class="pillar-row p1">
+        <div class="pillar-num">01</div>
+        <div>
+          <h4>Estás viendo nacer un club</h4>
+          <p>La narrativa madre y el antídoto directo al "no sentís nada": vendemos un movimiento que arranca de cero, no un equipo más.</p>
+        </div>
+      </div>
+      <div class="pillar-row p2">
+        <div class="pillar-num">02</div>
+        <div>
+          <h4>Más que un equipo: un proyecto de ciudad</h4>
+          <p>El masterplan se hace sentir, no se lista. Estadio aprobado, sport complex, comunidad y debut 2027: lo invisible se vuelve visible.</p>
+        </div>
+      </div>
+      <div class="pillar-row p3">
+        <div class="pillar-num">03</div>
+        <div>
+          <h4>Argentinos en Treasure Coast</h4>
+          <p>La identidad como marca, no como límite. El cruce argentino y el orgullo local son la bandera, como Athletic Club hizo con lo vasco.</p>
+        </div>
+      </div>
+      <div class="pillar-row p4">
+        <div class="pillar-num">04</div>
+        <div>
+          <h4>Sé fundador desde el día cero</h4>
+          <p>La pertenencia como producto. Fundador de por vida, irrepetible, con una ventana que cierra en 2027. El corazón de la conversión.</p>
+        </div>
+      </div>
+      <div class="pillar-row p5">
+        <div class="pillar-num">05</div>
+        <div>
+          <h4>Ser y parecer distintos</h4>
+          <p>La web experiencial que ningún club de USL One tiene: camiseta 3D, estadio navegable. "Ser y parecer", siempre honesto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 12. DIVIDER 03: ARQUITECTURA ══════════════ -->
+<section class="slide slide--divider" data-slide="12">
+  <div class="section-num">03</div>
+  <div class="slide-content">
+    <div class="label anim">Entregable 3</div>
+    <h2 class="shimmer-text anim">La arquitectura del sitio</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; max-width:640px; margin:0 auto;">Cómo se estructura: navegación simple, conversión arriba, y la home como un arco narrativo que hace sentir y convierte.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 13. PRINCIPIO + NAV ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="label anim">El principio</div>
+    <h2 class="anim" style="font-size:2.1rem; margin-bottom:16px;">Navegación simple, conversión arriba</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:32px;">Partimos de lo que pidió el cliente, pero priorizado y reordenado. No un mega menú de club maduro: pocos pilares claros, mobile-first, y la conversión integrada al recorrido.</p>
+    <div class="nav-mock anim">
+      <div class="nav-items">
+        <span class="nav-crest">PSLSC</span>
+        <span class="nav-link">Sumate</span>
+        <span class="nav-link">El Club</span>
+        <span class="nav-link">Estadio</span>
+        <span class="nav-link">Tienda</span>
+        <span class="nav-link">Entradas</span>
+        <span class="nav-more">☰ más</span>
+      </div>
+      <span class="nav-cta">Hincha Fundador ▸</span>
+    </div>
+    <p class="anim" style="margin-top:24px; font-size:0.9rem; color:var(--text-muted); max-width:760px;">El botón "Hincha Fundador" es persistente: la acción de conversión nunca queda a más de un tap, en cualquier página y en cualquier scroll.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 14. SITEMAP / JERARQUÍA ══════════════ -->
+<section class="slide" data-slide="14">
+  <div class="slide-content">
+    <div class="label anim">Jerarquía de páginas</div>
+    <h2 class="anim" style="font-size:2.1rem; margin-bottom:28px;">Qué páginas, en qué orden</h2>
+    <div class="split" style="align-items:flex-start;">
+      <div class="anim">
+        <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">Páginas que mueven la aguja</p>
+        <ul class="icon-list">
+          <li><i data-lucide="star" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Sumate / Hincha Fundador.</strong> La conversión número uno.</div></li>
+          <li><i data-lucide="landmark" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">El Club.</strong> El storytelling del masterplan, no un About muerto.</div></li>
+          <li><i data-lucide="building-2" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Estadio.</strong> Activo de marca más experiencia 3D.</div></li>
+          <li><i data-lucide="shirt" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Tienda.</strong> Monetización con la camiseta 3D, no un link escondido.</div></li>
+          <li><i data-lucide="ticket" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Entradas / 2027.</strong> El ticket deposit reembolsable.</div></li>
+        </ul>
+      </div>
+      <div class="anim">
+        <div class="card card--sm" style="margin-bottom:16px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Páginas de soporte</p>
+          <p style="font-size:0.92rem; margin:0;">Equipos, Academy, Partidos, Comunidad, Noticias, Partners y Contacto. Presentes, pero por debajo de la conversión.</p>
+        </div>
+        <div class="card card--sm card--accent-4">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">Diferido a 2027</p>
+          <p style="font-size:0.92rem; margin:0;">Matchday-ops, selección de butaca transaccional y app nativa. No hay venue ni fixtures todavía: hoy la energía va a la web y al funnel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 15. HOME COMO ARCO NARRATIVO ══════════════ -->
+<section class="slide" data-slide="15">
+  <div class="slide-content">
+    <div class="label anim">El corazón de la arquitectura</div>
+    <h2 class="shimmer-text anim" style="font-size:2.1rem; margin-bottom:14px;">La home como arco narrativo</h2>
+    <p class="anim" style="max-width:860px; margin-bottom:28px; font-size:0.98rem;">De arriba hacia abajo, pensada para que se sienta la magnitud y convierta a fundador. Sumate, camiseta, fundador y depósito aparecen antes que noticias o partidos: la home prioriza sentir y convertir, no informar.</p>
+    <div class="arc-grid anim">
+      <div class="arc-item"><span class="arc-num">1</span><div><h4>Estás viendo nacer un club</h4><span class="arc-tag">Hero · Pilar 1</span></div></div>
+      <div class="arc-item"><span class="arc-num">6</span><div><h4>Ticket deposit 2027</h4><span class="arc-tag">Tu lugar se fija hoy · Pilar 4</span></div></div>
+      <div class="arc-item"><span class="arc-num">2</span><div><h4>Prueba social en vivo</h4><span class="arc-tag">Fundadores, depósitos, cierra 2027 · Pilar 4</span></div></div>
+      <div class="arc-item"><span class="arc-num">7</span><div><h4>Comunidad y pertenencia</h4><span class="arc-tag">Treasure Coast, academy · Pilar 3</span></div></div>
+      <div class="arc-item"><span class="arc-num">3</span><div><h4>El masterplan como evento</h4><span class="arc-tag">Estadio, complex, 2027 · Pilar 2</span></div></div>
+      <div class="arc-item"><span class="arc-num">8</span><div><h4>Últimas noticias</h4><span class="arc-tag">Bloque nativo, indexable · SEO</span></div></div>
+      <div class="arc-item"><span class="arc-num">4</span><div><h4>La camiseta 3D</h4><span class="arc-tag">La primera de la historia · Pilar 5</span></div></div>
+      <div class="arc-item"><span class="arc-num">9</span><div><h4>Partners y footer</h4><span class="arc-tag">Pitch a marcas, captura · Owned media</span></div></div>
+      <div class="arc-item"><span class="arc-num">5</span><div><h4>Sé Fundador</h4><span class="arc-tag">De por vida, número, muro, carnet · Pilar 4</span></div></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 16. CÓMO SE CONSTRUYE (buckets) ══════════════ -->
+<section class="slide" data-slide="16">
+  <div class="slide-content">
+    <div class="label anim">El límite y cómo lo cruzamos</div>
+    <h2 class="anim" style="font-size:2rem; margin-bottom:16px;">La plataforma de USL tiene límites. Cruzarlos es la estrategia.</h2>
+    <p class="anim" style="max-width:860px; margin-bottom:28px;">USL impone su plataforma (SportsEngine más un WordPress) con templates permeables y muchos límites técnicos: cero soporte de código a medida y el riesgo de romper el tracking que alimenta el score. Si nos quedamos dentro del template, la web es una más. Para hacer algo distinto hay que ir más allá de lo que la plataforma da por default. La arquitectura ya marca dónde respetamos el límite y dónde lo cruzamos.</p>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">🟩 Nativo</h4>
+        <p style="font-size:0.9rem;">Storytelling indexable, muro de fundadores, contadores y noticias. Vive en la plataforma y suma SEO.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">🟦 A medida</h4>
+        <p style="font-size:0.9rem;">Camiseta 3D, estadio 3D y bloques experienciales. Página propia embebida por iframe.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.05rem; margin-bottom:8px;">🟧 Externo</h4>
+        <p style="font-size:0.9rem;">Tienda completa y pasarela de pago: se conectan, no se construyen de cero.</p>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:28px; font-size:0.9rem; color:var(--text-muted); max-width:860px;">Lo nativo respeta el límite; lo a medida y lo externo lo cruzan, con disciplina y de la mano de Santi. Regla de oro: lo pesado va aislado en iframe para no romper performance ni el tracking del score; el storytelling clave, en bloques nativos indexables. QA propio, porque la plataforma no da soporte de código a medida.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 17. EL WIREFRAME YA ESTÁ VIVO ══════════════ -->
+<section class="slide" data-slide="17">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Ya navegable</div>
+        <h2 class="anim" style="font-size:2.1rem;">La arquitectura ya está en pie</h2>
+        <p class="anim" style="margin-top:16px;">No es teoría. La estructura ya está deployada y se puede recorrer: muestra el arco narrativo y la jerarquía completa, con la lógica de cada bloque a la vista.</p>
+        <div class="anim" style="margin-top:24px; padding:18px 22px; border:1px solid var(--border-medium); border-radius:14px; display:inline-flex; align-items:center; gap:10px;">
+          <i data-lucide="globe" style="width:18px; height:18px; color:var(--text-muted);"></i>
+          <span style="font-size:0.95rem; color:var(--text-primary);">pslsc-wireframe.vercel.app</span>
+        </div>
+      </div>
+      <div>
+        <div class="card anim" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">Tres páginas para recorrer</p>
+          <ul class="icon-list">
+            <li><i data-lucide="layout" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Home.</strong> Los 9 bloques del arco narrativo.</div></li>
+            <li><i data-lucide="badge-check" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Sumate / Founders.</strong> La conversión: qué es ser fundador, tiers, muro.</div></li>
+            <li><i data-lucide="handshake" style="width:18px; height:18px;"></i><div><strong style="color:var(--text-primary); font-weight:600;">Partners.</strong> La página de sponsors e inversores que pidió el cliente.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 18. PRÓXIMO PASO: DISEÑO ══════════════ -->
+<section class="slide" data-slide="18">
+  <div class="slide-content">
+    <div class="split" style="align-items:flex-start;">
+      <div>
+        <div class="label anim">Próximo paso</div>
+        <h2 class="shimmer-text anim" style="font-size:2.1rem;">Etapa 3: Diseño</h2>
+        <p class="anim" style="margin-top:16px;">Con el argumento, los pilares y la arquitectura definidos, el proyecto pasa al diseño visual. Y en paralelo, resolvemos las decisiones que destraban la ejecución.</p>
+        <ul class="checklist anim" style="margin-top:20px;">
+          <li><i data-lucide="layout" style="width:18px; height:18px;"></i>Diseño hi-fi de Home y Sumate, las dos que mueven la aguja primero</li>
+          <li><i data-lucide="box" style="width:18px; height:18px;"></i>Páginas Estadio y Tienda con specs para Santi</li>
+          <li><i data-lucide="shirt" style="width:18px; height:18px;"></i>Producción del modelo 3D de la camiseta, el entregable costoso real</li>
+          <li><i data-lucide="plug" style="width:18px; height:18px;"></i>Spike técnico con Santi: Code Element, iframe y tracking</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card anim card--accent-3" style="padding:28px;">
+          <p style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">Decisiones a cerrar con el cliente</p>
+          <ul class="icon-list">
+            <li><i data-lucide="languages" style="width:18px; height:18px;"></i><div>Idioma del sitio: inglés primero o bilingüe completo.</div></li>
+            <li><i data-lucide="dollar-sign" style="width:18px; height:18px;"></i><div>Monto y mecánica del depósito, más la estructura de tiers.</div></li>
+            <li><i data-lucide="flag" style="width:18px; height:18px;"></i><div>Nombre tribu del hincha fundador.</div></li>
+            <li><i data-lucide="palette" style="width:18px; height:18px;"></i><div>¿Hay manual de marca? Define si construimos el sistema de diseño.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>PSL SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 19. THANK YOU ══════════════ -->
+<section class="slide slide--thanks" data-slide="19">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Listos para arrancar el diseño cuando Port St. Lucie SC lo decida.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 20. CHAT ══════════════ -->
+<section class="slide" data-slide="20">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre la estrategia?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale al asistente lo que quieras sobre el trabajo de la semana 2.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuál es el espejo de PSLSC?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son los pilares narrativos?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo se estructura la home?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la semana 2</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué páginas tiene el sitio?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué viene en la Etapa 3?</button>
+        </div>
+      </div>
+
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de este avance. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+    switch (e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      if (entry.isIntersecting) {
+        anims.forEach(function(el) { el.classList.add('anim--visible'); });
+      } else {
+        anims.forEach(function(el) { el.classList.remove('anim--visible'); });
+      }
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(function(slide) { animObserver.observe(slide); });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR
+// ═══════════════════════════════════════
+function printPDF() { window.print(); }
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: 19 * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A
+// ═══════════════════════════════════════
+const QA_ENTRIES = [
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen dia', 'buenos dias', 'hey'],
+    answer: '¡Hola! Soy el asistente de este avance. Podés preguntarme sobre el benchmark de mercado, los pilares narrativos, la arquitectura del sitio, la home o qué viene en la Etapa 3.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la estrategia, estoy acá. También podés escribir al equipo a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después podés volver a preguntar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'de que se trata', 'que hicieron', 'semana 2', 'esta semana', 'que paso', 'estrategia'],
+    answer: 'La semana 2 (Estrategia) entregó tres cosas encadenadas: (1) Un benchmark de 40 fuentes en 6 ligas, leídas como máquinas de fanbase y monetización, con cada cifra verificada. (2) Los pilares narrativos: 5 ideas fuerza que ordenan todo lo que el club comunica. (3) La arquitectura del sitio: navegación simple, jerarquía de páginas y la home como arco narrativo que prioriza sentir y convertir.'
+  },
+  {
+    keywords: ['que puedo preguntar', 'ayuda', 'help', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: cómo hicimos el benchmark, cuál es el espejo de PSLSC, el techo de USL One, los patrones que robamos, el hueco del estadio 3D, los 5 pilares narrativos, la arquitectura y la home, cómo se construye cada bloque, el wireframe en vivo o qué viene en la Etapa 3.'
+  },
+  {
+    keywords: ['benchmark', 'metodo', 'como lo hicieron', 'fuentes', 'investigacion', 'datos', '40', 'verificacion', 'rigor'],
+    answer: 'El benchmark analizó 40 fuentes en 6 ligas (USL League One, USL Championship, MLS, Premier League, La Liga y fuentes extra), leyendo cada club como máquina de fanbase y monetización. Chequeamos 48 afirmaciones: 41 confirmadas, 4 refutadas y descartadas, 3 matizadas. No es inspiración estética: es el argumento que respalda cada decisión de arquitectura.'
+  },
+  {
+    keywords: ['techo', 'usl one', 'usl league one', 'piso', 'spokane', 'omaha', 'bajo', 'parejo'],
+    answer: 'El techo de USL One es bajo y parejo: hasta el campeón vive en un template sin storytelling. Spokane Velocity es el piso (template stock, cero storytelling, el "no sentís nada"). Union Omaha es el piso alto: campeón en 2021 y 2024, pero comunica su futuro con un banner de texto. La conclusión clave: superar ese piso es casi gratis, es esfuerzo de diseño y no de presupuesto.'
+  },
+  {
+    keywords: ['espejo', 'hearts of pine', 'portland', 'caso', 'maine', 'vara', 'referencia'],
+    answer: 'El espejo de PSLSC es Portland Hearts of Pine: club de expansión sin historia que en su año inaugural lideró la liga en asistencia (5.811 de promedio, lo más alto por más de un tercio), vendió más merch que todos los demás clubes juntos y barrió los premios de marketing, producto y PR de la propia USL. Mismo punto de partida que nosotros, y demuestra que el storytelling pre-lanzamiento se convierte en plata y en score de liga.'
+  },
+  {
+    keywords: ['patrones', 'robar', 'que funciona', 'masterplan evento', 'funnel', 'merch'],
+    answer: 'Cuatro patrones separan a los que generan algo: (1) Masterplan como evento, no página About (Birmingham movió plata antes de tener estadio). (2) Funnel de fundadores: depósito reembolsable más estatus de fundador de por vida (St. Louis: +60.000 depósitos para 22.500 butacas). (3) Merch como línea narrativa con drops como eventos. (4) Estadio y camiseta como experiencia (Real Madrid prueba que el estadio experiencia convierte).'
+  },
+  {
+    keywords: ['hueco', 'oportunidad', 'estadio 3d', 'camiseta 3d', '3d', 'wrexham', 'experiencia'],
+    answer: 'El hueco que nadie en USL One ocupó: el estadio y la camiseta como experiencia digital. PSLSC tiene un estadio ya aprobado, hoy invisible, y la tienda del propio Wrexham (el referente del cliente) es 2D plana, sin 3D. Con un estadio 3D navegable y una camiseta 3D girando, PSLSC supera literalmente al referente número uno del mundo. No hace falta ser más grande que la liga para parecerlo: alcanza con ser el único que cuenta bien su historia y deja comprarla.'
+  },
+  {
+    keywords: ['de quien', 'de quienes', 'robamos', 'referentes', 'birmingham', 'san diego', 'st louis', 'tottenham', 'athletic', 'barca'],
+    answer: 'De quién tomamos qué: Hearts of Pine (arquitectura narrativa de fundación), Birmingham City (masterplan invisible como evento), San Diego FC y St. Louis (funnel de fundador y depósito de por vida), Wrexham (la narrativa de nacimiento como producto, su web no), Tottenham y Real Madrid (estadio como destino navegable) y Athletic y Barça (identidad local y nombre tribu como pertenencia).'
+  },
+  {
+    keywords: ['pilares', 'pilar', 'narrativos', 'ideas fuerza', '5 pilares', 'cinco', 'narrativa'],
+    answer: 'Los 5 pilares narrativos son: (1) Estás viendo nacer un club, la narrativa madre y antídoto al "no sentís nada". (2) Más que un equipo: un proyecto de ciudad (masterplan, estadio, 2027). (3) Argentinos en Treasure Coast: la identidad como marca, no como límite. (4) Sé fundador desde el día cero: la pertenencia como producto, de por vida e irrepetible. (5) Ser y parecer distintos: la web experiencial que ningún club de USL One tiene.'
+  },
+  {
+    keywords: ['nacer', 'nacimiento', 'movimiento', 'pilar 1', 'primer pilar'],
+    answer: 'Pilar 1, "Estás viendo nacer un club": es la narrativa madre y el antídoto directo al "no sentís nada". Vendemos un movimiento que arranca de cero, no un equipo más. Es el hero de la home.'
+  },
+  {
+    keywords: ['proyecto de ciudad', 'masterplan', 'pilar 2', 'estadio aprobado', 'sport complex', '2027'],
+    answer: 'Pilar 2, "Más que un equipo: un proyecto de ciudad": el masterplan se hace sentir, no se lista. Estadio aprobado, sport complex, comunidad y debut 2027. El objetivo es hacer visible lo que hoy es invisible.'
+  },
+  {
+    keywords: ['argentinos', 'identidad', 'treasure coast', 'pilar 3', 'argenta', 'argentino'],
+    answer: 'Pilar 3, "Argentinos en Treasure Coast": la identidad como marca, no como límite. El cruce argentino y el orgullo local son la bandera, igual que Athletic Club posiciona lo vasco como su marca.'
+  },
+  {
+    keywords: ['fundador', 'pertenencia', 'pilar 4', 'de por vida', 'irrepetible', 'sumate'],
+    answer: 'Pilar 4, "Sé fundador desde el día cero": la pertenencia como producto. Fundador de por vida, irrepetible, con una ventana que cierra en 2027 (número, muro, carnet). Es el corazón de la conversión y se basa en San Diego FC y St. Louis.'
+  },
+  {
+    keywords: ['distintos', 'ser y parecer', 'pilar 5', 'experiencial', 'diferenciacion'],
+    answer: 'Pilar 5, "Ser y parecer distintos": la web experiencial que ningún club de USL One tiene (camiseta 3D, estadio navegable). Es "ser y parecer", siempre honesto, y la forma más barata de parecer más grande sin perder el tono cálido.'
+  },
+  {
+    keywords: ['arquitectura', 'estructura', 'navegacion', 'nav', 'menu', 'simple'],
+    answer: 'La arquitectura usa navegación simple y conversión arriba (no un mega menú de club maduro). El nav principal, mobile-first, es: Sumate, El Club, Estadio, Tienda, Entradas y un "más". Y un botón persistente "Hincha Fundador" que mantiene la conversión a un tap en cualquier página.'
+  },
+  {
+    keywords: ['paginas', 'sitemap', 'jerarquia', 'que paginas', 'secciones', 'diferido'],
+    answer: 'Páginas prioritarias (las que mueven la aguja): Sumate / Hincha Fundador, El Club, Estadio, Tienda y Entradas / 2027. Páginas de soporte: Equipos, Academy, Partidos, Comunidad, Noticias, Partners y Contacto. Diferido a 2027: matchday-ops, selección de butaca transaccional y app nativa. Hoy la energía va a la web y al funnel.'
+  },
+  {
+    keywords: ['home', 'arco', 'bloques', 'inicio', 'portada', '9 bloques'],
+    answer: 'La home es un arco narrativo de 9 bloques: (1) Hero "estás viendo nacer un club", (2) prueba social en vivo, (3) el masterplan como evento, (4) la camiseta 3D, (5) sé fundador, (6) ticket deposit 2027, (7) comunidad, (8) últimas noticias y (9) partners y footer. Sumate, camiseta, fundador y depósito aparecen antes que noticias o partidos: la home prioriza sentir y convertir, no informar.'
+  },
+  {
+    keywords: ['como se construye', 'nativo', 'a medida', 'externo', 'iframe', 'tracking', 'plataforma', 'sportsengine', 'wordpress', 'buckets', 'limites', 'limite', 'cruzar', 'restricciones'],
+    answer: 'USL impone su plataforma (SportsEngine más un WordPress) con muchos límites técnicos: cero soporte de código a medida y el riesgo de romper el tracking que alimenta el score. Si nos quedamos dentro del template, la web es una más; para hacer algo distinto hay que cruzar esos límites. La arquitectura ya separa tres zonas: 🟩 Nativo (storytelling indexable, muro, contadores, noticias; respeta el límite y suma SEO), 🟦 A medida (camiseta 3D, estadio 3D; página propia embebida por iframe, acá cruzamos el límite con Santi) y 🟧 Externo (tienda y pasarela de pago; se conectan, no se construyen). Regla de oro: lo pesado va aislado en iframe para no romper performance ni el tracking; el storytelling clave va en bloques nativos. QA propio, porque la plataforma no da soporte de código a medida.'
+  },
+  {
+    keywords: ['wireframe', 'vivo', 'navegable', 'deploy', 'maqueta', 'link', 'vercel'],
+    answer: 'La arquitectura ya está deployada y navegable en pslsc-wireframe.vercel.app. Tiene tres páginas para recorrer: Home (los 9 bloques del arco), Sumate / Founders (la conversión: qué es ser fundador, tiers, muro) y Partners (la página de sponsors e inversores que pidió el cliente). No es teoría: se puede tocar.'
+  },
+  {
+    keywords: ['etapa 3', 'diseno', 'proximo paso', 'que sigue', 'que viene', 'siguiente'],
+    answer: 'La Etapa 3 es Diseño. Incluye: diseño hi-fi de Home y Sumate (las que mueven la aguja primero), las páginas Estadio y Tienda con specs para Santi, la producción del modelo 3D de la camiseta (el entregable costoso real, no el código) y el spike técnico con Santi (Code Element, iframe, tracking). En paralelo se cierran decisiones con el cliente: idioma del sitio, monto y tiers del depósito, nombre tribu del hincha y si hay manual de marca.'
+  },
+  {
+    keywords: ['decisiones', 'abiertas', 'pendiente', 'idioma', 'monto', 'manual de marca', 'nombre tribu'],
+    answer: 'Decisiones a cerrar con el cliente antes o durante el diseño: idioma del sitio (inglés primero vs bilingüe completo), monto y mecánica del depósito más la estructura de tiers, nombre tribu del hincha fundador, y si existe manual de marca (define si construimos el sistema de diseño).'
+  },
+  {
+    keywords: ['score', 'usl', 'liga', 'metricas', 'seguidores', 'ticketing'],
+    answer: 'Toda la estrategia está atada al score de USL (seguidores, clics web, ticketing, merch, contrataciones). La lógica: la base owned (emails, WhatsApp Channel, fundadores) es el activo medible que mueve el score, no las redes sueltas. Por eso la home prioriza captura y conversión, y lo experiencial se aísla en iframe para no romper el tracking que alimenta ese score.'
+  },
+  {
+    keywords: ['yacare', 'studio', 'equipo', 'contacto', 'quien hizo'],
+    answer: 'Este avance fue preparado por Yacaré (yacare.io). Para consultas o seguimiento escribí a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de este avance. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el benchmark, los 5 pilares narrativos, la arquitectura del sitio, la home o qué viene en la Etapa 3.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[?!.,;:]/g, '');
+  let bestMatch = null;
+  let bestScore = 0;
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) score += kwNorm.length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+  setTimeout(function() {
+    typing.remove();
+    const reply = findBestAnswer(text);
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
