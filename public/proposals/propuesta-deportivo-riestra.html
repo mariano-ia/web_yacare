@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta · Portal Interno · Deportivo Riestra · Yacaré</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #fafafa;
+  --text-primary: #0d0d0d;
+  --text-secondary: #565656;
+  --text-muted: #9a9a9a;
+  --border-subtle: rgba(0,0,0,0.10);
+  --border-medium: rgba(0,0,0,0.22);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.62;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header — the only dark element */
+header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px;
+  padding: 16px 40px;
+  background: #000000;
+}
+header img { height: 20px; width: auto; display: block; flex-shrink: 0; }
+header .meta {
+  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  text-align: right; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.meta-short { display: none; }
+
+/* Layout */
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 40px; }
+
+h1 {
+  font-family: var(--font-display); font-weight: 700;
+  text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.98;
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  margin-bottom: 26px;
+}
+p { color: var(--text-secondary); }
+
+.label {
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-muted);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 24px;
+}
+.label::before { content: ''; width: 26px; height: 1px; background: var(--text-muted); }
+
+/* Hero */
+.hero { padding: 80px 0 60px; }
+.hero .lead {
+  font-size: 1.18rem; line-height: 1.55; color: var(--text-secondary);
+  max-width: 60ch;
+}
+.hero .lead strong { color: var(--text-primary); font-weight: 600; }
+
+/* Section */
+section { padding: 50px 0; border-top: 1px solid var(--border-subtle); }
+
+/* Quiénes somos */
+.about p { font-size: 1.08rem; line-height: 1.6; max-width: 64ch; }
+.about p + p { margin-top: 14px; }
+.about .soft { font-size: 0.95rem; color: var(--text-muted); margin-top: 14px; }
+
+/* Challenge grid */
+.challenge { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+.challenge .item .n {
+  font-family: var(--font-display); font-size: 1.05rem; color: var(--text-muted);
+  letter-spacing: 0.05em; margin-bottom: 10px;
+}
+.challenge .item h3 {
+  font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+  color: var(--text-primary); margin-bottom: 6px; line-height: 1.32;
+}
+.challenge .item p { font-size: 0.92rem; }
+.challenge-sum {
+  margin-top: 26px; font-size: 0.95rem; line-height: 1.5;
+  color: var(--text-muted); max-width: 60ch;
+}
+
+/* How */
+.how .intro { font-size: 1.08rem; max-width: 66ch; margin-bottom: 30px; color: var(--text-secondary); }
+.miradas {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden;
+}
+.miradas div { background: var(--bg); padding: 20px; }
+.miradas .k {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+}
+.miradas .v { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.4; }
+
+/* Stages (rows) */
+.stages { border-top: 1px solid var(--border-subtle); }
+.stage {
+  display: grid; grid-template-columns: 220px 1fr 1.35fr; gap: 28px;
+  padding: 20px 0; border-bottom: 1px solid var(--border-subtle); align-items: start;
+}
+.stage .sn { font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.stage .sn b {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+  color: var(--text-muted); margin-right: 9px;
+}
+.stage .sd { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; }
+.stage .smeta .m { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.45; }
+.stage .smeta .m + .m { margin-top: 7px; }
+.stage .smeta span {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted); margin-right: 8px;
+}
+.stages-note { font-size: 0.84rem; color: var(--text-muted); margin-top: 18px; }
+
+/* Integración (full width) + alcance (two cols) */
+.integra { max-width: 72ch; font-size: 0.98rem; margin-bottom: 30px; }
+.cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.scope ul { list-style: none; }
+.scope li {
+  font-size: 0.9rem; color: var(--text-secondary);
+  padding: 8px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.scope li:last-child { border-bottom: none; }
+
+/* Inversión */
+.offers { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 26px; }
+.offer {
+  border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px;
+  background: var(--bg-soft); display: flex; flex-direction: column;
+}
+.offer--key { border-color: var(--border-medium); }
+.offer .tag {
+  font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;
+}
+.offer .price {
+  font-family: var(--font-display); font-weight: 700; line-height: 1;
+  font-size: 2.7rem; color: var(--text-primary); letter-spacing: -0.03em;
+}
+.offer .price small {
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 400;
+  color: var(--text-muted); letter-spacing: 0; margin-left: 6px;
+}
+.offer .terms { font-size: 0.76rem; color: var(--text-muted); margin: 8px 0 16px; }
+.offer p { font-size: 0.9rem; line-height: 1.55; }
+
+.modules { width: 100%; border-collapse: collapse; }
+.modules tr { border-bottom: 1px solid var(--border-subtle); }
+.modules tr:first-child { border-top: 1px solid var(--border-subtle); }
+.modules td { padding: 13px 4px; font-size: 0.94rem; color: var(--text-secondary); }
+.modules td:last-child {
+  text-align: right; font-family: var(--font-display); font-weight: 600;
+  color: var(--text-primary); white-space: nowrap;
+}
+.pay { font-size: 0.84rem; color: var(--text-muted); margin-top: 16px; }
+
+/* Offer inclusions */
+.offer .incl { list-style: none; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px; }
+.offer .incl li { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; padding-left: 16px; position: relative; }
+.offer .incl li::before { content: ''; position: absolute; left: 2px; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); }
+
+/* Growth universe */
+.growth-intro { font-size: 1.05rem; max-width: 70ch; margin-bottom: 30px; color: var(--text-secondary); }
+.universe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 34px; }
+.universe .u h3 { font-family: var(--font-body); font-size: 0.98rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+.universe .u p { font-size: 0.9rem; line-height: 1.45; }
+
+/* Footer */
+footer { border-top: 1px solid var(--border-subtle); padding: 42px 0 60px; }
+footer .next { font-size: 1.05rem; color: var(--text-primary); margin-bottom: 18px; max-width: 52ch; }
+footer .contact {
+  display: flex; gap: 28px; font-size: 0.85rem; color: var(--text-secondary);
+}
+footer .contact span { color: var(--text-muted); }
+
+/* Mobile */
+@media (max-width: 760px) {
+  header { padding: 14px 20px; }
+  header img { width: 84px; height: auto; }
+  .meta-full { display: none; }
+  .meta-short { display: inline; }
+  .wrap { padding: 0 22px; }
+  h1 { font-size: 2.3rem; }
+  .hero { padding: 44px 0 36px; }
+  .hero .lead { font-size: 1.02rem; }
+  section { padding: 36px 0; }
+  .challenge { grid-template-columns: 1fr; gap: 22px; }
+  .challenge-sum { font-size: 0.95rem; }
+  .miradas { grid-template-columns: 1fr 1fr; }
+  .stage { grid-template-columns: 1fr; gap: 10px; padding: 18px 0; }
+  .cols2 { grid-template-columns: 1fr; gap: 28px; }
+  .offers { grid-template-columns: 1fr; }
+  .universe { grid-template-columns: 1fr; gap: 20px; }
+  footer .contact { flex-direction: column; gap: 8px; }
+}
+
+@media print {
+  header { position: static; }
+  body { font-size: 12px; }
+  section, footer, .offer, .stage { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo_yacare.svg" alt="Yacaré" style="filter:invert(1);">
+  <div class="meta"><span class="meta-full">Propuesta · Portal Interno · Deportivo Riestra · Junio 2026</span><span class="meta-short">Riestra · 2026</span></div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="label">Propuesta de trabajo</div>
+    <h1>Un portal,<br>no otro Excel más</h1>
+    <p class="lead">Hoy el GPS viaja por WhatsApp, el video vive en YouTube y los informes quedan fuera de cualquier sistema. Eso no se resuelve con otra planilla: se resuelve con <strong>un portal interno que el cuerpo técnico pueda mirar como una sola fuente de verdad</strong>.</p>
+  </div>
+
+  <!-- QUIÉNES SOMOS -->
+  <section class="about">
+    <div class="label">Quiénes somos</div>
+    <p>Resolvemos problemas con soluciones digitales. Partimos de lo que necesita el cuerpo técnico para tomar decisiones más rápido, no de una idea genérica de portal.</p>
+    <p>Queremos construir el sistema que va a usar el plantel todos los días y quedarnos acompañando su evolución, no entregar un producto y desentendernos.</p>
+    <p class="soft">Por eso pensamos esto en etapas: primero lo que ordena el día a día, después lo que lo hace crecer.</p>
+  </section>
+
+  <!-- EL DESAFÍO -->
+  <section>
+    <div class="label">El desafío</div>
+    <div class="challenge">
+      <div class="item">
+        <div class="n">01</div>
+        <h3>El GPS todavía viaja por WhatsApp</h3>
+        <p>Datos en Excel, partido a partido, sin un lugar central.</p>
+      </div>
+      <div class="item">
+        <div class="n">02</div>
+        <h3>El video vive fuera del sistema</h3>
+        <p>Entrenamientos en YouTube, partidos sin almacenamiento centralizado.</p>
+      </div>
+      <div class="item">
+        <div class="n">03</div>
+        <h3>Cada uno mira algo distinto del plantel</h3>
+        <p>Sin trazabilidad ni una visión unificada para decidir en equipo.</p>
+      </div>
+    </div>
+    <p class="challenge-sum">Ninguno de estos se resuelve de a uno. Se ordena con un sistema pensado para cómo trabaja el cuerpo técnico, no al revés.</p>
+  </section>
+
+  <!-- CÓMO OPERARÍA EL SISTEMA -->
+  <section class="how">
+    <div class="label">Cómo operaría el sistema</div>
+    <p class="intro">El portal trabaja con acceso por roles: cada perfil ve y carga exactamente lo que necesita. Los videoanalistas alimentan el sistema, el cuerpo médico gestiona su información sensible y el resto del cuerpo técnico consulta todo desde un solo lugar.</p>
+    <div class="miradas">
+      <div><div class="k">Videoanalistas</div><div class="v">Cargan datos, gestionan contenido y configuración.</div></div>
+      <div><div class="k">Cuerpo médico</div><div class="v">Registra y sigue lesiones por jugador.</div></div>
+      <div><div class="k">Cuerpo técnico</div><div class="v">Accede a toda la información en modo lectura.</div></div>
+      <div><div class="k">Yacaré</div><div class="v">Construye, integra y acompaña el sistema.</div></div>
+    </div>
+  </section>
+
+  <!-- LAS ETAPAS -->
+  <section>
+    <div class="label">Las etapas</div>
+    <div class="stages">
+      <div class="stage">
+        <div class="sn"><b>01</b> MVP</div>
+        <div class="sd">Login con roles, plantel con métricas GPS acumuladas, carga automática de Excel por partido, videos de entrenamiento y de partidos completos.</div>
+        <div class="smeta">
+          <div class="m"><span>Tiempo</span> 3 a 4 semanas</div>
+          <div class="m"><span>Inversión</span> USD 3.800</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="sn"><b>02</b> Módulo médico</div>
+        <div class="sd">Registro y seguimiento de lesiones por jugador. Requiere una instancia previa de relevamiento con el personal médico del club.</div>
+        <div class="smeta">
+          <div class="m"><span>Tiempo</span> 1 semana</div>
+          <div class="m"><span>Inversión</span> A definir</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="sn"><b>03</b> Búsqueda inteligente</div>
+        <div class="sd">Consultas en lenguaje natural sobre el plantel, comparación avanzada entre jugadores y alertas de carga física.</div>
+        <div class="smeta">
+          <div class="m"><span>Tiempo</span> A coordinar</div>
+          <div class="m"><span>Inversión</span> A definir</div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="sn"><b>04</b> Expansión del plantel</div>
+        <div class="sd">Incorporación de reserva y juveniles, gestión multi equipo y reportes exportables. Etapa tentativa, sujeta a la evolución del proyecto.</div>
+        <div class="smeta">
+          <div class="m"><span>Tiempo</span> A coordinar</div>
+          <div class="m"><span>Inversión</span> A definir</div>
+        </div>
+      </div>
+    </div>
+    <p class="stages-note">Las etapas 2, 3 y 4 se cotizan una vez validado el alcance del MVP con el club.</p>
+  </section>
+
+  <!-- INTEGRACIÓN + ALCANCE -->
+  <section>
+    <div class="label">Cómo nos integramos</div>
+    <p class="integra">El club ya tiene una maqueta visual del portal, y es un punto de partida valioso para entender la estética y la navegación esperadas. Pero una maqueta estática y un producto funcional son cosas distintas: construimos la base de datos, el backend con la lógica de negocio y el frontend funcional desde cero, usando esa maqueta como referencia visual.</p>
+    <div class="cols2">
+      <div class="scope">
+        <div class="label">Incluye</div>
+        <ul>
+          <li>Base de datos relacional del plantel, partidos, GPS y usuarios</li>
+          <li>Backend: procesamiento de Excel, acumulados y acceso por rol</li>
+          <li>Frontend funcional: tablas, filtros, carga de archivos, video</li>
+          <li>Infraestructura: hosting, dominio y autenticación segura</li>
+        </ul>
+      </div>
+      <div class="scope">
+        <div class="label">No incluye</div>
+        <ul>
+          <li>Diseño visual desde cero (se parte de la maqueta existente)</li>
+          <li>Relevamiento médico detallado (instancia aparte con el club)</li>
+          <li>Costos de terceros (almacenamiento de video, licencias)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HACIA DÓNDE PUEDE CRECER -->
+  <section>
+    <div class="label">Hacia dónde puede crecer</div>
+    <p class="growth-intro">Lo que se construye depende de lo que necesite el cuerpo técnico. Por eso no prometemos funcionalidades hoy: sería irreal. Lo que sí podemos compartir es el universo de lo que el sistema puede llegar a ser. Qué se construye y cuándo, lo decide el club.</p>
+    <div class="universe">
+      <div class="u"><h3>Reserva y juveniles</h3><p>La misma arquitectura de roles, extendida a todo el club.</p></div>
+      <div class="u"><h3>Búsqueda en lenguaje natural</h3><p>Preguntar por un jugador y recibir la respuesta al instante.</p></div>
+      <div class="u"><h3>Alertas de carga física</h3><p>Avisos automáticos cuando un jugador entra en zona de riesgo.</p></div>
+      <div class="u"><h3>Comparación entre jugadores</h3><p>Cruzar métricas para sostener decisiones de plantel.</p></div>
+      <div class="u"><h3>Reportes exportables</h3><p>Información lista para compartir fuera del portal.</p></div>
+      <div class="u"><h3>Gestión multi equipo</h3><p>Primera, reserva y juveniles, cada uno con su vista.</p></div>
+      <div class="u"><h3>Historial completo de partidos</h3><p>Video y métricas de toda la temporada, siempre a mano.</p></div>
+      <div class="u"><h3>Integración con el área médica</h3><p>Seguimiento de lesiones conectado al rendimiento físico.</p></div>
+      <div class="u"><h3>Acceso desde el celular</h3><p>El portal disponible donde esté el cuerpo técnico.</p></div>
+    </div>
+    <p class="challenge-sum">Y lo que vayamos imaginando junto al club. Cada paso se decide con el uso real del portal, no antes.</p>
+  </section>
+
+  <!-- LA INVERSIÓN -->
+  <section>
+    <div class="label">La inversión</div>
+    <div class="offers">
+      <div class="offer offer--key">
+        <div class="tag">Etapa 1 · MVP</div>
+        <div class="price">USD 3.800</div>
+        <div class="terms">Pago único. Entrega en 3 a 4 semanas.</div>
+        <p>El portal funcionando: roles, plantel, GPS y video.</p>
+        <ul class="incl">
+          <li>Login con acceso por roles</li>
+          <li>Plantel con métricas GPS acumuladas</li>
+          <li>Carga automática de Excel por partido</li>
+          <li>Videos de entrenamiento</li>
+          <li>Videos de partidos completos</li>
+        </ul>
+      </div>
+      <div class="offer">
+        <div class="tag">Almacenamiento de video</div>
+        <div class="price">USD 75 <small>/ mes</small></div>
+        <div class="terms">Costo operativo, a cargo del club.</div>
+        <p>Vimeo Advanced, necesario para alojar los partidos completos.</p>
+        <ul class="incl">
+          <li>Almacenamiento ilimitado</li>
+          <li>Hasta 10 usuarios</li>
+          <li>Privacidad por contraseña o dominio</li>
+          <li>Streaming de alta calidad</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pay">Forma de pago: a convenir. Etapas 2, 3 y 4 se cotizan una vez validado el alcance del MVP.</p>
+  </section>
+
+</div>
+
+<div class="wrap">
+  <footer>
+    <p class="next">El primer paso: definir la solución de almacenamiento de video y validar con el club la priorización de módulos del MVP.</p>
+    <div class="contact">
+      <div><span>Web</span> &nbsp;yacare.io</div>
+      <div><span>Mail</span> &nbsp;contact@yacare.io</div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
