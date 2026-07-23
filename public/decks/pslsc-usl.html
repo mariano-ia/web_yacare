@@ -303,13 +303,16 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   position: relative; overflow: hidden;
 }
 .slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .shimmer-text { filter: drop-shadow(0 2px 16px rgba(0,0,0,0.55)); }
 .slide--cover .subtitle {
-  font-size: 1.1rem; color: var(--text-secondary);
+  font-size: 1.1rem; color: #cfcfcf;
   max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.7);
 }
 .slide--cover .meta {
-  font-size: 0.75rem; color: var(--text-muted);
+  font-size: 0.75rem; color: var(--text-secondary);
   text-transform: uppercase; letter-spacing: 0.15em;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.7);
 }
 
 .cover-video {
@@ -317,11 +320,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   width: 100%; height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.92;
 }
 .cover-video-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.9) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.36) 55%, rgba(0,0,0,0.68) 100%);
   z-index: 0;
 }
 
@@ -622,7 +625,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
     <div class="anim"><span class="client-tag">Port St. Lucie SC</span></div>
-    <h1 class="shimmer-text anim">A Living Story</h1>
+    <div class="anim"><h1 class="shimmer-text">A Living Story</h1></div>
     <p class="subtitle anim">The redesign of our website. A site that stops being an institutional page and starts telling the story of our birth in real time.</p>
     <p class="meta anim" style="margin-top:24px;">Presentation for the USL · July 2026</p>
   </div>
@@ -784,7 +787,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
     <div class="anim"><span class="client-tag">Port St. Lucie SC</span></div>
-    <h2 class="shimmer-text anim">You're watching a club be born</h2>
+    <div class="anim"><h2 class="shimmer-text">You're watching a club be born</h2></div>
     <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">The redesign arrives very soon. And the story is just beginning.</p>
     <div class="contact-row anim">
       <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> pslsc.vercel.app</div>
