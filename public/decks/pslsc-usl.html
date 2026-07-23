@@ -378,6 +378,69 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .build-line { left: 14px; }
 }
 
+/* ═══════════════════════════════════════
+   HAIRLINE SCHEMATICS (outline / blueprint)
+   ═══════════════════════════════════════ */
+.wire {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.wire--dim { stroke: rgba(255, 255, 255, 0.25); }
+.wire-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.anim--visible .wire-draw {
+  animation: wire-draw-anim 1.25s var(--ease-out) both;
+  animation-delay: var(--wd-delay, 0s);
+}
+@keyframes wire-draw-anim { to { stroke-dashoffset: 0; } }
+
+.wire-icon { width: 42px; height: 42px; display: block; margin-bottom: 14px; }
+
+/* Hairline ring pulse, reused by "now" markers */
+@keyframes hair-ring {
+  0%   { transform: scale(0.6); opacity: 0.85; }
+  100% { transform: scale(1.75); opacity: 0; }
+}
+@keyframes tl-build { to { transform: scaleX(1); } }
+
+/* Slide 2 — milestone timeline */
+.tl { position: relative; margin-top: 8px; }
+.tl-row { display: flex; gap: 24px; }
+.tl-item { flex: 1; text-align: center; position: relative; padding-top: 36px; }
+.tl-marker {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: var(--bg-primary); z-index: 1;
+}
+.tl-item--now .tl-marker { border-color: #fff; }
+.tl-item--now .tl-marker::after {
+  content: ''; position: absolute; inset: -5px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: hair-ring 2.2s ease-out infinite;
+}
+.tl-track {
+  position: absolute; top: 7px; left: 16.66%; right: 16.66%;
+  height: 0; border-top: 1px solid rgba(255, 255, 255, 0.5);
+  transform: scaleX(0); transform-origin: left center;
+}
+.anim--visible .tl-track { animation: tl-build 1.3s var(--ease-out) 0.15s forwards; }
+
+/* Slide 6 — building milestone connector */
+.steps::before { transform: scaleX(0); transform-origin: left center; }
+.steps.anim--visible::before { animation: tl-build 1.4s var(--ease-out) 0.2s forwards; }
+.step .step-num { position: relative; }
+.step:not(:first-child) .step-num { opacity: 0.5; }
+.step:first-child .step-num { border-color: #fff; color: #fff; }
+.step:first-child .step-num::after {
+  content: ''; position: absolute; inset: -6px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  animation: hair-ring 2.4s ease-out infinite;
+}
+
 .cover-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -593,6 +656,12 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 
   .blob { width: 200px !important; height: 200px !important; }
 
+  /* Hairline schematics: resolve to final state (no observer on mobile) */
+  .wire-draw { stroke-dashoffset: 0 !important; animation: none !important; }
+  .tl-row { flex-direction: column; gap: 20px; }
+  .tl-item { padding-top: 0; }
+  .tl-track, .tl-marker { display: none; }
+
   .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
   .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
 
@@ -709,18 +778,24 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
     <div class="label anim">Where we are</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">A club is being born, right now</h2>
     <p class="anim" style="max-width:780px; margin-bottom:48px;">Port St. Lucie has its own professional soccer club for the first time. And it's all happening right now: construction is moving forward, founders are joining, and the countdown is already running.</p>
-    <div class="grid-3 anim">
-      <div>
-        <div class="stat-number">Today</div>
-        <div class="stat-label">Stadium under construction</div>
-      </div>
-      <div>
-        <div class="stat-number">Live</div>
-        <div class="stat-label">Founders joining</div>
-      </div>
-      <div>
-        <div class="stat-number">2027</div>
-        <div class="stat-label">Debut in USL League One</div>
+    <div class="tl anim">
+      <div class="tl-track" aria-hidden="true"></div>
+      <div class="tl-row">
+        <div class="tl-item tl-item--now">
+          <span class="tl-marker"></span>
+          <div class="stat-number">Today</div>
+          <div class="stat-label">Stadium under construction</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-marker"></span>
+          <div class="stat-number">Live</div>
+          <div class="stat-label">Founders joining</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-marker"></span>
+          <div class="stat-number">2027</div>
+          <div class="stat-label">Debut in USL League One</div>
+        </div>
       </div>
     </div>
   </div>
@@ -768,18 +843,44 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Every module is built to spark emotion</h2>
     <div class="grid-2x2 anim">
       <div class="card card--sm card--accent-1">
+        <svg class="wire-icon" viewBox="0 0 48 48" aria-hidden="true" style="--wd-delay:0.05s">
+          <rect class="wire wire-draw" x="4" y="15" width="16" height="18" rx="3" pathLength="1"/>
+          <rect class="wire wire-draw" x="28" y="15" width="16" height="18" rx="3" pathLength="1"/>
+          <line class="wire wire--dim" x1="4" y1="24" x2="20" y2="24"/>
+          <line class="wire wire--dim" x1="28" y1="24" x2="44" y2="24"/>
+          <circle class="wire" cx="24" cy="20" r="1.3"/>
+          <circle class="wire" cx="24" cy="28" r="1.3"/>
+        </svg>
         <h4 style="font-size:1.15rem; margin-bottom:10px;">The countdown</h4>
         <p style="font-size:0.95rem;">The days to the first whistle pulse on the home page. The club's clock takes center stage: every time you visit, there's less time left.</p>
       </div>
       <div class="card card--sm card--accent-2">
+        <svg class="wire-icon" viewBox="0 0 48 48" aria-hidden="true" style="--wd-delay:0.15s">
+          <rect class="wire wire-draw" x="5" y="9" width="38" height="30" rx="3" pathLength="1"/>
+          <line class="wire wire--dim" x1="17.6" y1="9" x2="17.6" y2="39"/>
+          <line class="wire wire--dim" x1="30.3" y1="9" x2="30.3" y2="39"/>
+          <line class="wire wire--dim" x1="5" y1="19" x2="43" y2="19"/>
+          <line class="wire wire--dim" x1="5" y1="29" x2="43" y2="29"/>
+          <rect class="wire" x="7" y="11" width="9" height="6" rx="1"/>
+        </svg>
         <h4 style="font-size:1.15rem; margin-bottom:10px;">The founders wall</h4>
         <p style="font-size:0.95rem;">A live board where every new founder shows up with their number. You take a photo, build your membership card, and share it: the wait turns into belonging.</p>
       </div>
       <div class="card card--sm card--accent-3">
+        <svg class="wire-icon" viewBox="0 0 48 48" aria-hidden="true" style="--wd-delay:0.25s">
+          <rect class="wire wire-draw" x="5" y="15" width="38" height="18" rx="9" pathLength="1"/>
+          <rect class="wire wire--dim" x="14" y="21" width="20" height="6" rx="2"/>
+          <line class="wire wire--dim" x1="24" y1="21" x2="24" y2="27"/>
+          <line class="wire" x1="18" y1="11" x2="18" y2="37" style="stroke-dasharray:3 3"/>
+        </svg>
         <h4 style="font-size:1.15rem; margin-bottom:10px;">The stadium reveal</h4>
         <p style="font-size:0.95rem;">A mask slides away as you scroll and uncovers the stadium, like raising a curtain. The construction isn't just shown: it's revealed.</p>
       </div>
       <div class="card card--sm card--accent-4">
+        <svg class="wire-icon" viewBox="0 0 48 48" aria-hidden="true" style="--wd-delay:0.35s">
+          <path class="wire wire-draw" d="M18 10 L24 13 L30 10 L41 16 L36.5 23 L33 21 L33 40 L15 40 L15 21 L11.5 23 L7 16 Z" pathLength="1"/>
+          <path class="wire wire--dim" d="M20 11.5 Q24 15 28 11.5"/>
+        </svg>
         <h4 style="font-size:1.15rem; margin-bottom:10px;">The jersey and the schedule</h4>
         <p style="font-size:0.95rem;">The jersey moves with the scroll, and the team's schedule lives on the home page with the next match highlighted. Soccer today, not in two years.</p>
       </div>
@@ -1121,7 +1222,7 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['launch', 'when', 'date', 'goes live', 'live', 'online', 'soon', 'release'],
-    answer: "The redesign is in its final stage and launches very soon. You can see a preview at pslsc.vercel.app. From launch on, the site will keep updating with every milestone: the groundbreaking, the 2027 season, and whatever comes next."
+    answer: "The redesign is in its final stage and launches very soon. From launch on, the site will keep updating with every milestone: the groundbreaking, the 2027 season, and whatever comes next."
   },
   {
     keywords: ['usl', 'league', 'league one', 'why it matters', 'emotion', 'value'],
@@ -1133,7 +1234,7 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['url', 'link', 'address', 'see', 'site', 'demo', 'preview'],
-    answer: "You can see the preview of the redesign at pslsc.vercel.app. The live demo shows the full home page: the countdown, the founders wall, the stadium reveal, the jersey with the scroll, and the team's schedule."
+    answer: "The redesign preview shows the full home page: the countdown, the founders wall, the stadium reveal, the jersey with the scroll, and the team's schedule. The redesign launches very soon."
   },
   {
     keywords: ['club', 'port', 'lucie', 'psl', 'debut', 'professional', 'academy', 'reserve'],
