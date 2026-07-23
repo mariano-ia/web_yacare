@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Port St. Lucie SC · A Living Story</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+
+.cover-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.5;
+}
+.cover-video-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.9) 100%);
+  z-index: 0;
+}
+
+.client-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 10px 28px;
+  margin-bottom: 36px;
+}
+
+.slide--quote {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 0.9rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.5rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .client-tag { font-size: 1.05rem; padding: 8px 20px; margin-bottom: 24px; }
+  .slide--thanks h2 { font-size: 2rem; }
+  .quote-text { font-size: 1.6rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint, .cover-video, .cover-video-overlay { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Questions
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 9</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Scroll</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <!-- Background video: place the file at public/videos/pslsc-cover.mp4 -->
+  <video class="cover-video" src="../videos/pslsc-cover.mp4" autoplay muted loop playsinline></video>
+  <div class="cover-video-overlay"></div>
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <div class="anim"><span class="client-tag">Port St. Lucie SC</span></div>
+    <h1 class="shimmer-text anim">A Living Story</h1>
+    <p class="subtitle anim">The redesign of our website. A site that stops being an institutional page and starts telling the story of our birth in real time.</p>
+    <p class="meta anim" style="margin-top:24px;">Presentation for the USL · July 2026</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. THE MOMENT ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">Where we are</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">A club is being born, right now</h2>
+    <p class="anim" style="max-width:780px; margin-bottom:48px;">Port St. Lucie has its own professional soccer club for the first time. And it's all happening right now: construction is moving forward, founders are joining, and the countdown is already running.</p>
+    <div class="grid-3 anim">
+      <div>
+        <div class="stat-number">Today</div>
+        <div class="stat-label">Stadium under construction</div>
+      </div>
+      <div>
+        <div class="stat-number">Live</div>
+        <div class="stat-label">Founders joining</div>
+      </div>
+      <div>
+        <div class="stat-number">2027</div>
+        <div class="stat-label">Debut in USL League One</div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>Port St. Lucie SC</span><span>USL Presentation</span></div>
+</section>
+
+
+<!-- ══════════════ 3. THE TURNING POINT ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">The decision</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px; max-width:900px;">You can't tell this story with a static site</h2>
+    <div class="split" style="align-items:stretch;">
+      <div class="anim">
+        <div class="card card--sm" style="height:100%;">
+          <h4 style="font-size:1.15rem; margin-bottom:10px;">What we didn't want</h4>
+          <p style="font-size:0.95rem;">Club websites are built for clubs that already exist: finished history, archives, news. A page that gets published once and sits still.</p>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="card card--sm card--highlight" style="height:100%;">
+          <h4 style="font-size:1.15rem; margin-bottom:10px;">What we built</h4>
+          <p style="font-size:0.95rem;">A living experience. The site tells our present moment: what's happening today, in real time, with the thrill of watching ourselves come to life.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>Port St. Lucie SC</span><span>USL Presentation</span></div>
+</section>
+
+
+<!-- ══════════════ 4. QUOTE ══════════════ -->
+<section class="slide slide--quote" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim" style="justify-content:center;">The concept</div>
+    <p class="quote-text shimmer-text anim">It's not a website.<br>It's an experience that tells our story in real time.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 5. HOW IT FEELS ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">How it feels</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Every module is built to spark emotion</h2>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">The countdown</h4>
+        <p style="font-size:0.95rem;">The days to the first whistle pulse on the home page. The club's clock takes center stage: every time you visit, there's less time left.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">The founders wall</h4>
+        <p style="font-size:0.95rem;">A live board where every new founder shows up with their number. You take a photo, build your membership card, and share it: the wait turns into belonging.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">The stadium reveal</h4>
+        <p style="font-size:0.95rem;">A mask slides away as you scroll and uncovers the stadium, like raising a curtain. The construction isn't just shown: it's revealed.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">The jersey and the schedule</h4>
+        <p style="font-size:0.95rem;">The jersey moves with the scroll, and the team's schedule lives on the home page with the next match highlighted. Soccer today, not in two years.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>Port St. Lucie SC</span><span>USL Presentation</span></div>
+</section>
+
+
+<!-- ══════════════ 6. THE STORY CONTINUES ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">What's coming</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Every milestone transforms the site</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:44px;">That's why we update it all the time. When we live a big moment, the site changes with us and turns it into a chapter of our story.</p>
+    <div class="steps anim">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h4>The launch</h4>
+          <p>The redesign goes live: the story starts being told in real time.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Groundbreaking</h4>
+          <p>The ground is broken and the site celebrates it: the stadium goes from render to reality.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h4>2027 Season</h4>
+          <p>The first whistle arrives: the site becomes game day, schedule, and field.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div>
+          <h4>The next chapter</h4>
+          <p>Every milestone that comes writes a new version. The story never sits still.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>Port St. Lucie SC</span><span>USL Presentation</span></div>
+</section>
+
+
+<!-- ══════════════ 7. WHY IT MATTERS ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Why it matters</div>
+        <h2 class="anim" style="font-size:2.2rem;">Emotion, all the time</h2>
+        <p class="anim" style="margin-top:16px;">A club that's just being born doesn't have decades of history to tell. It has something better: the privilege of inviting people in from the very start. The site is designed for exactly that.</p>
+      </div>
+      <div>
+        <ul class="icon-list anim">
+          <li><i data-lucide="eye" style="width:22px;height:22px;"></i><div><strong style="color:#fff;">Real progress, not promises.</strong> Every visit shows the project moving forward: construction, founders, countdown.</div></li>
+          <li><i data-lucide="heart" style="width:22px;height:22px;"></i><div><strong style="color:#fff;">The wait becomes belonging.</strong> Fans don't watch from the outside: they have a name, a number, and a membership card.</div></li>
+          <li><i data-lucide="refresh-cw" style="width:22px;height:22px;"></i><div><strong style="color:#fff;">There's always a reason to come back.</strong> The site changes with every milestone, and every change is news.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>Port St. Lucie SC</span><span>USL Presentation</span></div>
+</section>
+
+
+<!-- ══════════════ 8. THANK YOU ══════════════ -->
+<section class="slide slide--thanks" data-slide="8">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <div class="anim"><span class="client-tag">Port St. Lucie SC</span></div>
+    <h2 class="shimmer-text anim">You're watching a club be born</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">The redesign arrives very soon. And the story is just beginning.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> pslsc.vercel.app</div>
+    </div>
+    <p class="anim" style="font-size:0.7rem; color:var(--text-muted); margin-top:32px;">Site designed and built together with yacare.io</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 9. CHAT ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">Have any questions about this presentation?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Ask the assistant anything. It has access to the full content of this presentation.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">What is a living experience?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Why not a static site?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">What happens at each milestone?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Summarize the presentation</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">What wow moments does the site have?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">When does it launch?</button>
+        </div>
+      </div>
+
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Type your question..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      This assistant answers only about the content of this presentation. It can make mistakes. For formal inquiries, write to contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const viewportW = window.innerWidth || document.documentElement.clientWidth;
+const isMobile = viewportW > 0 && viewportW <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  // The cover starts visible without depending on the observer (background tabs)
+  slides[0].querySelectorAll('.anim').forEach(function(el) {
+    el.classList.add('anim--visible');
+  });
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  if (!vh) return;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'whats up', 'greetings', 'howdy'],
+    answer: "Hi! I'm the assistant for this presentation. You can ask me about the living experience concept, the site's wow moments, the milestones coming up, or the launch of the redesign."
+  },
+  {
+    keywords: ['thanks', 'thank', 'great', 'perfect', 'awesome', 'excellent', 'cool', 'nice', 'appreciate'],
+    answer: "You're welcome! If any other question about the presentation comes up, I'm here. For formal inquiries you can write to contact@yacare.io."
+  },
+  {
+    keywords: ['bye', 'goodbye', 'see you', 'later', 'farewell', 'take care'],
+    answer: "See you! If a question comes up later, you can check back here or write to contact@yacare.io."
+  },
+  {
+    keywords: ['summary', 'summarize', 'what is this', 'whats it about', 'what is it about', 'explain', 'in a nutshell', 'overview', 'recap'],
+    answer: "Port St. Lucie SC is about to launch the redesign of its website, built around a living experience concept. Instead of a static institutional page, the site tells the club's present moment: the stadium construction, founders joining live, and the countdown to the debut in USL League One in 2027. With each milestone (the launch, the groundbreaking, the 2027 season) the site transforms and writes a new chapter. The idea: spark emotion all the time and turn the wait into belonging."
+  },
+  {
+    keywords: ['what can i ask', 'help', 'what do you know', 'options', 'what can you do'],
+    answer: "You can ask me about: the living experience concept, why we moved past the static site, the wow moments (countdown, founders wall and membership card, stadium reveal, jersey and schedule), the milestones that transform the site (launch, groundbreaking, 2027 season), when it launches, and who built it."
+  },
+  // Content
+  {
+    keywords: ['living experience', 'living', 'alive', 'concept', 'idea', 'living story', 'real time', 'present'],
+    answer: "The living experience is the core concept of the redesign: the site isn't a page that gets published and sits still, it's an experience that tells our story in real time. Everything is in the present tense (the construction moving forward, founders joining, the days left until the first whistle) and the site updates all the time to tell every milestone of the club."
+  },
+  {
+    keywords: ['static', 'why not', 'difference', 'institutional', 'before', 'traditional'],
+    answer: "Traditional club websites are built for clubs that already exist: finished history, archives, news. Port St. Lucie SC is being born, and that doesn't happen twice. A static site can't tell a birth; a living experience can: it shows real progress on every visit and lets you feel the thrill of watching a club come to life."
+  },
+  {
+    keywords: ['milestone', 'milestones', 'groundbreaking', 'ground breaking', 'season', '2027', 'chapter', 'changes', 'transforms', 'updates', 'evolves'],
+    answer: "Every milestone of the club transforms the site. First the launch of the redesign, when the story starts being told live. Then the groundbreaking, when the ground is broken and the stadium goes from render to reality. Then the 2027 season, when the first whistle arrives and the site becomes game day, schedule, and field. And every milestone that comes writes a new version: the story never sits still."
+  },
+  {
+    keywords: ['wow', 'moments', 'highlight', 'features', 'what does it have', 'interactive'],
+    answer: "The site has four wow moments. The countdown: the days to the first whistle pulse on the home page. The founders wall: a live board where each founder shows up with their number, and you can take a photo, build your membership card, and share it. The stadium reveal: a mask slides away as you scroll and uncovers the construction like raising a curtain. And the jersey with the schedule: the jersey moves with the scroll and the schedule lives on the home page with the next match highlighted."
+  },
+  {
+    keywords: ['card', 'membership', 'photo', 'share', 'founder', 'founders', 'wall', 'board', 'belonging', 'number'],
+    answer: "The founders wall is a live board, like an airport flip board, where each new founder shows up with their number. And the most special moment: every fan can take a photo, build their founder membership card, and share it. So the wait stops being passive: fans have a name, a number, and a card, and the wait turns into belonging."
+  },
+  {
+    keywords: ['countdown', 'first whistle', 'days', 'clock', 'timer'],
+    answer: "The countdown marks the days left until the club's first whistle in USL League One in 2027. It pulses on the home page and puts the club's clock center stage: every time you visit, there's less time left. It's the simplest way to spark emotion on every visit."
+  },
+  {
+    keywords: ['stadium', 'construction', 'reveal', 'mask', 'render', 'build', 'field'],
+    answer: "The stadium is under construction, and the site tells it with a reveal: a mask slides away as you scroll and uncovers the stadium, like raising a curtain. When the groundbreaking arrives, the site will celebrate it: the stadium goes from render to reality and the story adds a chapter."
+  },
+  {
+    keywords: ['jersey', 'shirt', 'scroll', 'schedule', 'fixture', 'calendar', 'match', 'team', 'game'],
+    answer: "The jersey moves along with the scroll, following the journey through the section. And the team's schedule lives on the home page: next match highlighted, results, and navigation forward and back, in the style of the big clubs. Soccer today, not in two years."
+  },
+  {
+    keywords: ['launch', 'when', 'date', 'goes live', 'live', 'online', 'soon', 'release'],
+    answer: "The redesign is in its final stage and launches very soon. You can see a preview at pslsc.vercel.app. From launch on, the site will keep updating with every milestone: the groundbreaking, the 2027 season, and whatever comes next."
+  },
+  {
+    keywords: ['usl', 'league', 'league one', 'why it matters', 'emotion', 'value'],
+    answer: "For the USL this means a club that sparks emotion all the time. A club that's just being born doesn't have decades of history to tell, but it has something better: the privilege of inviting people in from the very start. Every visit shows real progress (construction, founders, countdown), the wait becomes belonging, and there's always a reason to come back, because the site changes with every milestone."
+  },
+  {
+    keywords: ['who', 'built', 'made', 'yacare', 'team', 'design', 'studio', 'agency'],
+    answer: "The site was designed and built by the Port St. Lucie SC team together with yacare.io, the studio that developed the living experience concept, the design system, and the interactive pieces."
+  },
+  {
+    keywords: ['url', 'link', 'address', 'see', 'site', 'demo', 'preview'],
+    answer: "You can see the preview of the redesign at pslsc.vercel.app. The live demo shows the full home page: the countdown, the founders wall, the stadium reveal, the jersey with the scroll, and the team's schedule."
+  },
+  {
+    keywords: ['club', 'port', 'lucie', 'psl', 'debut', 'professional', 'academy', 'reserve'],
+    answer: "Port St. Lucie SC is the city's first professional soccer club. It debuts in USL League One in 2027, already has a team playing today, a youth academy, and its own stadium under construction. All of that is happening now, and the site tells it in the present tense."
+  },
+  {
+    keywords: ['price', 'cost', 'budget', 'investment', 'how much'],
+    answer: "This presentation doesn't include financial information; it's the presentation of the redesign to the USL. For that kind of inquiry, write to contact@yacare.io."
+  }
+];
+
+const FALLBACK_ANSWER = "I don't have a specific answer for that in the content of this presentation. You can rephrase the question or write to contact@yacare.io. You can also ask me about the living experience concept, the site's wow moments, the milestones coming up, or the launch.";
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Thinking';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
