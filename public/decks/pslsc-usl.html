@@ -315,6 +315,69 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   text-shadow: 0 1px 10px rgba(0,0,0,0.7);
 }
 
+/* Live chip (cover) */
+.live-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 9px 18px 9px 15px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 0 rgba(138, 94, 255, 0.55);
+  animation: live-pulse 2.2s ease-out infinite;
+  flex-shrink: 0;
+}
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(138, 94, 255, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(138, 94, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(138, 94, 255, 0); }
+}
+
+/* ═══════════════════════════════════════
+   CONSTRUCTION LINE — builds as you scroll
+   ═══════════════════════════════════════ */
+.build-line {
+  position: fixed;
+  top: 0; bottom: 0; left: 34px;
+  width: 2px;
+  z-index: 9997;
+  pointer-events: none;
+  /* Blueprint track (the not-yet-built part) */
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.16) 0 7px, transparent 7px 15px);
+  background-size: 2px 15px;
+  background-repeat: repeat-y;
+}
+.build-line-fill {
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  height: 0;
+  background: linear-gradient(180deg, #8A63F2, #D1249D);
+  box-shadow: 0 0 12px rgba(138, 94, 255, 0.5);
+}
+.build-line-node {
+  position: absolute;
+  left: 50%; top: 0;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 14px 3px rgba(138, 94, 255, 0.85), 0 0 0 4px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+@media (max-width: 768px) {
+  .build-line { left: 14px; }
+}
+
 .cover-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -577,7 +640,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
    PRINT
    ═══════════════════════════════════════ */
 @media print {
-  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint, .cover-video, .cover-video-overlay { display: none !important; }
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint, .cover-video, .cover-video-overlay, .build-line { display: none !important; }
   .deck { height: auto; overflow: visible; scroll-snap-type: none; }
   .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
@@ -613,6 +676,12 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   <i data-lucide="chevron-down"></i>
 </div>
 
+<!-- Construction line: builds itself as you scroll through the deck -->
+<div class="build-line" aria-hidden="true">
+  <div class="build-line-fill" id="build-line-fill"></div>
+  <div class="build-line-node" id="build-line-node"></div>
+</div>
+
 <div class="deck" id="deck">
 
 
@@ -627,7 +696,9 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
     <div class="anim"><span class="client-tag">Port St. Lucie SC</span></div>
     <div class="anim"><h1 class="shimmer-text">A Living Story</h1></div>
     <p class="subtitle anim">The redesign of our website. A site that stops being an institutional page and starts telling the story of our birth in real time.</p>
-    <p class="meta anim" style="margin-top:24px;">Presentation for the USL · July 2026</p>
+    <div class="anim" style="margin-top:28px;">
+      <span class="live-chip"><span class="live-dot"></span>Going live in August</span>
+    </div>
   </div>
 </section>
 
@@ -873,6 +944,23 @@ deck.addEventListener('scroll', () => {
     hint.classList.add('hidden');
   }
 }, { passive: true });
+
+// ═══════════════════════════════════════
+// CONSTRUCTION LINE — builds as you scroll
+// ═══════════════════════════════════════
+const buildFill = document.getElementById('build-line-fill');
+const buildNode = document.getElementById('build-line-node');
+function updateBuildLine() {
+  const max = deck.scrollHeight - deck.clientHeight;
+  const p = max > 0 ? Math.min(1, Math.max(0, deck.scrollTop / max)) : 0;
+  const pct = (p * 100).toFixed(2) + '%';
+  buildFill.style.height = pct;
+  buildNode.style.top = pct;
+  buildNode.style.opacity = p > 0.005 ? '1' : '0';
+}
+deck.addEventListener('scroll', updateBuildLine, { passive: true });
+window.addEventListener('resize', updateBuildLine);
+updateBuildLine();
 
 // ═══════════════════════════════════════
 // SLIDE COUNTER (desktop only)
