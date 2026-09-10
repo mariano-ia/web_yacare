@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Academia Digital PSL SC</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-number--sm { font-size: 2.8rem; }
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  max-width: 900px;
+}
+
+/* Route list */
+.route-list { display: flex; flex-direction: column; gap: 2px; }
+.route-row {
+  display: grid; grid-template-columns: 220px 1fr; gap: 20px;
+  padding: 9px 0; border-bottom: 1px solid var(--border-subtle);
+  align-items: baseline;
+}
+.route-row code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem; color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.route-row code.sub { color: var(--text-secondary); padding-left: 14px; }
+.route-row span { font-size: 0.82rem; color: var(--text-muted); }
+
+/* Reuse table */
+.reuse-row {
+  display: grid; grid-template-columns: 1fr 24px 1fr; gap: 16px;
+  align-items: center; padding: 11px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.reuse-row div:first-child { font-size: 0.9rem; color: var(--text-primary); }
+.reuse-row i { color: var(--text-muted); width: 16px; height: 16px; }
+.reuse-row div:last-child { font-size: 0.9rem; color: var(--text-secondary); }
+
+/* Revenue rows */
+.rev-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 24px;
+  align-items: baseline; padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.rev-row .rev-name { font-size: 1rem; color: var(--text-primary); }
+.rev-row .rev-calc { font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 2px; }
+.rev-row .rev-amount {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+  color: var(--text-secondary); letter-spacing: -0.03em; white-space: nowrap;
+}
+
+/* Recurring bar */
+.rev-bar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+.rev-bar__rec { background: linear-gradient(90deg, #8A63F2, #D1249D); }
+.rev-bar__one { background: rgba(255,255,255,0.12); }
+.rev-bar-legend { display: flex; gap: 28px; margin-top: 12px; font-size: 0.78rem; color: var(--text-muted); }
+
+/* Ecosystem diagram */
+.eco-wrap { width: 100%; overflow-x: auto; }
+.eco-wrap svg { display: block; width: 100%; max-width: 940px; height: auto; min-width: 700px; margin: 0 auto; }
+
+/* Sources footnote */
+.src { font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; margin-top: 20px; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip i { width: 16px; height: 16px; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.2rem; }
+  .stat-number--sm { font-size: 1.8rem; }
+  .stat-label { font-size: 0.7rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .route-row { grid-template-columns: 1fr; gap: 2px; padding: 8px 0; }
+  .route-row code { font-size: 0.78rem; }
+  .route-row span { font-size: 0.75rem; }
+
+  .reuse-row { grid-template-columns: 1fr 18px 1fr; gap: 10px; padding: 9px 0; }
+  .reuse-row div:first-child, .reuse-row div:last-child { font-size: 0.8rem; }
+
+  .rev-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+  .rev-row .rev-amount { font-size: 1.3rem; }
+  .rev-bar-legend { gap: 16px; font-size: 0.7rem; flex-wrap: wrap; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 19</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;">
+      <span class="club-chip">Port St. Lucie SC</span>
+    </div>
+    <h1 class="shimmer-text anim">La Academia como producto digital</h1>
+    <p class="subtitle anim"><strong style="color:#fff; font-weight:600;">Un hub que conecta</strong> academia, clínicas, ligas de adultos, tienda y matchday sobre un mismo carnet y una misma moneda.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. POR QUÉ ESTA PROPUESTA ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">Por qué esta propuesta</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">¿Por qué créditos solo para las clínicas?</h2>
+    <p class="anim" style="max-width:800px; margin-bottom:32px;">Nos pidieron comercializar las clínicas con la comunidad. Proponemos ir un paso más allá.</p>
+    <div class="grid-2x2 anim" style="margin-bottom:28px;">
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">El pedido</h4>
+        <p style="font-size:1rem; margin-bottom:0;">Vender clínicas a la comunidad con créditos.</p>
+      </div>
+      <div class="card card--sm card--highlight card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">La propuesta</h4>
+        <p style="font-size:1rem; margin-bottom:0;">Créditos prepagos para todo lo que el club vende: clínicas, academia, ligas, tienda y partidos.</p>
+      </div>
+    </div>
+    <p class="anim" style="font-size:1.05rem; color:var(--text-primary); max-width:800px;">Cada crédito que una familia carga es un motivo más para volver al club.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. LA TESIS ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La tesis</div>
+        <h2 class="anim" style="font-size:2.2rem;">Un chico que entra a los seis años y sigue vinculado al club a los treinta</h2>
+        <p class="anim" style="margin-top:16px;">Escuelita, inferiores, clínicas, tienda, partidos: todo forma parte de una misma historia, la de la comunidad con el club.</p>
+        <p class="anim">Proponemos un carnet único que acompañe al chico desde el primer día.</p>
+        <p class="anim">Y una sola moneda, los créditos, que sirva en todo el club: academia, clínicas, tienda, partidos y lo que venga.</p>
+      </div>
+      <div class="anim">
+        <div class="card" style="padding:36px;">
+          <i data-lucide="quote" style="width:24px; height:24px; color:var(--text-muted); margin-bottom:16px;"></i>
+          <p style="font-size:1.15rem; color:var(--text-primary); line-height:1.55; font-weight:300;">El sitio actual convierte visitantes en fundadores. La Academia convierte familias en suscriptores vitalicios.</p>
+          <div style="display:flex; align-items:flex-start; gap:12px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border-subtle);">
+            <i data-lucide="flag" style="width:20px; height:20px; color:var(--text-muted); flex-shrink:0; margin-top:3px;"></i>
+            <p style="font-size:0.95rem; color:var(--text-primary); margin:0;">Esa continuidad es lo que ningún club de USL League One está construyendo hoy en su web.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. LA OPORTUNIDAD ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">Por qué es negocio</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Un ingreso que vuelve todos los meses</h2>
+    <p class="anim" style="max-width:840px; margin-bottom:32px;">Las demás líneas comerciales (entradas, tienda, abonos) dependen del calendario de la USL y del estadio, y cada temporada hay que volver a venderlas desde cero. La Academia no. Los chicos entrenan todo el año y el adulto de la liga se anota todo el año.</p>
+    <ul class="icon-list anim">
+      <li>
+        <i data-lucide="repeat" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Ingreso previsible, no estacional.</strong> Una suscripción mensual sobre diez meses de temporada se puede proyectar, financiar y auditar. Una venta de entradas que hay que volver a generar cada temporada, no.</div>
+      </li>
+      <li>
+        <i data-lucide="user-check" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">El que paga es un adulto con alta intención.</strong> Una madre que inscribe a su hijo es un lead cualificado para abonos, camisetas y matchday. Es el canal de captación de hinchas más barato que va a tener el club.</div>
+      </li>
+      <li>
+        <i data-lucide="trending-up" style="width:22px; height:22px;"></i>
+        <div><strong style="color:#fff;">Valor de vida desmesurado.</strong> Un chico que entra en Exploración y sale en Rendimiento son trece años de suscripción, más la familia alrededor comprando todo lo demás.</div>
+      </li>
+    </ul>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. EL UNIVERSO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">El universo, con datos públicos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:40px;">El techo está lejísimos</h2>
+    <div class="grid-4 anim" style="margin-bottom:36px;">
+      <div>
+        <div class="stat-number stat-number--sm">268.062</div>
+        <div class="stat-label">Habitantes de Port St. Lucie</div>
+      </div>
+      <div>
+        <div class="stat-number stat-number--sm">55.700</div>
+        <div class="stat-label">Menores de 18 en la ciudad</div>
+      </div>
+      <div>
+        <div class="stat-number stat-number--sm">49.421</div>
+        <div class="stat-label">Alumnos en escuelas del condado</div>
+      </div>
+      <div>
+        <div class="stat-number stat-number--sm">800</div>
+        <div class="stat-label">Founders ya registrados</div>
+      </div>
+    </div>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Los 800 founders son el 0,3% de la ciudad</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Adultos identificados, con mail y nombre, antes de que el club juegue su primer partido. Es la semilla de la red y el costo de adquisición más barato que va a existir: si el 10% tiene un chico en edad de academia, son 80 familias de arranque sin gastar un dólar en captación.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">La familia ya está gastando esta plata</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Una familia estadounidense gastó en promedio USD 1.188 al año en el fútbol de su hijo en 2024, un 46% más que hace cinco años. El ingreso familiar mediano en Port St. Lucie es de USD 86.241, por encima del promedio de Florida. La pregunta no es si pagan, es a quién.</p>
+      </div>
+    </div>
+    <p class="src anim">Fuentes: U.S. Census Bureau (estimación 2025, y 20,8% de población menor de 18); St. Lucie Public Schools (matrícula 2025 / 2026); Aspen Institute Project Play, State of Play 2025. El número de founders es dato propio del club.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. ES UNA RED ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">La forma del producto</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">No es una sección. Es una red social del club</h2>
+    <p class="anim" style="max-width:880px; margin-bottom:32px;">Todo lo que va a pasar en la Academia (quién entrenó, quién completó una clínica, quién subió de nivel, quién faltó tres semanas) se puede evaporar sin dejar rastro, como se evapora en cualquier academia que trabaja con planillas. O puede quedar registrado, cruzado y devuelto a cada uno en su propio idioma. Esa decisión se toma antes de inscribir a la primera familia, no después.</p>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm card--accent-1">
+        <i data-lucide="smartphone" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">El chico</h4>
+        <p style="font-size:0.95rem;">Se levanta, abre el celular y ve en qué nivel está, quién subió de rango esta semana, qué clínica completó el chico del otro equipo, cuántos sellos le faltan para el próximo escalón. Es gamificación aplicada a la pertenencia: la primera razón real para volver todos los días.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <i data-lucide="git-compare-arrows" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">El club</h4>
+        <p style="font-size:0.95rem;">Ve el cruce. Asistencia, progreso, permanencia, consumo y compras, todo sobre la misma persona a lo largo de trece años. Sabe quién está por irse antes de que se vaya, y sabe qué familia compra. Ninguna planilla va a hacer eso.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <i data-lucide="heart-handshake" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">La familia</h4>
+        <p style="font-size:0.95rem;">Ve un recorrido que crece, no un recibo que llega. Ve el progreso de su hijo con la misma claridad con la que ve un boletín escolar, y ve el saldo de créditos que ya pagó y todavía puede usar.</p>
+      </div>
+    </div>
+    <div class="card card--sm anim" style="border-color:var(--border-medium);">
+      <p style="font-size:0.95rem; margin-bottom:0;"><strong style="color:#fff;">Una precisión que define todo el diseño:</strong> es una red de logros, no de mensajes. El chico ve lo que el otro hizo, nunca habla con el otro. Esa distinción es la que hace que sea seguro para menores y motivante al mismo tiempo.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. EL ECOSISTEMA ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">El ecosistema</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">Todo se conecta con todo</h2>
+    <p class="anim" style="max-width:940px; margin-bottom:8px; font-size:0.98rem;">No es un sistema de créditos, ni un carnet, ni una sección. Es un solo sistema con muchas puertas: el chico entrena y gana créditos, los créditos se gastan en la tienda o en la comida del día de partido, la familia va a la cancha y suma, el adulto de la liga compra abono, el que sale de la Academia entra al roster.</p>
+
+    <div class="eco-wrap anim">
+      <svg viewBox="0 0 940 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama del ecosistema: el carnet y los créditos en el centro, conectados con academia, clínicas, ligas de adultos, tienda, matchday, gastronomía, zona de chicos y primer equipo.">
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8A63F2" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#D1249D" stop-opacity="0.45"/>
+          </linearGradient>
+        </defs>
+
+        <!-- outer ring -->
+        <ellipse cx="470" cy="235" rx="345" ry="160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3 7"/>
+
+        <!-- spokes -->
+        <g stroke="rgba(255,255,255,0.16)" stroke-width="1">
+          <line x1="470" y1="235" x2="470" y2="75"/>
+          <line x1="470" y1="235" x2="714" y2="122"/>
+          <line x1="470" y1="235" x2="815" y2="235"/>
+          <line x1="470" y1="235" x2="714" y2="348"/>
+          <line x1="470" y1="235" x2="470" y2="395"/>
+          <line x1="470" y1="235" x2="226" y2="348"/>
+          <line x1="470" y1="235" x2="125" y2="235"/>
+          <line x1="470" y1="235" x2="226" y2="122"/>
+        </g>
+
+        <!-- nodes -->
+        <g font-family="Antonio, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#888888">
+          <g><rect x="392" y="53" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="81">ACADEMIA</text></g>
+          <g><rect x="636" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="128">CLÍNICAS</text></g>
+          <g><rect x="737" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="815" y="241">LIGAS DE ADULTOS</text></g>
+          <g><rect x="636" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="354">TIENDA</text></g>
+          <g><rect x="392" y="373" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="401">MATCHDAY</text></g>
+          <g><rect x="148" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="354">GASTRONOMÍA</text></g>
+          <g><rect x="47" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="125" y="241">ZONA DE CHICOS</text></g>
+          <g><rect x="148" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="128">PRIMER EQUIPO</text></g>
+        </g>
+
+        <!-- center -->
+        <circle cx="470" cy="235" r="86" fill="#000000" stroke="url(#ringGrad)" stroke-width="2"/>
+        <circle cx="470" cy="235" r="86" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+        <text x="470" y="218" font-family="Antonio, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#ffffff">CARNET DE</text>
+        <text x="470" y="240" font-family="Antonio, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#ffffff">TRIPULANTE</text>
+        <text x="470" y="264" font-family="Antonio, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#ffffff">+ LUCACOINS</text>
+        <text x="470" y="286" font-family="Figtree, sans-serif" font-size="10" text-anchor="middle" fill="#555555" letter-spacing="1">UNA IDENTIDAD, UNA MONEDA</text>
+      </svg>
+    </div>
+
+    <p class="anim" style="font-size:0.88rem; max-width:940px; margin-top:4px;">Con esas dos piezas en el centro, cada línea nueva que el club abra ya nace conectada a todas las demás, sin integrar nada dos veces.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. EL CARNET ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">El objeto central</div>
+        <h2 class="anim" style="font-size:2.2rem;">El carnet del jugador</h2>
+        <p class="anim" style="margin-top:16px;">Un objeto digital que se abre cuando el chico entra al club y no se resetea nunca: no por temporada, no por categoría, no por año. Es el perfil de la red y la identidad dentro del ecosistema.</p>
+        <p class="anim">Es una credencial de pertenencia, no un panel de administración. Si parece un recibo, fracasa. Si parece un objeto que se muestra, funciona. Y a diferencia del carnet de fundador, este cambia todos los meses.</p>
+        <p class="anim">Sobre ese objeto se apoya toda la capa de gamificación: niveles, rangos, sellos e hitos que le dan al chico algo concreto que perseguir cada mes, y le dan al club una medida de cuánto se está enganchando cada familia.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-1" style="padding:32px;">
+          <h4 style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.12em; margin-bottom:20px;">QUÉ MUESTRA</h4>
+          <ul class="checklist">
+            <li><i data-lucide="hash" style="width:16px; height:16px;"></i> Número de jugador, vitalicio</li>
+            <li><i data-lucide="layers" style="width:16px; height:16px;"></i> Fase y nivel actual dentro del modelo del club</li>
+            <li><i data-lucide="calendar-days" style="width:16px; height:16px;"></i> Años en el club, categorías, entrenadores</li>
+            <li><i data-lucide="stamp" style="width:16px; height:16px;"></i> Clínicas completadas, con un sello por cada una</li>
+            <li><i data-lucide="award" style="width:16px; height:16px;"></i> Hitos: primera convocatoria, Academy Cup, ascenso de nivel</li>
+            <li><i data-lucide="coins" style="width:16px; height:16px;"></i> Saldo de créditos</li>
+            <li><i data-lucide="triangle" style="width:16px; height:16px;"></i> Posición en la pirámide, con el siguiente escalón marcado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. CRÉDITOS ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">El sistema de créditos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">LucaCoins: se compran, se ganan, se gastan</h2>
+    <p class="anim" style="max-width:880px; margin-bottom:36px;">El club ya pensó créditos para la venta de clínicas, y esa idea es el punto de partida. Lo que proponemos es que nazcan con las tres capas pensadas desde el principio, porque la diferencia entre un contador de sesiones y una moneda del ecosistema es de diseño de datos, no de alcance. Si se construye como lo primero, migrar a lo segundo es rehacerlo.</p>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm card--accent-1">
+        <i data-lucide="shopping-cart" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Se compran</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Cada plan de suscripción trae créditos incluidos todos los meses, y la familia puede comprar más. Esto convierte una cuota, que se siente como un gasto, en una billetera cargada, que se siente como saldo a favor.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <i data-lucide="trophy" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Se ganan</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Asistencia a entrenamiento, clínicas completadas, hitos deportivos y de conducta, traer una familia nueva, actividad comunitaria. Acá el sistema deja de ser un método de pago y pasa a ser un mecanismo de hábito y de retención.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <i data-lucide="store" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Se gastan</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">En clínicas, tienda, entradas, gastronomía, ligas de adultos y suscripción. Y en experiencias sin costo marginal: foto con Luca, salir de la mano con el equipo, visita al vestuario. Las experiencias valen más emocionalmente y cuestan menos.</p>
+      </div>
+    </div>
+    <p class="anim" style="font-size:0.95rem; max-width:940px;"><strong style="color:#fff;">Tres reglas que van con esto.</strong> El saldo es un pasivo contable y necesita libro mayor, vencimiento y tope de emisión, definidos por Finanzas desde el primer crédito. Nada de mecánicas de azar dirigidas a menores: el progreso se gana, no se sortea. Y el chico nunca compra créditos, compra el adulto siempre.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. NAMING ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="label anim">Nombre y concepto</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">El chico no es pasajero. Es tripulación</h2>
+    <p class="anim" style="max-width:840px; margin-bottom:32px;">El boarding pass funciona para el fundador: la metáfora del que se sube a algo que está por salir. Para el chico de la Academia la metáfora es otra, porque el viaje dura años. El club ya habla ese idioma: el ancla en el escudo, "Anchored in glory", Luca y sobre todo "Founding Crew", que ya está en uso.</p>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Crew</h4>
+        <p style="font-size:0.95rem;">El chico entra a la tripulación del club. Conecta directo con el Founding Crew de los adultos: los grandes se subieron, los chicos navegan.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Bitácora</h4>
+        <p style="font-size:0.95rem;">El cuaderno de a bordo que registra el viaje. La metáfora más precisa: no se resetea, se acumula, y su valor está en todo lo que ya tiene escrito.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:10px;">Carta de navegación</h4>
+        <p style="font-size:0.95rem;">Aplicada al recorrido de fases: dónde estás, qué puerto viene después.</p>
+      </div>
+    </div>
+    <p class="anim" style="font-size:0.95rem; max-width:900px;">Las cuatro fases del plan podrían tener encima una capa de rangos de tripulación para el chico, manteniendo Exploración, Fundamental, Construcción y Rendimiento como los nombres metodológicos que ve el adulto. Al padre le hablás de desarrollo; al chico le hablás de ascender de rango. <strong style="color:#fff;">Todo esto es dirección, no decisión: los nombres los valida Prensa.</strong></p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 11. SON MENORES ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La restricción que define la arquitectura</div>
+        <h2 class="anim" style="font-size:2.2rem;">Son menores</h2>
+        <p class="anim" style="margin-top:16px;">No es un anexo legal: es lo que determina cómo se modela la red. Resolverlo en la definición cuesta una fracción de lo que cuesta descubrirlo en QA.</p>
+        <p class="anim" style="color:var(--text-primary); font-size:1.05rem;"><strong>El modelo: la cuenta es del adulto, el perfil es del chico.</strong></p>
+        <p class="anim" style="font-size:0.95rem;">Se registra el padre, la madre o el tutor: esa es la única cuenta con credenciales y con la suscripción. Bajo esa cuenta cuelgan uno o más perfiles de jugador. Todo crédito por entrega de datos lo gana el adulto, porque la COPPA prohíbe condicionar la participación de un menor a que entregue datos personales. Además mejora el producto: quien paga la suscripción y compra la camiseta es él.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-2" style="padding:32px;">
+          <h4 style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.12em; margin-bottom:20px;">CÓMO SE HACE UNA RED SEGURA</h4>
+          <ul class="checklist">
+            <li><i data-lucide="eye" style="width:16px; height:16px;"></i> Se ven logros y niveles, nunca datos de contacto</li>
+            <li><i data-lucide="message-square-off" style="width:16px; height:16px;"></i> Cero mensajería entre usuarios y cero comunicación directa del club al menor</li>
+            <li><i data-lucide="lock" style="width:16px; height:16px;"></i> Adentro del club, identificado y moderado. Hacia la web pública, nombre e inicial</li>
+            <li><i data-lucide="file-check" style="width:16px; height:16px;"></i> Uso de imagen con consentimiento explícito, granular y revocable, por canal</li>
+            <li><i data-lucide="shield-check" style="width:16px; height:16px;"></i> El Safeguarding Officer revisa y firma el diseño antes del desarrollo</li>
+          </ul>
+          <p style="font-size:0.9rem; margin:20px 0 0;">Bien planteado, esto no limita el producto: lo diferencia. Una familia que compara PSL SC con la academia de al lado y ve que el club entendió esto, decide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 12. MODELO DE INGRESOS ══════════════ -->
+<section class="slide" data-slide="12">
+  <div class="slide-content">
+    <div class="label anim">Modelo de ingresos · escenario conservador</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Qué factura esto en régimen</h2>
+
+    <div class="anim" style="margin-bottom:24px;">
+      <div class="rev-row">
+        <div>
+          <div class="rev-name">Academia · suscripción mensual</div>
+          <span class="rev-calc">400 chicos × USD 150 por mes × 10 meses de temporada</span>
+        </div>
+        <div class="rev-amount">USD 600.000</div>
+      </div>
+      <div class="rev-row">
+        <div>
+          <div class="rev-name">Ligas de adultos · suscripción</div>
+          <span class="rev-calc">480 jugadores × USD 250 al año, dos temporadas</span>
+        </div>
+        <div class="rev-amount">USD 120.000</div>
+      </div>
+      <div class="rev-row">
+        <div>
+          <div class="rev-name">Clínicas · créditos</div>
+          <span class="rev-calc">10 clínicas × 10 asistentes × 36 semanas × USD 25 la sesión</span>
+        </div>
+        <div class="rev-amount">USD 90.000</div>
+      </div>
+      <div class="rev-row">
+        <div>
+          <div class="rev-name">Cross sell al club</div>
+          <span class="rev-calc">120 abonos de familias de Academia + tienda sobre la misma base</span>
+        </div>
+        <div class="rev-amount">USD 78.000</div>
+      </div>
+      <div class="rev-row" style="border-bottom:none; padding-top:18px;">
+        <div><div class="rev-name" style="font-size:1.1rem;"><strong>Total anual modelado</strong></div></div>
+        <div class="rev-amount" style="color:var(--text-primary); font-size:2.2rem;">USD 888.000</div>
+      </div>
+      <div class="rev-bar">
+        <div class="rev-bar__rec" style="width:81%;"></div>
+        <div class="rev-bar__one" style="width:19%;"></div>
+      </div>
+      <div class="rev-bar-legend">
+        <span><strong style="color:var(--text-secondary);">81%</strong> ingreso recurrente por suscripción</span>
+        <span><strong style="color:var(--text-secondary);">19%</strong> transaccional</span>
+      </div>
+    </div>
+
+    <p class="anim" style="font-size:0.9rem; max-width:960px;"><strong style="color:#fff;">Por qué es conservador.</strong> Los 400 chicos son el 0,7% de los menores de 18 de la ciudad. La suscripción de USD 1.500 al año queda por debajo del rango competitivo de Florida (USD 1.495 a USD 2.725) y apenas encima del gasto promedio nacional en fútbol. Los 120 abonos equivalen al 4% de la asistencia promedio de un partido de USL League One en 2025.</p>
+    <p class="src anim">Referencias de precio: Central Florida SC y Springs Soccer Club (tarifas competitivas 2025); ligas recreativas de adultos en Florida, rango de USD 65 a USD 150 por temporada; asistencia promedio USL League One 2025, 2.785 espectadores.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 13. LA PALANCA ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="label anim">Rentabilidad</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">El número que mueve todo es la retención</h2>
+    <p class="anim" style="max-width:900px; margin-bottom:32px;">Con márgenes de contribución razonables por línea (40% en Academia, 65% en ligas, 60% en clínicas), el modelo deja cerca de <strong style="color:#fff;">USD 411.000 de contribución anual</strong>. Pero el margen no es lo interesante. Lo interesante es cuánto tiempo se queda cada familia.</p>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm card--accent-1">
+        <div class="stat-number stat-number--sm">USD 5.000</div>
+        <div class="stat-label" style="margin-bottom:12px;">Valor de vida con 70% de retención</div>
+        <p style="font-size:0.9rem; margin-bottom:0;">Permanencia media de 3,3 años. Es lo que pasa cuando la relación con la familia vive en una planilla y un grupo de WhatsApp.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <div class="stat-number stat-number--sm">USD 7.500</div>
+        <div class="stat-label" style="margin-bottom:12px;">Valor de vida con 80% de retención</div>
+        <p style="font-size:0.9rem; margin-bottom:0;">Permanencia media de 5 años. Diez puntos de retención suben el valor de vida un 50% sin vender un solo lugar nuevo.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <div class="stat-number stat-number--sm">USD 10.000</div>
+        <div class="stat-label" style="margin-bottom:12px;">Valor de vida con 85% de retención</div>
+        <p style="font-size:0.9rem; margin-bottom:0;">Permanencia media de 6,7 años. El doble que el primer escenario, con la misma cantidad de chicos y el mismo precio.</p>
+      </div>
+    </div>
+    <div class="card card--sm anim" style="border-color:var(--border-medium);">
+      <p style="font-size:1rem; margin-bottom:0;"><strong style="color:#fff;">Acá es donde la plataforma deja de ser un gasto y pasa a ser la palanca.</strong> La gamificación no es un adorno: un carnet que crece, un nivel que sube, un sello que falta, un saldo que espera y una red donde el chico ve lo que hicieron los demás son mecanismos de retención medibles. Cada punto que mueven vale más que cualquier campaña de captación.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 14. EL REMATE ══════════════ -->
+<section class="slide slide--divider" data-slide="14">
+  <div class="blob blob--purple" style="top:-150px; left:-150px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <div class="label anim" style="justify-content:center;">El remate de largo plazo</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(1.7rem, 3.2vw, 2.7rem); max-width:980px; margin:0 auto 28px;">Cuando el club firme a su primer jugador salido de la Academia, ese carnet no se archiva: se conecta a su ficha de roster</h2>
+    <p class="anim" style="max-width:760px; margin:0 auto; font-size:1rem;">La web va a mostrar el recorrido completo, del U9 al debut profesional, con fechas y sellos reales. Ese día el sitio cuenta una historia que ningún club de la liga puede contar. Y no se puede improvisar: hay que haber empezado a guardarla trece años antes.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 15. OPCIÓN A vs B ══════════════ -->
+<section class="slide" data-slide="15">
+  <div class="slide-content">
+    <div class="label anim">La decisión</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">La primera camada de familias se inscribe una sola vez</h2>
+    <p class="anim" style="max-width:900px; margin-bottom:32px;">Este es el único punto del proyecto que no admite corrección posterior. Todo lo demás se puede iterar: una landing se rehace, un copy se ajusta, una funcionalidad se agrega el año que viene. La relación con la primera camada de familias, no. Si se inscriben en un formulario suelto, esos datos y ese vínculo se recuperan después con mucho más esfuerzo que haciéndolo bien de entrada.</p>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Si arrancamos por el front</h4>
+        <p style="font-size:0.95rem;">Sale una sección de Academia linda y bien maquetada, con la información del plan bien presentada. Pero sin modelo de cuentas no hay relación identificada con la familia, y sin relación identificada no hay carnet, no hay red, no hay suscripción ni créditos que sobrevivan a una sesión.</p>
+        <p style="font-size:0.95rem; color:var(--text-primary); margin-bottom:0;">La inscripción termina siendo un formulario que dispara un mail, y el primer año de familias entra sin quedar registrado.</p>
+      </div>
+      <div class="card card--sm card--highlight card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Si arrancamos por la definición</h4>
+        <p style="font-size:0.95rem;">Modelo de datos pensado, arquitectura de información y reglas de negocio acordadas antes de maquetar. La familia tiene cuenta y suscripción, el chico tiene historial, nivel y sellos, los créditos tienen ledger, y todo cruza con los sistemas que el club ya usa.</p>
+        <p style="font-size:0.95rem; color:var(--text-primary); margin-bottom:0;">Cada familia que entra desde el día uno queda adentro de la plataforma, y el reloj de los trece años empieza a correr con ella.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 16. EL PUNTO DE PARTIDA ══════════════ -->
+<section class="slide" data-slide="16">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">Cómo se arranca</div>
+        <h2 class="anim" style="font-size:2.2rem;">Hay un solo punto de partida</h2>
+        <p class="anim" style="margin-top:16px;">No hace falta discutir el mapa entero hoy. Hace falta acordar la primera pieza, porque es la única que condiciona a todas las demás.</p>
+        <p class="anim">La definición de producto: cómo se modela la cuenta de la familia, qué ve cada uno en la red, qué reglas tienen los créditos y qué firma Safeguarding. Con eso resuelto, el resto se puede construir en el orden que al club le convenga comercialmente.</p>
+        <p class="anim" style="font-size:0.95rem;">Y hay un solo reloj externo: el calendario de la USL Academy fija cuándo tiene que estar abierta la inscripción. Conviene verificarlo con Deportivo.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-1" style="padding:36px;">
+          <h4 style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.12em; margin-bottom:20px;">QUÉ SE DEFINE EN ESA PRIMERA PIEZA</h4>
+          <ul class="checklist">
+            <li><i data-lucide="users" style="width:16px; height:16px;"></i> Las personas: madre o padre, chico, adulto recreativo</li>
+            <li><i data-lucide="route" style="width:16px; height:16px;"></i> El recorrido completo, de la primera consulta al debut</li>
+            <li><i data-lucide="database" style="width:16px; height:16px;"></i> El modelo de cuentas y de suscripción</li>
+            <li><i data-lucide="coins" style="width:16px; height:16px;"></i> Las reglas del crédito, acordadas con Finanzas</li>
+            <li><i data-lucide="shield-check" style="width:16px; height:16px;"></i> El marco de protección, firmado por Safeguarding</li>
+          </ul>
+          <p style="font-size:0.9rem; margin:20px 0 0;">Es la pieza que no se puede saltear y la única que hay que acordar antes de escribir una línea de código.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 17. QUÉ HAY QUE DEFINIR ══════════════ -->
+<section class="slide" data-slide="17">
+  <div class="slide-content">
+    <div class="label anim">La agenda de la definición</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Qué hay que definir, y con quién</h2>
+    <p class="anim" style="max-width:900px; margin-bottom:32px;">Ninguna de estas definiciones es nuestra. Todas son del club, y ninguna se puede resolver escribiendo código. Por eso conviene abrirlas ahora y no cuando ya haya familias inscriptas.</p>
+    <div class="grid-2x2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Negocio · con Marketing y Finanzas</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Precio de la suscripción por categoría, matrícula, clínica suelta, paquete e inscripción a ligas. Valor del crédito y reglas de emisión. Política de vencimiento. Si las ligas de adultos son ingreso propio o herramienta de captación. Qué sistema administra el cobro recurrente.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Protección · con Safeguarding y Legales</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Flujo de consentimiento parental verificable, revisado y firmado por el Safeguarding Officer. Política de uso de imagen de menores por canal. Tratamiento contable del saldo de créditos.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Contenido · con Deportivo y Prensa</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Fotos y biografías del cuerpo técnico y del equipo multidisciplinario. Calendario de Academia y fechas de pruebas. Definición operativa de cada una de las diez clínicas. Estado real de los acuerdos con J. Petrov y con Hurricanes. Y los nombres del carnet y de la moneda.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Las familias · lo que ya existe</h4>
+        <p style="font-size:0.95rem; margin-bottom:0;">Idealmente entrevistas. Si no es viable: consultas recibidas, listas de espera, datos de la academia actual y del U20, motivos de baja, preguntas frecuentes que reciben los entrenadores. Acceso a entrenadores y staff es un buen sustituto de primera vuelta.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 18. GRACIAS ══════════════ -->
+<section class="slide slide--thanks" data-slide="18">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Hablemos</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:620px; margin-left:auto; margin-right:auto;">Si estamos de acuerdo en la dirección, el próximo paso es sentarnos a definir. Si no, también sirve saberlo ahora.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 19. CHAT ══════════════ -->
+<section class="slide" data-slide="19">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta propuesta.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuánto factura esto?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿De dónde salen los números?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué es una red social?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funcionan los créditos?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué pasa con los datos de menores?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta propuesta. Podés preguntarme sobre el modelo de negocio y los números, la red social del club, el ecosistema, el carnet del jugador, las suscripciones, el sistema de créditos, la protección de menores o el punto de partida.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la propuesta, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras'],
+    answer: 'La propuesta plantea construir la Academia como un hub digital y no como una sección del sitio. En el centro hay un carnet del jugador que no se resetea nunca y una moneda de créditos que circula por todo el club. Alrededor se conectan academia, clínicas, ligas de adultos, tienda, gastronomía, matchday y primer equipo. El negocio se vende por suscripción, no por cuota, y el modelo conservador da USD 888.000 anuales con 81% de ingreso recurrente. La palanca de rentabilidad es la retención: diez puntos suben el valor de vida por familia un 50%.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el modelo de ingresos y de dónde salen los números, el universo de mercado de Port St. Lucie, la retención y el valor de vida, la red social del club, el ecosistema, la gamificación, la diferencia entre la opción A y la opción B, el carnet de tripulante, el naming, los LucaCoins, la protección de menores, el punto de partida y qué necesitamos del club. También tengo material de la propuesta larga sobre arquitectura de rutas, reutilización de componentes y riesgos.'
+  },
+  // Business and numbers
+  {
+    keywords: ['factura', 'facturación', 'facturacion', 'ingreso', 'ingresos', 'cuánto genera', 'cuanto genera', 'revenue', 'modelo de ingresos', '888', 'cuánta plata', 'cuanta plata', 'dinero', 'negocio'],
+    answer: 'El modelo conservador da USD 888.000 al año en régimen. Academia por suscripción: 400 chicos × USD 150 por mes × 10 meses = USD 600.000. Ligas de adultos: 480 jugadores × USD 250 al año = USD 120.000. Clínicas con créditos: 10 clínicas × 10 asistentes × 36 semanas × USD 25 = USD 90.000. Cross sell al club (abonos y tienda sobre la base de familias) = USD 78.000. El 81% de eso es ingreso recurrente por suscripción.'
+  },
+  {
+    keywords: ['conservador', 'de dónde salen', 'de donde salen', 'supuesto', 'supuestos', 'fuente', 'fuentes', 'dato', 'datos', 'referencia', 'cómo lo calculan', 'como lo calculan', 'benchmark'],
+    answer: 'Los supuestos están anclados en datos públicos. Port St. Lucie tiene 268.062 habitantes (Census 2025) y 20,8% son menores de 18, o sea unos 55.700 chicos: los 400 inscriptos del modelo son el 0,7% de eso. La suscripción de USD 1.500 al año queda por debajo del rango competitivo de Florida, donde Central Florida SC cobra USD 1.495 y Springs Soccer Club entre USD 2.375 y USD 2.725. El gasto promedio de una familia estadounidense en el fútbol de su hijo fue de USD 1.188 en 2024 según el Aspen Institute. Las ligas de adultos en Florida cobran entre USD 65 y USD 150 por temporada. Y los 120 abonos son el 4% de la asistencia promedio de USL League One en 2025, que fue de 2.785.'
+  },
+  {
+    keywords: ['rentabilidad', 'margen', 'contribución', 'contribucion', 'ganancia', 'utilidad', '411', 'ebitda', 'rentable'],
+    answer: 'Con márgenes de contribución razonables por línea (40% en Academia, 65% en ligas de adultos, 60% en clínicas y 50% en cross sell), el modelo deja cerca de USD 411.000 de contribución anual sobre USD 888.000 de ingreso. Pero el margen no es lo más interesante: lo que mueve el negocio es cuánto tiempo se queda cada familia.'
+  },
+  {
+    keywords: ['retención', 'retencion', 'ltv', 'valor de vida', 'churn', 'permanencia', 'palanca', 'se van', 'baja', 'bajas'],
+    answer: 'La retención es la palanca. Con 70% de retención anual la permanencia media es de 3,3 años y el valor de vida por familia es de USD 5.000. Con 80% pasa a 5 años y USD 7.500. Con 85% pasa a 6,7 años y USD 10.000. O sea que diez puntos de retención suben el valor de vida un 50% sin vender un solo lugar nuevo. Un carnet que crece, un nivel que sube, un saldo que espera y una red donde el chico ve lo que hicieron los demás son mecanismos de retención: ahí es donde el producto digital deja de ser un gasto y pasa a ser la palanca del negocio.'
+  },
+  {
+    keywords: ['universo', 'mercado', 'ciudad', 'población', 'poblacion', 'habitantes', 'port st lucie', 'techo', 'tamaño', 'tamano', 'demografía', 'demografia'],
+    answer: 'Port St. Lucie tiene 268.062 habitantes según la estimación del Census de 2025, con 20,8% de población menor de 18, o sea unos 55.700 chicos. Las escuelas del condado tienen 49.421 alumnos matriculados. El ingreso familiar mediano es de USD 86.241, por encima del promedio de Florida. Contra eso, los 800 founders actuales son el 0,3% de la ciudad y los 400 chicos del modelo son el 0,7% de los menores de 18. El techo está lejísimos.'
+  },
+  {
+    keywords: ['founder', 'founders', '800', 'fundadores', 'base actual'],
+    answer: 'Los 800 founders son adultos ya identificados, con nombre y mail, antes de que el club juegue su primer partido. Son el 0,3% de la ciudad y la semilla de la red. Es el costo de adquisición más barato que va a existir: si el 10% tiene un chico en edad de academia, son 80 familias de arranque sin gastar un dólar en captación.'
+  },
+  {
+    keywords: ['suscripción', 'suscripcion', 'suscripciones', 'cuota', 'mensual', 'recurrente', 'previsibilidad', 'abono mensual', 'membresía', 'membresia'],
+    answer: 'La propuesta es vender suscripción, no cuota. Una suscripción mensual sobre diez meses de temporada se puede proyectar, financiar y auditar; un pico de venta de entradas no. En el modelo, el 81% del ingreso es recurrente. Y se combina con los créditos: cada plan trae créditos incluidos todos los meses, lo que convierte algo que se siente como un gasto en una billetera cargada que se siente como saldo a favor. Las ligas de adultos van con la misma lógica.'
+  },
+  // Product
+  {
+    keywords: ['red social', 'red', 'social', 'hub', 'ver a otros', 'otros chicos', 'comparar', 'ranking', 'compañero', 'companero'],
+    answer: 'Es una red social del club. Todo lo que va a pasar en la Academia (quién entrenó, quién completó una clínica, quién subió de nivel, quién faltó tres semanas) se puede evaporar sin dejar rastro, como se evapora en cualquier academia que trabaja con planillas, o puede quedar registrado y cruzado. Esa decisión se toma antes de inscribir a la primera familia. El chico se levanta, abre el celular y ve en qué nivel está, quién subió de rango esta semana y qué clínica completó el chico del otro equipo. El club ve el cruce de asistencia, progreso, permanencia y consumo sobre la misma persona a lo largo de trece años. La familia ve un recorrido que crece en vez de un recibo que llega. La precisión clave: es una red de logros, no de mensajes. Se ve lo que el otro hizo, nunca se habla con el otro.'
+  },
+  {
+    keywords: ['ecosistema', 'conecta', 'conexión', 'conexion', 'gastronomía', 'gastronomia', 'comida', 'todo junto', 'sistema', 'gráfico', 'grafico', 'diagrama'],
+    answer: 'No es un sistema de créditos, ni un carnet, ni una sección: es un solo sistema con muchas puertas. En el centro están el carnet de tripulante (la identidad) y los LucaCoins (la moneda). Alrededor se conectan academia, clínicas, ligas de adultos, tienda, matchday, gastronomía, zona de chicos y primer equipo. El chico entrena y gana LucaCoins, los LucaCoins se gastan en la tienda o en la comida del día de partido, la familia va a la cancha y suma, el adulto de la liga compra abono, el que sale de la Academia entra al roster. Con esas dos piezas en el centro, cada línea nueva que el club abra ya nace conectada a todas las demás.'
+  },
+  {
+    keywords: ['gamificación', 'gamificacion', 'gamification', 'juego', 'sello', 'sellos', 'insignia', 'medalla', 'engagement', 'enganche', 'motivación', 'motivacion', 'niveles', 'rangos'],
+    answer: 'La gamificación no es un adorno decorativo: es el mecanismo de retención. El carnet de tripulante sostiene niveles, rangos, sellos e hitos que le dan al chico algo concreto que perseguir cada mes, y le dan al club una medida de cuánto se está enganchando cada familia. Cada clínica completada deja un sello, cada hito sube de rango, y todo eso se ve en la red. Como la retención es la palanca del negocio (diez puntos valen 50% más de valor de vida), la capa de gamificación es la parte del producto que más directamente mueve la rentabilidad.'
+  },
+  {
+    keywords: ['tesis', 'idea central', 'por qué', 'por que', 'sentido', 'vitalicio', 'treinta', 'seis años', 'seis anos'],
+    answer: 'La tesis es que un chico que entra a los seis años sigue vinculado al club a los treinta. Es la única línea del negocio con horizonte de dos décadas, ingreso recurrente y un vínculo que no depende de que el primer equipo gane. La esencia es la del club argentino de barrio traducida a producto digital: vos no te hacés hincha de Port St. Lucie, te hacés del club.'
+  },
+  {
+    keywords: ['decisión', 'decision', 'irreversible', 'irreversibilidad', 'primera camada', 'diferencia', 'comparación', 'comparacion', 'front simple', 'folleto', 'plataforma', 'por el front'],
+    answer: 'La decisión es por dónde arrancar, y es el único punto del proyecto que no admite corrección posterior: la primera camada de familias se inscribe una sola vez. Si arrancamos por el front, sale una sección linda y bien maquetada, pero sin modelo de cuentas no hay relación identificada con la familia, y sin eso no hay carnet, red, suscripción ni créditos que sobrevivan a una sesión: el primer año de familias entra sin quedar registrado. Si arrancamos por la definición, cada familia que entra desde el día uno queda adentro de la plataforma y el reloj de los trece años empieza a correr con ella. Todo lo demás se puede iterar; esto no.'
+  },
+  {
+    keywords: ['tres piezas', 'piezas', 'componentes', 'estructura'],
+    answer: 'Son tres. Pieza A, el Hub de la Academia: el destino permanente y la cara pública de la red. Pieza B, el sistema de créditos: la moneda que hace circular el ecosistema, combinada con la suscripción. Pieza C, la comunidad adulta: las cinco ligas recreativas vendidas como suscripción, la pieza con menos fricción regulatoria y la que más rápido genera ingreso.'
+  },
+  {
+    keywords: ['carnet', 'credencial', 'objeto', 'sello', 'número de jugador', 'numero de jugador', 'perfil del chico', 'historial'],
+    answer: 'El carnet del jugador es un objeto digital que se abre cuando el chico entra al club y no se resetea nunca: no por temporada, no por categoría, no por año. Es el perfil de la red y la identidad dentro del ecosistema. Muestra el número de jugador vitalicio, la fase y el nivel actual, años en el club, categorías y entrenadores, clínicas completadas con un sello por cada una, hitos, saldo de créditos y la posición en la pirámide. Es una credencial de pertenencia, no un panel de administración: si parece un recibo fracasa, si parece un objeto que se muestra funciona.'
+  },
+  {
+    keywords: ['nombre', 'naming', 'crew', 'bitácora', 'bitacora', 'tripulación', 'tripulacion', 'carta de navegación', 'metáfora', 'metafora', 'boarding pass', 'rango'],
+    answer: 'El boarding pass funciona para el fundador, pero el chico de la Academia no es pasajero: es tripulación, y el viaje dura años. El club ya habla ese idioma (el ancla, "Anchored in glory", Luca, "Founding Crew"). Direcciones a explorar: Crew, Bitácora y Carta de navegación. Aparte, las cuatro fases podrían tener una capa de rangos de tripulación para el chico manteniendo Exploración, Fundamental, Construcción y Rendimiento como nombres metodológicos para el adulto. Y el rango es exactamente lo que se ve en la red. Es dirección, no decisión: el nombre lo valida Prensa.'
+  },
+  {
+    keywords: ['crédito', 'credito', 'créditos', 'creditos', 'lucacoin', 'moneda', 'ledger', 'saldo', 'canje', 'puntos', 'billetera'],
+    answer: 'Los créditos tienen tres capas, pensadas desde el principio. Se compran: cada plan de suscripción trae créditos incluidos y la familia puede comprar más, lo que convierte una cuota en una billetera cargada. Se ganan: asistencia a entrenamiento, clínicas completadas, hitos deportivos y de conducta, traer una familia nueva, actividad comunitaria; acá dejan de ser método de pago y pasan a ser mecanismo de hábito. Se gastan: en clínicas, tienda, entradas, gastronomía, ligas y suscripción, y en experiencias sin costo marginal como foto con Luca o salir de la mano con el equipo. La diferencia entre un contador de sesiones y una moneda del ecosistema es de diseño de datos: si se construye como lo primero, migrar a lo segundo es rehacerlo.'
+  },
+  {
+    keywords: ['regla', 'reglas', 'pasivo', 'contable', 'finanzas', 'azar', 'ruleta', 'caja sorpresa', 'loot', 'vencimiento', 'emisión', 'emision'],
+    answer: 'Tres reglas a fijar antes de escribir código. Una: el saldo es un pasivo contable, necesita libro mayor, política de vencimiento y tope de emisión, y lo define Finanzas desde el primer crédito emitido. Dos: nada de mecánicas de azar dirigidas a menores, sin cajas sorpresa ni ruletas; el progreso se gana, no se sortea. Tres: el chico nunca compra créditos, compra el adulto siempre.'
+  },
+  {
+    keywords: ['menor', 'menores', 'coppa', 'niños', 'ninos', 'legal', 'privacidad', 'datos', 'safeguarding', 'consentimiento', 'parental', 'tutor', 'cuenta', 'login', 'seguridad'],
+    answer: 'Es la restricción que define la arquitectura de la red. El modelo es: la cuenta es del adulto, el perfil es del chico. Se registra el padre, la madre o el tutor como única cuenta con credenciales y con la suscripción, y bajo ella cuelgan uno o más perfiles de jugador. Todo crédito por entrega de datos lo gana el adulto, porque la COPPA prohíbe condicionar la participación de un menor a que entregue datos personales. Cómo se hace una red segura: se ven logros y niveles pero nunca datos de contacto, cero mensajería entre usuarios y cero comunicación directa del club al menor, adentro del club identificado y moderado y hacia la web pública sólo nombre e inicial, uso de imagen con consentimiento explícito y revocable, y el Safeguarding Officer firma el diseño antes del desarrollo.'
+  },
+  {
+    keywords: ['ruta', 'rutas', 'url', 'arquitectura web', 'sitemap', 'academy', 'leagues', 'luca', 'sección', 'seccion', 'página', 'pagina'],
+    answer: 'Las rutas nuevas son: la sección de Academia con pathway, programs, tryouts, clinics, partners y staff. El área privada de la familia con el carnet del jugador, créditos, schedule y billing. Las ligas recreativas de adultos con página por liga e inscripción. Y la zona de chicos, ya prevista en el roadmap. Dos decisiones a discutir: que la zona de chicos sea la cara infantil del ecosistema todo el año, y que la Academia esté en español desde el origen.'
+  },
+  {
+    keywords: ['reutiliza', 'reutilizar', 'existente', 'aprovecha', 'template', 'boarding', 'founders wall', 'vivenu', 'activecampaign', 'costo total'],
+    answer: 'Buena parte se apoya en lo que ya existe: el carnet sobre el generador de boarding pass, el muro de jugadores sobre el Founders Wall, la landing de clínicas sobre el template de campaña, la inscripción a pruebas sobre la captura de ActiveCampaign, las fichas de staff y las páginas de liga sobre sus templates, el calendario sobre el de comunidad, y el cobro de suscripciones sobre Vivenu. Lo genuinamente nuevo son tres cosas: el modelo de cuenta de adulto y menor, el motor de créditos con su ledger, y el área privada donde vive la red.'
+  },
+  {
+    keywords: ['punto de partida', 'arrancar', 'empezar', 'empieza', 'por donde', 'por dónde', 'comenzar', 'inicio', 'primero', 'siguiente paso', 'próximo paso', 'proximo paso', 'definición de producto', 'definicion de producto'],
+    answer: 'Hay un solo punto de partida y no hace falta discutir el mapa entero hoy. Es la definición de producto: cómo se modela la cuenta de la familia, qué ve cada uno en la red, qué reglas tienen los créditos y qué firma Safeguarding. Con eso resuelto, el resto se puede construir en el orden que al club le convenga comercialmente. Es la única pieza que no se puede saltear y la única que hay que acordar antes de escribir una línea de código. El único reloj externo es el calendario de la USL Academy, que fija cuándo tiene que estar abierta la inscripción.'
+  },
+  {
+    keywords: ['definir', 'definición', 'definicion', 'definiciones', 'agenda', 'con quién', 'con quien', 'necesitamos', 'input', 'contenido', 'fotos', 'información', 'informacion'],
+    answer: 'Hay cuatro frentes de definición, y ninguno se resuelve escribiendo código. Negocio, con Marketing y Finanzas: precio de la suscripción por categoría, matrícula, clínicas, valor del crédito, política de vencimiento y qué sistema administra el cobro recurrente. Protección, con Safeguarding y Legales: consentimiento parental verificable, política de uso de imagen y tratamiento contable del saldo. Contenido, con Deportivo y Prensa: fotos y biografías del staff, calendario, definición operativa de las diez clínicas, estado de los acuerdos, y los nombres del carnet y de la moneda. Y las familias: idealmente entrevistas, o lo que ya exista (consultas recibidas, listas de espera, motivos de baja, preguntas frecuentes de los entrenadores).'
+  },
+  {
+    keywords: ['familia', 'familias', 'entrevista', 'investigación', 'investigacion', 'research', 'usuario'],
+    answer: 'Idealmente haríamos entrevistas con familias. Entendemos que puede no ser viable, así que la pregunta concreta es qué información ya existe hoy: consultas recibidas, listas de espera, datos de la academia actual y del U20, motivos de baja, preguntas frecuentes que reciben los entrenadores. Con eso ya se puede trabajar, y el acceso a entrenadores y staff es un buen sustituto de primera vuelta.'
+  },
+  {
+    keywords: ['riesgo', 'riesgos', 'problema', 'peligro', 'cuidado', 'contra'],
+    answer: 'Cuatro riesgos. Una economía de créditos mal calibrada genera pasivo real: prudencia en la emisión inicial, siempre se puede regalar más y nunca se puede sacar. La Academia y el primer equipo compiten por la misma atención en el nav y en el hero. El plan depende de acuerdos aún abiertos, y no conviene publicar como cerrado lo que está en negociación. Y el naming toca la voz del club: si no se acuerda temprano con Prensa, se rehace tarde.'
+  },
+  {
+    keywords: ['pregunta', 'preguntas', 'reunión', 'reunion', 'abierta', 'abiertas'],
+    answer: 'Cinco preguntas para la reunión. ¿La Academia es un centro de ingresos propio o una herramienta de captación de hinchas? ¿Cuál es el precio real de la suscripción por categoría? ¿Qué sistema administra hoy la Academia, si es que hay alguno? ¿Qué información sobre las familias existe ya y a qué podemos acceder? ¿Quién ocupa el rol de Safeguarding Officer? La primera cambia todo el diseño.'
+  },
+  {
+    keywords: ['clínica', 'clinica', 'clínicas', 'clinicas', 'diez'],
+    answer: 'Las diez clínicas semanales del plan están explícitamente abiertas a atletas de afuera de la estructura de la Academia. Es un producto de entrada al embudo que hoy no tiene ni página ni forma de comprarse. Se venden con créditos y en el modelo aportan USD 90.000 al año (10 clínicas × 10 asistentes × 36 semanas × USD 25). Necesitamos del club la definición operativa de cada una: quién la dicta, dónde, cuándo y cuánto sale.'
+  },
+  {
+    keywords: ['liga', 'ligas', 'adulto', 'adultos', 'recreativa', '+35', '5v5', '7v7', 'comunidad'],
+    answer: 'Son cinco ligas recreativas de adultos: 5v5, 7v7, femenina, masculina y +35. Capturan a un público que el club hoy no toca, como el amateur de treinta y cinco años que quiere jugar los martes y termina siendo abonado. Se venden como suscripción, no como inscripción suelta: 480 jugadores a USD 250 al año son USD 120.000. Es la pieza con menos fricción regulatoria, la que más rápido genera ingreso y la que sirve para probar el cobro recurrente antes de exponerlo a familias.'
+  },
+  {
+    keywords: ['roster', 'profesional', 'debut', 'primer equipo', 'team', 'firma', 'largo plazo'],
+    answer: 'Cuando el club firme a su primer jugador salido de la Academia, ese carnet no se archiva: se conecta a su ficha de roster. La web va a poder mostrar el recorrido completo, del U9 al debut profesional, con fechas y sellos reales. Ese día el sitio cuenta una historia que ningún club de la liga puede contar, y no se puede improvisar: hay que haber empezado a guardarla trece años antes.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'equipo', 'contacto'],
+    answer: 'Yacaré Studio (yacare.io) es el estudio de producto digital detrás del sitio actual del club. Para consultas sobre esta propuesta podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['fase', 'fases', 'exploración', 'exploracion', 'fundamental', 'construcción', 'construccion', 'rendimiento', 'pirámide', 'piramide', 'pathway'],
+    answer: 'El plan define cuatro fases: Exploración, Fundamental, Construcción y Rendimiento, más la pirámide hacia el profesionalismo. La propuesta es hacer ese recorrido explícito y navegable en el Hub de la Academia, para que la familia entienda dónde está el chico hoy, qué viene después y cómo se llega. Y que el chico lo vea como niveles y rangos dentro de la red.'
+  },
+  {
+    keywords: ['honorario', 'presupuesto', 'cotización', 'cotizacion', 'cuánto cobran', 'cuanto cobran', 'pago', 'contrato'],
+    answer: 'Esta presentación es de dirección de producto y de modelo de negocio: define el qué y el cuánto vale para el club, no el dimensionamiento del trabajo. Eso se cierra después de acordar la dirección. Para conversarlo, escribí a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta propuesta. Si querés, podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el modelo de ingresos, la retención, la red social del club, el ecosistema, el carnet, los créditos o la protección de menores.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
