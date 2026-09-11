@@ -647,13 +647,37 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
 }
 
-/* Tag row (slide 6) */
-.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag {
-  padding: 7px 14px; border-radius: 999px;
-  border: 1px solid var(--border-medium);
-  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+/* Timeline (slide 6) */
+.timeline {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(8, 1fr);
+  padding: 6px 0 0;
+}
+.tl-rail {
+  position: absolute; top: 12px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.tl-item {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.tl-dot {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.tl-item:nth-child(6) .tl-dot { border-color: rgba(255,255,255,0.35); }
+.tl-item:nth-child(7) .tl-dot { border-color: rgba(255,255,255,0.55); }
+.tl-item:nth-child(8) .tl-dot { border-color: rgba(255,255,255,0.75); }
+.tl-item:nth-child(9) .tl-dot { border-color: #ffffff; }
+.tl-label {
+  font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  white-space: nowrap;
+}
+.tl-arrow {
+  position: absolute; top: 12px; right: -6px; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #D1249D;
 }
 
 /* Decisions grid (slide 8) */
@@ -674,7 +698,13 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
     position: static; width: 120px;
     display: block; margin: 0 0 14px auto;
   }
-  .tag { font-size: 0.72rem; padding: 6px 10px; }
+  .timeline { grid-template-columns: 1fr; gap: 12px; padding: 0 0 0 4px; }
+  .tl-rail { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .tl-item { flex-direction: row; align-items: center; gap: 12px; }
+  .tl-dot { width: 11px; height: 11px; margin-left: -4px; }
+  .tl-label { font-size: 0.8rem; }
+  .tl-arrow { display: none; }
   .decisions { grid-template-columns: 1fr; gap: 8px; }
   .decision { padding: 12px 14px; font-size: 0.9rem; }
 }
@@ -876,7 +906,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <section class="slide" data-slide="6">
   <div class="slide-content">
     <div class="label anim">La evolución</div>
-    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Esto puede crecer junto con el club</h2>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Un hub que crece con el club</h2>
     <div class="steps anim" style="margin-bottom:32px;">
       <div class="step">
         <div class="step-num">1</div>
@@ -900,11 +930,20 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
         </div>
       </div>
     </div>
-    <div class="tag-row anim" style="margin-bottom:24px;">
-      <span class="tag">Academy</span><span class="tag">Clinics</span><span class="tag">Facilities</span><span class="tag">Matchday</span><span class="tag">Stadium</span><span class="tag">Store</span><span class="tag">Benefits</span><span class="tag">Experiences</span>
+    <div class="timeline anim" style="margin-bottom:28px;">
+      <div class="tl-rail"></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Academy</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Clinics</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Facilities</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Matchday</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Stadium</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Store</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Benefits</span></div>
+      <div class="tl-item"><span class="tl-dot"></span><span class="tl-label">Experiences</span></div>
+      <i data-lucide="chevron-right" class="tl-arrow"></i>
     </div>
     <p class="anim" style="max-width:880px; font-size:0.98rem;">En el futuro, la misma identidad podría permitir entrar al estadio, consumir, acceder a beneficios, regalar créditos o participar de nuevas experiencias.</p>
-    <p class="anim" style="font-size:1.15rem; color:var(--text-primary); max-width:880px;">No estamos diseñando solamente para lo que PSLSC es hoy, sino para lo que puede convertirse mañana.</p>
+    <p class="anim" style="font-size:1.15rem; color:var(--text-primary); max-width:880px;">No estamos diseñando solamente para lo que Port St. Lucie es hoy, sino para lo que puede convertirse mañana.</p>
   </div>
   <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
 </section>
@@ -1251,7 +1290,7 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['crecer', 'crece', 'evolución', 'evolucion', 'futuro', 'mañana', 'manana', 'después', 'despues', 'más adelante', 'mas adelante', 'hoy', 'etapas', 'roadmap', 'estadio', 'stadium', 'regalar'],
-    answer: 'Esto puede crecer junto con el club. Hoy: identidad, créditos y actividades. Después: el historial de cada persona y de su relación con el club. Más adelante: un ecosistema completamente conectado, con Academy, Clinics, Facilities, Matchday, Stadium, Store, Benefits y Experiences. En el futuro, la misma identidad podría permitir entrar al estadio, consumir, acceder a beneficios, regalar créditos o participar de nuevas experiencias. No estamos diseñando solamente para lo que PSLSC es hoy, sino para lo que puede convertirse mañana.'
+    answer: 'Esto puede crecer junto con el club. Hoy: identidad, créditos y actividades. Después: el historial de cada persona y de su relación con el club. Más adelante: un ecosistema completamente conectado, con Academy, Clinics, Facilities, Matchday, Stadium, Store, Benefits y Experiences. En el futuro, la misma identidad podría permitir entrar al estadio, consumir, acceder a beneficios, regalar créditos o participar de nuevas experiencias. No estamos diseñando solamente para lo que Port St. Lucie es hoy, sino para lo que puede convertirse mañana.'
   },
   {
     keywords: ['puntos de contacto', 'diagrama', 'dibujo', 'gráfico', 'grafico', 'centro', 'alrededor', 'youth', 'first team', 'clinics', 'facilities', 'matchday', 'store', 'community', 'áreas', 'areas', 'pslsc id'],
