@@ -621,15 +621,24 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 }
 
 
-/* Moments row (slide 3) */
-.moments { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; }
+/* Moments list (slide 3) */
+.moments { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 .moment {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
-  padding: 22px 20px; border-radius: 16px;
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  padding: 13px 18px; border-radius: 12px;
   background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
   font-size: 1rem; color: var(--text-primary);
 }
-.moment i { width: 22px; height: 22px; color: var(--text-muted); }
+.moment i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Luca (slide 3) */
+.luca-wrap { display: flex; justify-content: center; }
+.luca-img {
+  display: block; width: 100%; max-width: 420px; height: auto;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+}
 
 /* Tag row (slide 6) */
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -651,8 +660,9 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .decision i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
 
 @media (max-width: 768px) {
-  .moments { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .moment { padding: 14px; font-size: 0.9rem; gap: 10px; }
+  .moments { gap: 6px; }
+  .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
+  .luca-img { max-width: 260px; }
   .tag { font-size: 0.72rem; padding: 6px 10px; }
   .decisions { grid-template-columns: 1fr; gap: 8px; }
   .decision { padding: 12px 14px; font-size: 0.9rem; }
@@ -769,16 +779,23 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <!-- ══════════════ 3. POR QUÉ UN ECOSISTEMA ══════════════ -->
 <section class="slide" data-slide="3">
   <div class="slide-content">
-    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">¿Por qué construir un ecosistema?</h2>
-    <p class="anim" style="max-width:800px; margin-bottom:36px;">Cada interacción con el club es una oportunidad para construir una relación más profunda.</p>
-    <div class="moments anim" style="margin-bottom:36px;">
-      <div class="moment"><i data-lucide="calendar-check"></i><span>Una clínica.</span></div>
-      <div class="moment"><i data-lucide="ticket"></i><span>Un partido.</span></div>
-      <div class="moment"><i data-lucide="activity"></i><span>Una actividad.</span></div>
-      <div class="moment"><i data-lucide="shopping-bag"></i><span>Una compra.</span></div>
-      <div class="moment"><i data-lucide="map-pin"></i><span>Una visita al club.</span></div>
+    <div class="split" style="align-items:center;">
+      <div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">¿Por qué construir un ecosistema?</h2>
+        <p class="anim" style="margin-bottom:28px;">Cada interacción con el club es una oportunidad para construir una relación más profunda.</p>
+        <div class="moments anim" style="margin-bottom:28px;">
+          <div class="moment"><i data-lucide="calendar-check"></i><span>Una clínica.</span></div>
+          <div class="moment"><i data-lucide="ticket"></i><span>Un partido.</span></div>
+          <div class="moment"><i data-lucide="activity"></i><span>Una actividad.</span></div>
+          <div class="moment"><i data-lucide="shopping-bag"></i><span>Una compra.</span></div>
+          <div class="moment"><i data-lucide="map-pin"></i><span>Una visita al club.</span></div>
+        </div>
+        <p class="anim" style="font-size:1.15rem; color:var(--text-primary);">Un ecosistema permite conectarlos y convertirlos en una relación continua.</p>
+      </div>
+      <div class="anim luca-wrap">
+        <img src="lucacoin.webp" alt="Luca, la mascota del club, sosteniendo una moneda Luca Coin PSLSC" class="luca-img">
+      </div>
     </div>
-    <p class="anim" style="font-size:1.2rem; color:var(--text-primary); max-width:800px;">Un ecosistema permite conectarlos y convertirlos en una relación continua.</p>
   </div>
   <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
 </section>
