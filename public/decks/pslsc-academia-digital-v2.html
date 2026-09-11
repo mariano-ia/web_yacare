@@ -631,6 +631,13 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 }
 .moment i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
 
+/* Coins (slide 5) */
+.coins-img {
+  position: absolute; top: -10px; right: 0;
+  width: 260px; height: auto; z-index: 1;
+  pointer-events: none;
+}
+
 /* Luca (slide 3) */
 .luca-wrap { display: flex; justify-content: center; }
 .luca-img {
@@ -663,6 +670,10 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .moments { gap: 6px; }
   .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
   .luca-img { max-width: 260px; }
+  .coins-img {
+    position: static; width: 120px;
+    display: block; margin: 0 0 14px auto;
+  }
   .tag { font-size: 0.72rem; padding: 6px 10px; }
   .decisions { grid-template-columns: 1fr; gap: 8px; }
   .decision { padding: 12px 14px; font-size: 0.9rem; }
@@ -831,9 +842,10 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 
 <!-- ══════════════ 5. CRÉDITOS COMO PARTICIPACIÓN ══════════════ -->
 <section class="slide" data-slide="5">
-  <div class="slide-content">
+  <div class="slide-content" style="position:relative;">
+    <img src="lucacoins.webp" alt="Pila de monedas Luca Coin PSLSC" class="coins-img anim">
     <div class="label anim">Los créditos</div>
-    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Los créditos se convierten en una herramienta de participación</h2>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px; max-width:700px;">Los créditos se convierten en una herramienta de participación</h2>
     <p class="anim" style="max-width:840px; margin-bottom:6px;">Los créditos no sirven solamente para pagar.</p>
     <p class="anim" style="max-width:840px; margin-bottom:32px;">También pueden ayudar al club a incentivar comportamientos y fortalecer el vínculo con su comunidad.</p>
     <div class="card card--sm anim" style="margin-bottom:28px;">
