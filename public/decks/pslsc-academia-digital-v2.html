@@ -325,9 +325,43 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .rev-bar__one { background: rgba(255,255,255,0.12); }
 .rev-bar-legend { display: flex; gap: 28px; margin-top: 12px; font-size: 0.78rem; color: var(--text-muted); }
 
-/* Ecosystem diagram */
-.eco-wrap { width: 100%; overflow-x: auto; }
-.eco-wrap svg { display: block; width: 100%; max-width: 940px; height: auto; min-width: 700px; margin: 0 auto; }
+/* Ecosystem (slide 7) */
+.slide--eco { overflow: hidden; }
+.eco-left { max-width: 540px; }
+.eco { position: relative; width: 100%; max-width: 520px; aspect-ratio: 1 / 1; }
+.eco-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.eco-node {
+  position: absolute; transform: translate(-50%, -50%);
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border-radius: 14px;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary);
+  white-space: nowrap; z-index: 1;
+}
+.eco-node i { width: 18px; height: 18px; color: var(--text-secondary); flex-shrink: 0; }
+.eco-center {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 32%; aspect-ratio: 1 / 1; border-radius: 50%; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 48px rgba(138, 94, 255, 0.22);
+}
+.eco-center i { width: 30px; height: 30px; color: var(--text-primary); margin-bottom: 6px; }
+.eco-center strong {
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-primary); line-height: 1;
+}
+.eco-center span {
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+}
+.phone-img {
+  position: absolute; right: -1vw; top: 52%; transform: translateY(-50%);
+  height: 106vh; width: auto; z-index: 0; pointer-events: none;
+}
 
 /* Sources footnote */
 .src { font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; margin-top: 20px; }
@@ -694,6 +728,17 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .moments { gap: 6px; }
   .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
   .luca-img { max-width: 260px; }
+  .eco-left { max-width: 100%; }
+  .eco { max-width: 100%; }
+  .eco-node { padding: 7px 10px; gap: 6px; font-size: 0.62rem; border-radius: 10px; }
+  .eco-node i { width: 13px; height: 13px; }
+  .eco-center i { width: 22px; height: 22px; margin-bottom: 2px; }
+  .eco-center strong { font-size: 0.85rem; }
+  .eco-center span { font-size: 0.6rem; }
+  .phone-img {
+    position: static; transform: none; height: auto;
+    width: 100%; max-width: 300px; display: block; margin: 24px auto 0;
+  }
   .coins-img {
     position: static; width: 120px;
     display: block; margin: 0 0 14px auto;
@@ -950,57 +995,43 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 
 
 <!-- ══════════════ 7. EL ECOSISTEMA ══════════════ -->
-<section class="slide" data-slide="7">
+<section class="slide slide--eco" data-slide="7">
+  <img src="pslsc-id.webp" alt="PSLSC ID en el teléfono: carnet de miembro con Luca, saldo de Luca Coins, accesos a Academy, Clinics, Matchday, Store y Facilities, y código QR" class="phone-img anim">
   <div class="slide-content" style="max-width:1180px;">
-    <div class="label anim">El ecosistema</div>
-    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">Un ecosistema, múltiples puntos de contacto</h2>
+    <div class="eco-left">
+      <div class="label anim">El ecosistema</div>
+      <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:12px;">Un ecosistema, múltiples puntos de contacto</h2>
+      <p class="anim" style="margin-bottom:28px; font-size:1.05rem;">Todos conectados a una misma identidad y a una misma economía de créditos.</p>
 
-    <div class="eco-wrap anim">
-      <svg viewBox="0 0 940 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama del ecosistema: la persona, con su PSLSC ID y sus créditos, en el centro, conectada con Academy, Youth, First Team, Clinics, Facilities, Matchday, Store y Community.">
-        <defs>
-          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#8A63F2" stop-opacity="0.45"/>
-            <stop offset="100%" stop-color="#D1249D" stop-opacity="0.45"/>
-          </linearGradient>
-        </defs>
-
-        <!-- outer ring -->
-        <ellipse cx="470" cy="235" rx="345" ry="160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3 7"/>
-
-        <!-- spokes -->
-        <g stroke="rgba(255,255,255,0.16)" stroke-width="1">
-          <line x1="470" y1="235" x2="470" y2="75"/>
-          <line x1="470" y1="235" x2="714" y2="122"/>
-          <line x1="470" y1="235" x2="815" y2="235"/>
-          <line x1="470" y1="235" x2="714" y2="348"/>
-          <line x1="470" y1="235" x2="470" y2="395"/>
-          <line x1="470" y1="235" x2="226" y2="348"/>
-          <line x1="470" y1="235" x2="125" y2="235"/>
-          <line x1="470" y1="235" x2="226" y2="122"/>
-        </g>
-
-        <!-- nodes -->
-        <g font-family="Antonio, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#888888">
-          <g><rect x="392" y="53" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="81">ACADEMY</text></g>
-          <g><rect x="636" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="128">YOUTH</text></g>
-          <g><rect x="737" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="815" y="241">FIRST TEAM</text></g>
-          <g><rect x="636" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="354">CLINICS</text></g>
-          <g><rect x="392" y="373" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="401">FACILITIES</text></g>
-          <g><rect x="148" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="354">MATCHDAY</text></g>
-          <g><rect x="47" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="125" y="241">STORE</text></g>
-          <g><rect x="148" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="128">COMMUNITY</text></g>
-        </g>
-
-        <!-- center -->
-        <circle cx="470" cy="235" r="86" fill="#000000" stroke="url(#ringGrad)" stroke-width="2"/>
-        <circle cx="470" cy="235" r="86" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
-        <text x="470" y="222" font-family="Antonio, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#ffffff">PERSON</text>
-        <text x="470" y="246" font-family="Antonio, sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#888888">PSLSC ID</text>
-        <text x="470" y="266" font-family="Antonio, sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#888888">+ CREDITS</text>
-      </svg>
+      <div class="eco anim">
+        <svg class="eco-lines" viewBox="0 0 100 100" aria-hidden="true">
+          <ellipse cx="50" cy="50" rx="38" ry="38" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1" stroke-dasharray="2 5" vector-effect="non-scaling-stroke"/>
+          <g stroke="rgba(255,255,255,0.18)" stroke-width="1" vector-effect="non-scaling-stroke">
+            <line x1="50" y1="50" x2="50" y2="12" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="77" y2="23" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="86" y2="50" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="77" y2="77" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="50" y2="88" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="23" y2="77" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="14" y2="50" vector-effect="non-scaling-stroke"/>
+            <line x1="50" y1="50" x2="23" y2="23" vector-effect="non-scaling-stroke"/>
+          </g>
+        </svg>
+        <div class="eco-node" style="left:50%; top:12%;"><i data-lucide="graduation-cap"></i><span>Academy</span></div>
+        <div class="eco-node" style="left:77%; top:23%;"><i data-lucide="users"></i><span>Youth</span></div>
+        <div class="eco-node" style="left:86%; top:50%;"><i data-lucide="shirt"></i><span>First Team</span></div>
+        <div class="eco-node" style="left:77%; top:77%;"><i data-lucide="cone"></i><span>Clinics</span></div>
+        <div class="eco-node" style="left:50%; top:88%;"><i data-lucide="land-plot"></i><span>Facilities</span></div>
+        <div class="eco-node" style="left:23%; top:77%;"><i data-lucide="ticket"></i><span>Matchday</span></div>
+        <div class="eco-node" style="left:14%; top:50%;"><i data-lucide="shopping-bag"></i><span>Store</span></div>
+        <div class="eco-node" style="left:23%; top:23%;"><i data-lucide="users-round"></i><span>Community</span></div>
+        <div class="eco-center">
+          <i data-lucide="user-round"></i>
+          <strong>PSLSC ID</strong>
+          <span>+ Luca Coins</span>
+        </div>
+      </div>
     </div>
-
-    <p class="anim" style="font-size:1.05rem; color:var(--text-primary); max-width:940px; margin-top:8px;">Todos conectados a una misma identidad y a una misma economía de créditos.</p>
   </div>
   <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
 </section>
