@@ -682,13 +682,13 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   mix-blend-mode: screen;
 }
 .coin-glint::before {
-  width: var(--gs); height: var(--gs); margin: calc(var(--gs) / -2);
+  width: var(--gs); aspect-ratio: 1 / 1; margin: calc(var(--gs) / -2);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,224,150,0.4) 32%, transparent 68%);
   animation: glint-halo 3.6s ease-in-out infinite;
 }
 .coin-glint::after {
-  width: calc(var(--gs) * 1.9); height: calc(var(--gs) * 1.9);
+  width: calc(var(--gs) * 1.9); aspect-ratio: 1 / 1;
   margin: calc(var(--gs) * -0.95);
   background:
     linear-gradient(to right, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%),
@@ -782,7 +782,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
     width: 100%; max-width: 250px; display: block; margin: 24px auto 0;
   }
   .coin-glint.coins-glint {
-    position: static; width: 120px;
+    position: relative; top: auto; right: auto; width: 120px;
     display: block; margin: 0 0 14px auto;
   }
   .timeline { grid-template-columns: 1fr; gap: 12px; padding: 0 0 0 4px; }
@@ -922,7 +922,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
         <p class="anim" style="font-size:1.15rem; color:var(--text-primary);">Un ecosistema permite conectarlos y convertirlos en una relación continua.</p>
       </div>
       <div class="anim luca-wrap">
-        <span class="coin-glint luca-glint" style="--gx:15.5%; --gy:23.5%; --gs:56px">
+        <span class="coin-glint luca-glint" style="--gx:15.5%; --gy:23.5%; --gs:13.5%">
           <img src="lucacoin.webp" alt="Luca, la mascota del club, sosteniendo una moneda Luca Coin PSLSC" class="luca-img">
         </span>
       </div>
@@ -963,7 +963,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <!-- ══════════════ 5. CRÉDITOS COMO PARTICIPACIÓN ══════════════ -->
 <section class="slide" data-slide="5">
   <div class="slide-content" style="position:relative;">
-    <span class="coin-glint coins-glint anim" style="--gx:79%; --gy:20.5%; --gs:64px"><img src="lucacoins.webp" alt="Pila de monedas Luca Coin PSLSC" class="coins-img"></span>
+    <span class="coin-glint coins-glint anim" style="--gx:79%; --gy:20.5%; --gs:25%"><img src="lucacoins.webp" alt="Pila de monedas Luca Coin PSLSC" class="coins-img"></span>
     <div class="label anim">Los créditos</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px; max-width:700px;">Los créditos se convierten en una herramienta de participación</h2>
     <p class="anim" style="max-width:840px; margin-bottom:6px;">Los créditos no sirven solamente para pagar.</p>
