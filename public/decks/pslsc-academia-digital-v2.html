@@ -348,6 +348,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
               linear-gradient(135deg, #8A63F2, #D1249D) border-box;
   box-shadow: 0 0 48px rgba(138, 94, 255, 0.22);
+  animation: id-pulse 3.2s ease-in-out infinite;
+}
+@keyframes id-pulse {
+  0%, 100% { box-shadow: 0 0 28px rgba(138, 94, 255, 0.16); }
+  50%      { box-shadow: 0 0 84px rgba(138, 94, 255, 0.55); }
 }
 .eco-center i { width: 30px; height: 30px; color: var(--text-primary); margin-bottom: 6px; }
 .eco-center strong {
@@ -359,11 +364,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
 }
 .phone-img {
-  position: absolute; right: -1vw; top: -2vh;
-  height: 106vh; width: auto; z-index: 0; pointer-events: none;
+  position: absolute; right: 0; top: 7vh;
+  height: 85vh; width: auto; z-index: 0; pointer-events: none;
 }
 @media (max-width: 1300px) and (min-width: 769px) {
-  .phone-img { height: 96vh; top: 3vh; right: -2vw; }
+  .phone-img { height: 77vh; top: 11vh; right: -1vw; }
 }
 
 /* Sources footnote */
@@ -668,17 +673,51 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 }
 .moment i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
 
-/* Coins (slide 5) */
-.coins-img {
-  position: absolute; top: -10px; right: 0;
-  width: 260px; height: auto; z-index: 1;
-  pointer-events: none;
+/* Destello animado sobre las monedas */
+.coin-glint { position: relative; display: block; line-height: 0; }
+.coin-glint::before, .coin-glint::after {
+  content: ''; position: absolute;
+  left: var(--gx); top: var(--gy);
+  pointer-events: none; z-index: 2;
+  mix-blend-mode: screen;
 }
+.coin-glint::before {
+  width: var(--gs); height: var(--gs); margin: calc(var(--gs) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,224,150,0.4) 32%, transparent 68%);
+  animation: glint-halo 3.6s ease-in-out infinite;
+}
+.coin-glint::after {
+  width: calc(var(--gs) * 1.9); height: calc(var(--gs) * 1.9);
+  margin: calc(var(--gs) * -0.95);
+  background:
+    linear-gradient(to right, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%),
+    linear-gradient(to bottom, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  animation: glint-star 3.6s ease-in-out infinite;
+}
+@keyframes glint-halo {
+  0%, 100% { opacity: 0.22; transform: scale(0.75); }
+  50%      { opacity: 0.95; transform: scale(1.15); }
+}
+@keyframes glint-star {
+  0%, 100% { opacity: 0.12; transform: rotate(0deg) scale(0.6); }
+  50%      { opacity: 1;    transform: rotate(45deg) scale(1.1); }
+}
+
+/* Coins (slide 5) */
+.coin-glint.coins-glint {
+  position: absolute; top: -10px; right: 0;
+  width: 260px; z-index: 1; pointer-events: none;
+}
+.coins-img { display: block; width: 100%; height: auto; }
 
 /* Luca (slide 3) */
 .luca-wrap { display: flex; justify-content: center; }
+.coin-glint.luca-glint { width: 100%; max-width: 420px; margin: 0 auto; }
 .luca-img {
-  display: block; width: 100%; max-width: 420px; height: auto;
+  display: block; width: 100%; height: auto;
   mix-blend-mode: screen;
   -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
@@ -730,7 +769,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 @media (max-width: 768px) {
   .moments { gap: 6px; }
   .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
-  .luca-img { max-width: 260px; }
+  .coin-glint.luca-glint { max-width: 260px; }
   .eco-left { max-width: 100%; }
   .eco { max-width: 100%; }
   .eco-node { padding: 7px 10px; gap: 6px; font-size: 0.62rem; border-radius: 10px; }
@@ -739,10 +778,10 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .eco-center strong { font-size: 0.85rem; }
   .eco-center span { font-size: 0.6rem; }
   .phone-img {
-    position: static; transform: none; height: auto;
-    width: 100%; max-width: 300px; display: block; margin: 24px auto 0;
+    position: static; height: auto;
+    width: 100%; max-width: 250px; display: block; margin: 24px auto 0;
   }
-  .coins-img {
+  .coin-glint.coins-glint {
     position: static; width: 120px;
     display: block; margin: 0 0 14px auto;
   }
@@ -793,6 +832,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .deck { height: auto; overflow: visible; scroll-snap-type: none; }
   .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .eco-center, .coin-glint::before, .coin-glint::after { animation: none !important; }
   #chat-container { display: none !important; }
 }
 </style>
@@ -882,7 +922,9 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
         <p class="anim" style="font-size:1.15rem; color:var(--text-primary);">Un ecosistema permite conectarlos y convertirlos en una relación continua.</p>
       </div>
       <div class="anim luca-wrap">
-        <img src="lucacoin.webp" alt="Luca, la mascota del club, sosteniendo una moneda Luca Coin PSLSC" class="luca-img">
+        <span class="coin-glint luca-glint" style="--gx:15.5%; --gy:23.5%; --gs:56px">
+          <img src="lucacoin.webp" alt="Luca, la mascota del club, sosteniendo una moneda Luca Coin PSLSC" class="luca-img">
+        </span>
       </div>
     </div>
   </div>
@@ -921,7 +963,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 <!-- ══════════════ 5. CRÉDITOS COMO PARTICIPACIÓN ══════════════ -->
 <section class="slide" data-slide="5">
   <div class="slide-content" style="position:relative;">
-    <img src="lucacoins.webp" alt="Pila de monedas Luca Coin PSLSC" class="coins-img anim">
+    <span class="coin-glint coins-glint anim" style="--gx:79%; --gy:20.5%; --gs:64px"><img src="lucacoins.webp" alt="Pila de monedas Luca Coin PSLSC" class="coins-img"></span>
     <div class="label anim">Los créditos</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px; max-width:700px;">Los créditos se convierten en una herramienta de participación</h2>
     <p class="anim" style="max-width:840px; margin-bottom:6px;">Los créditos no sirven solamente para pagar.</p>
