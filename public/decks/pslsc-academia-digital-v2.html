@@ -359,8 +359,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
 }
 .phone-img {
-  position: absolute; right: -1vw; top: 52%; transform: translateY(-50%);
+  position: absolute; right: -1vw; top: -2vh;
   height: 106vh; width: auto; z-index: 0; pointer-events: none;
+}
+@media (max-width: 1300px) and (min-width: 769px) {
+  .phone-img { height: 96vh; top: 3vh; right: -2vw; }
 }
 
 /* Sources footnote */
@@ -1032,7 +1035,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
       </div>
     </div>
   </div>
-  <img src="pslsc-id.webp" alt="PSLSC ID en el teléfono: carnet de miembro con Luca, saldo de Luca Coins, accesos a Academy, Clinics, Matchday, Store y Facilities, y código QR" class="phone-img anim">
+  <img src="pslsc-id.webp" alt="PSLSC ID en el teléfono: carnet de miembro con Luca, saldo de Luca Coins, accesos a Academy, Clinics, Matchday, Store y Facilities, y código QR" class="phone-img">
   <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
 </section>
 
@@ -1087,7 +1090,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
     <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
-    <h2 class="shimmer-text anim">Hablemos</h2>
+    <h2 class="shimmer-text anim">¿Hacemos algo grande juntos?</h2>
     <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:620px; margin-left:auto; margin-right:auto;">Si estamos alineados con esta visión, el próximo paso es sentarnos a definir el producto.</p>
     <div class="contact-row anim">
       <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
