@@ -358,6 +358,11 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   color: var(--text-secondary);
 }
 .club-chip i { width: 16px; height: 16px; color: var(--text-muted); }
+.club-chip--solid {
+  background: var(--text-primary); color: #000;
+  border-color: var(--text-primary);
+  font-size: 1.05rem; padding: 12px 26px;
+}
 
 /* ═══════════════════════════════════════
    SLIDE VARIANTS
@@ -591,6 +596,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   .quote-text { font-size: 1.05rem; }
 
   .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+  .club-chip--solid { font-size: 0.85rem; padding: 9px 16px; text-align: center; }
 
   .blob { width: 200px !important; height: 200px !important; }
 
@@ -727,7 +733,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
       <span class="club-chip">Port St. Lucie SC</span>
     </div>
     <h1 class="shimmer-text anim" style="max-width:900px; margin-left:auto; margin-right:auto;">Los créditos pueden conectar toda la experiencia PSLSC</h1>
-    <p class="subtitle anim">Mucho más que una forma de pagar.</p>
+    <div class="anim" style="margin-bottom:28px;"><span class="club-chip club-chip--solid">Mucho más que una forma de pagar una clínica</span></div>
     <p class="meta anim" style="margin-top:8px;">Academy · Clinics · Matchday · Facilities · Store · Community</p>
   </div>
 </section>
