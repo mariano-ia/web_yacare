@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Créditos PSLSC</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-number--sm { font-size: 2.8rem; }
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  max-width: 900px;
+}
+
+/* Route list */
+.route-list { display: flex; flex-direction: column; gap: 2px; }
+.route-row {
+  display: grid; grid-template-columns: 220px 1fr; gap: 20px;
+  padding: 9px 0; border-bottom: 1px solid var(--border-subtle);
+  align-items: baseline;
+}
+.route-row code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem; color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.route-row code.sub { color: var(--text-secondary); padding-left: 14px; }
+.route-row span { font-size: 0.82rem; color: var(--text-muted); }
+
+/* Reuse table */
+.reuse-row {
+  display: grid; grid-template-columns: 1fr 24px 1fr; gap: 16px;
+  align-items: center; padding: 11px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.reuse-row div:first-child { font-size: 0.9rem; color: var(--text-primary); }
+.reuse-row i { color: var(--text-muted); width: 16px; height: 16px; }
+.reuse-row div:last-child { font-size: 0.9rem; color: var(--text-secondary); }
+
+/* Revenue rows */
+.rev-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 24px;
+  align-items: baseline; padding: 14px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.rev-row .rev-name { font-size: 1rem; color: var(--text-primary); }
+.rev-row .rev-calc { font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 2px; }
+.rev-row .rev-amount {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+  color: var(--text-secondary); letter-spacing: -0.03em; white-space: nowrap;
+}
+
+/* Recurring bar */
+.rev-bar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+.rev-bar__rec { background: linear-gradient(90deg, #8A63F2, #D1249D); }
+.rev-bar__one { background: rgba(255,255,255,0.12); }
+.rev-bar-legend { display: flex; gap: 28px; margin-top: 12px; font-size: 0.78rem; color: var(--text-muted); }
+
+/* Ecosystem diagram */
+.eco-wrap { width: 100%; overflow-x: auto; }
+.eco-wrap svg { display: block; width: 100%; max-width: 940px; height: auto; min-width: 700px; margin: 0 auto; }
+
+/* Sources footnote */
+.src { font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; margin-top: 20px; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip i { width: 16px; height: 16px; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.2rem; }
+  .stat-number--sm { font-size: 1.8rem; }
+  .stat-label { font-size: 0.7rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .route-row { grid-template-columns: 1fr; gap: 2px; padding: 8px 0; }
+  .route-row code { font-size: 0.78rem; }
+  .route-row span { font-size: 0.75rem; }
+
+  .reuse-row { grid-template-columns: 1fr 18px 1fr; gap: 10px; padding: 9px 0; }
+  .reuse-row div:first-child, .reuse-row div:last-child { font-size: 0.8rem; }
+
+  .rev-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+  .rev-row .rev-amount { font-size: 1.3rem; }
+  .rev-bar-legend { gap: 16px; font-size: 0.7rem; flex-wrap: wrap; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+
+/* Moments row (slide 3) */
+.moments { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; }
+.moment {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  padding: 22px 20px; border-radius: 16px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary);
+}
+.moment i { width: 22px; height: 22px; color: var(--text-muted); }
+
+/* Tag row (slide 6) */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+}
+
+/* Decisions grid (slide 8) */
+.decisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+.decision {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; border-radius: 14px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary);
+}
+.decision i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .moments { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .moment { padding: 14px; font-size: 0.9rem; gap: 10px; }
+  .tag { font-size: 0.72rem; padding: 6px 10px; }
+  .decisions { grid-template-columns: 1fr; gap: 8px; }
+  .decision { padding: 12px 14px; font-size: 0.9rem; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 11</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;">
+      <span class="club-chip">Port St. Lucie SC</span>
+    </div>
+    <h1 class="shimmer-text anim" style="max-width:900px; margin-left:auto; margin-right:auto;">Los créditos pueden conectar toda la experiencia PSLSC</h1>
+    <p class="subtitle anim">Mucho más que una forma de pagar.</p>
+    <p class="meta anim" style="margin-top:8px;">Academy · Clinics · Matchday · Facilities · Store · Community</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. PEDIDO Y OPORTUNIDAD ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">El origen</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px; max-width:900px;">Partimos de un pedido concreto. Descubrimos una oportunidad mucho mayor.</h2>
+    <div class="grid-2x2 anim">
+      <div class="card">
+        <i data-lucide="inbox" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.3rem; margin-bottom:12px;">El pedido</h4>
+        <p style="font-size:1.05rem; margin-bottom:0;">Crear una experiencia digital para vender actividades de la Academy utilizando un sistema de créditos.</p>
+      </div>
+      <div class="card card--highlight card--accent-1">
+        <i data-lucide="sparkles" style="width:26px; height:26px; color:var(--text-muted); margin-bottom:16px;"></i>
+        <h4 style="font-size:1.3rem; margin-bottom:12px;">La oportunidad</h4>
+        <p style="font-size:1.05rem; color:var(--text-primary); margin-bottom:0;">Convertir esos créditos en una unidad común capaz de conectar toda la relación de una persona con PSLSC.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. POR QUÉ UN ECOSISTEMA ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">El problema</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">¿Por qué construir un ecosistema?</h2>
+    <p class="anim" style="max-width:800px; margin-bottom:36px;">Hoy, muchas de las interacciones con el club suceden como momentos separados.</p>
+    <div class="moments anim" style="margin-bottom:36px;">
+      <div class="moment"><i data-lucide="calendar-check"></i><span>Una clínica.</span></div>
+      <div class="moment"><i data-lucide="ticket"></i><span>Un partido.</span></div>
+      <div class="moment"><i data-lucide="activity"></i><span>Una actividad.</span></div>
+      <div class="moment"><i data-lucide="shopping-bag"></i><span>Una compra.</span></div>
+      <div class="moment"><i data-lucide="map-pin"></i><span>Una visita al club.</span></div>
+    </div>
+    <p class="anim" style="font-size:1.2rem; color:var(--text-primary); max-width:800px;">La oportunidad es convertir esos momentos aislados en una relación continua.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. UNA SOLA PLATAFORMA ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La propuesta</div>
+        <h2 class="anim" style="font-size:2.2rem;">Una sola plataforma para toda la relación con el club</h2>
+        <p class="anim" style="margin-top:16px;">No proponemos solamente un front para vender actividades de la Academy.</p>
+        <p class="anim">Proponemos un espacio donde cada persona pueda:</p>
+        <p class="anim" style="font-size:1.15rem; color:var(--text-primary); margin-top:24px;">Una identidad. Una cuenta. Una relación continua con PSLSC.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--accent-1" style="padding:32px;">
+          <ul class="checklist">
+            <li><i data-lucide="check" style="width:16px; height:16px;"></i> Participar de experiencias</li>
+            <li><i data-lucide="check" style="width:16px; height:16px;"></i> Comprar y utilizar créditos</li>
+            <li><i data-lucide="check" style="width:16px; height:16px;"></i> Recibir beneficios</li>
+            <li><i data-lucide="check" style="width:16px; height:16px;"></i> Relacionarse con distintas áreas del club</li>
+            <li><i data-lucide="check" style="width:16px; height:16px;"></i> Volver una y otra vez al mismo ecosistema</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. CRÉDITOS COMO PARTICIPACIÓN ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">Los créditos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Los créditos se convierten en una herramienta de participación</h2>
+    <p class="anim" style="max-width:840px; margin-bottom:6px;">Los créditos no sirven solamente para pagar.</p>
+    <p class="anim" style="max-width:840px; margin-bottom:32px;">También pueden ayudar al club a incentivar comportamientos y fortalecer el vínculo con su comunidad.</p>
+    <div class="card card--sm anim" style="margin-bottom:28px;">
+      <h4 style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.12em; margin-bottom:8px;">POR EJEMPLO</h4>
+      <div class="reuse-row">
+        <div>Dejá tu email</div>
+        <i data-lucide="arrow-right"></i>
+        <div>Recibís créditos.</div>
+      </div>
+      <div class="reuse-row">
+        <div>Participá de una actividad</div>
+        <i data-lucide="arrow-right"></i>
+        <div>Sumás créditos.</div>
+      </div>
+      <div class="reuse-row" style="border-bottom:none;">
+        <div>Usalos después</div>
+        <i data-lucide="arrow-right"></i>
+        <div>En una clínica, una entrada, una cancha o un consumo dentro del club.</div>
+      </div>
+    </div>
+    <p class="anim" style="font-size:1.15rem; color:var(--text-primary); max-width:840px;">El crédito empieza a conectar participación, pertenencia y consumo.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. CRECE CON EL CLUB ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">La evolución</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Esto puede crecer junto con el club</h2>
+    <div class="steps anim" style="margin-bottom:32px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Hoy</h4>
+          <p>Identidad + créditos + actividades.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Después</h4>
+          <p>Historial de cada persona y de su relación con PSLSC.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Más adelante</h4>
+          <p>Un ecosistema completamente conectado.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tag-row anim" style="margin-bottom:24px;">
+      <span class="tag">Academy</span><span class="tag">Clinics</span><span class="tag">Facilities</span><span class="tag">Matchday</span><span class="tag">Stadium</span><span class="tag">Store</span><span class="tag">Benefits</span><span class="tag">Experiences</span>
+    </div>
+    <p class="anim" style="max-width:880px; font-size:0.98rem;">En el futuro, la misma identidad podría permitir entrar al estadio, consumir, acceder a beneficios, regalar créditos o participar de nuevas experiencias.</p>
+    <p class="anim" style="font-size:1.15rem; color:var(--text-primary); max-width:880px;">No estamos diseñando solamente para lo que PSLSC es hoy, sino para lo que puede convertirse mañana.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. EL ECOSISTEMA ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">El ecosistema</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:8px;">Un ecosistema, múltiples puntos de contacto</h2>
+
+    <div class="eco-wrap anim">
+      <svg viewBox="0 0 940 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama del ecosistema: la persona, con su PSLSC ID y sus créditos, en el centro, conectada con Academy, Youth, First Team, Clinics, Facilities, Matchday, Store y Community.">
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8A63F2" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#D1249D" stop-opacity="0.45"/>
+          </linearGradient>
+        </defs>
+
+        <!-- outer ring -->
+        <ellipse cx="470" cy="235" rx="345" ry="160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3 7"/>
+
+        <!-- spokes -->
+        <g stroke="rgba(255,255,255,0.16)" stroke-width="1">
+          <line x1="470" y1="235" x2="470" y2="75"/>
+          <line x1="470" y1="235" x2="714" y2="122"/>
+          <line x1="470" y1="235" x2="815" y2="235"/>
+          <line x1="470" y1="235" x2="714" y2="348"/>
+          <line x1="470" y1="235" x2="470" y2="395"/>
+          <line x1="470" y1="235" x2="226" y2="348"/>
+          <line x1="470" y1="235" x2="125" y2="235"/>
+          <line x1="470" y1="235" x2="226" y2="122"/>
+        </g>
+
+        <!-- nodes -->
+        <g font-family="Antonio, sans-serif" font-size="15" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#888888">
+          <g><rect x="392" y="53" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="81">ACADEMY</text></g>
+          <g><rect x="636" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="128">YOUTH</text></g>
+          <g><rect x="737" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="815" y="241">FIRST TEAM</text></g>
+          <g><rect x="636" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="714" y="354">CLINICS</text></g>
+          <g><rect x="392" y="373" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="470" y="401">FACILITIES</text></g>
+          <g><rect x="148" y="326" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="354">MATCHDAY</text></g>
+          <g><rect x="47" y="213" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="125" y="241">STORE</text></g>
+          <g><rect x="148" y="100" width="156" height="44" rx="12" fill="#000000" stroke="rgba(255,255,255,0.14)"/><text x="226" y="128">COMMUNITY</text></g>
+        </g>
+
+        <!-- center -->
+        <circle cx="470" cy="235" r="86" fill="#000000" stroke="url(#ringGrad)" stroke-width="2"/>
+        <circle cx="470" cy="235" r="86" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+        <text x="470" y="222" font-family="Antonio, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#ffffff">PERSON</text>
+        <text x="470" y="246" font-family="Antonio, sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#888888">PSLSC ID</text>
+        <text x="470" y="266" font-family="Antonio, sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#888888">+ CREDITS</text>
+      </svg>
+    </div>
+
+    <p class="anim" style="font-size:1.05rem; color:var(--text-primary); max-width:940px; margin-top:8px;">Todos conectados a una misma identidad y a una misma economía de créditos.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. ES UN PRODUCTO DIGITAL ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">Las definiciones</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Esto no es una web. Es un producto digital.</h2>
+    <p class="anim" style="max-width:840px; margin-bottom:32px;">Para que este ecosistema funcione, hay decisiones de producto que todavía necesitamos definir.</p>
+    <div class="decisions anim" style="margin-bottom:32px;">
+      <div class="decision"><i data-lucide="user-round"></i><span>Identidades y cuentas</span></div>
+      <div class="decision"><i data-lucide="users"></i><span>Relaciones familiares</span></div>
+      <div class="decision"><i data-lucide="wallet"></i><span>Wallet y créditos</span></div>
+      <div class="decision"><i data-lucide="scale"></i><span>Reglas de acumulación y uso</span></div>
+      <div class="decision"><i data-lucide="route"></i><span>Journeys</span></div>
+      <div class="decision"><i data-lucide="gift"></i><span>Beneficios</span></div>
+      <div class="decision"><i data-lucide="plug"></i><span>Integraciones</span></div>
+      <div class="decision"><i data-lucide="shield-check"></i><span>Safeguarding</span></div>
+      <div class="decision"><i data-lucide="trending-up"></i><span>Evolución del producto</span></div>
+    </div>
+    <p class="anim" style="font-size:1.2rem; color:var(--text-primary); max-width:840px;">Antes de construir pantallas, tenemos que diseñar el sistema.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. EL PRÓXIMO PASO ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">El próximo paso</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">El próximo paso es diseñar el producto</h2>
+    <p class="anim" style="max-width:840px; margin-bottom:6px;">Si estamos alineados con esta visión, proponemos avanzar hacia una etapa de definición.</p>
+    <p class="anim" style="max-width:840px; margin-bottom:36px;">El objetivo será convertir esta oportunidad en un producto concreto:</p>
+    <div class="steps anim" style="margin-bottom:40px;">
+      <div class="step"><div class="step-num">1</div><div><h4>Personas</h4></div></div>
+      <div class="step"><div class="step-num">2</div><div><h4>Journeys</h4></div></div>
+      <div class="step"><div class="step-num">3</div><div><h4>Reglas</h4></div></div>
+      <div class="step"><div class="step-num">4</div><div><h4>Alcance</h4></div></div>
+      <div class="step"><div class="step-num">5</div><div><h4>Roadmap</h4></div></div>
+    </div>
+    <p class="anim" style="max-width:840px; margin-bottom:4px;">A partir de esa definición podremos establecer con precisión:</p>
+    <p class="anim" style="font-size:1.2rem; color:var(--text-primary); max-width:840px;">qué construir, cómo construirlo, en qué etapas y con qué inversión.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 10. HABLEMOS ══════════════ -->
+<section class="slide slide--thanks" data-slide="10">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Hablemos</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:620px; margin-left:auto; margin-right:auto;">Si estamos alineados con esta visión, el próximo paso es sentarnos a definir el producto.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 11. CHAT ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta propuesta.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuál es la oportunidad?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Para qué sirven los créditos?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo puede crecer?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué hay que definir?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuál es el próximo paso?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta propuesta. Podés preguntarme sobre el pedido y la oportunidad, por qué construir un ecosistema, la plataforma, los créditos como herramienta de participación, cómo puede crecer, los puntos de contacto, qué hay que definir o cuál es el próximo paso.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la propuesta, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras'],
+    answer: 'Partimos de un pedido concreto: una experiencia digital para vender actividades de la Academy con un sistema de créditos. La oportunidad es mucho mayor: convertir esos créditos en una unidad común que conecte toda la relación de una persona con PSLSC. Una identidad, una cuenta y una relación continua con el club, donde los créditos sirven para pagar y también para incentivar la participación. Puede crecer junto con el club, desde identidad, créditos y actividades hasta un ecosistema completamente conectado. El próximo paso es una etapa de definición para diseñar el producto antes de construir pantallas.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el pedido original y la oportunidad, por qué construir un ecosistema, qué es la plataforma, los créditos como herramienta de participación, los ejemplos de cómo se ganan y se usan, cómo puede crecer con el club, los puntos de contacto del ecosistema, las decisiones de producto que hay que definir, el próximo paso y la inversión.'
+  },
+  // Content
+  {
+    keywords: ['pedido', 'oportunidad', 'origen', 'por qué esta propuesta', 'por que esta propuesta', 'de dónde sale', 'de donde sale', 'academy'],
+    answer: 'El pedido fue concreto: crear una experiencia digital para vender actividades de la Academy utilizando un sistema de créditos. La oportunidad que descubrimos es mucho mayor: convertir esos créditos en una unidad común capaz de conectar toda la relación de una persona con PSLSC, no solo las actividades de la Academy.'
+  },
+  {
+    keywords: ['ecosistema', 'por qué construir', 'por que construir', 'momentos', 'separados', 'aislados', 'relación continua', 'relacion continua', 'problema'],
+    answer: 'Hoy, muchas de las interacciones con el club suceden como momentos separados: una clínica, un partido, una actividad, una compra, una visita al club. La oportunidad es convertir esos momentos aislados en una relación continua, donde cada uno suma a la misma historia de la persona con PSLSC.'
+  },
+  {
+    keywords: ['plataforma', 'espacio', 'front', 'identidad', 'cuenta', 'una sola', 'qué puede hacer', 'que puede hacer', 'cada persona'],
+    answer: 'No proponemos solamente un front para vender actividades de la Academy. Proponemos un espacio donde cada persona pueda participar de experiencias, comprar y utilizar créditos, recibir beneficios, relacionarse con distintas áreas del club y volver una y otra vez al mismo ecosistema. Una identidad, una cuenta, una relación continua con PSLSC.'
+  },
+  {
+    keywords: ['crédito', 'credito', 'créditos', 'creditos', 'para qué sirven', 'para que sirven', 'participación', 'participacion', 'incentivar', 'comportamiento', 'pagar', 'moneda', 'wallet', 'billetera'],
+    answer: 'Los créditos no sirven solamente para pagar. También pueden ayudar al club a incentivar comportamientos y fortalecer el vínculo con su comunidad. Por ejemplo: dejás tu email y recibís créditos; participás de una actividad y sumás créditos; después los usás en una clínica, una entrada, una cancha o un consumo dentro del club. El crédito empieza a conectar participación, pertenencia y consumo.'
+  },
+  {
+    keywords: ['ejemplo', 'ejemplos', 'email', 'mail', 'ganar', 'sumar', 'usar', 'gastar', 'cómo se usan', 'como se usan', 'cómo se ganan', 'como se ganan'],
+    answer: 'Tres ejemplos. Dejá tu email y recibís créditos. Participá de una actividad y sumás créditos. Usalos después en una clínica, una entrada, una cancha o un consumo dentro del club. Las reglas concretas de acumulación y uso son una de las definiciones de la etapa de producto.'
+  },
+  {
+    keywords: ['crecer', 'crece', 'evolución', 'evolucion', 'futuro', 'mañana', 'manana', 'después', 'despues', 'más adelante', 'mas adelante', 'hoy', 'etapas', 'roadmap', 'estadio', 'stadium', 'regalar'],
+    answer: 'Esto puede crecer junto con el club. Hoy: identidad, créditos y actividades. Después: el historial de cada persona y de su relación con PSLSC. Más adelante: un ecosistema completamente conectado, con Academy, Clinics, Facilities, Matchday, Stadium, Store, Benefits y Experiences. En el futuro, la misma identidad podría permitir entrar al estadio, consumir, acceder a beneficios, regalar créditos o participar de nuevas experiencias. No estamos diseñando solamente para lo que PSLSC es hoy, sino para lo que puede convertirse mañana.'
+  },
+  {
+    keywords: ['puntos de contacto', 'diagrama', 'dibujo', 'gráfico', 'grafico', 'centro', 'alrededor', 'youth', 'first team', 'clinics', 'facilities', 'matchday', 'store', 'community', 'áreas', 'areas', 'pslsc id'],
+    answer: 'En el centro está la persona, con su PSLSC ID y sus créditos. Alrededor, los puntos de contacto: Academy, Youth, First Team, Clinics, Facilities, Matchday, Store y Community. Todos conectados a una misma identidad y a una misma economía de créditos.'
+  },
+  {
+    keywords: ['producto digital', 'no es una web', 'web', 'definir', 'definiciones', 'decisiones', 'qué hay que', 'que hay que', 'sistema', 'pantallas', 'diseñar el sistema', 'disenar el sistema'],
+    answer: 'Esto no es una web, es un producto digital. Para que el ecosistema funcione hay decisiones de producto que todavía necesitamos definir: identidades y cuentas, relaciones familiares, wallet y créditos, reglas de acumulación y uso, journeys, beneficios, integraciones, safeguarding y evolución del producto. Antes de construir pantallas, tenemos que diseñar el sistema.'
+  },
+  {
+    keywords: ['familia', 'familias', 'familiares', 'menor', 'menores', 'safeguarding', 'chicos', 'niños', 'ninos', 'padres', 'tutor', 'seguridad'],
+    answer: 'Las relaciones familiares y el safeguarding son dos de las decisiones de producto que hay que definir antes de construir: cómo se vinculan las cuentas de adultos y menores, y qué reglas de protección aplican. Se resuelven en la etapa de definición, junto con el club.'
+  },
+  {
+    keywords: ['beneficio', 'beneficios', 'benefits', 'experiencias', 'experiences'],
+    answer: 'Los beneficios y las experiencias son parte del ecosistema: la misma identidad y los mismos créditos pueden dar acceso a beneficios, a experiencias nuevas y, más adelante, a entrar al estadio o consumir dentro del club. Qué beneficios concretos y con qué reglas es una de las definiciones de producto.'
+  },
+  {
+    keywords: ['integración', 'integracion', 'integraciones', 'sistemas', 'plataformas', 'conectar con', 'tickets', 'tienda'],
+    answer: 'Las integraciones con los sistemas que el club ya usa son una de las decisiones de producto a definir. El objetivo es que el ecosistema se conecte con lo que existe, no que lo reemplace. El detalle se resuelve en la etapa de definición.'
+  },
+  {
+    keywords: ['próximo paso', 'proximo paso', 'siguiente paso', 'etapa de definición', 'etapa de definicion', 'definición', 'definicion', 'arrancar', 'empezar', 'cómo seguimos', 'como seguimos', 'personas', 'journeys', 'reglas', 'alcance'],
+    answer: 'Si estamos alineados con esta visión, proponemos avanzar hacia una etapa de definición. El objetivo será convertir esta oportunidad en un producto concreto, en este orden: personas, journeys, reglas, alcance y roadmap. A partir de esa definición podremos establecer con precisión qué construir, cómo construirlo, en qué etapas y con qué inversión.'
+  },
+  {
+    keywords: ['inversión', 'inversion', 'precio', 'costo', 'cuánto sale', 'cuanto sale', 'cuánto cuesta', 'cuanto cuesta', 'presupuesto', 'honorario', 'cotización', 'cotizacion', 'cuánto cobran', 'cuanto cobran', 'plazo', 'tiempo', 'cuándo', 'cuando'],
+    answer: 'La inversión, las etapas y los tiempos salen de la etapa de definición. Recién con personas, journeys, reglas, alcance y roadmap definidos podemos establecer con precisión qué construir, cómo construirlo, en qué etapas y con qué inversión. Para conversarlo, escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'equipo', 'contacto'],
+    answer: 'Yacaré Studio (yacare.io) es el estudio de producto digital detrás del sitio actual del club. Para consultas sobre esta propuesta podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta propuesta. Si querés, podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme sobre el pedido y la oportunidad, los créditos, cómo puede crecer, qué hay que definir o cuál es el próximo paso.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
