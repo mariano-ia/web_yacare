@@ -26,6 +26,101 @@
             height: 28px;
             width: auto;
         }
+
+        /* PSLSC hero headline, same styles as portstluciesc.com (Ferryman ExtraBold, self-hosted) */
+        @font-face {
+            font-family: 'Ferryman';
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+            src: url('/fonts/ferryman-extrabold.woff2') format('woff2');
+        }
+
+        .pslsc-showcase {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-8);
+            background: #0C0C0A;
+            container-type: inline-size;
+        }
+
+        .pslsc-showcase video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* slight zoom anchored top-left so the AI watermark in the bottom-right corner falls outside the frame */
+            transform: scale(1.18);
+            transform-origin: top left;
+        }
+
+        .pslsc-showcase__scrim {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(120% 90% at 72% 18%, rgba(169, 214, 222, .10), transparent 60%),
+                linear-gradient(180deg, rgba(12, 12, 10, .62) 0%, rgba(12, 12, 10, .35) 32%, rgba(12, 12, 10, .88) 82%, #0C0C0A 100%);
+        }
+
+        .pslsc-morph {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            padding: clamp(20px, 5cqw, 48px);
+            font: 800 clamp(30px, 8.6cqw, 96px)/0.92 'Ferryman', Georgia, serif;
+            letter-spacing: -.01em;
+            max-width: 15ch;
+            text-wrap: balance;
+            color: #FFFFFF;
+            opacity: 0;
+        }
+
+        .pslsc-morph.is-in {
+            animation: psl-hero-in 720ms cubic-bezier(.22, .61, .36, 1) 180ms both;
+        }
+
+        .pslsc-morph__label {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        .pslsc-morph-sizer {
+            visibility: hidden;
+        }
+
+        .pslsc-morph-word {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #AAF6E6;
+            font-weight: 800;
+        }
+
+        @keyframes psl-hero-in {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pslsc-morph {
+                opacity: 1;
+                animation: none !important;
+            }
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -120,25 +215,18 @@
                     <div>
 
                         <!-- Video Showcase -->
-                        <div
-                            style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: var(--space-8); background: var(--bg-secondary);">
+                        <div class="pslsc-showcase">
                             <video src="/videos/pslsc-cover.mp4" poster="/assets/images/pslsc-cover.jpg" autoplay muted
-                                loop playsinline preload="metadata" aria-label="Port St. Lucie SC stadium under construction"
-                                style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
-                            <div aria-hidden="true"
-                                style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 8, 12, 0.85) 0%, rgba(8, 8, 12, 0.4) 40%, rgba(8, 8, 12, 0) 70%);">
-                            </div>
-                            <p class="pslsc-morph" aria-label="You're watching a club be born."
-                                style="position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: clamp(20px, 4vw, 40px); font-family: 'Antonio', sans-serif; font-weight: 600; font-size: clamp(1.7rem, 4.6vw, 3.4rem); line-height: 1.05; text-transform: uppercase; color: #ffffff; filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.55));">
-                                <span aria-hidden="true">You're watching a club be</span>
-                                <span aria-hidden="true"
-                                    style="position: relative; display: inline-block; vertical-align: top; white-space: nowrap;">
-                                    <span class="pslsc-morph-sizer" style="visibility: hidden;">imagined.</span>
-                                    <span class="pslsc-morph-word" data-words="imagined,loved,born"
-                                        style="position: absolute; left: 0; top: 0; color: var(--accent-light);">born.</span>
+                                loop playsinline preload="metadata"
+                                aria-label="Port St. Lucie SC stadium under construction"></video>
+                            <div class="pslsc-showcase__scrim" aria-hidden="true"></div>
+                            <p class="pslsc-morph" aria-label="You're watching a club be born.">
+                                <span aria-hidden="true">You’re watching a club be</span>
+                                <span class="pslsc-morph__label" aria-hidden="true">
+                                    <span class="pslsc-morph-sizer">imagined.</span>
+                                    <span class="pslsc-morph-word" data-words="imagined,loved,born">born.</span>
                                 </span>
                             </p>
-                        </div>
                         </div>
 
                         <!-- Context -->
@@ -509,7 +597,7 @@
             var started = false;
             var io = new IntersectionObserver(function (entries) {
                 if (started || !entries.some(function (e) { return e.isIntersecting; })) return;
-                started = true; io.disconnect(); setTimeout(run, 300);
+                started = true; io.disconnect(); el.closest('.pslsc-morph').classList.add('is-in'); setTimeout(run, 300);
             }, { threshold: 0.35 });
             io.observe(el.closest('.pslsc-morph'));
         })();
