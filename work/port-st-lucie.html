@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #08080c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__logo-img {
+            height: 28px;
+            width: auto;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>Port St. Lucie SC: A Living Website for a Club Being Born | Yacaré</title>
+    <meta name="description"
+        content="How we turned the story of Port St. Lucie SC, a soccer club debuting in USL League One in 2027, into a living website: strategy, design system and custom code blocks built to change with every milestone.">
+    <link rel="canonical" href="https://yacare.io/work/port-st-lucie.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- App -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="/" class="nav__logo" aria-label="Yacaré Home">
+                <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo" class="nav__logo-img"
+                    style="height: 28px; width: auto;" />
+            </a>
+            <div class="nav__links">
+                <div class="lang-toggle" id="lang-toggle">
+                    <button class="lang-toggle__btn active" id="lang-btn-en"
+                        onclick="window.i18n?.setLanguage('en').then(()=>{document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.remove('active'))})">EN</button>
+                    <button class="lang-toggle__btn" id="lang-btn-es"
+                        onclick="window.i18n?.setLanguage('es').then(()=>{document.querySelectorAll('#lang-btn-es').forEach(el=>el.classList.add('active'));document.querySelectorAll('#lang-btn-en').forEach(el=>el.classList.remove('active'))})">ES</button>
+                </div>
+
+                <a href="/" class="nav__link" data-i18n="nav.home">Home</a>
+                <a href="/services.html" class="nav__link" data-i18n="nav.services">Services</a>
+                <a href="/work.html" class="nav__link" data-i18n="nav.work">Work</a>
+                <a href="/about.html" class="nav__link" data-i18n="nav.about">About</a>
+                <a href="/elpantano/" class="nav__link" data-i18n="nav.blog">Blog</a>
+                <a href="/contact.html" class="btn btn--primary nav__cta"><span data-i18n="nav.cta">Let's
+                        Talk</span></a>
+            </div>
+            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero hero--internal" id="hero" style="min-height: 65vh;">
+            <div class="hero__background" aria-hidden="true">
+                <div class="hero__blob hero__blob--1"></div>
+                <div class="hero__blob hero__blob--2"></div>
+                <div class="hero__blob hero__blob--3"></div>
+            </div>
+            <div class="container hero__content">
+                <div style="display:flex; flex-direction:column; align-items:center; gap: 15px;">
+                    <div class="chip-group" style="justify-content: center;">
+                        <span class="chip" data-i18n="work_pslsc.chip1">Sports Club</span>
+                        <span class="chip" data-i18n="work_pslsc.chip2">Design System &amp; Code Blocks</span>
+                        <span class="chip" data-i18n="work_pslsc.chip3">Living Website</span>
+                    </div>
+                    <h1 class="gradient-text">PORT ST. LUCIE SC</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATEMENT -->
+        <section class="section about-statement" aria-label="Short Summary">
+            <div class="container">
+                <p class="about-statement__text reveal-words">
+                    <span data-i18n="work_pslsc.statement">A website that tells the story of a club being born in real
+                        time, built as a design system and code blocks ready to change with every milestone on the road
+                        to 2027.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTENT + SIDEBAR -->
+        <section class="section" style="border-top: 1px solid var(--border-medium);">
+            <div class="container">
+                <div class="project-layout">
+
+                    <!-- Left -->
+                    <div>
+
+                        <!-- Video Showcase -->
+                        <div
+                            style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: var(--space-8); background: var(--bg-secondary);">
+                            <video src="/videos/pslsc-cover.mp4" poster="/assets/images/pslsc-cover.jpg" autoplay muted
+                                loop playsinline preload="metadata" aria-label="Port St. Lucie SC stadium under construction"
+                                style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+                        </div>
+
+                        <!-- Context -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                <span data-i18n="work_pslsc.context_heading">Context</span>
+                            </h2>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.context_p1">Port St. Lucie SC is the first professional
+                                    soccer club in its city. It debuts in USL League One in 2027, already runs a reserve
+                                    team in the USL Academy League, has a youth academy and a stadium on the way.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.context_p2">The assets were real. The problem was that
+                                    nobody could feel them. The masterplan, the stadium and 2027 did not come through
+                                    when you landed on the site. The club's own words were blunt: you don't feel
+                                    anything.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.context_p3">There was a second layer. Web, Instagram, TikTok
+                                    and X were each telling a different story, and tickets and merch were about to
+                                    start generating revenue with no narrative to sit on.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.context_p4">The engagement was clear from day one:
+                                    strategy, design, a design system and custom code blocks, handed off to the club's
+                                    developer for integration into WordPress. We would not build the platform. We would
+                                    build the pieces that make it feel like something.</span>
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65;">
+                                <span data-i18n="work_pslsc.context_p5">So we did not treat this as a redesign. We
+                                    treated it as a system that tells the project and converts, week after
+                                    week.</span>
+                            </p>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr style="border: none; height: 1px; background: var(--border-medium); margin: 100px 0;">
+
+                        <!-- Our Solution -->
+                        <div class="reveal" style="margin-bottom: var(--space-12);">
+                            <h2
+                                style="font-family: 'Antonio', sans-serif; font-size: var(--fs-h2); line-height: 1.1; text-transform: uppercase; color: var(--text-primary); margin-bottom: var(--space-6);">
+                                <span data-i18n="work_pslsc.solution_heading">Our Solution</span>
+                            </h2>
+
+                            <h3 style="font-size: 1.4rem; color: var(--text-primary); margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_sh1">Discovery before pixels</span>
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p1">We started with the person who lands on the
+                                    site. Marco, 35, has lived in Port St. Lucie for over ten years, has Latin American
+                                    roots and a kid who plays soccer. He arrives excited and skeptical at the same
+                                    time: he wants to believe, but he has seen projects in the city that never
+                                    happened. If the site convinces him, he becomes the club's best ambassador.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p2">From there we mapped four jobs to be done,
+                                    each with its breaking point: check that the project is real, find a way to join
+                                    today, find a place for his kid, and have something concrete to share.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p3">Then we benchmarked. Forty sources across six
+                                    leagues, from USL League One to the Premier League, read as fanbase and revenue
+                                    machines rather than teams. We tried to refute every strong number before using
+                                    it. The finding was clear: the ceiling in USL League One is low and flat. Beating
+                                    it was a design effort, not a budget one. That became the argument behind every
+                                    architecture decision:</span>
+                            </p>
+                            <ul
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4); list-style-type: none; padding-left: 0;">
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li1">Five narrative pillars, starting with
+                                        "you're watching a club be born"</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li2">Simple navigation, with the Founding
+                                        Member action never more than a tap away</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li3">A home page structured as a narrative
+                                        arc: proof first, then emotion, always an action</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li4">The official store as one of the concrete
+                                        ways to join today, not a secondary section</span>
+                                </li>
+                            </ul>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_sh2">Built as blocks, made to be felt</span>
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p4">The site was designed as a set of independent
+                                    blocks. Each section is a piece the developer can take and integrate into
+                                    WordPress one at a time, and the interactive parts ship packaged and ready to drop
+                                    in, with no need to understand how they work inside.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p5">Eleven blocks on the home tell a construction
+                                    in progress: a hero headline that cycles through imagined, built, backed, loved and
+                                    born over footage of the works, a stats band with animated counters for founding
+                                    members, deposits and days to the first match, and the live team schedule with the
+                                    next match highlighted.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p6">Four moments were built from scratch:</span>
+                            </p>
+                            <ul
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4); list-style-type: none; padding-left: 0;">
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li5">The jersey that moves with your scroll, no
+                                        dragging needed</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li6">The founders wall, an airport-board style
+                                        panel where every new founder appears live, plus the membership card you build
+                                        from a photo and share</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li7">The stadium reveal, a mask that slides
+                                        away as you scroll and uncovers the render like raising a curtain</span>
+                                </li>
+                                <li
+                                    style="margin-bottom: var(--space-2); padding-left: var(--space-4); position: relative;">
+                                    <span
+                                        style="position: absolute; left: 0; color: var(--text-primary); font-weight: bold;">•</span>
+                                    <span data-i18n="work_pslsc.solution_li8">The animated project timeline, because
+                                        this is a construction schedule, not a pitch deck</span>
+                                </li>
+                            </ul>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p7">The same system carries the Join and Partners
+                                    pages without duplicating work. Join resolves the full founder signup flow, with
+                                    three plans and an FAQ that anticipates Marco's real objections. Partners keeps the
+                                    same visual language in a more commercial register, reading the same traction
+                                    numbers a fan sees as a growth curve for sponsors and investors.</span>
+                            </p>
+
+                            <h3
+                                style="font-size: 1.4rem; color: var(--text-primary); margin-top: var(--space-8); margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_sh3">A living site, not a launch</span>
+                            </h3>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p8">We did not design a static page. We designed
+                                    the experience of the club's current moment: the launch and the road to the 2027
+                                    season. The countdown, the founders wall and the hero all live in the present
+                                    tense.</span>
+                            </p>
+                            <p
+                                style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-4);">
+                                <span data-i18n="work_pslsc.solution_p9">When the next milestone arrives, the site
+                                    changes with it. The launch, the groundbreaking, the first whistle: each one writes
+                                    a new version. That is why the site is planned in stages, not closed and forgotten
+                                    the day it goes live.</span>
+                            </p>
+                            <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65;">
+                                <span data-i18n="work_pslsc.solution_p10">The club presented the redesign to USL as a
+                                    living story. Today we keep working on the next chapters, starting with the stadium
+                                    microsite for the groundbreaking campaign, where every family writes the message
+                                    they want to leave in the foundations.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: sticky sidebar -->
+                    <aside class="project-sidebar">
+                        <div class="project-info-box" style="padding: var(--space-5);">
+
+                            <!-- Outcomes -->
+                            <div
+                                style="margin-bottom: var(--space-5); padding-bottom: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-4);"
+                                    data-i18n="work_pslsc.outcomes_heading">Outcomes</span>
+                                <ul
+                                    style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; list-style: none; padding-left: 0; margin: 0;">
+                                    <li style="margin-bottom: 12px;"><span data-i18n="work_pslsc.outcomes_li1">•
+                                            Four custom interactive pieces built from scratch</span></li>
+                                    <li style="margin-bottom: 12px;"><span data-i18n="work_pslsc.outcomes_li2">•
+                                            One design system reused across Home, Join and Partners</span></li>
+                                    <li style="margin-bottom: 12px;"><span data-i18n="work_pslsc.outcomes_li3">•
+                                            A benchmark of 40 sources across 6 leagues backing every decision</span>
+                                    </li>
+                                    <li style="margin-bottom: 12px;"><span data-i18n="work_pslsc.outcomes_li4">•
+                                            Redesign presented to USL as a living story</span></li>
+                                    <li style="margin-bottom: 0;"><span data-i18n="work_pslsc.outcomes_li5">•
+                                            Ongoing partnership through each club milestone</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- Team -->
+                            <div>
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-3);"
+                                    data-i18n="work_pslsc.team_heading">Team</span>
+                                <p
+                                    style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                                    <span data-i18n="work_pslsc.team_roles">Design Lead<br>
+                                        UX/UI Designer<br>
+                                        Front-end Developer</span>
+                                </p>
+                            </div>
+
+                            <!-- Live site -->
+                            <div
+                                style="margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--border-medium);">
+                                <span
+                                    style="display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: var(--space-3);"
+                                    data-i18n="work_pslsc.site_heading">Live site</span>
+                                <a href="https://www.portstluciesc.com/" target="_blank" rel="noopener"
+                                    style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.95rem; color: var(--text-primary); text-decoration: underline; text-underline-offset: 4px;">
+                                    <span data-i18n="work_pslsc.site_link">portstluciesc.com</span>
+                                    <i data-lucide="arrow-up-right" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="/" class="nav__logo" style="display:inline-flex; margin-bottom:var(--space-3);">
+                        <img src="/logo_yacare.svg" alt="Yacaré - B2B SaaS Product Design Agency Logo"
+                            class="nav__logo-img footer__logo-img" />
+                    </a>
+                    <p data-i18n="footer.tagline">Boutique digital product agency.<br>We design, build, and grow digital
+                        products that move the needle.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading" data-i18n="footer.col_services">Services</h4>
+                    <a href="/services/discovery-sprint.html" class="footer__link"
+                        data-i18n="footer.link_discovery">Discovery Sprint</a>
+                    <a href="/services/mvp-jumpstarter.html" class="footer__link" data-i18n="footer.link_mvp">MVP
+                        Jumpstarter</a>
+                    <a href="/services/product-growth.html" class="footer__link" data-i18n="footer.link_growth">Product
+                        Growth</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading" data-i18n="footer.col_company">Company</h4>
+                    <a href="/about.html" class="footer__link" data-i18n="footer.link_about">About Us</a>
+                    <a href="/work.html" class="footer__link" data-i18n="footer.link_work">Our Work</a>
+                    <a href="/elpantano/" class="footer__link" data-i18n="footer.link_blog">Blog</a>
+                </div>
+
+                <div>
+                    <h4 class="footer__heading" data-i18n="footer.col_connect">Connect</h4>
+                    <a href="/contact.html" class="footer__link" data-i18n="footer.link_contact">Contact</a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="footer__link">Instagram</a>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <div class="footer__legal" style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <span data-i18n="footer.legal">© 2026 Yacaré. All rights reserved.</span>
+                    <a href="/privacy-policy.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_privacy">Privacy
+                        Policy</a>
+                    <a href="/terms-and-conditions.html" class="footer__link"
+                        style="opacity: 0.7; font-size: 0.9em; margin: 0;" data-i18n="footer.link_terms">Terms &amp;
+                        Conditions</a>
+                </div>
+                <div class="footer__social">
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

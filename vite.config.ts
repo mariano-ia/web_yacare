@@ -39,6 +39,7 @@ export default defineConfig({
                 'services/mvp-jumpstarter': resolve(__dirname, 'services/mvp-jumpstarter.html'),
                 'services/product-growth': resolve(__dirname, 'services/product-growth.html'),
                 work: resolve(__dirname, 'work.html'),
+                'work/port-st-lucie': resolve(__dirname, 'work/port-st-lucie.html'),
                 'work/vixon': resolve(__dirname, 'work/vixon.html'),
                 'work/sameco': resolve(__dirname, 'work/sameco.html'),
                 'work/brandtrack': resolve(__dirname, 'work/brandtrack.html'),

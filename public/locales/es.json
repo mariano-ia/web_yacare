@@ -41,7 +41,8 @@
         "brandtrack_desc": "Evolución estratégica de UX y optimización de interfaz para música ambiental corporativa.",
         "nawaiam_dashboard_desc": "Plataforma de RRHH gamificada que transforma datos conductuales complejos en insights accionables.",
         "pharma_desc": "Plataforma de salud empresarial que optimiza la logística global y el cumplimiento normativo complejo.",
-        "nawaiam_website_desc": "Experiencia de juego inmersiva que redefine el reclutamiento a través de la ciencia y el diseño de conversión."
+        "nawaiam_website_desc": "Experiencia de juego inmersiva que redefine el reclutamiento a través de la ciencia y el diseño de conversión.",
+        "pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027."
     },
     "methodology": {
         "title_1": "Cómo construimos.",
@@ -127,7 +128,8 @@
             "card_nawaiam_web_desc": "Experiencia de inmersión en juegos que redefine el reclutamiento a través de la ciencia y el diseño de conversión.",
             "cta_title": "¿Listo para construir<br>algo grandioso?",
             "cta_desc": "Compartinos tu desafío. Te responderemos en 24 horas con una hoja de ruta clara para hacerlo realidad.",
-            "cta_btn": "Iniciar un Proyecto"
+            "cta_btn": "Iniciar un Proyecto",
+            "card_pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027."
         },
         "about": {
             "hero_title_1": "Equipo pequeño",
@@ -509,5 +511,49 @@
         "outcomes_li4": "Insights más procesables para equipos de RRHH",
         "team_heading": "Equipo",
         "team_roles": "Líder de Producto<br>\n                                    Diseñador UX/UI<br>\n                                    Especialista en Visualización de Datos<br>\n                                    Desarrollador Frontend"
+    },
+    "work_pslsc": {
+        "chip1": "Club deportivo",
+        "chip2": "Sistema de diseño y bloques de código",
+        "chip3": "Sitio vivo",
+        "statement": "Un sitio que cuenta la historia de un club que está naciendo, en tiempo real, construido como sistema de diseño y bloques de código listos para cambiar con cada hito rumbo a 2027.",
+        "context_heading": "Contexto",
+        "context_p1": "Port St. Lucie SC es el primer club de fútbol profesional de su ciudad. Debuta en la USL League One en 2027, ya opera un equipo reserva en la USL Academy League, tiene una academia juvenil y un estadio en camino.",
+        "context_p2": "Los activos eran reales. El problema era que nadie los sentía. El masterplan, el estadio y el 2027 no se percibían al entrar al sitio. Las palabras del propio club fueron directas: no sentís nada.",
+        "context_p3": "Había una segunda capa. Web, Instagram, TikTok y X contaban cosas distintas, y los tickets y el merch estaban por empezar a generar ingresos sin un relato que los sostuviera.",
+        "context_p4": "El encargo fue claro desde el día uno: estrategia, diseño, sistema de diseño y bloques de código a medida, con handoff al desarrollador del club para integrarlos en WordPress. No íbamos a construir la plataforma. Íbamos a construir las piezas que hacen que se sienta algo.",
+        "context_p5": "Por eso no lo tratamos como un rediseño. Lo tratamos como un sistema que cuenta el proyecto y convierte, semana a semana.",
+        "solution_heading": "Nuestra solución",
+        "solution_sh1": "Descubrimiento antes que píxeles",
+        "solution_p1": "Arrancamos por la persona que llega al sitio. Marco, 35, vive en Port St. Lucie hace más de diez años, tiene raíces latinoamericanas y un hijo que juega al fútbol. Entra con entusiasmo y escepticismo a la vez: quiere creer, pero ya vio proyectos en la ciudad que nunca llegaron a nada. Si el sitio lo convence, se vuelve el mejor embajador del club.",
+        "solution_p2": "Desde ahí mapeamos cuatro trabajos por resolver, cada uno con su punto de quiebre: verificar que el proyecto es real, encontrar cómo sumarse hoy, encontrar un lugar para su hijo y tener algo concreto para compartir.",
+        "solution_p3": "Después hicimos benchmark. Cuarenta fuentes en seis ligas, de la USL League One a la Premier League, leídas como máquinas de fanbase e ingresos y no como equipos. Cada cifra fuerte se intentó refutar antes de usarla. El hallazgo fue claro: el techo de la USL League One es bajo y parejo. Superarlo era esfuerzo de diseño, no de presupuesto. Eso se convirtió en el argumento detrás de cada decisión de arquitectura:",
+        "solution_li1": "Cinco pilares narrativos, empezando por \"estás viendo nacer un club\"",
+        "solution_li2": "Navegación simple, con la acción de Hincha Fundador nunca a más de un tap",
+        "solution_li3": "Una home estructurada como arco narrativo: primero la prueba, después la emoción, siempre una acción",
+        "solution_li4": "La tienda oficial como una de las formas concretas de sumarse hoy, no como sección secundaria",
+        "solution_sh2": "Construido en bloques, hecho para sentirse",
+        "solution_p4": "El sitio se diseñó como un conjunto de bloques independientes. Cada sección es una pieza que el desarrollador puede tomar e integrar a WordPress de a una, y las partes interactivas se entregan empaquetadas y listas para insertar, sin tener que entender cómo funcionan por dentro.",
+        "solution_p5": "Once bloques en la home cuentan una obra en curso: un hero cuyo titular cicla por imagined, built, backed, loved y born sobre imágenes de la obra, una banda de stats con contadores animados de fundadores, depósitos y días al primer partido, y el fixture del equipo en vivo con el próximo partido destacado.",
+        "solution_p6": "Cuatro momentos se construyeron desde cero:",
+        "solution_li5": "La camiseta que se mueve con tu scroll, sin arrastrar nada",
+        "solution_li6": "El muro de fundadores, un panel tipo tablero de aeropuerto donde cada nuevo fundador aparece en vivo, más el carnet que armás con una foto y compartís",
+        "solution_li7": "La revelación del estadio, una máscara que se corre con el scroll y descubre el render como quien levanta el telón",
+        "solution_li8": "La línea de tiempo animada del proyecto, porque esto es un cronograma de obra, no un pitch deck",
+        "solution_p7": "El mismo sistema sostiene las páginas Sumate y Partners sin duplicar trabajo. Sumate resuelve el flujo completo de alta de fundador, con tres planes y un FAQ que anticipa las objeciones reales de Marco. Partners mantiene el mismo lenguaje visual en un registro más comercial, leyendo los mismos números de tracción que ve un hincha como curva de crecimiento para sponsors e inversores.",
+        "solution_sh3": "Un sitio vivo, no un lanzamiento",
+        "solution_p8": "No diseñamos una página estática. Diseñamos la experiencia del momento actual del club: el lanzamiento y el camino a la temporada 2027. El contador, el muro de fundadores y el hero viven en tiempo presente.",
+        "solution_p9": "Cuando llega el próximo hito, el sitio cambia con él. El lanzamiento, el groundbreaking, el primer silbato: cada uno escribe una nueva versión. Por eso el sitio se planifica por etapas, y no se cierra y se olvida el día que se publica.",
+        "solution_p10": "El club presentó el rediseño ante la USL como una historia viva. Hoy seguimos trabajando en los próximos capítulos, empezando por el micrositio del estadio para la campaña del groundbreaking, donde cada familia escribe el mensaje que quiere dejar en los cimientos.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "• Cuatro piezas interactivas a medida construidas desde cero",
+        "outcomes_li2": "• Un sistema de diseño reutilizado en Home, Sumate y Partners",
+        "outcomes_li3": "• Un benchmark de 40 fuentes en 6 ligas que respalda cada decisión",
+        "outcomes_li4": "• Rediseño presentado ante la USL como una historia viva",
+        "outcomes_li5": "• Acompañamiento continuo en cada hito del club",
+        "team_heading": "Equipo",
+        "team_roles": "Design Lead<br>Diseñador/a UX/UI<br>Desarrollador/a Front-end",
+        "site_heading": "Sitio en vivo",
+        "site_link": "portstluciesc.com"
     }
 }

@@ -41,7 +41,8 @@
         "brandtrack_desc": "Strategic UX evolution and interface optimization for enterprise background music.",
         "nawaiam_dashboard_desc": "Gamified HR platform transforming complex behavioral data into actionable insights.",
         "pharma_desc": "Enterprise healthcare platform streamlining global logistics and complex regulatory compliance.",
-        "nawaiam_website_desc": "Immersive gaming experience redefining recruitment through science and conversion design."
+        "nawaiam_website_desc": "Immersive gaming experience redefining recruitment through science and conversion design.",
+        "pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027."
     },
     "methodology": {
         "title_1": "How we build.",
@@ -127,7 +128,8 @@
             "card_nawaiam_web_desc": "Immersive gaming experience redefining recruitment through science and conversion design.",
             "cta_title": "Ready to build<br>something great?",
             "cta_desc": "Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.",
-            "cta_btn": "Start a Project"
+            "cta_btn": "Start a Project",
+            "card_pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027."
         },
         "about": {
             "hero_title_1": "Small team",
@@ -509,5 +511,49 @@
         "outcomes_li4": "More actionable insights for HR teams",
         "team_heading": "Team",
         "team_roles": "Product Lead<br>\n                                    UX/UI Designer<br>\n                                    Data Visualization Specialist<br>\n                                    Frontend Developer"
+    },
+    "work_pslsc": {
+        "chip1": "Sports Club",
+        "chip2": "Design System & Code Blocks",
+        "chip3": "Living Website",
+        "statement": "A website that tells the story of a club being born in real time, built as a design system and code blocks ready to change with every milestone on the road to 2027.",
+        "context_heading": "Context",
+        "context_p1": "Port St. Lucie SC is the first professional soccer club in its city. It debuts in USL League One in 2027, already runs a reserve team in the USL Academy League, has a youth academy and a stadium on the way.",
+        "context_p2": "The assets were real. The problem was that nobody could feel them. The masterplan, the stadium and 2027 did not come through when you landed on the site. The club's own words were blunt: you don't feel anything.",
+        "context_p3": "There was a second layer. Web, Instagram, TikTok and X were each telling a different story, and tickets and merch were about to start generating revenue with no narrative to sit on.",
+        "context_p4": "The engagement was clear from day one: strategy, design, a design system and custom code blocks, handed off to the club's developer for integration into WordPress. We would not build the platform. We would build the pieces that make it feel like something.",
+        "context_p5": "So we did not treat this as a redesign. We treated it as a system that tells the project and converts, week after week.",
+        "solution_heading": "Our Solution",
+        "solution_sh1": "Discovery before pixels",
+        "solution_p1": "We started with the person who lands on the site. Marco, 35, has lived in Port St. Lucie for over ten years, has Latin American roots and a kid who plays soccer. He arrives excited and skeptical at the same time: he wants to believe, but he has seen projects in the city that never happened. If the site convinces him, he becomes the club's best ambassador.",
+        "solution_p2": "From there we mapped four jobs to be done, each with its breaking point: check that the project is real, find a way to join today, find a place for his kid, and have something concrete to share.",
+        "solution_p3": "Then we benchmarked. Forty sources across six leagues, from USL League One to the Premier League, read as fanbase and revenue machines rather than teams. We tried to refute every strong number before using it. The finding was clear: the ceiling in USL League One is low and flat. Beating it was a design effort, not a budget one. That became the argument behind every architecture decision:",
+        "solution_li1": "Five narrative pillars, starting with \"you're watching a club be born\"",
+        "solution_li2": "Simple navigation, with the Founding Member action never more than a tap away",
+        "solution_li3": "A home page structured as a narrative arc: proof first, then emotion, always an action",
+        "solution_li4": "The official store as one of the concrete ways to join today, not a secondary section",
+        "solution_sh2": "Built as blocks, made to be felt",
+        "solution_p4": "The site was designed as a set of independent blocks. Each section is a piece the developer can take and integrate into WordPress one at a time, and the interactive parts ship packaged and ready to drop in, with no need to understand how they work inside.",
+        "solution_p5": "Eleven blocks on the home tell a construction in progress: a hero headline that cycles through imagined, built, backed, loved and born over footage of the works, a stats band with animated counters for founding members, deposits and days to the first match, and the live team schedule with the next match highlighted.",
+        "solution_p6": "Four moments were built from scratch:",
+        "solution_li5": "The jersey that moves with your scroll, no dragging needed",
+        "solution_li6": "The founders wall, an airport-board style panel where every new founder appears live, plus the membership card you build from a photo and share",
+        "solution_li7": "The stadium reveal, a mask that slides away as you scroll and uncovers the render like raising a curtain",
+        "solution_li8": "The animated project timeline, because this is a construction schedule, not a pitch deck",
+        "solution_p7": "The same system carries the Join and Partners pages without duplicating work. Join resolves the full founder signup flow, with three plans and an FAQ that anticipates Marco's real objections. Partners keeps the same visual language in a more commercial register, reading the same traction numbers a fan sees as a growth curve for sponsors and investors.",
+        "solution_sh3": "A living site, not a launch",
+        "solution_p8": "We did not design a static page. We designed the experience of the club's current moment: the launch and the road to the 2027 season. The countdown, the founders wall and the hero all live in the present tense.",
+        "solution_p9": "When the next milestone arrives, the site changes with it. The launch, the groundbreaking, the first whistle: each one writes a new version. That is why the site is planned in stages, not closed and forgotten the day it goes live.",
+        "solution_p10": "The club presented the redesign to USL as a living story. Today we keep working on the next chapters, starting with the stadium microsite for the groundbreaking campaign, where every family writes the message they want to leave in the foundations.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "• Four custom interactive pieces built from scratch",
+        "outcomes_li2": "• One design system reused across Home, Join and Partners",
+        "outcomes_li3": "• A benchmark of 40 sources across 6 leagues backing every decision",
+        "outcomes_li4": "• Redesign presented to USL as a living story",
+        "outcomes_li5": "• Ongoing partnership through each club milestone",
+        "team_heading": "Team",
+        "team_roles": "Design Lead<br>UX/UI Designer<br>Front-end Developer",
+        "site_heading": "Live site",
+        "site_link": "portstluciesc.com"
     }
 }
