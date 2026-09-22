@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A 90 Day AI Roadmap for Your Startup · Yacaré Blog</title>
+    <meta name="description" content="A 90 day AI roadmap for your startup: from diagnosis to your first use case in production, with weekly milestones, key decisions and mistakes to avoid.">
+    <link rel="canonical" href="https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/roadmap-de-ia-para-startup-primeros-90-dias.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/roadmap-de-ia-para-startup-primeros-90-dias.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="A 90 Day AI Roadmap for Your Startup">
+    <meta property="og:description" content="A concrete, week by week plan to go from diagnosis to your first AI use case in production without burning cash or time.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Rafa Guerrero">
+    <meta property="article:published_time" content="2026-06-17">
+    <meta property="article:section" content="Business">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A 90 Day AI Roadmap for Your Startup">
+    <meta name="twitter:description" content="A concrete, week by week plan to go from diagnosis to your first AI use case in production without burning cash or time.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "en",
+  "headline": "A 90 Day AI Roadmap for Your Startup",
+  "description": "A 90 day AI roadmap for your startup: from diagnosis to your first use case in production, with weekly milestones, key decisions and mistakes to avoid.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Rafa Guerrero"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-17",
+  "dateModified": "2026-06-17",
+  "articleSection": "Business",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Business",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "90 Day AI Roadmap",
+      "item": "https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need a data team to start this roadmap?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not for the first case. In the first 90 days you can validate with existing tools and APIs without hiring specialists. Only when the case justifies in house development is it worth adding dedicated technical roles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if during the diagnosis I discover I do not need AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That is a good result, not a failure. Many problems are solved with better processes or simple automation. Saving yourself an unnecessary build is part of the value of doing the diagnosis before building."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much budget should I set aside for the first 90 days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the case, but most of the cost at this stage is team time, not infrastructure. It is also worth budgeting the recurring model usage costs, which show up once in production and add up every month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I compress the 90 days if I am in a hurry?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The diagnosis and case selection phase can be shortened a lot with a focused sprint. The part you should not rush is validation with users, because that is where the errors that matter show up."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/en/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--tecnologia">Technology</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--cultura">Culture</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--opinion">Opinion</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--ia">AI</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--analisis">Analysis</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--negocios">Business</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Search the blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Search">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC to close</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Breadcrumb">
+            <a href="/elpantano/en/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/en/">Business</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>90 Day AI Roadmap</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/en/" class="ep-cat ep-cat--negocios">Business</a>
+            </div>
+
+            <h1 class="ep-article-head__title">A 90 Day AI Roadmap for Your Startup</h1>
+
+            <p class="ep-article-head__standfirst">
+                A concrete, week by week plan to go from diagnosis to your first AI use case in production without burning cash or time.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/en/" class="ep-article-head__author" aria-label="Rafa Guerrero">
+                    <div class="ep-article-head__avatar" aria-hidden="true">R</div>
+                    <span class="ep-article-head__author-name">Rafa Guerrero</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-17">June 17, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">8 min read</span>
+
+                <div class="ep-article-head__share" aria-label="Share article">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/en/roadmap-de-ia-para-startup-primeros-90-dias.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="por-que-90-dias">Why think in 90 days and not a year</h2>
+                    <p>An <strong>AI roadmap for a startup</strong> does not need to be a fifty page document. It needs to be a short plan, with verifiable milestones and a near term deadline. Ninety days is enough to diagnose, choose a use case and put something real in front of users.</p>
+                    <p>The most common trap is starting with the technology instead of the problem. Before thinking about models or vendors, you should know which business metric you want to move and by how much. If you cannot name it, you are not ready to build yet.</p>
+                    <p>This plan assumes you are a founder or SMB owner, that you have a small team and that budget matters. The idea is not to do everything, but to do one thing well and learn from it.</p>
+                    <div class="ep-pullquote"><p>Ninety days is enough to diagnose, choose a case and put something real in front of users.</p></div>
+                    <h2 id="dias-1-30-diagnostico">Days 1 to 30: diagnosis and choosing the case</h2>
+                    <p>The first month is for looking inward. Week 1: list the processes where your team loses the most time or where users get stuck. Week 2: quantify those problems with real data, even if they are rough estimates (hours per week, abandonment rate, cost per ticket).</p>
+                    <p>Week 3: prioritize. Look for a case with high impact and low complexity, not the flashiest one. A good first case is usually repetitive, based on text or data you already have, and with a result that is easy to evaluate. If you are torn between several, review the <a href="https://yacare.io/elpantano/en/errores-comunes-al-aplicar-ia-en-una-empresa.html">common mistakes when applying AI in a company</a> to rule out the ones that look easy but are not.</p>
+                    <p>Week 4: define the success metric and the baseline. Without a starting number, you will not know later whether the AI worked. If you need to align the team quickly and come out with a clear plan, a <a href="/services/discovery-sprint.html">Discovery Sprint</a> compresses much of this month into a single week of focused work.</p>
+                    <p>An honest warning: if during this month you discover that the problem is solved with a well built spreadsheet or a tidier process, do not force AI. Write it down and move on to the next candidate.</p>
+                    <h2 id="dias-31-60-prototipo">Days 31 to 60: prototype and the build or buy decision</h2>
+                    <p>With the case chosen, the second month is for testing technical viability without committing to a full build. Week 5: put together a quick prototype, ideally no code or with existing tools, to see if the idea behaves as you expected. The guide on <a href="https://yacare.io/elpantano/en/como-validar-idea-de-producto-con-ia.html">validating a product idea with AI without code</a> is useful here.</p>
+                    <p>Week 6: make the core decision. Should you use an existing API or tool, or do you need something custom? Most startups start by buying and only build when the case justifies it. The article on <a href="https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html">building or buying an AI solution</a> helps you avoid overestimating your need for in house development.</p>
+                    <p>Week 7: test the prototype with users or with your internal team. Do not look for perfection, look for signals: are people using it? Is the result reliable? In which cases does it fail badly? Document the errors, because that is where the most valuable information lives.</p>
+                    <p>Week 8: estimate real costs before moving forward. An AI product has recurring usage costs, not just development costs. Review <a href="https://yacare.io/elpantano/en/cuanto-cuesta-desarrollar-producto-con-ia-startup.html">how much an AI product costs</a> so you can budget with your feet on the ground and avoid surprises on the monthly bill.</p>
+                    <h2 id="dias-61-90-produccion">Days 61 to 90: from prototype to production</h2>
+                    <p>The last month is for taking the validated case into a real, scoped and measurable environment. Weeks 9 and 10: build the minimal version that solves the problem end to end. Do not add extra features. The goal is a functional MVP, as we explain in <a href="https://yacare.io/elpantano/en/del-prototipo-al-mvp-primer-producto-con-ia.html">from prototype to MVP</a>.</p>
+                    <p>Week 11: launch to a small group. Keep human oversight over the AI outputs, especially if they touch customers or sensitive decisions. Define what happens when the model gets it wrong and who steps in.</p>
+                    <p>Week 12: measure against the baseline you set in the first month. This is where the loop closes. If you do not know how to evaluate the result, the article on <a href="https://yacare.io/elpantano/en/producto-con-ia-como-medir-si-funciona.html">AI product metrics</a> gives you a framework to tell real improvement from noise.</p>
+                    <p>By the end of the 90 days you should have three things: a case in production, numbers that say whether it worked and a list of lessons for the next cycle. That is worth more than an ambitious roadmap that never gets executed.</p>
+                    <h2 id="errores-y-siguiente-paso">What to avoid and how to continue</h2>
+                    <p>The most expensive mistake is starting on too many fronts at once. A single well executed case generates more learning and internal confidence than five half finished experiments. The discipline of choosing matters as much as the execution.</p>
+                    <p>Another mistake is thinking AI replaces judgment. In customer support, for example, it is worth reading <a href="https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html">when a chatbot makes sense and when it does not</a> before automating everything. For SMBs focused on data or internal processes, <a href="https://yacare.io/elpantano/en/ia-para-analisis-de-datos-en-pymes.html">AI for data analysis</a> and <a href="https://yacare.io/elpantano/en/automatizacion-con-ia-para-pymes-por-donde-empezar.html">automation with AI</a> are often better starting points than user facing products.</p>
+                    <p>Once the first cycle is closed, repeat the process with the next case. A mature <strong>artificial intelligence strategy</strong> is not one big single project, but a series of short cycles that accumulate. Every ninety days, one more case in production and a team that learns to work with these tools.</p>
+                    <div class="ep-pullquote"><p>A single well executed case generates more learning than five half finished experiments.</p></div>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">If you want to come out with a clear, prioritized AI case in a single week, let's work together on a Yacaré Discovery Sprint.</p>
+                        <a href="/services/discovery-sprint.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Explore Discovery Sprint &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Frequently asked questions</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Do I need a data team to start this roadmap?</summary>
+                        <p>Not for the first case. In the first 90 days you can validate with existing tools and APIs without hiring specialists. Only when the case justifies in house development is it worth adding dedicated technical roles.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">What if during the diagnosis I discover I do not need AI?</summary>
+                        <p>That is a good result, not a failure. Many problems are solved with better processes or simple automation. Saving yourself an unnecessary build is part of the value of doing the diagnosis before building.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How much budget should I set aside for the first 90 days?</summary>
+                        <p>It depends on the case, but most of the cost at this stage is team time, not infrastructure. It is also worth budgeting the recurring model usage costs, which show up once in production and add up every month.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Can I compress the 90 days if I am in a hurry?</summary>
+                        <p>The diagnosis and case selection phase can be shortened a lot with a focused sprint. The part you should not rush is validation with users, because that is where the errors that matter show up.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">R</div>
+                        <div>
+                            <div class="ep-author-mini__name">Rafa Guerrero</div>
+                            <div class="ep-author-mini__role">Columnist · Business</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Covers the intersection of technology and business in startups and SMBs.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">In this article</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#por-que-90-dias">Why think in 90 days and not a year</a></li>
+                        <li><a href="#dias-1-30-diagnostico">Days 1 to 30: diagnosis and choosing the case</a></li>
+                        <li><a href="#dias-31-60-prototipo">Days 31 to 60: prototype and the build or buy decision</a></li>
+                        <li><a href="#dias-61-90-produccion">Days 61 to 90: from prototype to production</a></li>
+                        <li><a href="#errores-y-siguiente-paso">What to avoid and how to continue</a></li>
+                        <li><a href="#preguntas-frecuentes">Frequently asked questions</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/en/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Back to the blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">R</div>
+                <div>
+                    <div class="ep-author-card__label">Author</div>
+                    <div class="ep-author-card__name">Rafa Guerrero</div>
+                    <div class="ep-author-card__role">Columnist · Business</div>
+                    <p class="ep-author-card__bio">
+                        Rafa Guerrero covers the intersection of technology and business: what companies adopt, what they drop, and why. Twelve years writing about startups, funding and product across Latin America and Spain. He cares more about the real case than the framework of the month.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">More from the blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/en/producto-con-ia-como-medir-si-funciona.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Analysis</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Product Metrics for AI: How to Measure If It Works</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Model accuracy doesn't tell you if the product is useful. We show you which metrics to actually watch and how to build a dashboard that reflects real value for your users.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 16, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/ia-en-ecommerce-recomendaciones-busqueda-retencion.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Business</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">AI in e-commerce: where it moves the needle</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Search, recommendations, retention, and support: where to apply artificial intelligence in your store and what to prioritize based on its size.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 15, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/construir-o-comprar-solucion-de-ia.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Analysis</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Build or Buy an AI Solution</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Before you spend on development, it pays to know when an off the shelf tool is enough and when you need something custom. A simple framework for deciding build vs buy in AI.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 15, 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/en/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">Yacaré's blog. Ideas on product, AI and business for people who build.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Sections</div>
+                    <a href="/elpantano/en/" class="ep-footer__link">Technology</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Culture</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Opinion</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">AI</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Analysis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">About</a>
+                    <a href="/services.html" class="ep-footer__link">Services</a>
+                    <a href="/work.html" class="ep-footer__link">Work</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Connect</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contact</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacy</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Terms</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">A blog by</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

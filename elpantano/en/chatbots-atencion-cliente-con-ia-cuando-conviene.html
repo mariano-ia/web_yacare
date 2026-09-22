@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Chatbots: When They Make Sense and When They Don't · Yacaré Blog</title>
+    <meta name="description" content="An honest look at when an AI chatbot makes sense for customer support and when it doesn't. Decision criteria, what to measure, and common mistakes to avoid.">
+    <link rel="canonical" href="https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/chatbots-atencion-cliente-con-ia-cuando-conviene.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/chatbots-atencion-cliente-con-ia-cuando-conviene.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AI Chatbots: When They Make Sense and When They Don't">
+    <meta property="og:description" content="An AI chatbot can take pressure off your support team or wreck your customer experience. The difference comes down to knowing when to use one. Here we give you concrete criteria to decide and what to measure.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Mia Torres">
+    <meta property="article:published_time" content="2026-06-07">
+    <meta property="article:section" content="AI">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Chatbots: When They Make Sense and When They Don't">
+    <meta name="twitter:description" content="An AI chatbot can take pressure off your support team or wreck your customer experience. The difference comes down to knowing when to use one. Here we give you concrete criteria to decide and what to measure.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "en",
+  "headline": "AI Chatbots: When They Make Sense and When They Don't",
+  "description": "An honest look at when an AI chatbot makes sense for customer support and when it doesn't. Decision criteria, what to measure, and common mistakes to avoid.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Mia Torres"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-07",
+  "dateModified": "2026-06-07",
+  "articleSection": "AI",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI Chatbots: When They Make Sense",
+      "item": "https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does an AI chatbot replace my support team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, and framing it that way usually ends badly. The chatbot resolves repetitive queries and frees up time, but your team is still needed for complex and sensitive cases. The best approach is to think of it as a complement, with clear escalation to people."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to implement an AI chatbot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the scope and whether you already have organized documentation. A narrow, well defined case is far more affordable than trying to cover all of support at once. That's why we recommend starting small and measuring before scaling the investment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the chatbot gives an incorrect answer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's a real risk, especially if the knowledge base is incomplete or out of date. That's why it's key to design escalation to humans and periodically review the topics the assistant doesn't resolve well. The quality of the answers depends directly on the information you give it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a technical team to have an AI chatbot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily to get started, since accessible tools exist today. What matters is defining the use case well and having the documentation ready. If you don't have a technical team, it helps to lean on a partner who validates the scope and builds a first functional product."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/en/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--tecnologia">Technology</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--cultura">Culture</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--opinion">Opinion</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--ia">AI</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--analisis">Analysis</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--negocios">Business</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Search the blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Search">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC to close</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Breadcrumb">
+            <a href="/elpantano/en/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/en/">AI</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>AI Chatbots: When They Make Sense</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/en/" class="ep-cat ep-cat--ia">AI</a>
+            </div>
+
+            <h1 class="ep-article-head__title">AI Chatbots: When They Make Sense and When They Don't</h1>
+
+            <p class="ep-article-head__standfirst">
+                An AI chatbot can take pressure off your support team or wreck your customer experience. The difference comes down to knowing when to use one. Here we give you concrete criteria to decide and what to measure.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/en/" class="ep-article-head__author" aria-label="Mia Torres">
+                    <div class="ep-article-head__avatar" aria-hidden="true">M</div>
+                    <span class="ep-article-head__author-name">Mia Torres</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-07">June 7, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">7 min read</span>
+
+                <div class="ep-article-head__share" aria-label="Share article">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/en/chatbots-atencion-cliente-con-ia-cuando-conviene.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="introduccion">The Chatbot Is Not a Magic Solution</h2>
+                    <p>More and more companies add an <strong>AI chatbot for customer support</strong> because it sounds modern and promises to cut costs. The problem shows up when it gets installed without thinking about whether it fits the business. A poorly applied assistant doesn't save work: it generates more complaints and wears down the customer relationship.</p>
+                    <p>The right question isn't <em>whether</em> you should have a chatbot, but <em>what for</em> and <em>in which cases</em>. The technology is already mature and accessible, but that doesn't make it suitable for everything. In this article we show you when an <strong>AI chatbot in your company</strong> adds real value and when it's better not to implement one.</p>
+                    <p>Let's get concrete with decision criteria and metrics, no inflated promises. The idea is that you finish reading with a clear answer for your own case.</p>
+                    <div class="ep-pullquote"><p>The question isn't whether you should have a chatbot, but what for and in which cases.</p></div>
+                    <h2 id="cuando-conviene">When an AI Chatbot Makes Sense</h2>
+                    <p>An <strong>AI virtual assistant</strong> pays off when there's a high volume of repetitive queries. If your team answers the same ten questions every day (hours, order status, how to reset a password), a chatbot resolves them instantly and frees up human time for complex cases.</p>
+                    <p>It also makes sense when you need support outside business hours. A customer who asks at eleven at night and gets a useful answer is better served than one who waits until the next morning. Here the chatbot fills a gap that would otherwise stay empty.</p>
+                    <p>Another favorable scenario is when you have clear, up to date documentation. AI answers well when it has reliable information to draw from: a knowledge base, frequently asked questions, written policies. Without that foundation, the assistant improvises and that's where the problems start. If you want to explore a first, narrow use case, it may help to read <a href="https://yacare.io/elpantano/en/automatizacion-con-ia-para-pymes-por-donde-empezar.html">where to start with AI automation for SMBs</a>.</p>
+                    <h2 id="cuando-no-conviene">When It Doesn't Make Sense (and Wrecks the Experience)</h2>
+                    <p>If your queries are emotional or sensitive, a chatbot usually makes things worse. A customer angry about an incorrect charge or someone going through a delicate situation doesn't want to talk to a bot: they want a person who listens. Forcing AI in those moments signals that the company isn't taking responsibility.</p>
+                    <p>It also doesn't make sense when every case is different and requires judgment. If your support involves negotiating, interpreting ambiguous contexts, or making decisions that aren't in a manual, AI falls short. It will give generic answers that don't resolve anything and force the customer to repeat everything when they finally reach a human.</p>
+                    <p>The worst scenario is using the chatbot as a containment wall so people never reach your team. That gets noticed right away and destroys trust. <strong>A chatbot that hides the button to talk to a person is a chatbot that's failing on purpose.</strong></p>
+                    <div class="ep-pullquote"><p>A chatbot that hides the button to talk to a person is a chatbot that's failing on purpose.</p></div>
+                    <h2 id="criterios-de-decision">Criteria to Decide for Your Case</h2>
+                    <p>Before investing, answer three questions with real data. First: what percentage of your queries are repetitive and solvable with existing information? If it's over sixty percent, there's clear room. If it's below thirty, you should review other priorities.</p>
+                    <p>Second: do you have the documentation ready or would you have to create it from scratch? The quality of the answers depends directly on the quality of your knowledge base. Often the most valuable work isn't the chatbot itself, but organizing that information.</p>
+                    <p>Third: have you thought through the escalation path to a human? Every assistant should have a clear, fast exit to a person when it can't resolve something. Without that design, the chatbot frustrates more than it helps. To avoid overbuilding, we recommend validating the scope with a <a href="https://yacare.io/elpantano/en/que-es-un-discovery-sprint-producto-ia.html">discovery sprint before investing in AI</a>, and if you're just starting out without a technical team, check out <a href="https://yacare.io/elpantano/en/como-aplicar-ia-en-una-pyme-sin-equipo-tecnico.html">how to apply AI in an SMB step by step</a>.</p>
+                    <h2 id="que-medir">What to Measure to Know If It's Working</h2>
+                    <p>It's not enough to launch the chatbot and assume it improves support. You need metrics that show whether it adds or subtracts. The first is the <strong>resolution rate</strong>: what percentage of conversations end without a human stepping in and without the customer asking the same thing again.</p>
+                    <p>The second is the <strong>escalation rate</strong> and, above all, how long it takes to happen. If people ask to talk to a person in the first few seconds, something is off with the answers or the tone. The third is post conversation satisfaction, measured with a simple question at the close of each conversation.</p>
+                    <p>Also look at the topics the chatbot fails to resolve. That list is gold: it tells you where documentation is missing or where AI isn't the right tool. Iterating on those gaps is worth more than adding new features. If you're going to build an AI product from scratch, it's worth clearly defining <a href="https://yacare.io/elpantano/en/mvp-con-ia-que-construir-primero.html">what to build first to validate</a>.</p>
+                    <h2 id="conclusion">Start Small and Honest</h2>
+                    <p>An AI chatbot is a tool, not a strategy. It makes sense when it resolves repetitive queries with good documentation and clear escalation to humans. It doesn't make sense when it replaces empathy, hides your team, or works without reliable information behind it.</p>
+                    <p>The practical recommendation is to start narrow: one well defined use case, metrics from day one, and the honesty of telling the customer they're talking to an assistant. From there you can expand with judgment instead of guessing.</p>
+                    <p>If you want to take this idea from concept to something functional without inflating the scope, at Yacaré we support you with the <a href="/services/mvp-jumpstarter.html">MVP Jumpstarter</a> so you can test with real users before overinvesting.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">If you want to validate an AI chatbot with real users without inflating the scope, let's work together on Yacaré's MVP Jumpstarter.</p>
+                        <a href="/services/mvp-jumpstarter.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Explore MVP Jumpstarter &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Frequently asked questions</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Does an AI chatbot replace my support team?</summary>
+                        <p>No, and framing it that way usually ends badly. The chatbot resolves repetitive queries and frees up time, but your team is still needed for complex and sensitive cases. The best approach is to think of it as a complement, with clear escalation to people.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How much does it cost to implement an AI chatbot?</summary>
+                        <p>It depends on the scope and whether you already have organized documentation. A narrow, well defined case is far more affordable than trying to cover all of support at once. That's why we recommend starting small and measuring before scaling the investment.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">What happens if the chatbot gives an incorrect answer?</summary>
+                        <p>It's a real risk, especially if the knowledge base is incomplete or out of date. That's why it's key to design escalation to humans and periodically review the topics the assistant doesn't resolve well. The quality of the answers depends directly on the information you give it.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Do I need a technical team to have an AI chatbot?</summary>
+                        <p>Not necessarily to get started, since accessible tools exist today. What matters is defining the use case well and having the documentation ready. If you don't have a technical team, it helps to lean on a partner who validates the scope and builds a first functional product.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">M</div>
+                        <div>
+                            <div class="ep-author-mini__name">Mia Torres</div>
+                            <div class="ep-author-mini__role">Columnist · AI</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Writes about applied AI and product tooling, without inflated promises.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">In this article</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#introduccion">The Chatbot Is Not a Magic Solution</a></li>
+                        <li><a href="#cuando-conviene">When an AI Chatbot Makes Sense</a></li>
+                        <li><a href="#cuando-no-conviene">When It Doesn't Make Sense (and Wrecks the Experience)</a></li>
+                        <li><a href="#criterios-de-decision">Criteria to Decide for Your Case</a></li>
+                        <li><a href="#que-medir">What to Measure to Know If It's Working</a></li>
+                        <li><a href="#conclusion">Start Small and Honest</a></li>
+                        <li><a href="#preguntas-frecuentes">Frequently asked questions</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/en/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Back to the blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">M</div>
+                <div>
+                    <div class="ep-author-card__label">Author</div>
+                    <div class="ep-author-card__name">Mia Torres</div>
+                    <div class="ep-author-card__role">Columnist · AI</div>
+                    <p class="ep-author-card__bio">
+                        Mia Torres covers applied artificial intelligence and tooling for product teams. She writes about what AI actually changes in the day to day of a business, without inflated promises. Previously at Wired en Español and product newsletters. She splits her time between Córdoba and Madrid.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">More from the blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/en/automatizacion-con-ia-para-pymes-por-donde-empezar.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--ia">AI</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">AI Automation for Small Businesses: Where to Start</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">A practical guide to identifying which processes to automate first, how to prioritize by impact and effort, and what mistakes to avoid when getting started with artificial intelligence.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">M</div>
+                            <span class="ep-card__author-name">Mia Torres</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 6, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/que-es-un-discovery-sprint-producto-ia.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Business</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Discovery sprint: validate your AI idea before you invest</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">A discovery sprint compresses weeks of uncertainty into five days of concrete work. Before spending on development, this process helps you find out whether your idea is worth pursuing and how to execute it.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 5, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/mvp-con-ia-que-construir-primero.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Business</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">AI MVP: What to Build First to Validate Your Startup</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">Before investing months in development, you need to know whether your core hypothesis makes sense. This guide helps you define the minimum scope of an AI product and understand what to leave out from day one.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 5, 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/en/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">Yacaré's blog. Ideas on product, AI and business for people who build.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Sections</div>
+                    <a href="/elpantano/en/" class="ep-footer__link">Technology</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Culture</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Opinion</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">AI</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Analysis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">About</a>
+                    <a href="/services.html" class="ep-footer__link">Services</a>
+                    <a href="/work.html" class="ep-footer__link">Work</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Connect</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contact</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacy</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Terms</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">A blog by</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

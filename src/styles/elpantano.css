@@ -1313,9 +1313,8 @@
 .ep-footer__yacare-link:hover { opacity: 0.9; }
 
 .ep-footer__yacare-img {
-    height: 18px;
+    height: 20px;
     width: auto;
-    filter: invert(1);
     display: block;
 }
 

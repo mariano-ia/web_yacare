@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKZE3QCB9L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TKZE3QCB9L');
+    </script>
+    <meta name="color-scheme" content="dark">
+    <style>
+        html,
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Build or Buy an AI Solution · Yacaré Blog</title>
+    <meta name="description" content="Build vs buy decision framework for AI: when an off the shelf tool fits, when to go custom, and the hidden costs of each option for your business.">
+    <link rel="canonical" href="https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate" hreflang="es" href="https://yacare.io/elpantano/construir-o-comprar-solucion-de-ia.html">
+    <link rel="alternate" hreflang="en" href="https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html">
+    <link rel="alternate" hreflang="x-default" href="https://yacare.io/elpantano/construir-o-comprar-solucion-de-ia.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Build or Buy an AI Solution">
+    <meta property="og:description" content="Before you spend on development, it pays to know when an off the shelf tool is enough and when you need something custom. A simple framework for deciding build vs buy in AI.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html">
+    <meta property="og:image" content="https://yacare.io/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Mia Torres">
+    <meta property="article:published_time" content="2026-06-15">
+    <meta property="article:section" content="Analysis">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Build or Buy an AI Solution">
+    <meta name="twitter:description" content="Before you spend on development, it pays to know when an off the shelf tool is enough and when you need something custom. A simple framework for deciding build vs buy in AI.">
+    <meta name="twitter:image" content="https://yacare.io/og-image.jpg">
+
+    <!-- Structured data -->
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "inLanguage": "en",
+  "headline": "Build or Buy an AI Solution",
+  "description": "Build vs buy decision framework for AI: when an off the shelf tool fits, when to go custom, and the hidden costs of each option for your business.",
+  "image": "https://yacare.io/og-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Mia Torres"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yacaré",
+    "url": "https://yacare.io"
+  },
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "articleSection": "Analysis",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Blog",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Analysis",
+      "item": "https://yacare.io/elpantano/en/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Build or Buy AI",
+      "item": "https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is buying an AI tool cheaper than building one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the short term, almost always yes, because you avoid development and team costs. But over two or three years the calculation changes based on the number of users, integrations, and provider dependence. It pays to estimate the total cost, not just the initial price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When does an AI capability justify a custom build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When it is part of your competitive advantage and not just an operational cost. If the quality of that capability determines whether you win or lose against competitors, you cannot depend on the same tool everyone else uses. If it is a commodity, buy it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I start by buying and build later?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, and it is usually the smartest strategy. Buying lets you learn fast with low risk, and you build only when you have evidence that the capability deserves its own investment. The key is to choose tools that won't trap you if you later want to migrate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I avoid buying the wrong tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Define the problem well before looking at solutions and test with a small pilot instead of committing upfront. A discovery process or a no code validation helps you confirm that the tool solves what you need before you pay."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Bungee+Inline&family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Serif:ital,wght@0,500;1,500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.ts"></script>
+</head>
+
+<body class="ep-page">
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="ep-nav" role="navigation" aria-label="Blog">
+        <div class="ep-nav__inner">
+            <a href="/elpantano/en/" class="ep-nav__logo">Blog</a>
+            <div class="ep-nav__cats">
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--tecnologia">Technology</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--cultura">Culture</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--opinion">Opinion</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--ia">AI</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--analisis">Analysis</a>
+                <a href="/elpantano/en/" class="ep-nav__cat ep-nav__cat--negocios">Business</a>
+            </div>
+            <div class="ep-nav__actions">
+                <button class="ep-nav__search" aria-label="Search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="ep-nav__toggle" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         SEARCH OVERLAY
+         ═══════════════════════════════════════════ -->
+    <div class="ep-search-overlay" id="epSearch" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="ep-search-overlay__backdrop" id="epSearchClose"></div>
+        <div class="ep-search-bar">
+            <span class="ep-search-bar__icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </span>
+            <input type="search" class="ep-search-bar__input" placeholder="Search the blog…" id="epSearchInput"
+                autocomplete="off" aria-label="Search">
+            <button class="ep-search-bar__close" id="epSearchCloseBtn" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <span class="ep-search-hint">ESC to close</span>
+    </div>
+    <script>
+        (function () {
+            var overlay = document.getElementById('epSearch');
+            var input = document.getElementById('epSearchInput');
+            function open() { overlay.classList.add('active'); setTimeout(function () { input.focus(); }, 60); }
+            function close() { overlay.classList.remove('active'); input.value = ''; }
+            document.querySelector('.ep-nav__search').addEventListener('click', open);
+            document.getElementById('epSearchClose').addEventListener('click', close);
+            document.getElementById('epSearchCloseBtn').addEventListener('click', close);
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+        }());
+    </script>
+
+    <main>
+
+        <!-- Breadcrumb -->
+        <nav class="ep-breadcrumb" aria-label="Breadcrumb">
+            <a href="/elpantano/en/">Blog</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <a href="/elpantano/en/">Analysis</a>
+            <span class="ep-breadcrumb__sep" aria-hidden="true">›</span>
+            <span>Build or Buy AI</span>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE HEADER
+             ═══════════════════════════════════════════ -->
+        <header class="ep-article-head">
+            <div class="ep-article-head__cat">
+                <a href="/elpantano/en/" class="ep-cat ep-cat--analisis">Analysis</a>
+            </div>
+
+            <h1 class="ep-article-head__title">Build or Buy an AI Solution</h1>
+
+            <p class="ep-article-head__standfirst">
+                Before you spend on development, it pays to know when an off the shelf tool is enough and when you need something custom. A simple framework for deciding build vs buy in AI.
+            </p>
+
+            <div class="ep-article-head__meta">
+                <a href="/elpantano/en/" class="ep-article-head__author" aria-label="Mia Torres">
+                    <div class="ep-article-head__avatar" aria-hidden="true">M</div>
+                    <span class="ep-article-head__author-name">Mia Torres</span>
+                </a>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <time class="ep-meta-text" datetime="2026-06-15">June 15, 2026</time>
+                <span class="ep-meta-dot" aria-hidden="true"></span>
+                <span class="ep-meta-text">7 min read</span>
+
+                <div class="ep-article-head__share" aria-label="Share article">
+                    <a href="https://twitter.com/intent/tweet?url=https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="Twitter/X">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://yacare.io/elpantano/en/construir-o-comprar-solucion-de-ia.html"
+                        target="_blank" rel="noopener" class="ep-share-btn" aria-label="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════
+             ARTICLE BODY + SIDEBAR
+             ═══════════════════════════════════════════ -->
+        <div class="ep-article-wrap">
+
+            <!-- Main reading column -->
+            <div class="ep-article-col">
+
+                <div class="ep-prose">
+                    <h2 id="el-dilema-build-vs-buy">The dilemma every founder faces</h2>
+                    <p>The question of <strong>building or buying software</strong> is old, but AI made it more confusing. Today there are dozens of ready made tools that promise to solve almost any problem, and at the same time it has never been so accessible to build something of your own. That abundance of options complicates the decision instead of simplifying it.</p>
+                    <p>The good news is that this is not an ideological choice. It is a concrete calculation: how central that capability is to your business, how much each path costs, and what happens when the context changes. This article gives you a framework to answer those three questions without falling for the hype.</p>
+                    <p>Let's be honest from the start: the right answer is almost always to buy first and build later, if needed at all. But there are clear exceptions and they are worth understanding.</p>
+                    <div class="ep-pullquote"><p>This is not an ideological choice. It is a concrete calculation about how central that capability is to your business.</p></div>
+                    <h2 id="cuando-conviene-comprar">When buying an off the shelf tool makes sense</h2>
+                    <p>Buying makes sense when your problem is common and the market has already solved it. If you need to transcribe meetings, generate text, classify emails, or handle frequent inquiries, there is most likely a mature tool that is cheaper and more reliable than anything you could put together in three months.</p>
+                    <p>The main advantage is speed. You can be operating in days, not quarters, and pay a monthly subscription instead of funding a development team. You also transfer maintenance, model updates, and security to the provider, who has more scale than you to sustain it.</p>
+                    <p>Before committing to a platform, it pays to understand <a href="https://yacare.io/elpantano/en/automatizacion-con-ia-para-pymes-por-donde-empezar.html">where to start with automation</a> and review the <a href="https://yacare.io/elpantano/en/errores-comunes-al-aplicar-ia-en-una-empresa.html">common mistakes when applying AI in a company</a>. Many frustrations come from buying the wrong tool for a poorly defined problem.</p>
+                    <h2 id="cuando-conviene-construir">When a custom solution makes sense</h2>
+                    <p>Building makes sense when the AI capability is part of your competitive advantage, not an operational cost. If your product lives or dies by the quality of its recommendation engine, that engine cannot be the same one your competitors get by buying the same API.</p>
+                    <p>A <strong>custom AI solution</strong> also makes sense when your data is unique and hard to integrate with generic tools, or when you have privacy and compliance requirements that standard platforms do not cover. In those cases, control is worth what it costs.</p>
+                    <p>The mistake is building out of technical pride or fear of depending on a provider. Before taking that path, it pays to read <a href="https://yacare.io/elpantano/en/cuanto-cuesta-desarrollar-producto-con-ia-startup.html">how much it costs to build a product with AI</a> and think about going <a href="https://yacare.io/elpantano/en/del-prototipo-al-mvp-primer-producto-con-ia.html">from prototype to MVP</a>. Building is not buying freedom, it is taking on an ongoing responsibility.</p>
+                    <h2 id="los-costos-ocultos">The hidden costs of each option</h2>
+                    <p>Buying seems cheap until you add up integrations, per user licenses that grow with your team, and provider dependence. If the tool raises prices, changes its model, or shuts down, your operation is exposed. The cost of migrating later is usually greater than the initial savings.</p>
+                    <p>Building seems controlled until the maintenance costs appear, along with monitoring models that degrade over time and the salary of the team that has to sustain it. An AI project does not end when it launches: it begins there. That is the part almost no one budgets for.</p>
+                    <p>An underrated middle path is to buy the foundation and build only the layer that sets you apart. You use a pretrained foundation model and add your data, your rules, and your interface. That way you avoid reinventing the common parts and focus your effort where it really matters.</p>
+                    <div class="ep-pullquote"><p>An AI project does not end when it launches: it begins there. That is the part almost no one budgets for.</p></div>
+                    <h2 id="como-decidir-en-la-practica">How to decide in practice</h2>
+                    <p>Start by separating the core from the accessory. Make a list of the AI capabilities your business needs and mark which ones are differentiators and which are commodities. Commodities you buy without hesitation; differentiators deserve the build debate.</p>
+                    <p>Then estimate the total cost over two years, not just the initial one. Include integration, maintenance, provider risk, and the opportunity cost of your team. Often the two year number completely changes a decision that seemed obvious in the first month.</p>
+                    <p>If you are not sure, don't invest blindly. A <a href="/services/discovery-sprint.html">Discovery Sprint</a> lets you validate the idea and walk away with a clear plan in a week, before committing budget. You can also <a href="https://yacare.io/elpantano/en/como-validar-idea-de-producto-con-ia.html">validate an idea with AI without code</a> to test the hypothesis with real customers before choosing a path.</p>
+                    <p>The build or buy decision is not forever. Start by buying to learn fast, and build when you have evidence that the capability deserves to be yours. The worst option is to decide in the abstract, with no data and without having tested anything.</p>
+                    <div class="ep-prose-cta" style="margin: var(--space-6) 0; padding: var(--space-5); border: 1px solid var(--border-medium); border-radius: var(--radius-md); background: var(--gradient-card, rgba(255,255,255,0.03));">
+                        <p style="margin: 0 0 var(--space-3); font-weight: 600; color: var(--text-primary, #fff);">If you are torn between building or buying your AI solution, at Yacaré we help you decide with a Discovery Sprint before you invest.</p>
+                        <a href="/services/discovery-sprint.html" style="display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius-pill, 9999px); background: var(--accent-primary, #8A5EFF); color: #fff; font-weight: 600; text-decoration: none;">Explore Discovery Sprint &rarr;</a>
+                    </div>
+                    <h2 id="preguntas-frecuentes">Frequently asked questions</h2>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Is buying an AI tool cheaper than building one?</summary>
+                        <p>In the short term, almost always yes, because you avoid development and team costs. But over two or three years the calculation changes based on the number of users, integrations, and provider dependence. It pays to estimate the total cost, not just the initial price.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">When does an AI capability justify a custom build?</summary>
+                        <p>When it is part of your competitive advantage and not just an operational cost. If the quality of that capability determines whether you win or lose against competitors, you cannot depend on the same tool everyone else uses. If it is a commodity, buy it.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">Can I start by buying and build later?</summary>
+                        <p>Yes, and it is usually the smartest strategy. Buying lets you learn fast with low risk, and you build only when you have evidence that the capability deserves its own investment. The key is to choose tools that won't trap you if you later want to migrate.</p>
+                    </details>
+                    <details class="ep-faq__item" style="border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.1)); padding: var(--space-3) 0;">
+                        <summary style="cursor: pointer; font-weight: 600;">How do I avoid buying the wrong tool?</summary>
+                        <p>Define the problem well before looking at solutions and test with a small pilot instead of committing upfront. A discovery process or a no code validation helps you confirm that the tool solves what you need before you pay.</p>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Sticky sidebar -->
+            <aside class="ep-article-sidebar">
+
+                <!-- Author mini -->
+                <div class="ep-author-mini">
+                    <div class="ep-author-mini__top">
+                        <div class="ep-author-mini__avatar" aria-hidden="true">M</div>
+                        <div>
+                            <div class="ep-author-mini__name">Mia Torres</div>
+                            <div class="ep-author-mini__role">Columnist · AI</div>
+                        </div>
+                    </div>
+                    <p class="ep-author-mini__bio">Writes about applied AI and product tooling, without inflated promises.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="ep-toc">
+                    <div class="ep-toc__head">In this article</div>
+                    <ul class="ep-toc__list">
+                        <li><a href="#el-dilema-build-vs-buy">The dilemma every founder faces</a></li>
+                        <li><a href="#cuando-conviene-comprar">When buying an off the shelf tool makes sense</a></li>
+                        <li><a href="#cuando-conviene-construir">When a custom solution makes sense</a></li>
+                        <li><a href="#los-costos-ocultos">The hidden costs of each option</a></li>
+                        <li><a href="#como-decidir-en-la-practica">How to decide in practice</a></li>
+                        <li><a href="#preguntas-frecuentes">Frequently asked questions</a></li>
+                    </ul>
+                    <div class="ep-toc__divider"></div>
+                    <a href="/elpantano/en/" class="ep-toc__back">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7" />
+                        </svg>
+                        Back to the blog
+                    </a>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             AUTHOR FULL CARD
+             ═══════════════════════════════════════════ -->
+        <div class="ep-author-card">
+            <div class="ep-author-card__inner">
+                <div class="ep-author-card__avatar" aria-hidden="true">M</div>
+                <div>
+                    <div class="ep-author-card__label">Author</div>
+                    <div class="ep-author-card__name">Mia Torres</div>
+                    <div class="ep-author-card__role">Columnist · AI</div>
+                    <p class="ep-author-card__bio">
+                        Mia Torres covers applied artificial intelligence and tooling for product teams. She writes about what AI actually changes in the day to day of a business, without inflated promises. Previously at Wired en Español and product newsletters. She splits her time between Córdoba and Madrid.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════
+             RELATED POSTS
+             ═══════════════════════════════════════════ -->
+        <div class="ep-related">
+            <div class="ep-section-head" style="margin-bottom: var(--space-6);">
+                <span class="ep-section-head__bar ep-section-head__bar--green"></span>
+                <span class="ep-section-head__label">More from the blog</span>
+            </div>
+
+            <div class="ep-card-grid">
+                <a href="/elpantano/en/errores-comunes-al-aplicar-ia-en-una-empresa.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Analysis</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">Common Mistakes When Applying AI in a Company</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">The most repeated stumbles when adopting AI are not technical: they are about approach. Here we break them down one by one and show how to avoid them before you spend time and money.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 15, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/ia-para-analisis-de-datos-en-pymes.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--analisis">Analysis</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">AI for Data Analysis in Small and Midsize Businesses</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">How an SMB can move from scattered spreadsheets to concrete decisions using artificial intelligence, starting with the data it already has.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 12, 2026</span>
+                    </div>
+                </a>
+
+                <a href="/elpantano/en/cuanto-cuesta-desarrollar-producto-con-ia-startup.html" class="ep-card ep-card--standard" style="display:block; padding: var(--space-4, 24px); border:1px solid var(--border-subtle, rgba(255,255,255,0.1)); border-radius: var(--radius-md, 12px); text-decoration:none;">
+                    <div class="ep-card__cat"><span class="ep-cat ep-cat--negocios">Business</span></div>
+                    <h3 class="ep-card__title" style="margin: .6rem 0;">How Much an AI Product Costs: A Real Guide</h3>
+                    <p class="ep-card__excerpt" style="opacity:.6; font-size:.95rem; margin:0 0 .8rem;">An honest breakdown of what you pay when building a product with artificial intelligence: team, models, infrastructure and maintenance, with ranges and the levers that move your budget.</p>
+                    <div class="ep-card__meta">
+                        <div class="ep-card__author-row">
+                            <div class="ep-card__author-thumb" aria-hidden="true">R</div>
+                            <span class="ep-card__author-name">Rafa Guerrero</span>
+                        </div>
+                        <span class="ep-card__dot" aria-hidden="true"></span>
+                        <span class="ep-card__date">Jun 11, 2026</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="ep-footer">
+        <div class="ep-footer__inner">
+            <div class="ep-footer__top">
+                <div class="ep-footer__brand">
+                    <a href="/elpantano/en/" class="ep-footer__logo">Blog</a>
+                    <p class="ep-footer__tagline">Yacaré's blog. Ideas on product, AI and business for people who build.</p>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Sections</div>
+                    <a href="/elpantano/en/" class="ep-footer__link">Technology</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Culture</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Opinion</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">AI</a>
+                    <a href="/elpantano/en/" class="ep-footer__link">Analysis</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Yacaré</div>
+                    <a href="/about.html" class="ep-footer__link">About</a>
+                    <a href="/services.html" class="ep-footer__link">Services</a>
+                    <a href="/work.html" class="ep-footer__link">Work</a>
+                </div>
+                <div>
+                    <div class="ep-footer__col-head">Connect</div>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        class="ep-footer__link">LinkedIn</a>
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        class="ep-footer__link">Instagram</a>
+                    <a href="/contact.html" class="ep-footer__link">Contact</a>
+                </div>
+            </div>
+            <div class="ep-footer__bottom">
+                <div class="ep-footer__legal">
+                    <span>© 2026 Yacaré</span>
+                    <a href="/privacy-policy.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Privacy</a>
+                    <a href="/terms-and-conditions.html" class="ep-footer__link"
+                        style="opacity: 0.6; margin: 0;">Terms</a>
+                </div>
+                <div class="ep-footer__yacare">
+                    <span class="ep-footer__yacare-text">A blog by</span>
+                    <a href="/" class="ep-footer__yacare-link" title="Yacaré">
+                        <img src="/yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="ep-footer__yacare-img">
+                    </a>
+                </div>
+                <div class="ep-footer__social">
+                    <a href="https://www.instagram.com/yacare.io/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/yacarearg" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
