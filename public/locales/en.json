@@ -42,7 +42,8 @@
         "nawaiam_dashboard_desc": "Gamified HR platform transforming complex behavioral data into actionable insights.",
         "pharma_desc": "Enterprise healthcare platform streamlining global logistics and complex regulatory compliance.",
         "nawaiam_website_desc": "Immersive gaming experience redefining recruitment through science and conversion design.",
-        "pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027."
+        "pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027.",
+        "henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product."
     },
     "methodology": {
         "title_1": "How we build.",
@@ -129,7 +130,8 @@
             "cta_title": "Ready to build<br>something great?",
             "cta_desc": "Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.",
             "cta_btn": "Start a Project",
-            "card_pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027."
+            "card_pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027.",
+            "card_henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product."
         },
         "about": {
             "hero_title_1": "Small team",
@@ -555,5 +557,43 @@
         "team_roles": "Design Lead<br>UX/UI Designer<br>Front-end Developer",
         "site_heading": "Live site",
         "site_link": "portstluciesc.com"
+    },
+    "work_henry": {
+        "chip1": "AI Product",
+        "chip2": "Conversational Experience",
+        "chip3": "From Zero to Launch",
+        "statement": "Walking tours of New York guided by chat, in the voice of a real creator, designed and built from a one-day demo to a live product with payments in three months.",
+        "context_heading": "Context",
+        "context_p1": "Henry is a Peruvian YouTuber based in New York. His channel, Resilentos, shows the city block by block, and his audience keeps asking the same thing: how do I see the New York you show, with you.",
+        "context_p2": "Guided tours don't scale. A PDF guide loses his voice. The idea was different: short walking tours guided by chat, with Henry writing to you stop by stop like a friend on WhatsApp. An impulse purchase of a few dollars, with one tour always free.",
+        "context_p3": "That meant three problems at once. Make an AI sound like a real person, without caricature and without inventing prices, hours or addresses. Design for a phone on the sidewalk, with a real city around it: closed shops, wrong corners, a pause to eat, GPS that jumps under a bridge. And build something an audience can actually buy and play, safely.",
+        "context_p4": "We started in mid June 2026 with a one-day demo: paste links to his videos and chat with a Henry grounded in them. Two days later the first real tour was running on a state machine. From there, the product.",
+        "solution_heading": "Our Solution",
+        "solution_sh1": "A voice distilled from the real videos",
+        "solution_p1": "Henry's persona is not a prompt someone wrote from memory. It is a profile distilled from ten real videos of the channel: a bio and a voice, injected on every turn. Peruvian register, tuteo, no opening marks, one idea per bubble, under 180 characters. On top of it, a voice and tone guide calibrated by hand, with the words he actually uses and the ones he doesn't.",
+        "solution_p2": "The guardrails matter as much as the voice. Hard facts come only from the itinerary and its sources. Personal details that are not in the bio are neither invented nor denied. And the product is honest: it is Henry's AI version, trained on his videos, and it says so with a smile if you ask.",
+        "solution_sh2": "An engine built for the street, not the screen",
+        "solution_p3": "Before writing the engine we catalogued what really happens on a walk: someone sits down to eat, a venue is closed, they get lost, they drift into a long tangent, they ask \"are you a bot?\". Stops are proposals, not tolls. Henry follows you and steers back with good humor, never with a wall.",
+        "solution_p4": "The engine is stateless: the phone sends where you are in the tour and the conversation, the model returns a reply and an intent, and the client moves between arrived, next, pause, resume and finish. That gave us:",
+        "solution_li1": "Staggered pacing: relaxed at first, a gentle nudge later, and after many turns every reply closes by proposing the next stop",
+        "solution_li2": "Location on your terms: Henry asks with a button, never reads it silently, talks in stretches instead of meters, and no coordinate is ever stored",
+        "solution_li3": "Real data at the current stop: opening hours from Google Places, more than 8,000 public bathrooms by proximity, water, food and transport tips within walking distance",
+        "solution_li4": "Pause and resume across devices, a single nudge after silence, and a warm human closing when the walk ends",
+        "solution_sh3": "From prototype to a product people can buy",
+        "solution_p5": "The data model lives in Supabase, and the most important decision lives there too: the paywall is enforced in the database. Paid stops never leave the server for someone who hasn't bought. On top of that, Stripe checkout, coupons, gifting a tour, an upsell when you finish one, passwordless login and a budget of turns and rate limits so a viral day cannot become a bill.",
+        "solution_p6": "Henry's team edits everything from a builder: stops, media, prices and where the paywall sits, with live editing on published tours protected by database constraints.",
+        "solution_p7": "Creating a tour became a workshop. Henry sends raw notes with map links, we turn them into a draft in his voice, review it numbered line by line, build a knowledge dossier per stop validated against sources, and then 30 synthetic AI walkers play the whole tour before publishing, scored on state, voice, grounding and promises kept.",
+        "solution_p8": "The product is live at caminaconhenry.com with three walkable tours across Brooklyn and Manhattan, a leaderboard of steps by country and verified reviews from people who finished a walk. Every tour played costs cents in AI, so the model works at a few dollars a ticket.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "• Live product with three walkable tours of New York",
+        "outcomes_li2": "• From a one-day demo to a working prototype with payments in two weeks",
+        "outcomes_li3": "• A persona distilled from real videos, with guardrails against invented facts",
+        "outcomes_li4": "• Paywall enforced in the database, not in the interface",
+        "outcomes_li5": "• 30 synthetic walkers test every tour before it goes live",
+        "outcomes_li6": "• AI cost per full tour under US$0.35",
+        "team_heading": "Team",
+        "team_roles": "Product Lead<br>Product Designer<br>Full-stack &amp; AI Engineer",
+        "site_heading": "Live site",
+        "site_link": "caminaconhenry.com"
     }
 }

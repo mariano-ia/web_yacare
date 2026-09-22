@@ -41,6 +41,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://yacare.io/work/henry.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://yacare.io/work/port-st-lucie.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

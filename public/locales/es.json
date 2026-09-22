@@ -42,7 +42,8 @@
         "nawaiam_dashboard_desc": "Plataforma de RRHH gamificada que transforma datos conductuales complejos en insights accionables.",
         "pharma_desc": "Plataforma de salud empresarial que optimiza la logística global y el cumplimiento normativo complejo.",
         "nawaiam_website_desc": "Experiencia de juego inmersiva que redefine el reclutamiento a través de la ciencia y el diseño de conversión.",
-        "pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027."
+        "pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027.",
+        "henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo."
     },
     "methodology": {
         "title_1": "Cómo construimos.",
@@ -129,7 +130,8 @@
             "cta_title": "¿Listo para construir<br>algo grandioso?",
             "cta_desc": "Compartinos tu desafío. Te responderemos en 24 horas con una hoja de ruta clara para hacerlo realidad.",
             "cta_btn": "Iniciar un Proyecto",
-            "card_pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027."
+            "card_pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027.",
+            "card_henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo."
         },
         "about": {
             "hero_title_1": "Equipo pequeño",
@@ -555,5 +557,43 @@
         "team_roles": "Design Lead<br>Diseñador/a UX/UI<br>Desarrollador/a Front-end",
         "site_heading": "Sitio en vivo",
         "site_link": "portstluciesc.com"
+    },
+    "work_henry": {
+        "chip1": "Producto con IA",
+        "chip2": "Experiencia conversacional",
+        "chip3": "De cero al lanzamiento",
+        "statement": "Recorridos a pie por Nueva York guiados por chat, con la voz de un creador real, diseñados y construidos desde una demo de un día hasta un producto en vivo con pagos en tres meses.",
+        "context_heading": "Contexto",
+        "context_p1": "Henry es un YouTuber peruano radicado en Nueva York. Su canal, Resilentos, muestra la ciudad cuadra por cuadra, y su audiencia le pregunta siempre lo mismo: cómo veo la Nueva York que mostrás, con vos.",
+        "context_p2": "Los tours guiados no escalan. Una guía en PDF pierde su voz. La idea era otra: recorridos cortos a pie guiados por chat, con Henry escribiéndote parada por parada como un amigo por WhatsApp. Una compra impulsiva de pocos dólares, con un recorrido siempre gratis.",
+        "context_p3": "Eso implicaba tres problemas a la vez. Lograr que una IA suene como una persona real, sin caricatura y sin inventar precios, horarios ni direcciones. Diseñar para un celular en la vereda, con una ciudad real alrededor: locales cerrados, esquinas equivocadas, una pausa para comer, un GPS que salta bajo un puente. Y construir algo que una audiencia pueda comprar y jugar de verdad, con seguridad.",
+        "context_p4": "Arrancamos a mediados de junio de 2026 con una demo de un día: pegar links a sus videos y chatear con un Henry anclado en ellos. Dos días después el primer recorrido real corría sobre una máquina de estados. De ahí en adelante, el producto.",
+        "solution_heading": "Nuestra solución",
+        "solution_sh1": "Una voz destilada de los videos reales",
+        "solution_p1": "La persona de Henry no es un prompt escrito de memoria. Es un perfil destilado de diez videos reales del canal: una bio y una voz, inyectadas en cada turno. Registro peruano, tuteo, sin signos de apertura, una idea por burbuja, menos de 180 caracteres. Encima, una guía de voz y tono calibrada a mano, con las palabras que usa de verdad y las que no.",
+        "solution_p2": "Los resguardos importan tanto como la voz. Los datos duros salen solo del itinerario y sus fuentes. Los detalles personales que no están en la bio no se inventan ni se niegan. Y el producto es honesto: es la versión IA de Henry, entrenada con sus videos, y lo dice con una sonrisa si le preguntás.",
+        "solution_sh2": "Un motor hecho para la calle, no para la pantalla",
+        "solution_p3": "Antes de escribir el motor catalogamos lo que pasa de verdad en una caminata: alguien se sienta a comer, un local está cerrado, se pierden, se van por las ramas, preguntan \"sos un bot?\". Las paradas son propuestas, no peajes. Henry te sigue y te reencauza con buen humor, nunca con un muro.",
+        "solution_p4": "El motor es stateless: el teléfono manda en qué punto del recorrido estás y la conversación, el modelo devuelve una respuesta y una intención, y el cliente se mueve entre llegué, siguiente, pausa, retomar y terminar. Eso nos dio:",
+        "solution_li1": "Ritmo escalonado: relajado al principio, un empujoncito después, y tras muchos turnos cada respuesta cierra proponiendo la próxima parada",
+        "solution_li2": "Ubicación en tus términos: Henry la pide con un botón, nunca la lee en silencio, habla por tramos y no por metros, y ninguna coordenada se guarda",
+        "solution_li3": "Datos reales en la parada actual: horarios de Google Places, más de 8.000 baños públicos por cercanía, agua, comida y transporte a distancia caminable",
+        "solution_li4": "Pausa y retomar entre dispositivos, un solo aviso tras el silencio y un cierre cálido y humano cuando termina la caminata",
+        "solution_sh3": "Del prototipo a un producto que se puede comprar",
+        "solution_p5": "El modelo de datos vive en Supabase, y la decisión más importante vive ahí también: el paywall se aplica en la base de datos. Las paradas pagas nunca salen del servidor para alguien que no compró. Encima, checkout con Stripe, cupones, regalar un recorrido, un upsell al terminar uno, login sin contraseña y un presupuesto de turnos y límites de uso para que un día viral no se convierta en una factura.",
+        "solution_p6": "El equipo de Henry edita todo desde un constructor: paradas, media, precios y dónde va el paywall, con edición en vivo sobre recorridos publicados protegida por constraints de la base.",
+        "solution_p7": "Crear un recorrido se volvió un taller. Henry manda notas crudas con links de mapas, las convertimos en un borrador con su voz, lo revisamos numerado línea por línea, armamos un dossier de conocimiento por parada validado contra fuentes, y después 30 caminantes sintéticos de IA juegan el recorrido completo antes de publicar, calificados por estado, voz, respaldo y promesas cumplidas.",
+        "solution_p8": "El producto está en vivo en caminaconhenry.com con tres recorridos caminables entre Brooklyn y Manhattan, un ranking de pasos por país y reseñas verificadas de gente que terminó una caminata. Cada recorrido jugado cuesta centavos en IA, así que el modelo funciona a pocos dólares por entrada.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "• Producto en vivo con tres recorridos caminables de Nueva York",
+        "outcomes_li2": "• De una demo de un día a un prototipo funcional con pagos en dos semanas",
+        "outcomes_li3": "• Una persona destilada de videos reales, con resguardos contra datos inventados",
+        "outcomes_li4": "• Paywall aplicado en la base de datos, no en la interfaz",
+        "outcomes_li5": "• 30 caminantes sintéticos prueban cada recorrido antes de salir",
+        "outcomes_li6": "• Costo de IA por recorrido completo menor a US$0,35",
+        "team_heading": "Equipo",
+        "team_roles": "Product Lead<br>Diseñador/a de Producto<br>Ingeniero/a Full-stack e IA",
+        "site_heading": "Sitio en vivo",
+        "site_link": "caminaconhenry.com"
     }
 }
