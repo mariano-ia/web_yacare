@@ -125,6 +125,20 @@
                             <video src="/videos/pslsc-cover.mp4" poster="/assets/images/pslsc-cover.jpg" autoplay muted
                                 loop playsinline preload="metadata" aria-label="Port St. Lucie SC stadium under construction"
                                 style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
+                            <div aria-hidden="true"
+                                style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 8, 12, 0.85) 0%, rgba(8, 8, 12, 0.4) 40%, rgba(8, 8, 12, 0) 70%);">
+                            </div>
+                            <p class="pslsc-morph" aria-label="You're watching a club be born."
+                                style="position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: clamp(20px, 4vw, 40px); font-family: 'Antonio', sans-serif; font-weight: 600; font-size: clamp(1.7rem, 4.6vw, 3.4rem); line-height: 1.05; text-transform: uppercase; color: #ffffff; filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.55));">
+                                <span aria-hidden="true">You're watching a club be</span>
+                                <span aria-hidden="true"
+                                    style="position: relative; display: inline-block; vertical-align: top; white-space: nowrap;">
+                                    <span class="pslsc-morph-sizer" style="visibility: hidden;">imagined.</span>
+                                    <span class="pslsc-morph-word" data-words="imagined,loved,born"
+                                        style="position: absolute; left: 0; top: 0; color: var(--accent-light);">born.</span>
+                                </span>
+                            </p>
+                        </div>
                         </div>
 
                         <!-- Context -->
@@ -457,6 +471,49 @@
         </div>
     </footer>
 
+    <!-- Hero headline morph, same behaviour as the live PSLSC site: runs once when the video enters view -->
+    <script>
+        (function () {
+            var el = document.querySelector('.pslsc-morph-word');
+            if (!el) return;
+            var words = (el.dataset.words || 'born').split(',').map(function (w) { return w.trim() + '.'; });
+            var sizer = document.querySelector('.pslsc-morph-sizer');
+            if (sizer) sizer.textContent = words.reduce(function (a, b) { return b.length > a.length ? b : a; }, '');
+            var HOLD = 240, DURATION = 700, READ_HOLD = 640, STEP = 45, CHARS = 'abcdefghijklmnopqrstuvwxyz';
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function scrambleTo(word, done) {
+                var t0 = performance.now();
+                (function tick() {
+                    var progress = Math.min(Math.max((performance.now() - t0 - HOLD) / DURATION, 0), 1);
+                    var out = '';
+                    for (var i = 0; i < word.length; i++) {
+                        var ch = word[i];
+                        out += !/[a-z]/i.test(ch) ? ch : (progress * word.length > i ? ch : CHARS[Math.floor(Math.random() * 26)]);
+                    }
+                    el.textContent = out;
+                    if (progress >= 1) { el.textContent = word; if (done) done(); return; }
+                    setTimeout(tick, STEP);
+                })();
+            }
+            function run() {
+                if (reduced) { el.textContent = words[words.length - 1]; return; }
+                var idx = 0;
+                (function next() {
+                    scrambleTo(words[idx], function () {
+                        if (idx >= words.length - 1) return;
+                        idx += 1;
+                        setTimeout(next, READ_HOLD);
+                    });
+                })();
+            }
+            var started = false;
+            var io = new IntersectionObserver(function (entries) {
+                if (started || !entries.some(function (e) { return e.isIntersecting; })) return;
+                started = true; io.disconnect(); setTimeout(run, 300);
+            }, { threshold: 0.35 });
+            io.observe(el.closest('.pslsc-morph'));
+        })();
+    </script>
 </body>
 
 </html>
