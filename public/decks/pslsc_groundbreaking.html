@@ -1,0 +1,1913 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Micrositio del Estadio PSLSC</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+.label--center { justify-content: center; }
+.label--center::after { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.title { font-size: clamp(2rem, 3.4vw, 2.8rem); max-width: 920px; }
+.lead { font-size: 1.1rem; max-width: 760px; }
+
+/* Closing line of each slide */
+.closer {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 40px;
+  font-size: 1.1rem; font-weight: 500;
+  color: var(--text-primary);
+}
+.closer::before { content: ''; width: 32px; height: 1px; background: var(--text-secondary); flex-shrink: 0; }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+.card h4 { font-size: 1.15rem; margin-bottom: 10px; }
+.card p { font-size: 0.95rem; }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.card-icon { width: 22px; height: 22px; color: var(--text-muted); margin-bottom: 16px; display: block; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary); margin: 0;
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; width: 20px; height: 20px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 12px 0; border-bottom: 1px solid var(--border-subtle); margin: 0;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist--roomy li { padding: 14px 0; font-size: 1.05rem; }
+.persona-insight { margin: 14px 0 0; padding-top: 14px; border-top: 1px solid var(--border-subtle); font-size: 0.95rem; }
+.checklist li i { color: var(--text-muted); width: 18px; height: 18px; flex-shrink: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff; cursor: pointer;
+}
+.btn i { width: 18px; height: 18px; }
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.tag-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.tag {
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 6px 18px;
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+.mini-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border-subtle); border-radius: 999px;
+  padding: 5px 14px; font-size: 0.8rem; color: var(--text-secondary);
+}
+.mini-chip i { width: 14px; height: 14px; color: var(--text-muted); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.speech {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid var(--border-medium);
+  border-radius: 18px 18px 18px 4px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+  font-size: 1.02rem; font-style: italic;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover { text-align: center; position: relative; overflow: hidden; }
+.slide--cover h1 { font-size: clamp(2.8rem, 5.4vw, 4.4rem); margin: 0 auto 20px; max-width: 1000px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 24px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 32px; }
+.cover-art { width: 100%; max-width: 760px; margin: 28px auto 0; display: block; }
+.cover-art svg { width: 100%; height: auto; max-height: 26vh; display: block; margin: 0 auto; }
+
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(2.6rem, 5vw, 4.4rem); margin: 0 auto 16px; max-width: 900px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 40px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   SLIDE 2 · ORIGEN
+   ═══════════════════════════════════════ */
+.origin-flow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch; margin-top: 36px; }
+.origin-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.origin-arrow i { width: 28px; height: 28px; }
+.origin-kicker {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.origin-kicker i { width: 16px; height: 16px; }
+.origin-card p { font-size: 1.15rem; color: var(--text-primary); line-height: 1.5; margin: 0; }
+.origin-card .sub { font-size: 0.9rem; color: var(--text-secondary); margin-top: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE 3 · MOBILE
+   ═══════════════════════════════════════ */
+.touch-list { gap: 14px; margin-top: 8px; }
+.touch-list li { font-size: 1rem; align-items: center; }
+
+.phone-stage { position: relative; display: flex; justify-content: center; align-items: center; min-height: 520px; }
+.poster {
+  position: absolute; left: 4%; top: 50%;
+  width: 190px; height: 270px;
+  transform: translateY(-58%) rotate(-7deg);
+  border: 1px solid var(--border-subtle); border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 18px;
+}
+.poster-title { font-family: var(--font-display); text-transform: uppercase; font-size: 1.6rem; line-height: 1; color: var(--text-secondary); letter-spacing: -0.02em; }
+.poster-sub { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; }
+.poster-qr { width: 64px; height: 64px; align-self: flex-end; opacity: 0.6; }
+.phone {
+  position: relative; z-index: 2;
+  width: 250px; height: 500px;
+  border-radius: 42px; border: 1px solid var(--border-medium);
+  background: #050505; padding: 12px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+  transform: rotate(4deg); margin-left: 90px;
+}
+.phone-screen {
+  height: 100%; border-radius: 32px; overflow: hidden; position: relative;
+  background: radial-gradient(circle at 50% 40%, #161616 0%, #080808 70%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 76px; height: 22px; border-radius: 999px; background: #000; border: 1px solid rgba(255,255,255,0.05); }
+.phone-hint { position: absolute; top: 60px; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+.scan-frame { position: relative; width: 160px; height: 160px; padding: 18px; }
+.scan-frame .qr-svg { width: 124px; height: 124px; display: block; }
+.corner { position: absolute; width: 22px; height: 22px; border-color: #fff; border-style: solid; }
+.corner--tl { top: 0; left: 0; border-width: 2px 0 0 2px; border-radius: 8px 0 0 0; }
+.corner--tr { top: 0; right: 0; border-width: 2px 2px 0 0; border-radius: 0 8px 0 0; }
+.corner--bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; border-radius: 0 0 0 8px; }
+.corner--br { bottom: 0; right: 0; border-width: 0 2px 2px 0; border-radius: 0 0 8px 0; }
+.scan-line {
+  position: absolute; left: 14px; right: 14px; top: 18px; height: 1px;
+  background: rgba(255,255,255,0.9); box-shadow: 0 0 14px 2px rgba(255,255,255,0.5);
+  animation: scan 2.4s ease-in-out infinite alternate;
+}
+@keyframes scan { from { top: 18px; } to { top: 140px; } }
+.phone-toast {
+  position: absolute; left: 14px; right: 14px; bottom: 22px;
+  background: rgba(255,255,255,0.08); border: 1px solid var(--border-medium);
+  backdrop-filter: blur(10px); border-radius: 16px;
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+}
+.phone-toast i { width: 18px; height: 18px; color: var(--text-secondary); flex-shrink: 0; }
+.phone-toast span { font-size: 0.78rem; color: var(--text-primary); line-height: 1.3; }
+.phone-toast small { display: block; font-size: 0.66rem; color: var(--text-secondary); }
+
+/* ═══════════════════════════════════════
+   SLIDES 4 & 5 · PERSONAS
+   ═══════════════════════════════════════ */
+.persona-head { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 1px solid var(--border-medium); background: rgba(255,255,255,0.03);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.avatar i { width: 28px; height: 28px; color: var(--text-secondary); }
+.persona-name { font-size: 1.7rem; margin: 0 0 4px; }
+.persona-role { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 600; }
+.persona-card p { font-size: 1rem; }
+
+.age-card .age { font-family: var(--font-display); font-size: 1.5rem; text-transform: uppercase; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1; margin-bottom: 12px; }
+.note {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 16px 20px; border: 1px dashed var(--border-medium); border-radius: 16px;
+}
+.note i { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+.note p { margin: 0; font-size: 0.95rem; }
+
+/* ═══════════════════════════════════════
+   SLIDE 6 · FASES
+   ═══════════════════════════════════════ */
+.phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 12px; }
+.phase-art { border-bottom: 1px solid var(--border-subtle); margin: -8px -8px 20px; padding: 0 8px 12px; }
+.phase-art svg { width: 100%; height: auto; display: block; }
+.phase-kicker { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
+.phase h4 { font-size: 1.6rem; margin: 6px 0 10px; }
+.phase-date { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); border-radius: 999px; padding: 3px 12px; margin-bottom: 14px; }
+.phase-date i { width: 13px; height: 13px; color: var(--text-muted); }
+.live-dot { animation: live 1.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes live { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+/* ═══════════════════════════════════════
+   SLIDE 7 · ESTRUCTURA
+   ═══════════════════════════════════════ */
+.module-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.module-num { font-family: var(--font-display); font-size: 1.8rem; line-height: 1; color: var(--text-muted); }
+.module-top i { width: 20px; height: 20px; color: var(--text-muted); }
+.modules {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%;
+  grid-template-areas: "m1 m2 m3" "m4 m4 m5" "m4 m4 m6";
+}
+.mod-1 { grid-area: m1; } .mod-2 { grid-area: m2; } .mod-3 { grid-area: m3; }
+.mod-4 { grid-area: m4; } .mod-5 { grid-area: m5; } .mod-6 { grid-area: m6; }
+.modules .card--sm { padding: 20px 22px; }
+.modules .module-top { margin-bottom: 10px; }
+.modules .module-num { font-size: 1.5rem; }
+.modules h4 { margin-bottom: 6px; }
+.modules p { margin: 0; }
+.mod-feature { padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; }
+.mod-feature .module-top { justify-content: flex-start; gap: 14px; }
+.feature-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-primary); border: 1px solid var(--border-medium); border-radius: 999px; padding: 4px 12px;
+}
+.feature-badge i { width: 13px; height: 13px; color: var(--text-secondary); }
+.mod-feature .feature-title { font-size: 1.9rem; margin: 6px 0 10px; max-width: 85%; }
+.mod-feature > p { font-size: 1rem; max-width: 580px; }
+.feature-life {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-subtle);
+}
+.life-kicker {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+  font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted);
+}
+.life-kicker i { width: 14px; height: 14px; }
+.feature-life p { font-size: 0.88rem; line-height: 1.45; margin: 0; }
+.confetti { position: absolute; top: 0; right: 0; width: 230px; height: 150px; pointer-events: none; }
+.confetti span { position: absolute; width: 9px; height: 15px; border-radius: 2px; opacity: 0.6; animation: flutter 5s ease-in-out infinite alternate; }
+.confetti span:nth-child(1) { top: 20px;  right: 36px;  background: #8A63F2; transform: rotate(18deg); }
+.confetti span:nth-child(2) { top: 54px;  right: 92px;  background: #FFB347; transform: rotate(-32deg); animation-delay: -1s; }
+.confetti span:nth-child(3) { top: 30px;  right: 150px; background: #D1249D; transform: rotate(48deg); animation-delay: -2s; }
+.confetti span:nth-child(4) { top: 88px;  right: 30px;  background: #FF6B6B; transform: rotate(-12deg); animation-delay: -3s; }
+.confetti span:nth-child(5) { top: 104px; right: 124px; background: #8A63F2; transform: rotate(64deg); animation-delay: -1.5s; opacity: 0.35; }
+.confetti span:nth-child(6) { top: 12px;  right: 206px; background: #FFB347; transform: rotate(-58deg); animation-delay: -2.5s; opacity: 0.35; }
+.confetti span:nth-child(7) { top: 64px;  right: 178px; background: #FF6B6B; transform: rotate(28deg); animation-delay: -4s; opacity: 0.3; }
+.confetti span:nth-child(8) { top: 128px; right: 62px;  background: #D1249D; transform: rotate(-44deg); animation-delay: -0.5s; opacity: 0.4; }
+@keyframes flutter { from { translate: 0 -4px; rotate: -8deg; } to { translate: 0 6px; rotate: 10deg; } }
+
+/* ═══════════════════════════════════════
+   SLIDE 8 · EVOLUCIÓN
+   ═══════════════════════════════════════ */
+.evo-card { padding: 20px 28px 8px; }
+.evo-table { width: 100%; border-collapse: collapse; }
+.evo-table th {
+  text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted); font-weight: 600; padding: 8px 14px 14px;
+  border-bottom: 1px solid var(--border-medium);
+}
+.evo-table th span { display: inline-flex; align-items: center; gap: 8px; }
+.evo-table th i { width: 14px; height: 14px; }
+.evo-table td {
+  padding: 13px 14px; border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.93rem; color: var(--text-secondary); vertical-align: top; line-height: 1.45;
+}
+.evo-table tr:last-child td { border-bottom: none; }
+.evo-table td:first-child {
+  font-family: var(--font-display); text-transform: uppercase; color: var(--text-primary);
+  font-size: 1.05rem; letter-spacing: -0.02em; white-space: nowrap; font-weight: 700;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 9 · RECORRIDO DE LUCA
+   ═══════════════════════════════════════ */
+.luca-split { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+.luca-options { display: flex; gap: 8px; margin: 12px 0 8px; flex-wrap: wrap; }
+.luca-map svg { width: 100%; height: auto; max-height: 300px; display: block; }
+.sector-list { display: flex; flex-direction: column; }
+.sector {
+  display: grid; grid-template-columns: 30px 1fr auto; gap: 14px; align-items: center;
+  padding: 11px 0; border-bottom: 1px solid var(--border-subtle); margin: 0;
+}
+.sector:last-child { border-bottom: none; }
+.sector-num {
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border-medium);
+  font-family: var(--font-display); font-size: 0.9rem; color: var(--text-primary);
+  display: flex; align-items: center; justify-content: center;
+}
+.sector-name { display: block; color: var(--text-primary); font-weight: 600; font-size: 0.98rem; line-height: 1.3; }
+.sector-desc { display: block; color: var(--text-secondary); font-size: 0.86rem; line-height: 1.4; }
+.sector-cta {
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font-size: 0.74rem; font-weight: 600; color: var(--text-primary);
+  border: 1px solid var(--border-medium); border-radius: 999px; padding: 5px 12px;
+}
+.sector-cta i { width: 13px; height: 13px; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   SLIDE 10 · IDEAS
+   ═══════════════════════════════════════ */
+.unlock-track { position: relative; height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; margin: 64px 12px 56px; }
+.unlock-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 30%; background: rgba(255,255,255,0.55); border-radius: 99px; }
+.unlock-point {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 30px; height: 30px; border-radius: 50%; background: #000;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+}
+.unlock-point.is-open { border-color: #fff; }
+.unlock-point i { width: 14px; height: 14px; color: var(--text-secondary); }
+.unlock-point.is-open i { color: var(--text-primary); }
+.unlock-point .num { position: absolute; bottom: 38px; font-family: var(--font-display); font-size: 1.35rem; color: var(--text-primary); white-space: nowrap; line-height: 1; }
+.unlock-point .what { position: absolute; top: 38px; font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; }
+
+.mock-select {
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid var(--border-medium); border-radius: 12px;
+  padding: 12px 16px; margin-top: 28px;
+  color: var(--text-primary); font-size: 0.95rem;
+}
+.mock-select i { width: 18px; height: 18px; color: var(--text-muted); }
+.route { display: flex; align-items: center; gap: 12px; margin: 22px 0 18px; }
+.route-end {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.route-end i { width: 18px; height: 18px; color: var(--text-secondary); }
+.route-line { flex: 1; border-top: 1px dashed var(--border-medium); position: relative; }
+.route-line i { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; color: var(--text-secondary); background: #070707; padding: 0 2px; box-sizing: content-box; }
+
+/* ═══════════════════════════════════════
+   SLIDE 11 · ARTEFACTOS
+   ═══════════════════════════════════════ */
+.artifacts { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 24px; align-items: stretch; }
+.artifacts-left { display: flex; flex-direction: column; gap: 20px; }
+.artifact-card { display: flex; gap: 20px; align-items: flex-start; }
+.artifact-icon {
+  width: 52px; height: 52px; border-radius: 14px; border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.artifact-icon i { width: 24px; height: 24px; color: var(--text-secondary); }
+.artifact-card p { margin: 0; }
+.artifact-card .chip-row { margin-top: 14px; }
+.artifact-card .artifact-sub { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin: 14px 0 0; }
+.artifact-card .artifact-sub + .chip-row { margin-top: 8px; }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 64px 20px 40px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+  .title { font-size: 1.6rem; margin-bottom: 18px; }
+  .lead { font-size: 0.95rem; }
+  .closer { font-size: 0.95rem; margin-top: 24px; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2 { grid-template-columns: 1fr; gap: 14px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 12px; }
+
+  .steps { flex-direction: column; gap: 16px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: center; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 0; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .cover-art svg { max-height: 20vh; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .origin-flow { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .origin-arrow i { transform: rotate(90deg); width: 22px; height: 22px; }
+  .origin-card p { font-size: 1rem; }
+
+  .phone-stage { min-height: 380px; }
+  .poster { width: 130px; height: 190px; left: 0; padding: 12px; }
+  .poster-title { font-size: 1.1rem; }
+  .poster-qr { width: 44px; height: 44px; }
+  .phone { width: 190px; height: 380px; border-radius: 34px; margin-left: 70px; }
+  .phone-screen { border-radius: 26px; }
+  .scan-frame { transform: scale(0.8); }
+  .phone-hint { top: 48px; }
+
+  .persona-name { font-size: 1.3rem; }
+  .avatar { width: 52px; height: 52px; }
+
+  .phases { grid-template-columns: 1fr; gap: 12px; }
+  .phase h4 { font-size: 1.25rem; }
+  .phase-art svg { max-height: 90px; }
+
+  .evo-card { padding: 8px; background: none; border: none; }
+  .evo-table thead { display: none; }
+  .evo-table, .evo-table tbody, .evo-table tr, .evo-table td { display: block; width: 100%; }
+  .evo-table tr { border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+  .evo-table td { border: none !important; padding: 3px 0; display: flex; gap: 10px; font-size: 0.82rem; }
+  .evo-table td::before { content: attr(data-label); min-width: 64px; color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; padding-top: 3px; font-family: var(--font-body); font-weight: 600; }
+  .evo-table td:first-child { font-size: 1rem; margin-bottom: 4px; }
+  .evo-table td:first-child::before { content: none; }
+
+  .luca-split { grid-template-columns: 1fr; gap: 16px; }
+  .luca-map svg { max-height: 220px; }
+  .sector { grid-template-columns: 28px 1fr; gap: 4px 12px; }
+  .sector-cta { grid-column: 2; justify-self: start; }
+
+  .unlock-track { margin: 52px 20px 48px; }
+  .unlock-point .num { font-size: 1rem; }
+  .unlock-point .what { font-size: 0.66rem; white-space: normal; width: 80px; text-align: center; }
+
+  .modules { grid-template-columns: 1fr; grid-template-areas: none; gap: 12px; }
+  .modules > .card { grid-area: auto; }
+  .mod-feature { padding: 20px; }
+  .mod-feature .feature-title { font-size: 1.3rem; max-width: 100%; }
+  .feature-life { grid-template-columns: 1fr; gap: 12px; }
+  .confetti { width: 120px; height: 80px; opacity: 0.6; }
+
+  .artifacts { grid-template-columns: 1fr; gap: 14px; }
+  .artifact-card { gap: 14px; }
+  .artifact-icon { width: 44px; height: 44px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; visibility: hidden; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 13</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DECK — 12 slides + chat
+     ═══════════════════════════════════════ -->
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. PORTADA ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="label label--center anim">Port St. Lucie SC</div>
+    <h1 class="shimmer-text anim">El estadio empieza a vivir antes del Groundbreaking</h1>
+    <p class="subtitle anim">Micrositio del estadio · Groundbreaking Campaign</p>
+    <div class="tag-row anim">
+      <span class="tag">Antes</span>
+      <span class="tag">Durante</span>
+      <span class="tag">Después</span>
+    </div>
+    <!-- Visual sugerido: render de la fachada con el ancla y Luca en primer plano. Reemplazar este SVG por el render cuando esté disponible. -->
+    <div class="cover-art anim">
+      <svg viewBox="0 0 800 260" fill="none" aria-hidden="true">
+        <defs>
+          <clipPath id="facadeClip"><path d="M120 240 V120 Q400 60 680 120 V240 Z"/></clipPath>
+          <linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0.15"/>
+          </linearGradient>
+          <mask id="fadeMask"><rect width="800" height="260" fill="url(#fadeDown)"/></mask>
+        </defs>
+        <g mask="url(#fadeMask)">
+          <line x1="0" y1="240" x2="800" y2="240" stroke="rgba(255,255,255,0.25)"/>
+          <!-- Floodlights -->
+          <line x1="60" y1="240" x2="60" y2="70" stroke="rgba(255,255,255,0.25)"/>
+          <rect x="44" y="56" width="32" height="14" rx="2" stroke="rgba(255,255,255,0.35)"/>
+          <line x1="740" y1="240" x2="740" y2="70" stroke="rgba(255,255,255,0.25)"/>
+          <rect x="724" y="56" width="32" height="14" rx="2" stroke="rgba(255,255,255,0.35)"/>
+          <!-- Facade fins -->
+          <g clip-path="url(#facadeClip)" stroke="rgba(255,255,255,0.12)">
+            <line x1="160" y1="60" x2="160" y2="240"/><line x1="200" y1="60" x2="200" y2="240"/>
+            <line x1="240" y1="60" x2="240" y2="240"/><line x1="280" y1="60" x2="280" y2="240"/>
+            <line x1="320" y1="60" x2="320" y2="240"/><line x1="480" y1="60" x2="480" y2="240"/>
+            <line x1="520" y1="60" x2="520" y2="240"/><line x1="560" y1="60" x2="560" y2="240"/>
+            <line x1="600" y1="60" x2="600" y2="240"/><line x1="640" y1="60" x2="640" y2="240"/>
+            <line x1="120" y1="180" x2="680" y2="180"/>
+          </g>
+          <path d="M120 240 V120 Q400 60 680 120 V240" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <path d="M90 118 Q400 40 710 118" stroke="#fff" stroke-width="2"/>
+          <!-- Entrance -->
+          <path d="M340 240 V195 Q400 165 460 195 V240" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+          <!-- Anchor -->
+          <g transform="translate(378 104) scale(1.8)" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><circle cx="12" cy="5" r="3"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p class="meta anim" style="margin-top:20px;">Septiembre 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. EL ORIGEN ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">El origen</div>
+    <h2 class="title shimmer-text anim">Partimos de una campaña y encontramos un espacio permanente para el club</h2>
+    <div class="origin-flow anim">
+      <div class="card origin-card">
+        <div class="origin-kicker"><i data-lucide="megaphone"></i> El pedido</div>
+        <p>Un micrositio que concentre toda la comunicación del Groundbreaking.</p>
+        <p class="sub">Una campaña con fecha.</p>
+      </div>
+      <div class="origin-arrow"><i data-lucide="arrow-right"></i></div>
+      <div class="card card--highlight card--accent-1 origin-card">
+        <div class="origin-kicker"><i data-lucide="house"></i> La oportunidad</div>
+        <p>Un sitio que crece con la obra y termina siendo la casa digital del estadio.</p>
+        <p class="sub">Un espacio que se queda.</p>
+      </div>
+    </div>
+    <p class="closer anim">Antes de diseñar pantallas, definimos a quién le hablamos.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 3. POR QUÉ MOBILE ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">El contexto</div>
+        <h2 class="title anim">Toda la campaña lleva a un celular</h2>
+        <p class="anim">Cada punto de contacto termina en una pantalla chica:</p>
+        <ul class="icon-list touch-list anim">
+          <li><i data-lucide="qr-code"></i><div>El QR de <strong>The First Mark</strong> en un comercio.</div></li>
+          <li><i data-lucide="signpost"></i><div>El cartel de <strong>Luca</strong> en la calle.</div></li>
+          <li><i data-lucide="clapperboard"></i><div>Un reel de <strong>Pass the Shovel</strong> en Instagram.</div></li>
+          <li><i data-lucide="clipboard-pen"></i><div>El registro de <strong>Future Seat</strong> y <strong>The First Goal</strong> el día del evento.</div></li>
+          <li><i data-lucide="gift"></i><div>El QR del <strong>souvenir</strong> en el living de casa.</div></li>
+          <li><i data-lucide="message-circle"></i><div>El link que <strong>Marco</strong> comparte por WhatsApp.</div></li>
+        </ul>
+      </div>
+      <!-- Visual sugerido: una mano sosteniendo un celular que escanea el QR del cartel de Luca. -->
+      <div class="phone-stage anim" aria-hidden="true">
+        <div class="poster">
+          <div>
+            <div class="poster-sub">Cartel de Luca</div>
+            <div class="poster-title" style="margin-top:10px;">Tu futura<br>casa</div>
+          </div>
+          <svg class="poster-qr qr-svg" data-seed="3"></svg>
+        </div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-hint">Escaneando</div>
+            <div class="scan-frame">
+              <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+              <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+              <svg class="qr-svg" data-seed="3"></svg>
+              <div class="scan-line"></div>
+            </div>
+            <div class="phone-toast">
+              <i data-lucide="landmark"></i>
+              <span>Micrositio del estadio<small>Tocá para abrir</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="closer anim">Si funciona en un celular en la vereda, funciona en todos lados.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 4. A QUIÉN LE HABLAMOS ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">Las personas</div>
+    <h2 class="title shimmer-text anim">Le hablamos a una familia: uno decide, el otro empuja</h2>
+    <div class="grid-2 anim" style="margin-top:12px;">
+      <div class="card persona-card card--accent-1">
+        <div class="persona-head">
+          <div class="avatar"><i data-lucide="user-round"></i></div>
+          <div>
+            <h3 class="persona-name">Marco, 35</h3>
+            <div class="persona-role">El que decide</div>
+          </div>
+        </div>
+        <p>Padre, vive en Port St. Lucie hace más de diez años y conoce el fútbol. Necesita pruebas de que el proyecto es real, pero no quiere mirarlo de afuera: <strong>quiere participar.</strong></p>
+        <div class="chip-row" style="margin-top:18px;">
+          <span class="mini-chip"><i data-lucide="hand-heart"></i> Participa</span>
+          <span class="mini-chip"><i data-lucide="clipboard-pen"></i> Registra</span>
+          <span class="mini-chip"><i data-lucide="share-2"></i> Comparte</span>
+          <span class="mini-chip"><i data-lucide="shirt"></i> Camiseta</span>
+          <span class="mini-chip"><i data-lucide="gift"></i> Souvenir</span>
+          <span class="mini-chip"><i data-lucide="ticket"></i> Entradas</span>
+        </div>
+      </div>
+      <div class="card persona-card card--accent-2">
+        <div class="persona-head">
+          <div class="avatar"><i data-lucide="goal"></i></div>
+          <div>
+            <h3 class="persona-name">Su hijo o hija, 8 a 16</h3>
+            <div class="persona-role">El que empuja</div>
+          </div>
+        </div>
+        <p>Juega al fútbol y <strong>se imagina en esa cancha.</strong> Recorre con Luca, juega y le dice a Marco:</p>
+        <div class="speech" style="margin-top:10px;">"Registrame"</div>
+      </div>
+    </div>
+    <p class="closer anim">Diseñamos para que el chico se entusiasme y el padre sienta que es parte.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 5. QUÉ NECESITA CADA UNO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">Las personas</div>
+    <h2 class="title anim">Mismo sitio, distintas razones para quedarse</h2>
+    <div class="grid-2 anim" style="margin-top:8px; align-items:stretch;">
+      <div class="card card--sm card--highlight" style="padding:28px 32px;">
+        <div class="persona-head" style="margin-bottom:10px;">
+          <div class="avatar" style="width:44px; height:44px;"><i data-lucide="user-round" style="width:20px; height:20px;"></i></div>
+          <h4 style="margin:0; font-size:1.3rem;">Marco necesita</h4>
+        </div>
+        <ul class="checklist checklist--roomy">
+          <li><i data-lucide="badge-check"></i> Ver que es real.</li>
+          <li><i data-lucide="hand-heart"></i> Participar y sentirse parte.</li>
+          <li><i data-lucide="users"></i> Imaginarse ahí con su hijo.</li>
+          <li><i data-lucide="mouse-pointer-click"></i> Una acción concreta hoy.</li>
+          <li><i data-lucide="share-2"></i> Algo para compartir.</li>
+        </ul>
+        <p class="persona-insight"><strong>No viene solo a mirar.</strong> El sitio le abre una puerta a la comunidad.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card card--sm age-card card--accent-3">
+          <div class="age">De 8 a 12 años</div>
+          <div class="chip-row">
+            <span class="mini-chip"><i data-lucide="smile"></i> Luca</span>
+            <span class="mini-chip"><i data-lucide="gamepad-2"></i> Juegos</span>
+            <span class="mini-chip"><i data-lucide="trophy"></i> Desafíos</span>
+          </div>
+        </div>
+        <div class="card card--sm age-card card--accent-4">
+          <div class="age">De 13 a 16 años</div>
+          <div class="chip-row">
+            <span class="mini-chip"><i data-lucide="users"></i> Jugadores</span>
+            <span class="mini-chip"><i data-lucide="shirt"></i> La camiseta</span>
+            <span class="mini-chip"><i data-lucide="graduation-cap"></i> El camino a la Academy</span>
+          </div>
+        </div>
+        <div class="note">
+          <i data-lucide="shield-check"></i>
+          <p>Los datos siempre los deja Marco. <strong>El chico juega y el padre registra a la familia.</strong></p>
+        </div>
+      </div>
+    </div>
+    <p class="closer anim">Si el chico no se engancha, Marco no llega. Si Marco no confía, no convierte.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 6. LA PROPUESTA ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">La propuesta</div>
+    <h2 class="title shimmer-text anim">Un sitio que se construye como la obra</h2>
+    <!-- Visual sugerido: línea de tiempo con el estadio que se va completando en cada fase. -->
+    <div class="phases anim">
+      <div class="card card--sm phase card--accent-1">
+        <div class="phase-art">
+          <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
+            <line x1="0" y1="105" x2="240" y2="105" stroke="rgba(255,255,255,0.3)"/>
+            <path d="M30 105 V55 Q120 25 210 55 V105" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 5"/>
+            <path d="M20 54 Q120 15 220 54" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 5"/>
+            <g transform="translate(106 66) scale(1.2)" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 22v-5l5-5 5 5-5 5z"/><path d="M9.5 14.5 16 8"/><path d="m17 2 5 5-.5.5a3.54 3.54 0 0 1-5 0s0 0 0 0a3.54 3.54 0 0 1 0-5L17 2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="phase-kicker">Fase 1</div>
+        <h4>Antes</h4>
+        <div class="phase-date"><i data-lucide="calendar"></i> 12/11 al 11/12</div>
+        <p>Expectativa y registro, con cuenta regresiva al 12 de diciembre.</p>
+      </div>
+      <div class="card card--sm phase card--accent-2">
+        <div class="phase-art">
+          <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
+            <defs><clipPath id="halfBuilt"><rect x="0" y="0" width="130" height="120"/></clipPath></defs>
+            <line x1="0" y1="105" x2="240" y2="105" stroke="rgba(255,255,255,0.3)"/>
+            <path d="M30 105 V55 Q120 25 210 55 V105" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 5"/>
+            <g clip-path="url(#halfBuilt)">
+              <path d="M30 105 V55 Q120 25 210 55 V105" stroke="rgba(255,255,255,0.75)" stroke-width="1.2"/>
+              <path d="M20 54 Q120 15 220 54" stroke="#fff" stroke-width="1.6"/>
+              <line x1="55" y1="44" x2="55" y2="105" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="80" y1="38" x2="80" y2="105" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="105" y1="35" x2="105" y2="105" stroke="rgba(255,255,255,0.15)"/>
+            </g>
+            <!-- Crane -->
+            <line x1="175" y1="105" x2="175" y2="18" stroke="rgba(255,255,255,0.55)"/>
+            <line x1="130" y1="22" x2="228" y2="22" stroke="rgba(255,255,255,0.55)"/>
+            <line x1="150" y1="22" x2="150" y2="46" stroke="rgba(255,255,255,0.4)"/>
+            <rect x="145" y="46" width="10" height="7" stroke="rgba(255,255,255,0.4)"/>
+            <!-- Live -->
+            <circle class="live-dot" cx="22" cy="18" r="4" fill="#fff"/>
+            <text x="32" y="22" fill="#fff" font-family="Figtree, sans-serif" font-size="10" font-weight="700" letter-spacing="1.5">EN VIVO</text>
+          </svg>
+        </div>
+        <div class="phase-kicker">Fase 2</div>
+        <h4>Durante</h4>
+        <div class="phase-date"><i data-lucide="radio"></i> 12/12</div>
+        <p>Modo en vivo, con agenda, mapa del evento y fotos en tiempo real.</p>
+      </div>
+      <div class="card card--sm phase card--accent-3">
+        <div class="phase-art">
+          <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
+            <defs><clipPath id="fullBuilt"><path d="M30 105 V55 Q120 25 210 55 V105 Z"/></clipPath></defs>
+            <line x1="0" y1="105" x2="240" y2="105" stroke="rgba(255,255,255,0.3)"/>
+            <g clip-path="url(#fullBuilt)" stroke="rgba(255,255,255,0.15)">
+              <line x1="55" y1="20" x2="55" y2="105"/><line x1="80" y1="20" x2="80" y2="105"/>
+              <line x1="160" y1="20" x2="160" y2="105"/><line x1="185" y1="20" x2="185" y2="105"/>
+            </g>
+            <path d="M30 105 V55 Q120 25 210 55 V105" stroke="rgba(255,255,255,0.8)" stroke-width="1.2"/>
+            <path d="M20 54 Q120 15 220 54" stroke="#fff" stroke-width="1.8"/>
+            <path d="M102 105 V85 Q120 74 138 85 V105" stroke="rgba(255,255,255,0.6)"/>
+            <g transform="translate(111 44) scale(0.75)" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22V8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><circle cx="12" cy="5" r="3"/>
+            </g>
+            <line x1="8" y1="105" x2="8" y2="30" stroke="rgba(255,255,255,0.3)"/>
+            <rect x="2" y="24" width="12" height="6" stroke="rgba(255,255,255,0.4)"/>
+            <line x1="232" y1="105" x2="232" y2="30" stroke="rgba(255,255,255,0.3)"/>
+            <rect x="226" y="24" width="12" height="6" stroke="rgba(255,255,255,0.4)"/>
+          </svg>
+        </div>
+        <div class="phase-kicker">Fase 3</div>
+        <h4>Después</h4>
+        <div class="phase-date"><i data-lucide="hammer"></i> Desde el 13/12</div>
+        <p>Diario de obra. La historia sigue hasta la inauguración.</p>
+      </div>
+    </div>
+    <p class="closer anim">No es una landing que se apaga. Es la sección permanente del estadio.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 7. LA ESTRUCTURA ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">La estructura</div>
+    <h2 class="title anim">Todo lo que Marco busca, en un solo recorrido</h2>
+    <div class="modules anim" style="margin-top:8px;">
+      <div class="card card--sm card--accent-1 mod-1">
+        <div class="module-top"><span class="module-num">01</span><i data-lucide="layout-template"></i></div>
+        <h4>Hero con doble lectura</h4>
+        <p>El render con el registro, y abajo qué es, dónde queda y cuándo abre.</p>
+      </div>
+      <div class="card card--sm card--accent-2 mod-2">
+        <div class="module-top"><span class="module-num">02</span><i data-lucide="columns-2"></i></div>
+        <h4>Hoy vs. 2028</h4>
+        <p>Un deslizador del terreno actual al render.</p>
+      </div>
+      <div class="card card--sm card--accent-3 mod-3">
+        <div class="module-top"><span class="module-num">03</span><i data-lucide="map"></i></div>
+        <h4>El recorrido de Luca</h4>
+        <p>El estadio por sectores.</p>
+      </div>
+      <div class="card card--highlight card--accent-4 mod-4 mod-feature">
+        <div class="confetti" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="module-top"><span class="module-num">04</span><span class="feature-badge"><i data-lucide="sparkles"></i> El corazón del sitio</span></div>
+        <h4 class="feature-title">"Estoy construyendo esta casa para…"</h4>
+        <p>Cada familia completa la frase y deja su mensaje. Es la forma más directa de participar: <strong>la comunidad pone sus deseos en los cimientos del estadio.</strong></p>
+        <div class="feature-life">
+          <div><span class="life-kicker"><i data-lucide="smartphone"></i> Antes</span><p>Las familias escriben su frase online.</p></div>
+          <div><span class="life-kicker"><i data-lucide="radio"></i> 12/12</span><p>Se suman los mensajes del evento.</p></div>
+          <div><span class="life-kicker"><i data-lucide="party-popper"></i> Inauguración</span><p>Los mensajes, impresos en papelitos de colores, vuelan desde la tribuna.</p></div>
+        </div>
+      </div>
+      <div class="card card--sm card--accent-1 mod-5">
+        <div class="module-top"><span class="module-num">05</span><i data-lucide="shovel"></i></div>
+        <h4>La pala viajera</h4>
+        <p>El mapa de la ciudad con cada parada y su video.</p>
+      </div>
+      <div class="card card--sm card--accent-2 mod-6">
+        <div class="module-top"><span class="module-num">06</span><i data-lucide="notebook-pen"></i></div>
+        <h4>Diario de obra</h4>
+        <p>"Próximamente" en la primera fase.</p>
+      </div>
+    </div>
+    <p class="closer anim">Primero la prueba de que es real. Después la emoción. Siempre una acción.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 8. CÓMO EVOLUCIONA ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">La estructura</div>
+    <h2 class="title anim">Cada sección cambia con la obra</h2>
+    <div class="card evo-card anim">
+      <table class="evo-table">
+        <thead>
+          <tr>
+            <th>Módulo</th>
+            <th><span><i data-lucide="hourglass"></i> Antes</span></th>
+            <th><span><i data-lucide="radio"></i> Durante</span></th>
+            <th><span><i data-lucide="hammer"></i> Después</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hero</td>
+            <td data-label="Antes">Cuenta regresiva y registro</td>
+            <td data-label="Durante">Modo en vivo</td>
+            <td data-label="Después">Recap y "Seguí la obra"</td>
+          </tr>
+          <tr>
+            <td>Hoy vs. 2028</td>
+            <td data-label="Antes">Terreno y render</td>
+            <td data-label="Durante">El Groundbreaking y render</td>
+            <td data-label="Después">Avance real y render</td>
+          </tr>
+          <tr>
+            <td>Recorrido de Luca</td>
+            <td data-label="Antes">Sectores</td>
+            <td data-label="Durante">Fotos del evento</td>
+            <td data-label="Después">Avances por sector</td>
+          </tr>
+          <tr>
+            <td>Muro</td>
+            <td data-label="Antes">Mensajes online</td>
+            <td data-label="Durante">Se suman los del evento</td>
+            <td data-label="Después">Archivo permanente y papelitos en la inauguración</td>
+          </tr>
+          <tr>
+            <td>Pala viajera</td>
+            <td data-label="Antes">Paradas y videos</td>
+            <td data-label="Durante">Última parada: el evento</td>
+            <td data-label="Después">Video completo</td>
+          </tr>
+          <tr>
+            <td>Diario de obra</td>
+            <td data-label="Antes">Próximamente</td>
+            <td data-label="Durante">Primera entrada</td>
+            <td data-label="Después">From Ground to Home</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="closer anim">Siempre hay algo nuevo, así que siempre hay una razón para volver.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 9. EL RECORRIDO DE LUCA ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">La experiencia</div>
+    <h2 class="title shimmer-text anim" style="margin-bottom:28px;">Luca te muestra tu futura casa</h2>
+    <div class="luca-split anim">
+      <div>
+        <div class="speech">"¿Recorrido completo o lo esencial en 30 segundos?"</div>
+        <div class="luca-options">
+          <span class="mini-chip"><i data-lucide="route"></i> Recorrido completo</span>
+          <span class="mini-chip"><i data-lucide="timer"></i> Lo esencial en 30 segundos</span>
+        </div>
+        <!-- Visual sugerido: Luca señalando el render de la tribuna, con los sectores numerados. -->
+        <div class="luca-map">
+          <svg viewBox="0 0 420 330" fill="none" aria-hidden="true">
+            <!-- Road outside -->
+            <line x1="398" y1="44" x2="398" y2="320" stroke="rgba(255,255,255,0.18)" stroke-dasharray="6 6"/>
+            <line x1="0" y1="316" x2="398" y2="316" stroke="rgba(255,255,255,0.18)" stroke-dasharray="6 6"/>
+            <!-- Stands -->
+            <rect x="40" y="40" width="320" height="230" rx="44" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
+            <rect x="62" y="60" width="276" height="190" rx="28" stroke="rgba(255,255,255,0.12)"/>
+            <!-- Pitch -->
+            <rect x="90" y="85" width="220" height="140" rx="3" stroke="rgba(255,255,255,0.6)"/>
+            <line x1="200" y1="85" x2="200" y2="225" stroke="rgba(255,255,255,0.35)"/>
+            <circle cx="200" cy="155" r="22" stroke="rgba(255,255,255,0.35)"/>
+            <rect x="90" y="125" width="32" height="60" stroke="rgba(255,255,255,0.35)"/>
+            <rect x="278" y="125" width="32" height="60" stroke="rgba(255,255,255,0.35)"/>
+            <!-- Route -->
+            <path d="M200 300 L130 248 L290 155 L345 250 L200 50 L398 22" stroke="rgba(255,255,255,0.3)" stroke-dasharray="3 5"/>
+            <!-- Markers -->
+            <g font-family="Antonio, sans-serif" font-size="14" font-weight="700" text-anchor="middle">
+              <circle cx="200" cy="300" r="14" fill="#000" stroke="#fff"/><text x="200" y="305" fill="#fff">1</text>
+              <circle cx="130" cy="248" r="14" fill="#000" stroke="#fff"/><text x="130" y="253" fill="#fff">2</text>
+              <circle cx="290" cy="155" r="14" fill="#000" stroke="#fff"/><text x="290" y="160" fill="#fff">3</text>
+              <circle cx="345" cy="250" r="14" fill="#000" stroke="#fff"/><text x="345" y="255" fill="#fff">4</text>
+              <circle cx="200" cy="50" r="14" fill="#000" stroke="#fff"/><text x="200" y="55" fill="#fff">5</text>
+              <circle cx="398" cy="22" r="14" fill="#000" stroke="#fff"/><text x="398" y="27" fill="#fff">6</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <ul class="sector-list">
+        <li class="sector">
+          <span class="sector-num">1</span>
+          <div><span class="sector-name">La llegada</span><span class="sector-desc">Luca te recibe y cuenta la historia del club.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Registrate</span>
+        </li>
+        <li class="sector">
+          <span class="sector-num">2</span>
+          <div><span class="sector-name">La tribuna</span><span class="sector-desc">Elegí tu asiento y sacate la foto.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Compartila</span>
+        </li>
+        <li class="sector">
+          <span class="sector-num">3</span>
+          <div><span class="sector-name">La cancha</span><span class="sector-desc">Pateale un penal a Luca.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Conocé la Academy</span>
+        </li>
+        <li class="sector">
+          <span class="sector-num">4</span>
+          <div><span class="sector-name">El túnel</span><span class="sector-desc">Jugadores y la camiseta.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Tienda oficial</span>
+        </li>
+        <li class="sector">
+          <span class="sector-num">5</span>
+          <div><span class="sector-name">La terraza</span><span class="sector-desc">Conciertos y eventos.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Recibí novedades</span>
+        </li>
+        <li class="sector">
+          <span class="sector-num">6</span>
+          <div><span class="sector-name">Afuera</span><span class="sector-desc">Walton &amp; One, accesos y cómo llegar.</span></div>
+          <span class="sector-cta"><i data-lucide="arrow-right"></i> Planificá tu visita</span>
+        </li>
+      </ul>
+    </div>
+    <p class="closer anim" style="margin-top:28px;">Cada parada emociona y termina en una acción.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 10. PARA EXPLORAR ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="label anim">Ideas a sumar</div>
+    <h2 class="title anim">Ideas que multiplican la participación</h2>
+    <div class="grid-2 anim" style="margin-top:8px;">
+      <div class="card card--accent-1">
+        <i data-lucide="users" class="card-icon"></i>
+        <h4>Desbloqueo colectivo</h4>
+        <p>Cada registro acerca a la comunidad a una meta. <strong>Registrarse deja de ser individual y se hace con otros.</strong></p>
+        <div class="unlock-track" aria-hidden="true">
+          <div class="unlock-fill"></div>
+          <div class="unlock-point is-open" style="left:20%;"><span class="num">1.000</span><i data-lucide="lock-open"></i><span class="what">Un sector</span></div>
+          <div class="unlock-point" style="left:50%;"><span class="num">2.500</span><i data-lucide="lock"></i><span class="what">Un video</span></div>
+          <div class="unlock-point" style="left:88%;"><span class="num">5.000</span><i data-lucide="lock"></i><span class="what">Sorpresa en el evento</span></div>
+        </div>
+      </div>
+      <div class="card card--accent-3">
+        <i data-lucide="map-pin" class="card-icon"></i>
+        <h4>¿A cuánto queda de tu casa?</h4>
+        <p>Elegís tu barrio y ves el tiempo y cómo llegar. <strong>La logística concreta que Marco necesita para planear la salida en familia.</strong></p>
+        <div class="mock-select" aria-hidden="true">
+          <span>Elegí tu barrio</span><i data-lucide="chevron-down"></i>
+        </div>
+        <div class="route" aria-hidden="true">
+          <div class="route-end"><i data-lucide="house"></i></div>
+          <div class="route-line"><i data-lucide="car"></i></div>
+          <div class="route-end"><i data-lucide="landmark"></i></div>
+        </div>
+        <div class="chip-row" aria-hidden="true">
+          <span class="mini-chip"><i data-lucide="clock"></i> Tiempo</span>
+          <span class="mini-chip"><i data-lucide="navigation"></i> Cómo llegar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 11. ARTEFACTOS ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="label anim">A evaluar técnicamente</div>
+    <h2 class="title anim">Dos experiencias para llevar el estadio más lejos</h2>
+    <div class="artifacts anim" style="margin-top:8px;">
+      <div class="artifacts-left">
+        <div class="card card--sm card--accent-2 artifact-card" style="padding:28px;">
+          <div class="artifact-icon"><i data-lucide="rotate-3d"></i></div>
+          <div>
+            <h4>Recorrido 3D con Luca</h4>
+            <p>Como un videojuego en primera persona: caminás el estadio con Luca al lado. Entrás por el acceso, subís a la tribuna, cruzás el túnel y salís a la cancha, por donde quieras y desde el navegador del celular.</p>
+            <div class="chip-row">
+              <span class="mini-chip"><i data-lucide="eye"></i> Primera persona</span>
+              <span class="mini-chip"><i data-lucide="footprints"></i> Luca te acompaña</span>
+              <span class="mini-chip"><i data-lucide="globe"></i> En el navegador</span>
+            </div>
+          </div>
+        </div>
+        <div class="card card--sm card--accent-4 artifact-card" style="padding:28px;">
+          <div class="artifact-icon"><i data-lucide="scan"></i></div>
+          <div>
+            <h4>El estadio en tu mesa</h4>
+            <p>Realidad aumentada sin descargar ninguna app. Escaneás un QR y el estadio aparece en 3D sobre la mesa del living: lo girás, te acercás y lo mostrás en familia.</p>
+            <p class="artifact-sub">Cómo llega el QR (a explorar)</p>
+            <div class="chip-row">
+              <span class="mini-chip"><i data-lucide="mail"></i> Email con QR imprimible</span>
+              <span class="mini-chip"><i data-lucide="file-text"></i> Papel con QR que llega a casa</span>
+              <span class="mini-chip"><i data-lucide="gift"></i> El QR del souvenir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card card--sm card--highlight" style="padding:28px;">
+        <h4 style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.15em; font-family:var(--font-body); font-weight:600; margin-bottom:6px;">Qué evaluamos</h4>
+        <ul class="checklist">
+          <li><i data-lucide="gauge"></i> Rendimiento en celulares de gama media.</li>
+          <li><i data-lucide="smartphone"></i> Compatibilidad con iPhone y Android.</li>
+          <li><i data-lucide="plug"></i> Integración con WordPress.</li>
+          <li><i data-lucide="timer"></i> Costo y tiempos.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="closer anim">Los incluimos si suman a la experiencia sin frenar el celular de Marco.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Micrositio del estadio</span></div>
+</section>
+
+
+<!-- ══════════════ 12. CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="12">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Construyamos la casa digital del estadio</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.15rem; margin:8px auto 32px; max-width:620px;">Si estamos alineados con esta visión, avanzamos con los wireframes.</p>
+    <div class="anim">
+      <a class="btn" href="mailto:contact@yacare.io?subject=Micrositio%20del%20estadio%20PSLSC">Avancemos <i data-lucide="arrow-right"></i></a>
+    </div>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 13. CHAT ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta propuesta?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta propuesta.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden; min-height:380px;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué mobile?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿A quién le hablamos?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo evoluciona el sitio?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo es el recorrido de Luca?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué hay que evaluar técnicamente?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; min-width:0; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" aria-label="Enviar" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta propuesta. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// QR ILLUSTRATION (decorative, not scannable)
+// ═══════════════════════════════════════
+function drawQR(svg) {
+  const n = 25;
+  let seed = parseInt(svg.dataset.seed || '1', 10) * 9973;
+  const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const inFinder = (x, y) =>
+    (x < 8 && y < 8) || (x >= n - 8 && y < 8) || (x < 8 && y >= n - 8);
+  let rects = '';
+  for (let y = 0; y < n; y++) {
+    for (let x = 0; x < n; x++) {
+      if (inFinder(x, y)) continue;
+      if (rand() > 0.52) rects += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    }
+  }
+  const finder = (fx, fy) =>
+    '<rect x="' + (fx + 0.5) + '" y="' + (fy + 0.5) + '" width="6" height="6" fill="none" stroke="#fff" stroke-width="1"/>' +
+    '<rect x="' + (fx + 2) + '" y="' + (fy + 2) + '" width="3" height="3"/>';
+  svg.setAttribute('viewBox', '0 0 ' + n + ' ' + n);
+  svg.setAttribute('shape-rendering', 'crispEdges');
+  svg.innerHTML = '<g fill="#fff">' + rects + finder(0, 0) + finder(n - 7, 0) + finder(0, n - 7) + '</g>';
+}
+document.querySelectorAll('.qr-svg').forEach(drawQR);
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      anims.forEach(function(el) {
+        el.classList.toggle('anim--visible', entry.isIntersecting);
+      });
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  const chatSlide = slides[totalSlides - 1];
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    deck.scrollTo({ top: chatSlide.offsetTop, behavior: 'smooth' });
+  }
+  setTimeout(function() { document.getElementById('chat-input')?.focus({ preventScroll: true }); }, 500);
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'buenas', 'buen dia', 'buenos dias', 'hey', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta propuesta. Podés preguntarme por qué el sitio es mobile, a quién le hablamos, cómo evoluciona con la obra, cómo es el recorrido de Luca o qué hay que evaluar técnicamente.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenisimo', 'copado', 'barbaro'],
+    answer: '¡De nada! Si te surge otra duda sobre el micrositio, estoy acá. También podés escribir a contact@yacare.io para hablar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Podés volver a consultar acá cuando quieras o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumime la propuesta', 'resumen', 'resumime', 'de que se trata', 'que es esto', 'explicame', 'en pocas palabras'],
+    answer: 'Proponemos un micrositio del estadio de Port St. Lucie SC que nace con la campaña del Groundbreaking y se queda como la casa digital del estadio. Está pensado primero para el celular, porque toda la campaña lleva ahí. Le habla a una familia: Marco, el padre que decide y quiere participar, y su hijo o hija de 8 a 16, que empuja. El sitio evoluciona en tres fases (Antes, Durante y Después del 12 de diciembre) con seis módulos; el corazón es el muro "Estoy construyendo esta casa para…", donde cada familia deja su mensaje. Si estamos alineados con esta visión, avanzamos con los wireframes.'
+  },
+  {
+    keywords: ['que puedo preguntar', 'ayuda', 'help', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el origen del proyecto, por qué es mobile, las personas (Marco y su hijo o hija), las fases Antes, Durante y Después, los módulos del sitio, cómo evoluciona cada sección, el recorrido de Luca, las ideas a sumar, los artefactos a evaluar (3D y realidad aumentada) o cómo seguimos.'
+  },
+  // Content
+  {
+    keywords: ['por que mobile', 'mobile', 'celular', 'movil', 'telefono', 'pantalla chica', 'qr', 'responsive'],
+    answer: 'Porque toda la campaña lleva a un celular. El QR de The First Mark en un comercio, el cartel de Luca en la calle, un reel de Pass the Shovel en Instagram, el registro de Future Seat y The First Goal el día del evento, el QR del souvenir y el link que Marco comparte por WhatsApp: todo termina en una pantalla chica. Si funciona en un celular en la vereda, funciona en todos lados.'
+  },
+  {
+    keywords: ['a quien le hablamos', 'quien', 'publico', 'audiencia', 'target', 'familia', 'personas', 'usuario'],
+    answer: 'Le hablamos a una familia: uno decide y el otro empuja. Marco, 35, es padre, vive en Port St. Lucie hace más de diez años y conoce el fútbol. Necesita pruebas de que el proyecto es real, pero sobre todo quiere participar. Registra, comparte y compra la camiseta, el souvenir y las entradas. Su hijo o hija, de 8 a 16, juega al fútbol, se imagina en esa cancha, recorre con Luca y le dice a Marco "registrame". Diseñamos para que el chico se entusiasme y el padre sienta que es parte.'
+  },
+  {
+    keywords: ['marco', 'padre', 'decide', 'participar', 'participa', 'participacion de marco', 'sentirse parte'],
+    answer: 'Marco, 35, es el que decide. Es padre, vive en Port St. Lucie hace más de diez años y conoce el fútbol. No solo quiere saber que el proyecto es real: quiere participar, y el sitio le abre una puerta a la comunidad. Necesita ver que es real, sentirse parte, imaginarse ahí con su hijo, una acción concreta hoy y algo para compartir. Es quien registra a la familia y compra la camiseta, el souvenir y las entradas.'
+  },
+  {
+    keywords: ['hijo', 'hija', 'chico', 'nino', 'nene', 'adolescente', 'edad', 'empuja'],
+    answer: 'El hijo o hija de Marco (8 a 16 años) es el que empuja. De 8 a 12 le interesan Luca, los juegos y los desafíos. De 13 a 16, los jugadores, la camiseta y el camino a la Academy. Si el chico no se engancha, Marco no llega.'
+  },
+  {
+    keywords: ['datos', 'los datos', 'deja los datos', 'privacidad', 'menores', 'registra a la familia', 'quien registra'],
+    answer: 'Los datos siempre los deja Marco. El chico juega y el padre registra a la familia.'
+  },
+  {
+    keywords: ['origen', 'pedido', 'por que un micrositio', 'campana', 'groundbreaking'],
+    answer: 'El pedido fue un micrositio que concentre toda la comunicación del Groundbreaking. La oportunidad que encontramos es un sitio que crece con la obra y termina siendo la casa digital del estadio: partimos de una campaña y encontramos un espacio permanente para el club.'
+  },
+  {
+    keywords: ['fase', 'fases', 'antes durante despues', 'etapas del sitio', 'fecha', 'fechas', 'cuando', '12 de diciembre', 'evento', 'cuenta regresiva', 'en vivo'],
+    answer: 'El sitio se construye como la obra, en tres fases. (1) Antes, del 12/11 al 11/12: expectativa y registro, con cuenta regresiva al 12 de diciembre. (2) Durante, el 12/12: modo en vivo, con agenda, mapa del evento y fotos en tiempo real. (3) Después, desde el 13/12: diario de obra, la historia sigue hasta la inauguración. No es una landing que se apaga, es la sección permanente del estadio.'
+  },
+  {
+    keywords: ['estructura', 'modulos', 'modulo', 'secciones', 'que tiene el sitio', 'contenido del sitio'],
+    answer: 'El sitio tiene seis módulos: (1) Hero con doble lectura: el render con el registro, y abajo qué es, dónde queda y cuándo abre. (2) Hoy vs. 2028: un deslizador del terreno actual al render. (3) El recorrido de Luca por sectores. (4) "Estoy construyendo esta casa para…": un muro de mensajes de la comunidad. (5) La pala viajera: el mapa de la ciudad con cada parada y su video. (6) Diario de obra. Primero la prueba de que es real, después la emoción, siempre una acción.'
+  },
+  {
+    keywords: ['como evoluciona el sitio', 'evoluciona', 'evolucion', 'cambia', 'cambian', 'se actualiza', 'volver'],
+    answer: 'Cada sección cambia con la obra. Hero: cuenta regresiva y registro, luego modo en vivo, luego recap y "Seguí la obra". Hoy vs. 2028: terreno y render, el Groundbreaking y render, avance real y render. Recorrido de Luca: sectores, fotos del evento, avances por sector. Muro: mensajes online, se suman los del evento, archivo permanente. Pala viajera: paradas y videos, última parada en el evento, video completo. Diario de obra: próximamente, primera entrada, From Ground to Home. Siempre hay algo nuevo, así que siempre hay una razón para volver.'
+  },
+  {
+    keywords: ['hoy vs', '2028', 'deslizador', 'slider', 'terreno', 'render', 'abre'],
+    answer: 'El módulo Hoy vs. 2028 es un deslizador que va del terreno actual al render del estadio. Antes muestra terreno y render; durante el evento, el Groundbreaking y render; después, el avance real de la obra frente al render.'
+  },
+  {
+    keywords: ['recorrido de luca', 'luca', 'sectores', 'sector', 'mascota', 'tribuna', 'tunel', 'terraza', 'llegada'],
+    answer: 'Luca te muestra tu futura casa. Arranca preguntando: "¿Recorrido completo o lo esencial en 30 segundos?". Los sectores son: La llegada (Luca cuenta la historia del club, y te registrás), La tribuna (elegís tu asiento y te sacás la foto, y la compartís), La cancha (le pateás un penal a Luca, y conocés la Academy), El túnel (jugadores y la camiseta, y vas a la tienda oficial), La terraza (conciertos y eventos, y recibís novedades) y Afuera (Walton & One, accesos y cómo llegar, y planificás tu visita). Cada parada emociona y termina en una acción.'
+  },
+  {
+    keywords: ['muro', 'mensajes', 'estoy construyendo esta casa', 'comunidad', 'papelitos', 'papel picado', 'inauguracion', 'corazon del sitio', 'frase'],
+    answer: '"Estoy construyendo esta casa para…" es el corazón del sitio. Cada familia completa la frase y deja su mensaje: es la forma más directa de participar, la comunidad pone sus deseos en los cimientos del estadio. Antes del evento las familias escriben online, el 12/12 se suman los mensajes del evento y después queda como archivo permanente. La idea para la inauguración: imprimir los mensajes en papelitos de colores y que vuelen desde la tribuna.'
+  },
+  {
+    keywords: ['pala viajera', 'pala', 'pass the shovel', 'paradas', 'mapa de la ciudad'],
+    answer: 'La pala viajera es el mapa de la ciudad con cada parada de la pala y su video. Antes muestra paradas y videos, durante el evento es la última parada y después queda el video completo.'
+  },
+  {
+    keywords: ['diario de obra', 'from ground to home', 'obra', 'avance'],
+    answer: 'El Diario de obra aparece como "próximamente" en la primera fase, tiene su primera entrada el día del evento y después se convierte en From Ground to Home: la historia de la obra hasta la inauguración.'
+  },
+  {
+    keywords: ['ideas', 'desbloqueo colectivo', 'desbloqueo', 'meta', 'participacion', 'gamificacion'],
+    answer: 'Una de las ideas a sumar es el Desbloqueo colectivo: cada registro acerca a la comunidad a una meta. Con 1.000 registros se revela un sector, con 2.500 un video y con 5.000 una sorpresa el día del evento. Registrarse deja de ser individual y se hace con otros. La otra idea es "¿A cuánto queda de tu casa?".'
+  },
+  {
+    keywords: ['a cuanto queda', 'barrio', 'como llegar', 'distancia', 'logistica', 'walton'],
+    answer: '"¿A cuánto queda de tu casa?" es una idea a sumar: elegís tu barrio y ves el tiempo y cómo llegar al estadio. Es la logística concreta que Marco necesita para planear la salida en familia. En el recorrido de Luca, el sector Afuera también muestra Walton & One, los accesos y cómo llegar.'
+  },
+  {
+    keywords: ['evaluar tecnicamente', 'tecnicamente', 'artefactos', 'artefacto', 'wordpress', 'rendimiento', 'compatibilidad', 'iphone', 'android'],
+    answer: 'Hay dos experiencias a evaluar técnicamente: el Recorrido 3D con Luca (como un videojuego en primera persona, caminás el estadio con Luca desde el navegador del celular) y El estadio en tu mesa (escaneás un QR y el estadio aparece en 3D sobre tu mesa, con realidad aumentada y sin descargar ninguna app). Evaluamos rendimiento en celulares de gama media, compatibilidad con iPhone y Android, integración con WordPress, y costo y tiempos. Los incluimos si suman a la experiencia sin frenar el celular de Marco.'
+  },
+  {
+    keywords: ['recorrido 3d', '3d', 'primera persona', 'videojuego', 'caminar el estadio', 'caminas'],
+    answer: 'El Recorrido 3D con Luca funciona como un videojuego en primera persona: caminás el estadio con Luca al lado. Entrás por el acceso, subís a la tribuna, cruzás el túnel y salís a la cancha, por donde quieras y desde el navegador del celular. Está a evaluar técnicamente: rendimiento en celulares de gama media, compatibilidad con iPhone y Android, integración con WordPress, y costo y tiempos.'
+  },
+  {
+    keywords: ['estadio en tu mesa', 'en tu mesa', 'realidad aumentada', 'ar', 'qr imprimible', 'email', 'escanear', 'escaneo', 'render en tu mesa'],
+    answer: 'El estadio en tu mesa usa realidad aumentada sin descargar ninguna app: escaneás un QR y el estadio aparece en 3D sobre la mesa del living, lo girás, te acercás y lo mostrás en familia. Cómo llega ese QR está a explorar: un email con un QR imprimible, un papel con el QR que llega a casa o el mismo QR del souvenir.'
+  },
+  {
+    keywords: ['proximo paso', 'proximos pasos', 'siguiente', 'wireframes', 'wireframe', 'como seguimos', 'arrancar', 'empezar'],
+    answer: 'Si estamos alineados con esta visión, avanzamos con los wireframes. La idea es construir la casa digital del estadio y llegar al 12 de diciembre con el sitio vivo. Para coordinar, podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['academy', 'academia', 'tienda', 'camiseta', 'entradas', 'souvenir'],
+    answer: 'El sitio conecta la emoción con acciones concretas: en la cancha, el penal a Luca lleva a conocer la Academy; en el túnel, los jugadores y la camiseta llevan a la tienda oficial. Marco es quien compra la camiseta, el souvenir y las entradas.'
+  },
+  {
+    keywords: ['precio', 'costo', 'presupuesto', 'cotizacion', 'inversion', 'cuanto sale', 'cuanto cuesta', 'usd', 'plazo'],
+    answer: 'Esta presentación se enfoca en la visión y la estructura del micrositio; no incluye presupuesto. Para hablar de costos y tiempos podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['yacare', 'estudio', 'studio', 'quienes son', 'empresa', 'contacto', 'mail'],
+    answer: 'Yacaré (yacare.io) es un estudio de producto digital. Para consultas sobre esta propuesta podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta propuesta. Podés reformular la pregunta o consultarlo con el equipo en contact@yacare.io. También podés preguntarme por qué es mobile, a quién le hablamos, cómo evoluciona el sitio o cómo es el recorrido de Luca.';
+
+function normalize(text) {
+  return text.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:"]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function findBestAnswer(question) {
+  const q = ' ' + normalize(question) + ' ';
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = normalize(kw);
+      // Short keywords must match a whole word (avoids "ar" inside "evaluar")
+      const hit = kwNorm.length <= 3 ? q.includes(' ' + kwNorm + ' ') : q.includes(kwNorm);
+      if (hit) score += kwNorm.length;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
