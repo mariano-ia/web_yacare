@@ -43,7 +43,8 @@
         "pharma_desc": "Enterprise healthcare platform streamlining global logistics and complex regulatory compliance.",
         "nawaiam_website_desc": "Immersive gaming experience redefining recruitment through science and conversion design.",
         "pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027.",
-        "henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product."
+        "henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product.",
+        "argo_desc": "A ten-minute game that reads how each child lives sport, turned into a trilingual platform for families and institutions."
     },
     "methodology": {
         "title_1": "How we build.",
@@ -131,7 +132,8 @@
             "cta_desc": "Share your challenge. We'll reply within 24 hours with a clear roadmap to make it happen.",
             "cta_btn": "Start a Project",
             "card_pslsc_desc": "A living website for a soccer club being born: stadium reveal, founders wall and a countdown to 2027.",
-            "card_henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product."
+            "card_henry_desc": "Chat-guided walking tours of New York in the voice of a real creator, from a one-day demo to a live product.",
+            "card_argo_desc": "A ten-minute game that reads how each child lives sport, turned into a trilingual platform for families and institutions."
         },
         "about": {
             "hero_title_1": "Small team",
@@ -592,5 +594,41 @@
         "team_roles": "Product Lead<br>Product Designer<br>Full-stack &amp; AI Engineer",
         "site_heading": "Live site",
         "site_link": "caminaconhenry.com"
+    },
+    "work_argo": {
+        "chip1": "Behavioral Profiling",
+        "chip2": "Gamified Assessment",
+        "chip3": "AI Product",
+        "statement": "A ten-minute game that reads how each child lives sport, turned into a report for the adult who accompanies them. Designed, built and scaled from a first prototype to a trilingual platform for families and institutions.",
+        "context_heading": "Context",
+        "context_p1": "Up to 70% of children quit sport before they turn 14. Part of the reason is simple: the adults around them talk to every child the same way, while each one processes correction, pressure, mistakes and belonging differently.",
+        "context_p2": "ArgoMethod® starts from one question: what if a child could be understood through play instead of a test? The answer is La Odisea del Argo, a ten-minute adventure on a ship where the child makes decisions inside a story. Argo reads those decisions to describe how they live the activity and what they need to enjoy it more.",
+        "context_p3": "The science had to be honest. Argo is based on the DISC model, adapted to youth sport, and it never claims to be a validated test, a diagnosis or a performance predictor. The report is a snapshot of the present, written for the adult who accompanies the child, not for a coach who wants to win.",
+        "context_p4": "Three audiences share one method: families and coaches with ArgoOne®, clubs, schools and academies with ArgoAcademy®, and the child, who only receives a short positive message from the crew. What started in February 2026 as a first prototype is today a trilingual platform in production.",
+        "solution_heading": "Our Solution",
+        "solution_sh1": "An odyssey instead of a questionnaire",
+        "solution_p1": "The child boards the Argo with Jason, Medea, Orpheus, Hylas and Argos. Twelve situational choices written in warm sporting language, with no right or wrong answers, plus three short mini games that observe decision tempo and how the child readjusts when the rules change in the middle of a storm. Nothing feels like an exam, and no ability is measured.",
+        "solution_p2": "Every scene has an animated background, from the port to the open sea, the storm, the island and the calm, and the journey opens with a 20-second cinematic intro with voiced characters. Before setting sail, the child is told in their own words that Argo helps them know themselves better in sport. Consent is part of the design, not a checkbox.",
+        "solution_sh2": "A method that says only what the data supports",
+        "solution_p3": "The report is built in two layers. The first is deterministic, with no AI: from the twelve choices and the mini-game metrics it computes an evidence sheet and assembles a skeleton of pre-approved concepts. Confidence gates decide whether a primary axis can be named at all, and whether a secondary \"veta\" joins the name. Everything is calibrated against the exact enumeration of the 455 possible compositions, not a simulation.",
+        "solution_p4": "The second layer is AI, and it is kept on a short leash: it only rewrites that skeleton in warm prose. It cannot introduce a trait, a magnitude or an example that is not in the evidence. The result:",
+        "solution_li1": "Four pure profiles and eight blends (Impulsor, Conector, Sostenedor, Estratega), named only when the data earns it",
+        "solution_li2": "Language intensity capped by the instrument's confidence: \"leans clearly\" is the strongest thing a report will ever say",
+        "solution_li3": "Age-fair reading of tempo, compared against Argo's own observed medians rather than invented constants",
+        "solution_li4": "Reports and product in Spanish, English and Portuguese, with a scientific foundation document written for external review",
+        "solution_sh3": "From a report to a platform",
+        "solution_p5": "ArgoOne® is the family product. Two steps: a short questionnaire for the adult and ten minutes of play for the child. Two reports come back: the child's profile and ArgoPuente®, how the adult's style combines with the child's across five moments, before, during, the stumble, the talk afterwards and the long-term bond with sport. A single purchase, no subscription.",
+        "solution_p6": "ArgoAcademy® is the institutional platform. Clubs, schools and academies build their rosters and send a link or a QR; every child plays and feeds an institutional dashboard with individual reports, team chemistry and a behavioral predictor for real situations: motivation, pressure, frustration, communication and role. Argo Coach, an AI assistant that knows the teams, answers the coach in natural language.",
+        "solution_p7": "Around the product we built everything a company needs to run it: a home page that demonstrates instead of describing, with a three-decision mini odyssey that reads the visitor live; a playable demo; AI-assisted support that drafts answers and a weekly digest; lead automation from the web and Instagram; family surveys; onboarding for coaches; and a legal and consent framework for institutions working with minors.",
+        "outcomes_heading": "Outcomes",
+        "outcomes_li1": "• Live platform in Spanish, English and Portuguese",
+        "outcomes_li2": "• One method serving families with ArgoOne® and institutions with ArgoAcademy®",
+        "outcomes_li3": "• A ten-minute game children finish without noticing an assessment",
+        "outcomes_li4": "• Argo Coach, an AI assistant for coaches grounded in their own rosters",
+        "outcomes_li5": "• Product, brand, content and operations built end to end since February 2026",
+        "team_heading": "Team",
+        "team_roles": "Product Lead<br>Product Designer<br>Full-stack &amp; AI Engineer",
+        "site_heading": "Live site",
+        "site_link": "argomethod.com"
     }
 }

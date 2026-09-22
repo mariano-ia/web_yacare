@@ -43,7 +43,8 @@
         "pharma_desc": "Plataforma de salud empresarial que optimiza la logística global y el cumplimiento normativo complejo.",
         "nawaiam_website_desc": "Experiencia de juego inmersiva que redefine el reclutamiento a través de la ciencia y el diseño de conversión.",
         "pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027.",
-        "henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo."
+        "henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo.",
+        "argo_desc": "Un juego de diez minutos que lee cómo vive el deporte cada niño, convertido en una plataforma trilingüe para familias e instituciones."
     },
     "methodology": {
         "title_1": "Cómo construimos.",
@@ -131,7 +132,8 @@
             "cta_desc": "Compartinos tu desafío. Te responderemos en 24 horas con una hoja de ruta clara para hacerlo realidad.",
             "cta_btn": "Iniciar un Proyecto",
             "card_pslsc_desc": "Un sitio vivo para un club de fútbol que está naciendo: estadio revelado, muro de fundadores y cuenta regresiva a 2027.",
-            "card_henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo."
+            "card_henry_desc": "Recorridos a pie por Nueva York guiados por chat con la voz de un creador real, de una demo de un día a un producto en vivo.",
+            "card_argo_desc": "Un juego de diez minutos que lee cómo vive el deporte cada niño, convertido en una plataforma trilingüe para familias e instituciones."
         },
         "about": {
             "hero_title_1": "Equipo pequeño",
@@ -592,5 +594,41 @@
         "team_roles": "Product Lead<br>Diseñador/a de Producto<br>Ingeniero/a Full-stack e IA",
         "site_heading": "Sitio en vivo",
         "site_link": "caminaconhenry.com"
+    },
+    "work_argo": {
+        "chip1": "Perfilamiento conductual",
+        "chip2": "Evaluación gamificada",
+        "chip3": "Producto con IA",
+        "statement": "Un juego de diez minutos que lee cómo vive el deporte cada niño, convertido en un informe para el adulto que lo acompaña. Diseñado, construido y escalado desde un primer prototipo hasta una plataforma trilingüe para familias e instituciones.",
+        "context_heading": "Contexto",
+        "context_p1": "Hasta el 70% de los niños abandona el deporte antes de los 14 años. Parte de la razón es simple: los adultos que los rodean le hablan a todos los niños de la misma manera, cuando cada uno procesa la corrección, la presión, el error y la pertenencia de forma distinta.",
+        "context_p2": "ArgoMethod® parte de una pregunta: qué pasaría si a un niño se lo pudiera entender jugando en vez de con un test. La respuesta es La Odisea del Argo, una aventura de diez minutos en un barco donde el niño toma decisiones dentro de una historia. Argo lee esas decisiones para describir cómo vive la actividad y qué necesita para disfrutarla más.",
+        "context_p3": "La ciencia tenía que ser honesta. Argo está basado en el modelo DISC, adaptado al deporte juvenil, y nunca dice ser un test validado, un diagnóstico ni un predictor de rendimiento. El informe es una fotografía del presente, escrita para el adulto que acompaña al niño, no para un entrenador que quiere ganar.",
+        "context_p4": "Tres audiencias comparten un mismo método: familias y entrenadores con ArgoOne®, clubes, colegios y academias con ArgoAcademy®, y el niño, que solo recibe un mensaje breve y positivo de la tripulación. Lo que arrancó en febrero de 2026 como un primer prototipo hoy es una plataforma trilingüe en producción.",
+        "solution_heading": "Nuestra solución",
+        "solution_sh1": "Una odisea en vez de un cuestionario",
+        "solution_p1": "El niño sube al Argo con Jasón, Medea, Orfeo, Hylas y Argos. Doce elecciones situacionales escritas en lenguaje cálido y deportivo, sin respuestas correctas ni incorrectas, más tres mini juegos cortos que observan el tempo de decisión y cómo se reacomoda cuando las reglas cambian en medio de una tormenta. Nada se siente como un examen y no se mide ninguna capacidad.",
+        "solution_p2": "Cada escena tiene un fondo animado, del puerto al mar abierto, la tormenta, la isla y la calma, y el viaje abre con una intro cinemática de 20 segundos con personajes con voz. Antes de zarpar, al niño se le cuenta en sus palabras que Argo sirve para conocerse mejor en el deporte. El consentimiento es parte del diseño, no una casilla.",
+        "solution_sh2": "Un método que dice solo lo que los datos sostienen",
+        "solution_p3": "El informe se construye en dos capas. La primera es determinista, sin IA: a partir de las doce elecciones y las métricas de los mini juegos computa una ficha de evidencia y arma un esqueleto de conceptos preaprobados. Compuertas de confianza deciden si se puede nombrar un eje primario, y si una \"veta\" secundaria entra al nombre. Todo se calibra contra la enumeración exacta de las 455 composiciones posibles, no contra una simulación.",
+        "solution_p4": "La segunda capa es IA, y va con correa corta: solo reescribe ese esqueleto en prosa cálida. No puede introducir un rasgo, una magnitud ni un ejemplo que no esté en la evidencia. El resultado:",
+        "solution_li1": "Cuatro perfiles puros y ocho mezclas (Impulsor, Conector, Sostenedor, Estratega), nombrados solo cuando los datos lo justifican",
+        "solution_li2": "Intensidad del lenguaje acotada por la confianza del instrumento: \"se inclina con claridad\" es lo más fuerte que un informe va a decir",
+        "solution_li3": "Lectura del tempo justa por edad, comparada contra las medianas observadas por Argo y no contra constantes inventadas",
+        "solution_li4": "Informes y producto en español, inglés y portugués, con un documento de fundamento científico escrito para revisión externa",
+        "solution_sh3": "Del informe a la plataforma",
+        "solution_p5": "ArgoOne® es el producto para familias. Dos pasos: un cuestionario breve para el adulto y diez minutos de juego para el niño. Vuelven dos informes: el perfil del niño y el ArgoPuente®, cómo se combina el estilo del adulto con el del niño en cinco momentos, la previa, el durante, el traspié, la charla después y el vínculo a largo plazo con el deporte. Una sola compra, sin suscripción.",
+        "solution_p6": "ArgoAcademy® es la plataforma institucional. Clubes, colegios y academias arman sus planteles y envían un link o un QR; cada niño juega y alimenta un dashboard institucional con informes individuales, química de grupo y un predictor conductual para situaciones reales: motivación, presión, frustración, comunicación y rol. Argo Coach, un asistente con IA que conoce los equipos, le responde al entrenador en lenguaje natural.",
+        "solution_p7": "Alrededor del producto construimos todo lo que una empresa necesita para operarlo: una home que demuestra en vez de describir, con una mini odisea de tres decisiones que lee al visitante en vivo; una demo jugable; soporte asistido por IA que redacta respuestas y un resumen semanal; automatización de leads desde la web e Instagram; encuestas a familias; onboarding para entrenadores; y un marco legal y de consentimiento para instituciones que trabajan con menores.",
+        "outcomes_heading": "Resultados",
+        "outcomes_li1": "• Plataforma en vivo en español, inglés y portugués",
+        "outcomes_li2": "• Un método que sirve a familias con ArgoOne® y a instituciones con ArgoAcademy®",
+        "outcomes_li3": "• Un juego de diez minutos que los niños terminan sin notar una evaluación",
+        "outcomes_li4": "• Argo Coach, un asistente con IA para entrenadores anclado en sus propios planteles",
+        "outcomes_li5": "• Producto, marca, contenido y operación construidos de punta a punta desde febrero de 2026",
+        "team_heading": "Equipo",
+        "team_roles": "Product Lead<br>Diseñador/a de Producto<br>Ingeniero/a Full-stack e IA",
+        "site_heading": "Sitio en vivo",
+        "site_link": "argomethod.com"
     }
 }
