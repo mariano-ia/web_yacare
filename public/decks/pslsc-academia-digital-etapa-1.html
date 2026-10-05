@@ -425,7 +425,7 @@ svg.lucide { flex-shrink: 0; }
 .lg-dot--on { border: none; background: linear-gradient(135deg, #8A63F2, #D1249D); box-shadow: 0 0 10px rgba(138, 94, 255, 0.6); }
 
 /* ═══════════════════════════════════════
-   ROADMAP (slide 8)
+   ROADMAP (slide 9)
    ═══════════════════════════════════════ */
 .roadmap {
   position: relative; width: 100%;
@@ -461,6 +461,91 @@ svg.lucide { flex-shrink: 0; }
   padding: 7px 0; margin: 0; border-bottom: 1px solid var(--border-subtle);
 }
 .rm-list li:last-child { border-bottom: none; }
+
+/* ═══════════════════════════════════════
+   BENEFICIOS (slide 6)
+   Una reserva entra por arriba, pasa por PSLSC ID y se reparte en
+   beneficios para el club (izquierda) y para el negocio (derecha).
+   Las líneas son un SVG estirado sobre el mapa: las columnas (36/28/36)
+   y las tres filas iguales de cada lado fijan sus coordenadas.
+   ═══════════════════════════════════════ */
+.bf { width: 100%; --bf-node: 56px; --bf-gap: 16px; --bf-glow: 34px; }
+.bf-head { display: flex; justify-content: center; }
+.bf-trigger {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-size: 0.92rem; font-weight: 500; line-height: 1.3; color: var(--text-primary);
+}
+.bf-trigger svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.bf-map {
+  position: relative;
+  display: grid; grid-template-columns: 36% 28% 36%;
+}
+.bf-lines {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible; pointer-events: none;
+}
+.bf-lines path { fill: none; vector-effect: non-scaling-stroke; }
+.bf-core {
+  position: relative; z-index: 2;
+  align-self: center; justify-self: center;
+  width: 156px; height: 156px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 26px rgba(138, 94, 255, 0.18);
+  animation: bf-core-pulse 4.5s ease-in-out infinite;
+}
+.bf-core svg { width: 30px; height: 30px; color: var(--text-primary); margin-bottom: 6px; }
+.bf-core strong {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-primary); line-height: 1;
+}
+.bf-core span {
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+}
+.bf-group { position: relative; z-index: 1; display: flex; flex-direction: column; }
+.bf-group-title {
+  position: absolute; bottom: calc(100% + 8px); right: calc(var(--bf-node) + var(--bf-gap));
+  margin: 0; padding-bottom: 7px; font-size: 1.5rem; white-space: nowrap;
+}
+.bf-group-title::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #8A63F2, #D1249D);
+}
+.bf-group--biz .bf-group-title { right: auto; left: calc(var(--bf-node) + var(--bf-gap)); }
+.bf-group--biz .bf-group-title::after { background: linear-gradient(90deg, #D1249D, #FF6B6B); }
+.bf-list { flex: 1 1 auto; display: grid; grid-template-rows: repeat(3, 1fr); }
+.bf-item { display: flex; align-items: center; gap: var(--bf-gap); padding: 16px 0; margin: 0; }
+.bf-group--club .bf-item { flex-direction: row-reverse; text-align: right; }
+.bf-node {
+  width: var(--bf-node); height: var(--bf-node); border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: bf-node-glow 4.5s ease-in-out infinite;
+}
+.bf-item:nth-child(2) .bf-node { animation-delay: 0.15s; }
+.bf-item:nth-child(3) .bf-node { animation-delay: 0.3s; }
+.bf-node svg { width: 24px; height: 24px; color: var(--text-primary); }
+.bf-text h4 { font-size: 1.3rem; margin: 0 0 5px; }
+.bf-text p { font-size: 0.95rem; line-height: 1.45; margin: 0; max-width: 16.5em; text-wrap: balance; }
+.bf-group--club .bf-text p { margin-left: auto; }
+/* Un ciclo de 4,5 s: la reserva baja, PSLSC ID late, los beneficios se encienden */
+@keyframes bf-core-pulse {
+  0%, 18%, 52%, 100% { box-shadow: 0 0 26px rgba(138, 94, 255, 0.18); }
+  33%                { box-shadow: 0 0 76px rgba(138, 94, 255, 0.65); }
+}
+@keyframes bf-node-glow {
+  0%, 48%, 80%, 100% { box-shadow: 0 0 0 rgba(209, 36, 157, 0); }
+  62%                { box-shadow: 0 0 var(--bf-glow) rgba(209, 36, 157, 0.6); }
+}
+.bf--reset .bf-core, .bf--reset .bf-node { animation: none; }
 
 .section-num {
   font-family: var(--font-display);
@@ -644,6 +729,18 @@ svg.lucide { flex-shrink: 0; }
     border-radius: 999px; line-height: 1.4;
   }
   .rm-list li:last-child { border-bottom: 1px solid var(--border-subtle); }
+
+  .bf-core { width: 112px; height: 112px; }
+  .bf-core svg { width: 22px; height: 22px; margin-bottom: 3px; }
+  .bf-core strong { font-size: 0.95rem; }
+  .bf-core span { font-size: 0.66rem; }
+  .bf { --bf-node: 44px; --bf-gap: 12px; }
+  .bf-trigger { font-size: 0.82rem; padding: 8px 14px; gap: 8px; }
+  .bf-trigger svg { width: 15px; height: 15px; }
+  .bf-text h4 { font-size: 1.15rem; }
+  .bf-text p { font-size: 0.88rem; }
+  .bf-node svg { width: 19px; height: 19px; }
+  .bf-group-title { font-size: 1.2rem; padding-bottom: 6px; }
 }
 
 /* ═══════════════════════════════════════
@@ -734,6 +831,9 @@ svg.lucide { flex-shrink: 0; }
   .rm-phase { font-size: 0.68rem; margin-bottom: 8px; }
   .rm-list li { font-size: 0.75rem; padding: 3px 10px; }
 
+  .bf-text h4 { font-size: 1.05rem; }
+  .bf-text p { font-size: 0.85rem; }
+
   .blob { width: 200px !important; height: 200px !important; }
 
   .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
@@ -760,6 +860,37 @@ svg.lucide { flex-shrink: 0; }
 /* Celular: grillas a una columna */
 @media (max-width: 600px) {
   .grid-2x2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* Beneficios en pantallas angostas: todo en una columna.
+   La reserva, PSLSC ID y debajo una tarjeta por lado. */
+@media (max-width: 760px) {
+  .bf-lines { display: none; }
+  .bf-map { display: flex; flex-direction: column; gap: 12px; }
+  .bf-core { order: -1; width: 104px; height: 104px; margin: 26px 0 14px; }
+  .bf-core::before, .bf-core::after {
+    content: ''; position: absolute; left: 50%; width: 1px; height: 26px; margin-left: -0.5px;
+  }
+  .bf-core::before { bottom: calc(100% + 2px); background: linear-gradient(180deg, rgba(255,255,255,0.3), #8A63F2); }
+  .bf-core::after { top: calc(100% + 2px); background: linear-gradient(180deg, #D1249D, rgba(209,36,157,0.25)); }
+  .bf-group {
+    padding: 16px 16px 8px; border-radius: 16px; overflow: hidden;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  }
+  .bf-group::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #8A63F2, #D1249D);
+  }
+  .bf-group--biz::after { background: linear-gradient(90deg, #D1249D, #FF6B6B); }
+  .bf-group-title, .bf-group--biz .bf-group-title { position: static; font-size: 1.15rem; padding-bottom: 0; margin-bottom: 4px; }
+  .bf-group-title::after { display: none; }
+  .bf-list { display: block; }
+  .bf-item, .bf-group--club .bf-item {
+    flex-direction: row; text-align: left; align-items: flex-start; gap: 12px; padding: 8px 0;
+  }
+  .bf { --bf-node: 40px; --bf-glow: 14px; }
+  .bf-node svg { width: 18px; height: 18px; }
+  .bf-text p { max-width: none; text-wrap: wrap; }
 }
 
 /* Scroll hint */
@@ -798,7 +929,8 @@ svg.lucide { flex-shrink: 0; }
   .deck { height: auto; overflow: visible; scroll-snap-type: none; }
   .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
   .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
-  .eco-node--on, .eco-pulse, .ms-node--on { animation: none !important; }
+  .eco-node--on, .eco-pulse, .ms-node--on, .bf-core, .bf-node { animation: none !important; }
+  .bf-dot { display: none !important; }
   #chat-container { display: none !important; }
 }
 </style>
@@ -824,7 +956,7 @@ svg.lucide { flex-shrink: 0; }
 </div>
 
 <!-- Slide counter (desktop only) -->
-<div class="slide-counter" id="slide-counter">1 / 10</div>
+<div class="slide-counter" id="slide-counter">1 / 11</div>
 
 <div class="scroll-hint" id="scroll-hint">
   <span>Deslizá</span>
@@ -1033,8 +1165,136 @@ svg.lucide { flex-shrink: 0; }
 </section>
 
 
-<!-- ══════════════ 6. ROL DE YACARÉ ══════════════ -->
+<!-- ══════════════ 6. BENEFICIOS ══════════════ -->
 <section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">Los beneficios</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:12px;"><span style="white-space:nowrap;">Gana el club.</span> <span style="white-space:nowrap;">Gana el negocio.</span></h2>
+    <p class="anim lead" style="margin-bottom:26px; text-wrap:balance;">Cada reserva en Academy deja algo de los dos lados.</p>
+    <div class="bf anim" style="margin-bottom:26px;">
+      <div class="bf-head">
+        <div class="bf-trigger"><i data-lucide="calendar-check"></i><span>Una familia reserva una actividad</span></div>
+      </div>
+      <div class="bf-map">
+        <svg class="bf-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="bf-g-in" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="30">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.3"/>
+              <stop offset="1" stop-color="#8A63F2"/>
+            </linearGradient>
+            <linearGradient id="bf-g-club" gradientUnits="userSpaceOnUse" x1="44" y1="0" x2="36" y2="0">
+              <stop offset="0" stop-color="#8A63F2"/>
+              <stop offset="1" stop-color="#D1249D"/>
+            </linearGradient>
+            <linearGradient id="bf-g-biz" gradientUnits="userSpaceOnUse" x1="56" y1="0" x2="64" y2="0">
+              <stop offset="0" stop-color="#8A63F2"/>
+              <stop offset="1" stop-color="#D1249D"/>
+            </linearGradient>
+          </defs>
+          <path id="bf-p-in" d="M50,0 L50,50" stroke="url(#bf-g-in)" stroke-width="1.5"/>
+          <g stroke="url(#bf-g-club)" stroke-width="1.5">
+            <path id="bf-p-c1" d="M50,50 C43,50 43,16.667 36,16.667"/>
+            <path id="bf-p-c2" d="M50,50 L36,50"/>
+            <path id="bf-p-c3" d="M50,50 C43,50 43,83.333 36,83.333"/>
+          </g>
+          <g stroke="url(#bf-g-biz)" stroke-width="1.5">
+            <path id="bf-p-b1" d="M50,50 C57,50 57,16.667 64,16.667"/>
+            <path id="bf-p-b2" d="M50,50 L64,50"/>
+            <path id="bf-p-b3" d="M50,50 C57,50 57,83.333 64,83.333"/>
+          </g>
+          <!-- Puntos de luz: un trazo mínimo con punta redonda se ve circular aunque el SVG esté estirado -->
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#8A63F2" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.12;0.3;1"><mpath href="#bf-p-in"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.12;0.15;0.27;0.3;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-c1"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" begin="0.15s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-c2"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" begin="0.15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" begin="0.3s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-c3"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" begin="0.3s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-b1"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" begin="0.15s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-b2"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" begin="0.15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+          <g class="bf-dot" opacity="0">
+            <path d="M0,0 h0.001" stroke="#D1249D" stroke-opacity="0.4" stroke-width="14" stroke-linecap="round"/>
+            <path d="M0,0 h0.001" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            <animateMotion dur="4.5s" begin="0.3s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.34;0.58;1"><mpath href="#bf-p-b3"/></animateMotion>
+            <animate attributeName="opacity" dur="4.5s" begin="0.3s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.555;0.58;1"/>
+          </g>
+        </svg>
+        <div class="bf-group bf-group--club">
+          <h3 class="bf-group-title">Para el club</h3>
+          <ul class="bf-list">
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="smartphone"></i></div>
+              <div class="bf-text"><h4>Experiencia simple</h4><p>Reservar, pagar y gestionar todo en un solo lugar.</p></div>
+            </li>
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="heart"></i></div>
+              <div class="bf-text"><h4>Pertenencia</h4><p>Una identidad PSLSC para&nbsp;cada jugador y su familia.</p></div>
+            </li>
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="workflow"></i></div>
+              <div class="bf-text"><h4>Menos carga operativa</h4><p>Inscripciones, pagos y&nbsp;confirmaciones en un mismo flujo.</p></div>
+            </li>
+          </ul>
+        </div>
+        <div class="bf-core">
+          <i data-lucide="user-round"></i>
+          <strong>PSLSC ID</strong>
+          <span>+ Academy</span>
+        </div>
+        <div class="bf-group bf-group--biz">
+          <h3 class="bf-group-title">Para el negocio</h3>
+          <ul class="bf-list">
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="wallet"></i></div>
+              <div class="bf-text"><h4>Ingresos anticipados</h4><p>Los créditos se compran antes de usarse.</p></div>
+            </li>
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="repeat"></i></div>
+              <div class="bf-text"><h4>Más frecuencia</h4><p>Créditos y beneficios que&nbsp;dan motivos para volver.</p></div>
+            </li>
+            <li class="bf-item">
+              <div class="bf-node"><i data-lucide="chart-column"></i></div>
+              <div class="bf-text"><h4>Datos propios</h4><p>Quién participa, en&nbsp;qué y cada cuánto.</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot-note anim"><i data-lucide="blocks"></i><span>Y todo lo que se construye en esta etapa queda como base para Clinics, Matchday, Store y lo que venga.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. ROL DE YACARÉ ══════════════ -->
+<section class="slide" data-slide="7">
   <div class="slide-content">
     <div class="label anim">Nuestro rol</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Rol de Yacaré en esta etapa</h2>
@@ -1083,8 +1343,8 @@ svg.lucide { flex-shrink: 0; }
 </section>
 
 
-<!-- ══════════════ 7. RESPONSABILIDADES ══════════════ -->
-<section class="slide" data-slide="7">
+<!-- ══════════════ 8. RESPONSABILIDADES ══════════════ -->
+<section class="slide" data-slide="8">
   <div class="slide-content">
     <div class="label anim">Responsabilidades</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Un producto construido en conjunto</h2>
@@ -1134,8 +1394,8 @@ svg.lucide { flex-shrink: 0; }
 </section>
 
 
-<!-- ══════════════ 8. ROADMAP ══════════════ -->
-<section class="slide" data-slide="8">
+<!-- ══════════════ 9. ROADMAP ══════════════ -->
+<section class="slide" data-slide="9">
   <div class="slide-content">
     <div class="label anim">Octubre a febrero</div>
     <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Roadmap de la Etapa 1</h2>
@@ -1208,8 +1468,8 @@ svg.lucide { flex-shrink: 0; }
 </section>
 
 
-<!-- ══════════════ 9. CIERRE ══════════════ -->
-<section class="slide slide--thanks" data-slide="9">
+<!-- ══════════════ 10. CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="10">
   <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
   <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
   <div class="slide-content" style="position:relative; z-index:1;">
@@ -1224,8 +1484,8 @@ svg.lucide { flex-shrink: 0; }
 </section>
 
 
-<!-- ══════════════ 10. CHAT ══════════════ -->
-<section class="slide slide--chat" data-slide="10">
+<!-- ══════════════ 11. CHAT ══════════════ -->
+<section class="slide slide--chat" data-slide="11">
   <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
 
     <div class="anim" style="text-align:center; margin-bottom:24px;">
@@ -1240,7 +1500,7 @@ svg.lucide { flex-shrink: 0; }
         <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
           <button class="chat-chip" onclick="askSuggestion(this)">Resumime la Etapa 1</button>
           <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué por etapas?</button>
-          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué incluye la Etapa 1?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué gana el club?</button>
           <button class="chat-chip" onclick="askSuggestion(this)">¿Qué entrega Yacaré?</button>
           <button class="chat-chip" onclick="askSuggestion(this)">¿Quién hace la implementación?</button>
           <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo es el roadmap?</button>
@@ -1370,6 +1630,21 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════
+// BENEFITS DIAGRAM — restart its sequence from the top
+// (keeps the SVG light dots and the CSS glows on the same clock)
+// ═══════════════════════════════════════
+const benefits = document.querySelector('.bf');
+let benefitsTimer = null;
+
+function restartBenefits() {
+  benefits.classList.add('bf--reset');
+  void benefits.offsetWidth;
+  benefits.classList.remove('bf--reset');
+  const lines = benefits.querySelector('.bf-lines');
+  try { lines.setCurrentTime(0); } catch (e) { /* dots just keep their own timing */ }
+}
+
+// ═══════════════════════════════════════
 // INTERSECTION OBSERVER — Animate .anim
 // (on mobile the CSS keeps content visible with no animation)
 // ═══════════════════════════════════════
@@ -1379,6 +1654,11 @@ const animObserver = new IntersectionObserver(function(entries) {
     anims.forEach(function(el) {
       el.classList.toggle('anim--visible', entry.isIntersecting);
     });
+    if (benefits && entry.target.contains(benefits)) {
+      // Wait for the slide to settle and fade in, so the first run is seen from the start
+      clearTimeout(benefitsTimer);
+      if (entry.isIntersecting) benefitsTimer = setTimeout(restartBenefits, 700);
+    }
   });
 }, { threshold: 0.3 });
 
@@ -1411,7 +1691,7 @@ const QA_ENTRIES = [
   // Conversational
   {
     keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
-    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme por qué proponemos avanzar por etapas, qué incluye la Etapa 1, el alcance de producto, qué entrega Yacaré, cómo se reparten las responsabilidades con PSLSC e IT o cómo es el roadmap de octubre a febrero.'
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme por qué proponemos avanzar por etapas, qué incluye la Etapa 1, qué ganan el club y el negocio, qué entrega Yacaré, cómo se reparten las responsabilidades con PSLSC e IT o cómo es el roadmap de octubre a febrero.'
   },
   {
     keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
@@ -1427,7 +1707,7 @@ const QA_ENTRIES = [
   },
   {
     keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
-    answer: 'Podés preguntarme sobre: la visión de PSLSC ID, por qué avanzar por etapas, el objetivo de la Etapa 1, los cuatro hitos, el alcance de producto (PSLSC ID, Academy y créditos), qué entrega Yacaré, quién hace la implementación, qué decide PSLSC, el roadmap mes a mes y la capacidad de horas.'
+    answer: 'Podés preguntarme sobre: la visión de PSLSC ID, por qué avanzar por etapas, el objetivo de la Etapa 1, los cuatro hitos, el alcance de producto (PSLSC ID, Academy y créditos), los beneficios para el club y para el negocio, qué entrega Yacaré, quién hace la implementación, qué decide PSLSC, el roadmap mes a mes y la capacidad de horas.'
   },
   // Content
   {
@@ -1461,6 +1741,10 @@ const QA_ENTRIES = [
   {
     keywords: ['alcance', 'funcionalidades', 'funcionalidad', 'features', 'lista', 'qué se diseña', 'que se disena', 'priorizar', 'priorización', 'priorizacion'],
     answer: 'El alcance de producto se organiza en tres áreas: PSLSC ID, Academy y créditos. No es una lista cerrada de funcionalidades: el detalle final se priorizará durante el proceso según impacto, complejidad y capacidad disponible.'
+  },
+  {
+    keywords: ['beneficio', 'beneficios', 'ventaja', 'ventajas', 'qué gana', 'que gana', 'qué ganan', 'que ganan', 'gana el club', 'gana el negocio', 'ganamos', 'vale la pena', 'conviene', 'por qué hacerlo', 'por que hacerlo', 'ingresos', 'recompra', 'pertenencia', 'carga operativa', 'datos propios', 'retorno'],
+    answer: 'Cada reserva en Academy deja algo de los dos lados. Para el club: una experiencia simple (reservar, pagar y gestionar todo en un solo lugar), pertenencia (una identidad PSLSC para cada jugador y su familia) y menos carga operativa (inscripciones, pagos y confirmaciones en un mismo flujo). Para el negocio: ingresos anticipados (los créditos se compran antes de usarse), más frecuencia (créditos y beneficios que dan motivos para volver) y datos propios (quién participa, en qué y cada cuánto). Además, todo lo que se construye en esta etapa queda como base para Clinics, Matchday, Store y lo que venga.'
   },
   {
     keywords: ['qué entrega', 'que entrega', 'entrega', 'entregables', 'entregable', 'rol de yacaré', 'rol de yacare', 'qué hace yacaré', 'que hace yacare', 'wireframes', 'prototipos', 'maquetas', 'diseños', 'disenos', 'ux/ui', 'benchmark', 'especificaciones'],
@@ -1516,7 +1800,7 @@ const QA_ENTRIES = [
   }
 ];
 
-const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme qué incluye la Etapa 1, qué entrega Yacaré, quién hace la implementación o cómo es el roadmap.';
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme qué incluye la Etapa 1, qué gana el club, qué entrega Yacaré, quién hace la implementación o cómo es el roadmap.';
 
 function findBestAnswer(question) {
   const q = question.toLowerCase()
