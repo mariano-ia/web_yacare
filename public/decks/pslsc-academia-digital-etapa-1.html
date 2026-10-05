@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · PSLSC ID Etapa 1</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.lead { font-size: 1.15rem; color: var(--text-primary); }
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip--accent {
+  background: transparent;
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem; padding: 11px 24px;
+}
+
+/* Lucide reemplaza cada <i> por un <svg>: que nunca se achique dentro de un flex */
+svg.lucide { flex-shrink: 0; }
+
+/* Card header: icon + title */
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-head i { width: 22px; height: 22px; color: var(--text-muted); flex-shrink: 0; }
+.card-head h4 { font-size: 1.25rem; margin: 0; }
+.card-sub {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary); margin-bottom: 14px;
+}
+.card-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+  font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;
+}
+.card-note svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Compact list inside cards */
+.dot-list li {
+  position: relative; padding: 7px 0 7px 18px; margin: 0;
+  font-size: 0.95rem; line-height: 1.4; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dot-list li:last-child { border-bottom: none; }
+.dot-list li::before {
+  content: ''; position: absolute; left: 2px; top: calc(7px + 0.7em);
+  width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* Footnote with icon */
+.foot-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 1rem; color: var(--text-primary); line-height: 1.5; max-width: 900px;
+}
+.foot-note svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Aclaración chica (slide 2) */
+.aside-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 24px; padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
+}
+.aside-note svg { width: 15px; height: 15px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+
+/* ═══════════════════════════════════════
+   HITOS (slide 4)
+   ═══════════════════════════════════════ */
+.milestones {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+}
+.ms-rail {
+  position: absolute; top: 26px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.ms-arrow {
+  position: absolute; top: 26px; right: -6px; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #D1249D;
+}
+.ms-item { position: relative; z-index: 1; }
+.ms-node {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  margin-bottom: 22px;
+}
+.ms-node svg { width: 22px; height: 22px; color: var(--text-secondary); }
+.ms-item:nth-child(2) .ms-node { border-color: rgba(255,255,255,0.35); }
+.ms-item:nth-child(3) .ms-node { border-color: rgba(255,255,255,0.6); }
+.ms-node--on {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: ms-pulse 3.2s ease-in-out infinite;
+}
+.ms-node--on svg { color: var(--text-primary); }
+@keyframes ms-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 18px rgba(138, 94, 255, 0.2); }
+  50%      { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 52px rgba(138, 94, 255, 0.6); }
+}
+.ms-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px;
+}
+.ms-body h4 { font-size: 1.25rem; margin-bottom: 10px; }
+.ms-body p { font-size: 0.95rem; margin-bottom: 0; }
+
+/* Rows with icon (slide 3) */
+.moments { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.moment {
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary); line-height: 1.4;
+}
+.moment i { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════
+   ECOSYSTEM (slide 2): solo Academy activo
+   ═══════════════════════════════════════ */
+.eco { position: relative; width: 100%; max-width: 480px; aspect-ratio: 1 / 1; margin: 0 auto; }
+.eco-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.eco-node {
+  position: absolute; transform: translate(-50%, -50%);
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border-radius: 14px;
+  background: var(--bg-primary); border: 1px solid var(--border-subtle);
+  font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  white-space: nowrap; z-index: 1;
+}
+.eco-node i { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; }
+.eco-node--off { opacity: 0.45; }
+.eco-node--on {
+  border: 1px solid transparent; color: var(--text-primary);
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: node-pulse 3.2s ease-in-out infinite;
+}
+.eco-node--on i { color: var(--text-primary); }
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(138, 94, 255, 0.18); }
+  50%      { box-shadow: 0 0 56px rgba(138, 94, 255, 0.6); }
+}
+.eco-center {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 32%; aspect-ratio: 1 / 1; border-radius: 50%; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 40px rgba(138, 94, 255, 0.25);
+}
+.eco-center i { width: 30px; height: 30px; color: var(--text-primary); margin-bottom: 6px; }
+.eco-center strong {
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-primary); line-height: 1;
+}
+.eco-center span {
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+}
+.eco-legend {
+  display: flex; justify-content: center; gap: 28px; margin-top: 20px;
+  font-size: 0.78rem; color: var(--text-secondary);
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+}
+.eco-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.lg-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--border-medium); }
+.lg-dot--on { border: none; background: linear-gradient(135deg, #8A63F2, #D1249D); box-shadow: 0 0 10px rgba(138, 94, 255, 0.6); }
+
+/* ═══════════════════════════════════════
+   ROADMAP (slide 8)
+   ═══════════════════════════════════════ */
+.roadmap {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+}
+.rm-rail {
+  position: absolute; top: 6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.rm-item { position: relative; z-index: 1; padding-top: 34px; }
+.rm-dot {
+  position: absolute; top: 0; left: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.rm-item:nth-child(3) .rm-dot { border-color: rgba(255,255,255,0.35); }
+.rm-item:nth-child(4) .rm-dot { border-color: rgba(255,255,255,0.55); }
+.rm-item:nth-child(5) .rm-dot { border-color: rgba(255,255,255,0.75); }
+.rm-item:nth-child(6) .rm-dot { border-color: #ffffff; }
+.rm-month {
+  font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: -0.02em; line-height: 1;
+  color: var(--text-primary); margin-bottom: 8px;
+}
+.rm-phase {
+  font-size: 0.74rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-secondary);
+  line-height: 1.35; min-height: 2.7em; margin-bottom: 10px;
+}
+.rm-list li {
+  font-size: 0.88rem; line-height: 1.4; color: var(--text-secondary);
+  padding: 7px 0; margin: 0; border-bottom: 1px solid var(--border-subtle);
+}
+.rm-list li:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 24px; }
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; opacity: 0.7; margin-bottom: 40px; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   TABLET — <=1100px
+   ═══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .slide { padding: 48px; }
+  .brand-bar { left: 48px; right: 96px; }
+  .eco-node { padding: 10px 14px; gap: 8px; font-size: 0.74rem; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET VERTICAL — <=900px (y celulares en horizontal)
+   Columnas apiladas, líneas de tiempo verticales
+   ═══════════════════════════════════════ */
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .eco { max-width: 440px; }
+
+  .milestones { grid-template-columns: 1fr; gap: 26px; }
+  .ms-rail { top: 0; bottom: 0; left: 21px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .ms-arrow { display: none; }
+  .ms-item { display: flex; gap: 18px; align-items: flex-start; }
+  .ms-node { width: 44px; height: 44px; min-width: 44px; margin: 0; }
+  .ms-node svg { width: 20px; height: 20px; }
+
+  .roadmap { grid-template-columns: 1fr; gap: 20px; padding-left: 24px; }
+  .rm-rail { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .rm-item { padding-top: 0; }
+  .rm-dot { top: 6px; left: -24px; }
+  .rm-month { font-size: 1.4rem; margin-bottom: 4px; }
+  .rm-phase { min-height: 0; margin-bottom: 10px; }
+  .rm-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rm-list li {
+    font-size: 0.82rem; padding: 4px 12px; border: 1px solid var(--border-subtle);
+    border-radius: 999px; line-height: 1.4;
+  }
+  .rm-list li:last-child { border-bottom: 1px solid var(--border-subtle); }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px (y celulares en horizontal)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 56px 20px 40px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide--chat { padding-top: 76px; }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .grid-2x2, .grid-3, .grid-4 { gap: 12px; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .card-head h4 { font-size: 1.05rem; }
+  .card-head i { width: 18px; height: 18px; }
+  .card-note { font-size: 0.82rem; }
+
+  .dot-list li { font-size: 0.85rem; padding: 5px 0 5px 16px; }
+  .foot-note { font-size: 0.88rem; }
+  .lead { font-size: 1rem; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .moments { gap: 6px; }
+  .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+  .club-chip--accent { font-size: 0.85rem; padding: 9px 16px; text-align: center; }
+
+  .eco { max-width: 360px; }
+  .eco-node { padding: 7px 10px; gap: 6px; font-size: 0.62rem; border-radius: 10px; }
+  .eco-node i { width: 13px; height: 13px; }
+  .eco-center i { width: 22px; height: 22px; margin-bottom: 2px; }
+  .eco-center strong { font-size: 0.85rem; }
+  .eco-center span { font-size: 0.6rem; }
+  .eco-legend { gap: 18px; font-size: 0.68rem; }
+  .aside-note { font-size: 0.78rem; padding: 10px 14px; margin-top: 18px; }
+
+  .milestones { gap: 22px; }
+  .ms-rail { left: 19px; }
+  .ms-item { gap: 14px; }
+  .ms-node { width: 40px; height: 40px; min-width: 40px; box-shadow: 0 0 0 4px var(--bg-primary); }
+  .ms-node svg { width: 18px; height: 18px; }
+  .ms-num { font-size: 0.65rem; margin-bottom: 4px; }
+  .ms-body h4 { font-size: 1.05rem; margin-bottom: 6px; }
+  .ms-body p { font-size: 0.88rem; }
+
+  .roadmap { gap: 18px; padding-left: 22px; }
+  .rm-dot { top: 4px; left: -22px; width: 11px; height: 11px; }
+  .rm-month { font-size: 1.2rem; }
+  .rm-phase { font-size: 0.68rem; margin-bottom: 8px; }
+  .rm-list li { font-size: 0.75rem; padding: 3px 10px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, show content immediately (no entry animation) */
+  .anim, .anim.anim--visible {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Tablet chica vertical: más aire a los costados */
+@media (min-width: 601px) and (max-width: 768px) {
+  .slide { padding: 48px 40px; }
+  .slide--chat { padding-top: 76px; }
+}
+
+/* Celular: grillas a una columna */
+@media (max-width: 600px) {
+  .grid-2x2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .eco-node--on, .eco-pulse, .ms-node--on { animation: none !important; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 10</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;">
+      <span class="club-chip">Port St. Lucie SC</span>
+    </div>
+    <h1 class="shimmer-text anim" style="max-width:900px; margin-left:auto; margin-right:auto;">Una primera etapa concreta para PSLSC ID</h1>
+    <div class="anim" style="margin-bottom:28px;"><span class="club-chip club-chip--accent">Construir las bases del producto y conectar Academy como primera experiencia real</span></div>
+    <p class="meta anim" style="margin-top:8px;">Etapa 1 · Octubre 2026 a febrero 2027</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. DE LA VISIÓN A LA EJECUCIÓN ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">La visión</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">De la visión a la ejecución</h2>
+        <p class="anim">PSLSC ID tiene el potencial de convertirse en la capa digital que conecte las distintas experiencias del club.</p>
+        <p class="anim">La propuesta es avanzar de manera progresiva, comenzando por una primera etapa enfocada en construir las bases del producto y conectar Academy como primera experiencia real dentro del ecosistema.</p>
+        <div class="aside-note anim"><i data-lucide="calendar-range"></i><span>Esta etapa está pensada para desarrollarse entre octubre y fines de febrero, dentro de la capacidad mensual actualmente planteada para Yacaré y en colaboración con el equipo de IT de PSLSC.</span></div>
+      </div>
+      <div class="anim">
+        <div class="eco">
+          <svg class="eco-lines" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <linearGradient id="eco-on" gradientUnits="userSpaceOnUse" x1="50" y1="50" x2="50" y2="12">
+                <stop offset="0" stop-color="#8A63F2"/>
+                <stop offset="1" stop-color="#D1249D"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="2 5" vector-effect="non-scaling-stroke"/>
+            <g stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3 4" vector-effect="non-scaling-stroke">
+              <line x1="50" y1="50" x2="82.9" y2="31" vector-effect="non-scaling-stroke"/>
+              <line x1="50" y1="50" x2="82.9" y2="69" vector-effect="non-scaling-stroke"/>
+              <line x1="50" y1="50" x2="50" y2="88" vector-effect="non-scaling-stroke"/>
+              <line x1="50" y1="50" x2="17.1" y2="69" vector-effect="non-scaling-stroke"/>
+              <line x1="50" y1="50" x2="17.1" y2="31" vector-effect="non-scaling-stroke"/>
+            </g>
+            <line x1="50" y1="50" x2="50" y2="12" stroke="url(#eco-on)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+            <circle class="eco-pulse" cx="50" cy="50" r="1" fill="#ffffff">
+              <animate attributeName="cy" values="44;16" dur="2.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+          <div class="eco-node eco-node--on" style="left:50%; top:12%;"><i data-lucide="graduation-cap"></i><span>Academy</span></div>
+          <div class="eco-node eco-node--off" style="left:82.9%; top:31%;"><i data-lucide="cone"></i><span>Clinics</span></div>
+          <div class="eco-node eco-node--off" style="left:82.9%; top:69%;"><i data-lucide="land-plot"></i><span>Facilities</span></div>
+          <div class="eco-node eco-node--off" style="left:50%; top:88%;"><i data-lucide="ticket"></i><span>Matchday</span></div>
+          <div class="eco-node eco-node--off" style="left:17.1%; top:69%;"><i data-lucide="shopping-bag"></i><span>Store</span></div>
+          <div class="eco-node eco-node--off" style="left:17.1%; top:31%;"><i data-lucide="users-round"></i><span>Community</span></div>
+          <div class="eco-center">
+            <i data-lucide="user-round"></i>
+            <strong>PSLSC ID</strong>
+            <span>Etapa 1</span>
+          </div>
+        </div>
+        <div class="eco-legend">
+          <span><span class="lg-dot lg-dot--on"></span>Etapa 1</span>
+          <span><span class="lg-dot"></span>Próximas etapas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 3. POR QUÉ POR ETAPAS ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="split" style="align-items:start; margin-bottom:36px;">
+      <div>
+        <div class="label anim">El enfoque</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Construir. Aprender. Expandir.</h2>
+        <p class="anim">PSLSC ID puede impactar múltiples áreas del club, pero intentar resolver todo el ecosistema desde el inicio aumentaría significativamente la complejidad, el costo y la cantidad de decisiones tomadas sin información real de uso.</p>
+        <p class="anim lead" style="margin-top:20px;">Proponemos desarrollar el producto por etapas.</p>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Cada etapa debe</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="gem"></i><span>Generar valor por sí misma.</span></div>
+          <div class="moment"><i data-lucide="blocks"></i><span>Construir infraestructura reutilizable.</span></div>
+          <div class="moment"><i data-lucide="lightbulb"></i><span>Permitir aprender del comportamiento real de los usuarios.</span></div>
+          <div class="moment"><i data-lucide="target"></i><span>Reducir incertidumbre antes de ampliar el alcance.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card card--highlight card--accent-1 anim" style="padding:32px 40px;">
+      <p class="quote-text">La primera etapa no busca resolver todo PSLSC ID. Busca construir un núcleo útil, real y preparado para crecer.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 4. OBJETIVO DE LA ETAPA 1 ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">El objetivo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Etapa 1: PSLSC ID + Academy</h2>
+    <p class="anim lead" style="max-width:840px; margin-bottom:6px;">Crear las bases de PSLSC ID y convertir Academy en su primera experiencia conectada.</p>
+    <p class="anim" style="margin-bottom:40px;">La Etapa 1 contempla cuatro hitos principales:</p>
+    <div class="milestones anim">
+      <div class="ms-item">
+        <div class="ms-node"><i data-lucide="chart-pie"></i></div>
+        <div class="ms-body">
+          <div class="ms-num">Hito 01</div>
+          <h4>Modelo comercial</h4>
+          <p>Analizar referencias de mercado, explorar alternativas y recomendar posibles modelos para créditos, acceso, frecuencia de compra, suscripciones o beneficios.</p>
+          <div class="card-note"><i data-lucide="signature"></i><span>Yacaré analiza y recomienda. La decisión comercial final, y la responsabilidad sobre ella, corresponden al equipo de PSLSC.</span></div>
+        </div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-node"><i data-lucide="id-card"></i></div>
+        <div class="ms-body">
+          <div class="ms-num">Hito 02</div>
+          <h4>Core de PSLSC ID</h4>
+          <p>Definir la estructura inicial del producto y las experiencias fundamentales que conformarán la identidad digital del usuario dentro del club.</p>
+        </div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-node"><i data-lucide="coins"></i></div>
+        <div class="ms-body">
+          <div class="ms-num">Hito 03</div>
+          <h4>Créditos y engagement</h4>
+          <p>Definir una primera lógica de obtención y utilización de créditos vinculada a experiencias digitales y actividades del club.</p>
+        </div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-node ms-node--on"><i data-lucide="graduation-cap"></i></div>
+        <div class="ms-body">
+          <div class="ms-num">Hito 04</div>
+          <h4>Academy</h4>
+          <p>Diseñar cómo Academy se integra dentro de PSLSC ID y convertirla en el primer caso de uso <span style="white-space:nowrap;">end-to-end</span> del ecosistema.</p>
+        </div>
+      </div>
+      <div class="ms-rail"></div>
+      <i data-lucide="chevron-right" class="ms-arrow"></i>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 5. ALCANCE DE PRODUCTO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">El alcance</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Alcance de producto</h2>
+    <p class="anim" style="margin-bottom:28px;">Tres áreas que vamos a definir y diseñar durante la Etapa 1.</p>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="id-card"></i><h4>PSLSC ID</h4></div>
+        <div class="card-sub">Definición y diseño de experiencias como</div>
+        <ul class="dot-list">
+          <li>Identidad y cuenta del usuario</li>
+          <li>Perfiles asociados</li>
+          <li>Dashboard principal</li>
+          <li>Balance de créditos</li>
+          <li>Historial de actividades</li>
+          <li>Próximas experiencias</li>
+          <li>Navegación general del ecosistema</li>
+        </ul>
+      </div>
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="graduation-cap"></i><h4>Academy</h4></div>
+        <div class="card-sub">Diseño del journey principal</div>
+        <ul class="dot-list">
+          <li>Descubrir actividades</li>
+          <li>Visualizar disponibilidad</li>
+          <li>Inscribirse o reservar</li>
+          <li>Utilizar créditos</li>
+          <li>Administrar próximas actividades</li>
+          <li>Recibir confirmaciones y feedback digital</li>
+        </ul>
+      </div>
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="coins"></i><h4>Créditos</h4></div>
+        <div class="card-sub">Definición inicial de</div>
+        <ul class="dot-list">
+          <li>Cómo se obtienen</li>
+          <li>Cómo se utilizan</li>
+          <li>Qué acciones digitales pueden generar créditos</li>
+          <li>Cómo se visualizan</li>
+          <li>Qué rol pueden tener dentro del ecosistema futuro</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim"><i data-lucide="info"></i><span>El detalle final de funcionalidades se priorizará durante el proceso según impacto, complejidad y capacidad disponible.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 6. ROL DE YACARÉ ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">Nuestro rol</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:14px;">Rol de Yacaré en esta etapa</h2>
+    <p class="anim" style="max-width:860px; margin-bottom:28px;">Durante esta primera etapa, Yacaré funcionará como equipo de producto y diseño digital de PSLSC. Nuestros entregables estarán centrados en:</p>
+    <div class="grid-4 anim" style="margin-bottom:24px;">
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="search"></i><h4>Entender</h4></div>
+        <ul class="dot-list">
+          <li>Análisis de producto</li>
+          <li>Investigación y benchmarking</li>
+          <li>Análisis de modelos comerciales</li>
+        </ul>
+      </div>
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="list-checks"></i><h4>Definir</h4></div>
+        <ul class="dot-list">
+          <li>Definición funcional</li>
+          <li>Arquitectura de experiencia</li>
+          <li>User journeys</li>
+          <li>Especificaciones funcionales</li>
+        </ul>
+      </div>
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="pen-tool"></i><h4>Diseñar</h4></div>
+        <ul class="dot-list">
+          <li>UX/UI</li>
+          <li>Wireframes</li>
+          <li>Diseños finales</li>
+          <li>Prototipos navegables</li>
+          <li>Maquetas</li>
+        </ul>
+      </div>
+      <div class="card card--sm">
+        <div class="card-head"><i data-lucide="handshake"></i><h4>Acompañar</h4></div>
+        <ul class="dot-list">
+          <li>Acompañamiento al equipo de IT durante la implementación</li>
+          <li>Revisión y ajuste de la experiencia implementada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card card--highlight card--accent-1 anim" style="padding:28px 36px;">
+      <p class="quote-text">Yacaré define y diseña la experiencia. La implementación técnica se realiza en colaboración con el equipo de IT de PSLSC.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 7. RESPONSABILIDADES ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">Responsabilidades</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Un producto construido en conjunto</h2>
+    <div class="grid-3 anim" style="margin-bottom:28px;">
+      <div class="card card--sm card--accent-1">
+        <div class="card-head"><i data-lucide="pen-tool"></i><h4>Yacaré</h4></div>
+        <div class="card-sub">Producto + UX/UI</div>
+        <ul class="dot-list">
+          <li>Estrategia</li>
+          <li>Análisis</li>
+          <li>Journeys</li>
+          <li>Definición funcional</li>
+          <li>Diseño</li>
+          <li>Prototipos</li>
+          <li>Documentación</li>
+          <li>Acompañamiento</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <div class="card-head"><i data-lucide="briefcase"></i><h4>PSLSC</h4></div>
+        <div class="card-sub">Negocio + decisiones</div>
+        <ul class="dot-list">
+          <li>Objetivos comerciales</li>
+          <li>Reglas operativas</li>
+          <li>Pricing final</li>
+          <li>Prioridades del club</li>
+          <li>Validación de alcance</li>
+          <li>Feedback interno</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <div class="card-head"><i data-lucide="code"></i><h4>IT</h4></div>
+        <div class="card-sub">Implementación</div>
+        <ul class="dot-list">
+          <li>Arquitectura técnica</li>
+          <li>Desarrollo</li>
+          <li>Integraciones</li>
+          <li>Infraestructura</li>
+          <li>QA técnico</li>
+          <li>Deployment</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim"><i data-lucide="link"></i><span>El timeline depende de la coordinación entre estos tres frentes.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 8. ROADMAP ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">Octubre a febrero</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">Roadmap de la Etapa 1</h2>
+    <div class="roadmap anim" style="margin-bottom:32px;">
+      <div class="rm-rail"></div>
+      <div class="rm-item">
+        <span class="rm-dot"></span>
+        <div class="rm-month">Octubre</div>
+        <div class="rm-phase">Definición y análisis</div>
+        <ul class="rm-list">
+          <li>Alineación de visión</li>
+          <li>Benchmark</li>
+          <li>Exploración de modelo comercial</li>
+          <li>Definición inicial de PSLSC ID</li>
+          <li>Arquitectura del producto</li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <span class="rm-dot"></span>
+        <div class="rm-month">Noviembre</div>
+        <div class="rm-phase">Experiencia core</div>
+        <ul class="rm-list">
+          <li>Journeys principales</li>
+          <li>Estructura del dashboard</li>
+          <li>Cuenta</li>
+          <li>Créditos</li>
+          <li>Primeras definiciones de Academy</li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <span class="rm-dot"></span>
+        <div class="rm-month">Diciembre</div>
+        <div class="rm-phase">Diseño de producto</div>
+        <ul class="rm-list">
+          <li>UX/UI</li>
+          <li>Prototipos</li>
+          <li>Experiencia <span style="white-space:nowrap;">end-to-end</span></li>
+          <li>Documentación funcional</li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <span class="rm-dot"></span>
+        <div class="rm-month">Enero</div>
+        <div class="rm-phase">Academy + implementación</div>
+        <ul class="rm-list">
+          <li>Definición final de Academy</li>
+          <li>Soporte al equipo de IT</li>
+          <li>Ajustes sobre implementación</li>
+          <li>Resolución de casos reales</li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <span class="rm-dot"></span>
+        <div class="rm-month">Febrero</div>
+        <div class="rm-phase">Primera versión + aprendizaje</div>
+        <ul class="rm-list">
+          <li>Refinamiento</li>
+          <li>Validación</li>
+          <li>Ajustes</li>
+          <li>Análisis de uso inicial</li>
+          <li>Definición de próximos pasos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card card--sm anim">
+      <div class="foot-note" style="max-width:none;"><i data-lucide="clock"></i><span>Este roadmap se plantea considerando una capacidad de 80 horas mensuales de Yacaré para PSLSC, compartida entre PSLSC ID y las demás necesidades digitales del club, además de la participación activa del equipo de IT.</span></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ 9. CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="9">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">¿Arrancamos?</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:640px; margin-left:auto; margin-right:auto;">Si estamos alineados con este alcance, en octubre empezamos con la alineación de visión, el benchmark y la definición inicial de PSLSC ID.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 10. CHAT ══════════════ -->
+<section class="slide slide--chat" data-slide="10">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre esta etapa?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la Etapa 1</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué por etapas?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué incluye la Etapa 1?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué entrega Yacaré?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Quién hace la implementación?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo es el roadmap?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+// Same breakpoint as the MOBILE block in the CSS
+const isMobile = window.matchMedia('(max-width: 768px), (max-height: 500px) and (orientation: landscape)').matches;
+
+// Current slide: the last one whose top has passed the upper 35% of the screen.
+// Uses real slide positions, so it still works if a slide is taller than the screen.
+function currentIndex() {
+  const pos = deck.scrollTop + deck.clientHeight * 0.35;
+  let idx = 0;
+  slides.forEach(function(s, i) { if (s.offsetTop <= pos) idx = i; });
+  return idx;
+}
+
+function goToSlide(i) {
+  deck.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (hidden on mobile via CSS)
+// ═══════════════════════════════════════
+function updateCounter() {
+  counterEl.textContent = (currentIndex() + 1) + ' / ' + totalSlides;
+}
+
+deck.addEventListener('scroll', updateCounter, { passive: true });
+updateCounter();
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+document.addEventListener('keydown', function(e) {
+  // Don't intercept if user is typing in the chat input
+  if (e.target.id === 'chat-input') return;
+
+  const vh = deck.clientHeight;
+  const i = currentIndex();
+  const s = slides[i];
+
+  switch (e.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+    case ' ':
+    case 'PageDown': {
+      e.preventDefault();
+      const slideBottom = s.offsetTop + s.offsetHeight;
+      if (slideBottom - (deck.scrollTop + vh) > 4) {
+        // Slide taller than the screen: show the rest of it first
+        deck.scrollTo({ top: Math.min(deck.scrollTop + vh * 0.85, slideBottom - vh), behavior: 'smooth' });
+      } else if (i < totalSlides - 1) {
+        goToSlide(i + 1);
+      }
+      break;
+    }
+    case 'ArrowUp':
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      if (deck.scrollTop - s.offsetTop > 4) {
+        deck.scrollTo({ top: Math.max(s.offsetTop, deck.scrollTop - vh * 0.85), behavior: 'smooth' });
+      } else if (i > 0) {
+        goToSlide(i - 1);
+      }
+      break;
+    case 'Home':
+      e.preventDefault();
+      goToSlide(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      goToSlide(totalSlides - 1);
+      break;
+  }
+});
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// (on mobile the CSS keeps content visible with no animation)
+// ═══════════════════════════════════════
+const animObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    const anims = entry.target.querySelectorAll('.anim');
+    anims.forEach(function(el) {
+      el.classList.toggle('anim--visible', entry.isIntersecting);
+    });
+  });
+}, { threshold: 0.3 });
+
+slides.forEach(function(slide) {
+  animObserver.observe(slide);
+});
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    goToSlide(totalSlides - 1);
+  }
+  setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme por qué proponemos avanzar por etapas, qué incluye la Etapa 1, el alcance de producto, qué entrega Yacaré, cómo se reparten las responsabilidades con PSLSC e IT o cómo es el roadmap de octubre a febrero.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre la Etapa 1, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras'],
+    answer: 'PSLSC ID puede convertirse en la capa digital que conecte las experiencias del club. Proponemos avanzar por etapas. La Etapa 1 crea las bases de PSLSC ID y convierte Academy en su primera experiencia conectada, a través de cuatro hitos: modelo comercial, core de PSLSC ID, créditos y engagement, y Academy como primer caso de uso end-to-end. Va de octubre a fines de febrero. Yacaré define y diseña la experiencia; la implementación técnica la hace el equipo de IT de PSLSC, y las decisiones de negocio las toma PSLSC.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: la visión de PSLSC ID, por qué avanzar por etapas, el objetivo de la Etapa 1, los cuatro hitos, el alcance de producto (PSLSC ID, Academy y créditos), qué entrega Yacaré, quién hace la implementación, qué decide PSLSC, el roadmap mes a mes y la capacidad de horas.'
+  },
+  // Content
+  {
+    keywords: ['visión', 'vision', 'capa digital', 'ecosistema', 'clinics', 'facilities', 'matchday', 'store', 'community', 'otras áreas', 'otras areas', 'próximas etapas', 'proximas etapas', 'qué queda afuera', 'que queda afuera'],
+    answer: 'PSLSC ID tiene el potencial de convertirse en la capa digital que conecte las distintas experiencias del club: Academy, Clinics, Facilities, Matchday, Store y Community. En la Etapa 1 solo Academy se conecta como primera experiencia real. Las demás áreas quedan para próximas etapas, que se definen a partir de lo que aprendamos en esta.'
+  },
+  {
+    keywords: ['por qué por etapas', 'por que por etapas', 'por etapas', 'etapas', 'por qué no todo', 'por que no todo', 'todo junto', 'construir aprender expandir', 'progresiva'],
+    answer: 'Intentar resolver todo el ecosistema desde el inicio aumentaría significativamente la complejidad, el costo y la cantidad de decisiones tomadas sin información real de uso. Por eso proponemos desarrollar el producto por etapas. Cada etapa debe generar valor por sí misma, construir infraestructura reutilizable, permitir aprender del comportamiento real de los usuarios y reducir incertidumbre antes de ampliar el alcance. La primera etapa no busca resolver todo PSLSC ID: busca construir un núcleo útil, real y preparado para crecer.'
+  },
+  {
+    keywords: ['etapa 1', 'etapa uno', 'primera etapa', 'incluye', 'objetivo', 'hitos', 'hito', 'cuatro hitos', 'cuatro frentes', 'qué abarca', 'que abarca'],
+    answer: 'El objetivo de la Etapa 1 es crear las bases de PSLSC ID y convertir Academy en su primera experiencia conectada. Contempla cuatro hitos: modelo comercial (análisis y recomendación de modelos), core de PSLSC ID (estructura inicial del producto e identidad digital del usuario), créditos y engagement (una primera lógica de obtención y uso de créditos) y Academy (su integración en PSLSC ID como primer caso de uso end-to-end).'
+  },
+  {
+    keywords: ['modelo comercial', 'comercial', 'suscripción', 'suscripcion', 'suscripciones', 'frecuencia de compra', 'pricing', 'precio de los créditos', 'precio de los creditos', 'monetización', 'monetizacion', 'última palabra', 'ultima palabra', 'decisión final', 'decision final'],
+    answer: 'En el hito de modelo comercial, Yacaré analiza referencias de mercado, explora alternativas y recomienda posibles modelos para créditos, acceso, frecuencia de compra, suscripciones o beneficios. La decisión comercial final, incluido el pricing, y la responsabilidad sobre ella corresponden al equipo de PSLSC.'
+  },
+  {
+    keywords: ['core', 'pslsc id', 'cuenta', 'perfil', 'perfiles', 'dashboard', 'identidad', 'historial', 'navegación', 'navegacion'],
+    answer: 'El core de PSLSC ID es la estructura inicial del producto y las experiencias fundamentales de la identidad digital del usuario dentro del club. En esta etapa se definen y diseñan experiencias como identidad y cuenta del usuario, perfiles asociados, dashboard principal, balance de créditos, historial de actividades, próximas experiencias y navegación general del ecosistema.'
+  },
+  {
+    keywords: ['academy', 'academia', 'journey', 'inscribirse', 'inscripción', 'inscripcion', 'reservar', 'reserva', 'disponibilidad', 'actividades', 'confirmaciones'],
+    answer: 'Academy es la primera experiencia conectada a PSLSC ID y el primer caso de uso end-to-end del ecosistema. Se diseña su journey principal: descubrir actividades, visualizar disponibilidad, inscribirse o reservar, utilizar créditos, administrar próximas actividades y recibir confirmaciones y feedback digital.'
+  },
+  {
+    keywords: ['crédito', 'credito', 'créditos', 'creditos', 'engagement', 'luca', 'coins', 'obtienen', 'ganar', 'sumar', 'usar créditos', 'usar creditos'],
+    answer: 'En la Etapa 1 se define una primera lógica de créditos vinculada a experiencias digitales y actividades del club: cómo se obtienen, cómo se utilizan, qué acciones digitales pueden generar créditos, cómo se visualizan y qué rol pueden tener dentro del ecosistema futuro.'
+  },
+  {
+    keywords: ['alcance', 'funcionalidades', 'funcionalidad', 'features', 'lista', 'qué se diseña', 'que se disena', 'priorizar', 'priorización', 'priorizacion'],
+    answer: 'El alcance de producto se organiza en tres áreas: PSLSC ID, Academy y créditos. No es una lista cerrada de funcionalidades: el detalle final se priorizará durante el proceso según impacto, complejidad y capacidad disponible.'
+  },
+  {
+    keywords: ['qué entrega', 'que entrega', 'entrega', 'entregables', 'entregable', 'rol de yacaré', 'rol de yacare', 'qué hace yacaré', 'que hace yacare', 'wireframes', 'prototipos', 'maquetas', 'diseños', 'disenos', 'ux/ui', 'benchmark', 'especificaciones'],
+    answer: 'Durante esta etapa Yacaré funciona como equipo de producto y diseño digital de PSLSC. Entregables: análisis de producto, investigación y benchmarking, análisis de modelos comerciales, definición funcional, arquitectura de experiencia, user journeys, especificaciones funcionales, UX/UI, wireframes, diseños finales, prototipos navegables, maquetas, acompañamiento al equipo de IT durante la implementación y revisión y ajuste de la experiencia implementada.'
+  },
+  {
+    keywords: ['implementación', 'implementacion', 'implementa', 'quién hace', 'quien hace', 'quién desarrolla', 'quien desarrolla', 'desarrollo', 'programa', 'código', 'codigo', 'equipo de it', 'el it', 'backend', 'infraestructura', 'deployment', 'qa tecnico', 'qa técnico'],
+    answer: 'Yacaré define y diseña la experiencia. La implementación técnica se realiza en colaboración con el equipo de IT de PSLSC, que se ocupa de la arquitectura técnica, el desarrollo, las integraciones, la infraestructura, el QA técnico y el deployment. Yacaré acompaña al equipo de IT durante la implementación y revisa y ajusta la experiencia implementada.'
+  },
+  {
+    keywords: ['responsabilidad', 'responsabilidades', 'quién decide', 'quien decide', 'decisiones', 'qué hace pslsc', 'que hace pslsc', 'qué hace el club', 'que hace el club', 'en conjunto', 'tres frentes', 'reglas operativas'],
+    answer: 'Es un producto construido en conjunto. Yacaré: producto y UX/UI (estrategia, análisis, journeys, definición funcional, diseño, prototipos, documentación y acompañamiento). PSLSC: negocio y decisiones (objetivos comerciales, reglas operativas, pricing final, prioridades del club, validación de alcance y feedback interno). IT: implementación (arquitectura técnica, desarrollo, integraciones, infraestructura, QA técnico y deployment). El timeline depende de la coordinación entre estos tres frentes.'
+  },
+  {
+    keywords: ['roadmap', 'timeline', 'cronograma', 'calendario', 'mes a mes', 'meses', 'plan de trabajo', 'cuánto dura', 'cuanto dura', 'duración', 'duracion'],
+    answer: 'Octubre: definición y análisis. Noviembre: experiencia core. Diciembre: diseño de producto. Enero: Academy + implementación. Febrero: primera versión + aprendizaje. Se plantea con una capacidad de 80 horas mensuales de Yacaré para PSLSC y con la participación activa del equipo de IT.'
+  },
+  {
+    keywords: ['octubre'],
+    answer: 'Octubre, definición y análisis: alineación de visión, benchmark, exploración de modelo comercial, definición inicial de PSLSC ID y arquitectura del producto.'
+  },
+  {
+    keywords: ['noviembre'],
+    answer: 'Noviembre, experiencia core: journeys principales, estructura del dashboard, cuenta, créditos y primeras definiciones de Academy.'
+  },
+  {
+    keywords: ['diciembre'],
+    answer: 'Diciembre, diseño de producto: UX/UI, prototipos, experiencia end-to-end y documentación funcional.'
+  },
+  {
+    keywords: ['enero'],
+    answer: 'Enero, Academy + implementación: definición final de Academy, soporte al equipo de IT, ajustes sobre implementación y resolución de casos reales.'
+  },
+  {
+    keywords: ['febrero', 'primera versión', 'primera version'],
+    answer: 'Febrero, primera versión + aprendizaje: refinamiento, validación, ajustes, análisis de uso inicial y definición de próximos pasos.'
+  },
+  {
+    keywords: ['garantiza', 'garantizado', 'garantía', 'garantia', 'promesa', 'compromiso', 'fecha', 'a tiempo', 'llegar', 'depende', 'atraso', 'demora', 'riesgo'],
+    answer: 'El roadmap depende de la coordinación entre tres frentes: Yacaré (producto y UX/UI), PSLSC (decisiones de negocio y validación) e IT (implementación). Se plantea considerando una capacidad de 80 horas mensuales de Yacaré y la participación activa del equipo de IT, así que los tiempos de implementación dependen también de su disponibilidad.'
+  },
+  {
+    keywords: ['horas', '80', 'capacidad', 'dedicación', 'dedicacion', 'inversión', 'inversion', 'precio', 'costo', 'cuánto sale', 'cuanto sale', 'cuánto cuesta', 'cuanto cuesta', 'presupuesto', 'honorarios'],
+    answer: 'La Etapa 1 se plantea dentro de la capacidad mensual actualmente planteada para Yacaré: 80 horas mensuales para PSLSC, compartidas entre PSLSC ID y las demás necesidades digitales del club. Para cualquier detalle comercial, escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['próximo paso', 'proximo paso', 'siguiente paso', 'arrancar', 'arrancamos', 'empezar', 'cómo seguimos', 'como seguimos', 'después de febrero', 'despues de febrero', 'etapa 2'],
+    answer: 'Si estamos alineados con este alcance, en octubre empezamos con la alineación de visión, el benchmark y la definición inicial de PSLSC ID. Lo que sigue después de la Etapa 1 se define en febrero, a partir del análisis de uso inicial.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'empresa', 'contacto'],
+    answer: 'Yacaré Studio (yacare.io) es el estudio de producto digital que acompaña a PSLSC. En esta etapa funciona como equipo de producto y diseño digital del club. Para consultas podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme qué incluye la Etapa 1, qué entrega Yacaré, quién hace la implementación o cómo es el roadmap.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
