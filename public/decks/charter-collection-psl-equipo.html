@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Charter Collection PSL SC</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.price {
+  font-family: var(--font-display);
+  font-size: 3.5rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.price span {
+  font-size: 1rem; color: var(--text-muted);
+  font-family: var(--font-body); font-weight: 400;
+}
+.price-features { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.price-features li {
+  font-size: 0.85rem; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+}
+.price-features li i { color: var(--text-muted); width: 16px; height: 16px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff; cursor: pointer;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.5rem; }
+  .price { font-size: 2.2rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+
+/* ═══════════════════════════════════════
+   CHARTER COLLECTION · EXTRAS
+   ═══════════════════════════════════════ */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+
+.tcard {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.7));
+}
+.shot {
+  display: block; width: 100%; height: auto;
+  border-radius: 12px; border: 1px solid var(--border-subtle);
+}
+.phone {
+  display: block; width: 100%; height: auto;
+  border-radius: 22px; border: 1px solid var(--border-medium);
+}
+.lineup { display: block; width: 100%; height: auto; }
+
+.caption {
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-muted); margin: 14px 0 6px;
+}
+.caption + p { font-size: 0.95rem; margin: 0; }
+
+.big-line {
+  font-family: var(--font-display);
+  text-transform: uppercase; font-weight: 700;
+  font-size: clamp(3rem, 6.5vw, 5.8rem);
+  line-height: 0.95; letter-spacing: -0.04em;
+  margin-bottom: 28px;
+}
+
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 5px 12px; font-size: 0.7rem; font-weight: 600;
+  color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* Secuencia de la carta No. 001 */
+.seq { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 28px; align-items: start; width: 100%; }
+.seq-arrow { color: var(--text-muted); align-self: center; margin-top: -60px; }
+.seq-item { text-align: center; }
+.seq-item img { max-height: 44vh; width: auto; max-width: 100%; margin: 0 auto; }
+.seq-item h4 { font-size: 1.15rem; margin: 18px 0 6px; }
+.seq-item p { font-size: 0.95rem; max-width: 280px; margin: 0 auto; }
+
+/* Pantallas */
+.screens { display: grid; grid-template-columns: 2.2fr 1fr 1fr; gap: 24px; align-items: end; width: 100%; }
+
+/* Anatomía */
+.anatomy { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 28px; align-items: center; width: 100%; }
+.anatomy img { max-height: 62vh; width: auto; max-width: 100%; margin: 0 auto; }
+.anatomy .icon-list li { font-size: 0.95rem; }
+
+/* Fan */
+.fan-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.fan-cards img { max-height: 40vh; width: auto; max-width: 100%; margin: 0 auto; }
+
+/* Hoja de ruta */
+.roadmap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; width: 100%; position: relative; }
+.roadmap::before {
+  content: ''; position: absolute; left: 0; right: 0; top: calc(24vh + 22px);
+  height: 1px; background: var(--border-medium);
+}
+.roadmap-item { position: relative; }
+.roadmap-thumb { height: 24vh; display: flex; align-items: flex-end; justify-content: center; }
+.roadmap-thumb img { max-height: 100%; width: auto; max-width: 100%; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6)); }
+.roadmap-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--text-secondary); margin: 16px auto 18px;
+  box-shadow: 0 0 0 6px var(--bg-primary); position: relative; z-index: 1;
+}
+.roadmap-item h4 { font-size: 1.15rem; margin-bottom: 6px; text-align: center; }
+.roadmap-item p { font-size: 0.9rem; text-align: center; margin: 0; }
+
+.decision-num {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+  color: var(--text-muted); line-height: 1; margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .split { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .slide-content img[style*="max-height"] { max-height: 52vh !important; }
+  .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+  .big-line { font-size: 2.6rem; }
+
+  .seq { grid-template-columns: 1fr; gap: 28px; }
+  .seq-arrow { display: none; }
+  .seq-item { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; text-align: left; }
+  .seq-item img { max-height: none; width: 96px; }
+  .seq-item h4 { margin: 0 0 4px; font-size: 1rem; }
+  .seq-item p { margin: 0; max-width: none; font-size: 0.88rem; }
+  .seq-item img { grid-column: 1; grid-row: 1 / span 2; }
+  .seq-item h4 { grid-column: 2; align-self: end; }
+  .seq-item p { grid-column: 2; align-self: start; }
+
+  .screens { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .screens > :first-child { grid-column: 1 / -1; }
+
+  .anatomy { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .anatomy > .anatomy-text { grid-column: 1 / -1; }
+  .anatomy img { max-height: 40vh; }
+
+  .fan-cards img { max-height: 34vh; }
+
+  .roadmap { grid-template-columns: 1fr; gap: 18px; }
+  .roadmap::before { display: none; }
+  .roadmap-item { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: center; }
+  .roadmap-thumb { height: 90px; }
+  .roadmap-dot { display: none; }
+  .roadmap-item h4, .roadmap-item p { text-align: left; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 16</div>
+
+<!-- ═══════════════════════════════════════
+     DECK — All 16 slides
+     ═══════════════════════════════════════ -->
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1; max-width:1240px;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <p class="meta anim" style="margin-bottom:20px;">Port St. Lucie SC · Idea para el equipo del club</p>
+    <h1 class="shimmer-text anim">Charter Collection</h1>
+    <p class="subtitle anim">Las primeras cartas en la historia de Port St. Lucie SC. Una forma de presentar a la gente del club como lo hace el deporte estadounidense.</p>
+    <div class="anim" style="margin-top:8px;">
+      <img src="charter-collection/lineup-todas.png" alt="Las siete cartas de la Charter Collection" class="lineup">
+    </div>
+    <p class="meta anim" style="margin-top:28px;">Octubre 2026 · Uso interno</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. DE DÓNDE VENIMOS ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">01 · De dónde venimos</div>
+        <h2 class="anim" style="font-size:2.6rem;">Un año con acento argentino</h2>
+        <p class="anim" style="margin-top:8px;">Las pruebas en Buenos Aires, el reel que se viralizó, el "Built in Florida, con ADN argentino". Funcionó: nos puso en el mapa y le dio al club una identidad que nadie más tiene.</p>
+      </div>
+      <div class="anim">
+        <ul class="icon-list" style="margin-bottom:28px;">
+          <li><i data-lucide="plane" style="width:22px; height:22px;"></i><div><strong style="color:#fff;">Pruebas en Buenos Aires.</strong> El primer contacto del club con el fútbol argentino.</div></li>
+          <li><i data-lucide="play" style="width:22px; height:22px;"></i><div><strong style="color:#fff;">El reel que se viralizó.</strong> La historia salió de Florida y llegó lejos.</div></li>
+          <li><i data-lucide="flag" style="width:22px; height:22px;"></i><div><strong style="color:#fff;">Built in Florida, con ADN argentino.</strong> El relato que nos ordenó todo el año.</div></li>
+        </ul>
+        <div class="card card--sm card--highlight">
+          <p style="color:#fff; font-size:1.1rem; margin:0;">Eso es parte de quiénes somos. Pero el club juega en Port St. Lucie.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 3. LO QUE ESCUCHAMOS ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">02 · Lo que escuchamos</div>
+    <h2 class="anim" style="font-size:2.6rem; max-width:850px;">La comunidad local vive el deporte a la estadounidense</h2>
+    <p class="anim" style="max-width:720px; margin-bottom:36px;">Querían ver un club que hable su idioma. Después de un ciclo muy argentino, el próximo gesto tiene que ser para ellos.</p>
+    <div class="grid-4 anim">
+      <div class="card card--sm card--accent-1">
+        <i data-lucide="calendar-days" style="width:22px; height:22px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Gameday</h4>
+        <p style="font-size:0.95rem; margin:0;">El partido como ritual de todo el día, no solo noventa minutos.</p>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <i data-lucide="sparkles" style="width:22px; height:22px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Rookies</h4>
+        <p style="font-size:0.95rem; margin:0;">Seguir a cada jugador desde su primera temporada.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <i data-lucide="layers" style="width:22px; height:22px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Colecciones</h4>
+        <p style="font-size:0.95rem; margin:0;">Guardar, completar, intercambiar. Volver por la que falta.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <i data-lucide="users" style="width:22px; height:22px; color:var(--text-muted); margin-bottom:14px;"></i>
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Padres e hijos</h4>
+        <p style="font-size:0.95rem; margin:0;">Dos generaciones con una carta en la mano.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 4. LA IDEA ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="split" style="grid-template-columns:1.25fr 1fr;">
+      <div>
+        <div class="label anim">03 · La idea</div>
+        <h2 class="big-line shimmer-text anim">Every announcement is a card.</h2>
+        <p class="anim" style="font-size:1.1rem; max-width:520px;">El club presenta a su gente como lo hace el deporte estadounidense: con trading cards. Un entrenador, un jugador, un hito del club. Cada anuncio sale como una carta coleccionable.</p>
+      </div>
+      <div class="anim" style="display:flex; justify-content:center;">
+        <img src="charter-collection/01-CC-001-brown-base.png" alt="Carta No. 001, Juan Ignacio Brown" class="tcard" style="max-height:74vh; width:auto; max-width:100%;">
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 5. POR QUÉ CARTAS ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="label anim">Por qué cartas</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:12px;">Un lenguaje que en Estados Unidos entienden todos</h2>
+    <div class="anim" style="margin:0 auto 28px; max-width:860px;">
+      <img src="charter-collection/lineup-comunes.png" alt="Cartas comunes de la colección" class="lineup" style="max-height:34vh; width:auto; max-width:100%; margin:0 auto;">
+    </div>
+    <div class="grid-4 anim">
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Se entiende solo</h4>
+        <p style="font-size:0.95rem; margin:0;">NFL, NBA, MLB. Nadie necesita que le expliquen qué es una carta.</p>
+      </div>
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Une generaciones</h4>
+        <p style="font-size:0.95rem; margin:0;">El padre que coleccionaba y el hijo que juega en la academia.</p>
+      </div>
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Físico y digital</h4>
+        <p style="font-size:0.95rem; margin:0;">Vive en la mano y en el teléfono. Un código une los dos mundos.</p>
+      </div>
+      <div class="card card--sm">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Da motivo para volver</h4>
+        <p style="font-size:0.95rem; margin:0;">Es coleccionable: siempre falta una. Cada anuncio es una excusa.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 6. CARD NO. 001 ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">04 · Cómo funciona</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:8px;">Card No.&nbsp;001: el primer Head Coach</h2>
+    <p class="anim" style="max-width:760px; margin-bottom:36px;">La presentación del DT convertida en juego. Cuatro días, una pregunta por día sobre el club, una pista por respuesta. El viernes la carta se da vuelta.</p>
+    <div class="seq anim">
+      <div class="seq-item">
+        <img src="charter-collection/02-CC-001-brown-silueta-bloqueada.png" alt="Carta bloqueada con silueta" class="tcard">
+        <h4>Lunes</h4>
+        <p>Arranca bloqueada. Solo se ve la silueta.</p>
+      </div>
+      <i data-lucide="arrow-right" class="seq-arrow" style="width:28px; height:28px;"></i>
+      <div class="seq-item">
+        <img src="charter-collection/03-CC-001-brown-3-pistas.png" alt="Carta con tres pistas desbloqueadas" class="tcard">
+        <h4>Martes a jueves</h4>
+        <p>Cada pregunta abre una pista: nacionalidad, trayectoria y más. Acierte o no, la pista se abre igual.</p>
+      </div>
+      <i data-lucide="arrow-right" class="seq-arrow" style="width:28px; height:28px;"></i>
+      <div class="seq-item">
+        <img src="charter-collection/01-CC-001-brown-base.png" alt="Carta No. 001 revelada" class="tcard">
+        <h4>Viernes, 10 AM ET</h4>
+        <p>Reveal. La carta completa entra a la colección de cada fan.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 7. EL JUEGO EN PANTALLA ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="label anim">El juego en pantalla</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:8px;">Pregunta, pista, reveal</h2>
+    <p class="anim" style="max-width:760px; margin-bottom:32px;">Pensado primero para el teléfono y fácil de replicar en Stories. La experiencia vive en su propia página; la home del club solo la enlaza.</p>
+    <div class="screens anim">
+      <div>
+        <img src="charter-collection/desktop-juego-pregunta.jpg" alt="Pregunta del día en desktop" class="shot">
+        <div class="caption">Desktop · La pregunta del día</div>
+      </div>
+      <div>
+        <img src="charter-collection/mobile-juego.jpg" alt="El juego en mobile" class="phone" style="max-height:52vh; width:auto; max-width:100%;">
+        <div class="caption">Mobile · Juego</div>
+      </div>
+      <div>
+        <img src="charter-collection/mobile-reveal.jpg" alt="Reveal en mobile" class="phone" style="max-height:52vh; width:auto; max-width:100%;">
+        <div class="caption">Mobile · Reveal</div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 8. ANATOMÍA DE UNA CARTA ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content" style="max-width:1240px;">
+    <div class="anatomy">
+      <div class="anatomy-text anim">
+        <div class="label">Anatomía de una carta</div>
+        <h2 style="font-size:2.2rem;">Frente y dorso, como una carta clásica</h2>
+        <p style="font-size:0.95rem;">Respetamos los códigos que el coleccionista estadounidense ya conoce, con la identidad del club.</p>
+      </div>
+      <div class="anim">
+        <img src="charter-collection/01-CC-001-brown-base.png" alt="Frente de la carta" class="tcard">
+      </div>
+      <div class="anim">
+        <img src="charter-collection/04-CC-001-brown-dorso.png" alt="Dorso de la carta" class="tcard">
+      </div>
+      <div class="anim">
+        <div class="caption" style="margin-top:0;">Frente</div>
+        <ul class="icon-list" style="gap:12px; margin-bottom:24px;">
+          <li><i data-lucide="hash" style="width:18px; height:18px;"></i><div>Código y set de la colección</div></li>
+          <li><i data-lucide="shield" style="width:18px; height:18px;"></i><div>Escudo "1st Season" y bandera</div></li>
+          <li><i data-lucide="tag" style="width:18px; height:18px;"></i><div>Sellos en palabras, sin números</div></li>
+        </ul>
+        <div class="caption">Dorso</div>
+        <ul class="icon-list" style="gap:12px;">
+          <li><i data-lucide="table" style="width:18px; height:18px;"></i><div>Trayectoria en tabla</div></li>
+          <li><i data-lucide="lightbulb" style="width:18px; height:18px;"></i><div>Un "Did you know?" con historia</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 9. LO QUE SE LLEVA EL FAN ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="split" style="grid-template-columns:1fr 1.15fr; gap:56px;">
+      <div>
+        <div class="label anim">Lo que se lleva el fan</div>
+        <h2 class="anim" style="font-size:2.4rem;">Una carta propia, con su número</h2>
+        <p class="anim">Cada fan que deja su mail recibe su <strong style="color:#fff;">Collector Card</strong>, propia y numerada. Los <strong style="color:#fff;">Founding Members</strong> reciben la versión dorada con su número de fundador.</p>
+        <div class="fan-cards anim" style="margin-top:24px;">
+          <div style="text-align:center;">
+            <img src="charter-collection/11-COL-collector.png" alt="Collector Card" class="tcard">
+            <div class="caption">Collector</div>
+          </div>
+          <div style="text-align:center;">
+            <img src="charter-collection/12-COL-founder-gold.png" alt="Founder Card dorada" class="tcard">
+            <div class="caption">Founding Member</div>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <img src="charter-collection/desktop-pedido-de-mail.jpg" alt="Pantalla para reclamar la Collector Card" class="shot">
+        <div class="card card--sm" style="margin-top:20px;">
+          <h4 style="font-size:1.15rem; margin-bottom:8px;">Para el club</h4>
+          <p style="font-size:0.95rem; margin:0;">El mail es la colección. Cada carta reclamada es un fan con nombre propio y un motivo para recibir noticias del club cada mañana.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 10. COMUNES Y ESPECIALES ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="label anim">05 · La colección</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:20px;">Cartas comunes y cartas especiales</h2>
+    <div class="anim" style="margin-bottom:28px;">
+      <img src="charter-collection/lineup-especiales.png" alt="Cartas especiales: First Win, Matchday Hero, Groundbreaking, Founder" class="lineup" style="max-height:34vh; width:auto; max-width:100%; margin:0 auto;">
+    </div>
+    <div class="grid-2 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Comunes</h4>
+        <ul class="icon-list" style="gap:10px;">
+          <li><i data-lucide="megaphone" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Charter Set:</strong> una carta por cada anuncio.</div></li>
+          <li><i data-lucide="smile" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Luca's Squad:</strong> el set de la mascota, para los más chicos.</div></li>
+          <li><i data-lucide="user" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Collectors:</strong> la carta propia de cada fan.</div></li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:12px;">Especiales</h4>
+        <ul class="icon-list" style="gap:10px;">
+          <li><i data-lucide="trophy" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Firsts y Matchday Hero:</strong> primer gol, primera victoria, figura del partido. Se reclaman durante 72 h.</div></li>
+          <li><i data-lucide="sprout" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Homegrown:</strong> para los chicos de la academia.</div></li>
+          <li><i data-lucide="map-pin" style="width:18px; height:18px;"></i><div><strong style="color:#fff;">Groundbreaking:</strong> exclusiva de evento, solo en persona.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 11. ROSTER Y COLECCIÓN ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="label anim">Roster y colección</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:8px;">Un plantel profesional, una colección aparte</h2>
+    <p class="anim" style="max-width:760px; margin-bottom:32px;">El roster se presenta en serio, como en cualquier club profesional. Lo coleccionable vive en su propio espacio, sin mezclarse con la información deportiva.</p>
+    <div class="grid-2 anim">
+      <div>
+        <img src="charter-collection/desktop-roster.jpg" alt="Página de roster" class="shot">
+        <div class="caption">Roster</div>
+        <p>Fotos, posiciones y datos. El tono de un club profesional.</p>
+      </div>
+      <div>
+        <img src="charter-collection/desktop-coleccion.jpg" alt="Página de la colección" class="shot">
+        <div class="caption">Collection</div>
+        <p>El álbum de cada fan, con lo que tiene y lo que le falta.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 12. GROUNDBREAKING PACK ══════════════ -->
+<section class="slide" data-slide="12">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="split" style="grid-template-columns:1.1fr 1fr;">
+      <div class="anim">
+        <img src="charter-collection/sobre-con-cartas.png" alt="Groundbreaking Pack con tres cartas" class="lineup" style="max-height:66vh; width:auto; max-width:100%; margin:0 auto;">
+      </div>
+      <div>
+        <div class="label anim">06 · Del evento al negocio</div>
+        <h2 class="anim" style="font-size:2.4rem; margin-bottom:12px;">El Groundbreaking Pack</h2>
+        <p class="anim"><span class="pill">12.12.2026 · Groundbreaking del estadio</span></p>
+        <p class="anim" style="margin-top:16px;">La idea se instala en persona. Cada asistente se lleva un sobre gratis, con tres cartas y un código para sumarlas a su colección digital.</p>
+        <ul class="checklist anim" style="margin-top:16px;">
+          <li><i data-lucide="check" style="width:18px; height:18px;"></i> Card No.&nbsp;001, el Head Coach</li>
+          <li><i data-lucide="check" style="width:18px; height:18px;"></i> Groundbreaking, la exclusiva del evento</li>
+          <li><i data-lucide="check" style="width:18px; height:18px;"></i> Luca, la mascota</li>
+          <li><i data-lucide="qr-code" style="width:18px; height:18px;"></i> Un código para la colección digital</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 13. NEGOCIO PARA EL SHOP ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="label anim">Del evento al negocio</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:8px;">Un negocio nuevo para el Shop</h2>
+    <p class="anim" style="max-width:760px; margin-bottom:32px;">El sobre se regala en el Groundbreaking y después se vende. Es la lógica clásica de las cartas estadounidenses, aplicada al club.</p>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Sobres de temporada</h4>
+        <p style="font-size:0.95rem; margin:0;">A la venta en el Shop antes del debut.</p>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Drops de 72 h</h4>
+        <p style="font-size:0.95rem; margin:0;">Durante la temporada, atados a lo que pasa en la cancha.</p>
+      </div>
+      <div class="card card--sm card--accent-4">
+        <h4 style="font-size:1.15rem; margin-bottom:8px;">Producto de entrada</h4>
+        <p style="font-size:0.95rem; margin:0;">Algo accesible al lado de la camiseta, para el que todavía no compra merch.</p>
+      </div>
+    </div>
+    <p class="anim" style="margin-top:24px; font-size:0.9rem;"><i data-lucide="info" style="width:16px; height:16px; vertical-align:-3px; color:var(--text-muted);"></i> Precio y proyección: a definir juntos con el club.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 14. HOJA DE RUTA ══════════════ -->
+<section class="slide" data-slide="14">
+  <div class="slide-content" style="max-width:1200px;">
+    <div class="label anim">07 · Qué viene</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:40px;">Hoja de ruta</h2>
+    <div class="roadmap anim">
+      <div class="roadmap-item">
+        <div class="roadmap-thumb"><img src="charter-collection/02-CC-001-brown-silueta-bloqueada.png" alt=""></div>
+        <div class="roadmap-dot"></div>
+        <div>
+          <h4>Oct y nov</h4>
+          <p>Reveal del Head Coach, Card No.&nbsp;001.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-thumb"><img src="charter-collection/sobre-groundbreaking.png" alt=""></div>
+        <div class="roadmap-dot"></div>
+        <div>
+          <h4>12 de diciembre</h4>
+          <p>Groundbreaking Pack en el evento del estadio.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-thumb"><img src="charter-collection/08-HG-homegrown.png" alt=""></div>
+        <div class="roadmap-dot"></div>
+        <div>
+          <h4>Enero</h4>
+          <p>Una carta por cada jugador del plantel.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-thumb"><img src="charter-collection/12-COL-founder-gold.png" alt=""></div>
+        <div class="roadmap-dot"></div>
+        <div>
+          <h4>Antes del debut</h4>
+          <p>Sobres de temporada a la venta en el Shop.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-thumb"><img src="charter-collection/06-FW-001-firsts-first-win-gold.png" alt=""></div>
+        <div class="roadmap-dot"></div>
+        <div>
+          <h4>Temporada</h4>
+          <p>Firsts, Matchday Hero y la carta de cada partido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Charter Collection · Uso interno</span></div>
+</section>
+
+
+<!-- ══════════════ 15. CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="15">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1; max-width:1240px;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.4rem, 5vw, 4.2rem);">Argentine roots.<br>American game day.<br>Port St. Lucie cards.</h2>
+    <div class="anim" style="margin-top:28px;">
+      <img src="charter-collection/lineup-todas.png" alt="Las siete cartas de la Charter Collection" class="lineup" style="max-width:1000px; margin:0 auto;">
+    </div>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 16. CHAT ══════════════ -->
+<section class="slide" data-slide="16">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Te quedó alguna duda sobre la idea?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Conoce el contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la idea</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funciona el juego del DT?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué trae el Groundbreaking Pack?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo gana plata el Shop?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuál es la hoja de ruta?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué se lleva el fan?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Animate all .anim children inside this slide
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        // Reset animations when slide leaves viewport
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    // Navigate to the chat slide (last)
+    const vh = deck.clientHeight;
+    deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'hi', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme sobre la idea de la Charter Collection, el juego del primer Head Coach, las cartas, el Groundbreaking Pack, el negocio para el Shop o la hoja de ruta.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge otra duda, estoy acá. También podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que aparezca después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras', 'la idea'],
+    answer: 'La Charter Collection son las primeras trading cards de Port St. Lucie SC. La idea es que cada anuncio del club salga como una carta coleccionable, como hace el deporte estadounidense. Arranca con la Card No. 001 (el primer Head Coach, presentado como un juego de cuatro días), sigue con un sobre gratis en el Groundbreaking del 12/12 y después se convierte en un producto para el Shop. Después de un año con acento argentino, es un gesto para la comunidad local.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme por qué cartas, cómo funciona el juego del DT, qué tiene una carta, qué se lleva el fan, qué cartas existen, el Groundbreaking Pack, el negocio para el Shop o la hoja de ruta.'
+  },
+  // Content
+  {
+    keywords: ['por qué', 'por que', 'porque', 'escuchamos', 'comunidad', 'local', 'argentino', 'argentina', 'acento', 'adn', 'buenos aires', 'reel'],
+    answer: 'El club tuvo un año con acento argentino: las pruebas en Buenos Aires, el reel que se viralizó, el "Built in Florida, con ADN argentino". Funcionó y nos puso en el mapa. Pero la comunidad local vive el deporte a la estadounidense (gameday, rookies, colecciones, padres e hijos con una carta en la mano) y quería ver un club que hable su idioma. Esta vez el gesto es para ellos.'
+  },
+  {
+    keywords: ['por qué cartas', 'por que cartas', 'trading', 'cards', 'nfl', 'nba', 'mlb', 'generaciones'],
+    answer: 'Por cuatro razones: es un lenguaje que en Estados Unidos entienden todos (NFL, NBA, MLB); une generaciones, el padre que coleccionaba y el hijo que juega en la academia; vive en dos mundos, físico y digital; y es coleccionable, así que da un motivo para volver.'
+  },
+  {
+    keywords: ['juego', 'dt', 'head coach', 'entrenador', 'brown', '001', 'pregunta', 'pista', 'reveal', 'viernes', 'silueta'],
+    answer: 'La Card No. 001 presenta al primer Head Coach como un juego. Durante cuatro días hay una pregunta por día sobre el club; cada respuesta desbloquea una pista (acierte o no). La carta arranca como una silueta bloqueada y se da vuelta el viernes a las 10 AM ET. Está pensado primero para el teléfono y es fácil de replicar en Stories.'
+  },
+  {
+    keywords: ['anatomía', 'anatomia', 'frente', 'dorso', 'diseño de la carta', 'sello', 'trayectoria', 'did you know'],
+    answer: 'Cada carta tiene frente y dorso como una carta clásica. Frente: código y set, escudo "1st Season", bandera y sellos en palabras (sin números). Dorso: datos clave, la trayectoria en tabla y un "Did you know?" con una historia.'
+  },
+  {
+    keywords: ['fan', 'collector', 'mail', 'email', 'founding', 'founder', 'fundador', 'dorada', 'numerada', 'base de datos'],
+    answer: 'Cada fan que deja su mail recibe una Collector Card propia y numerada. Los Founding Members reciben la versión dorada con su número de fundador. Para el club, el mail es la colección: cada carta reclamada es un fan con nombre propio y un canal para mandarle novedades.'
+  },
+  {
+    keywords: ['comunes', 'especiales', 'tipos', 'colección', 'coleccion', 'charter set', 'luca', 'mascota', 'firsts', 'matchday', 'homegrown', 'academia'],
+    answer: 'Comunes: Charter Set (una carta por anuncio), Luca\'s Squad (la mascota, para los más chicos) y Collectors (la carta de cada fan). Especiales: Firsts (primer gol, primera victoria) y Matchday Hero, que se reclaman durante 72 h; Homegrown para la academia; y Groundbreaking como exclusiva de evento.'
+  },
+  {
+    keywords: ['roster', 'plantel', 'jugadores'],
+    answer: 'El roster se presenta en serio, como en cualquier club profesional. Lo coleccionable vive en su propio espacio (la colección), sin mezclarse con la información deportiva. Desde enero sale una carta por cada jugador.'
+  },
+  {
+    keywords: ['groundbreaking', 'sobre', 'pack', 'evento', '12/12', '12.12', 'diciembre', 'estadio', 'gratis'],
+    answer: 'El Groundbreaking Pack se entrega el 12.12.2026 en el evento del estadio: un sobre gratis para cada asistente, con tres cartas (Card No. 001, Groundbreaking y Luca) y un código para sumarlas a la colección digital. Es donde la idea se instala en persona.'
+  },
+  {
+    keywords: ['shop', 'negocio', 'vender', 'venta', 'plata', 'ingreso', 'drop', 'merch'],
+    answer: 'El sobre se regala en el Groundbreaking y después se vende. Para el Shop: sobres de temporada antes del debut; drops de 72 h durante la temporada; y un producto de entrada accesible al lado de la camiseta. Precio y proyección quedan a definir con el club.'
+  },
+  {
+    keywords: ['precio', 'costo', 'cuánto', 'cuanto', 'proyección', 'proyeccion', 'tirada'],
+    answer: 'El precio de los sobres, la tirada y la proyección todavía no están definidos. Es uno de los temas para cerrar juntos con el club.'
+  },
+  {
+    keywords: ['hoja de ruta', 'roadmap', 'cuándo', 'cuando', 'calendario', 'fechas', 'timeline', 'enero', 'temporada', 'debut'],
+    answer: 'Octubre y noviembre: reveal del Head Coach. 12 de diciembre: Groundbreaking Pack. Enero: una carta por jugador. Antes del debut: sobres a la venta en el Shop. Durante la temporada: Firsts, Matchday Hero y la carta de cada partido.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'studio', 'quiénes', 'quienes', 'contacto'],
+    answer: 'Yacaré (yacare.io) es el estudio que desarrolla la idea junto al club. Para consultas podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en esta presentación. Podés reformular la pregunta o consultarlo con el equipo en contact@yacare.io. También podés preguntarme por el juego del DT, el Groundbreaking Pack, el Shop o la hoja de ruta.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        // Longer keyword matches are worth more
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  // Hide all suggestions after clicking one
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  // Set input and send
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  // Simulate brief delay for natural feel
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
