@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0C0C0A">
+  <meta name="robots" content="noindex">
+  <title>The Locker Room · Port St. Lucie SC</title>
+  <meta name="description" content="Walk the rail of the first Port St. Lucie SC locker room: every jersey in 3D. Pick a number, put your name on it.">
+  <link rel="icon" href="assets/brand/crest-aqua.webp">
+  <link rel="preload" as="image" href="assets/kits/home-front.webp">
+  <link rel="preload" as="image" href="assets/kits/home-back.webp">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="locker.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main id="app" data-ready="false" data-card="">
+    <canvas id="stage" tabindex="0" aria-label="3D locker room with the club's jerseys. Use the arrow keys to walk the rail and Enter to open one."></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <header id="header" class="hud">
+      <a class="brand" href="https://www.portstluciesc.com" title="Port St. Lucie SC">
+        <img src="assets/brand/crest-aqua.webp" alt="Port St. Lucie SC crest" width="562" height="600">
+        <span class="brand-text"><b>The Locker Room</b><small>Founders Edition<span class="brand-season"> · 2027 season</span></small></span>
+      </a>
+      <h1 class="title"><span>Port St. Lucie SC</span><small>The first locker room in club history</small></h1>
+      <nav class="filters" aria-label="Filter the rail">
+        <div class="filter-row">
+          <button class="pill" data-filter="" aria-pressed="true">All <span>27</span></button>
+          <button class="pill" data-filter="GK" aria-pressed="false">Keepers <span>2</span></button>
+          <button class="pill" data-filter="HOME" aria-pressed="false">Home <span>21</span></button>
+          <button class="pill" data-filter="AWAY" aria-pressed="false">Away <span>4</span></button>
+        </div>
+        <button class="btn btn-aqua header-cta" data-customize>Make it yours</button>
+      </nav>
+    </header>
+
+    <!-- rótulos de grupo, anclados a la barra -->
+    <div id="labels" class="hud" aria-hidden="true">
+      <div class="label" data-group="GK"><i></i><span>Goalkeepers</span><b>2</b></div>
+      <div class="label" data-group="HOME"><i></i><span>Home kit</span><b>21</b></div>
+      <div class="label" data-group="AWAY"><i></i><span>Away kit</span><b>4</b></div>
+    </div>
+
+    <!-- pie de foto de la camiseta señalada -->
+    <div id="caption" aria-hidden="true">
+      <p class="cap-main"><span id="cap-num"></span><span id="cap-name"></span></p>
+      <p id="cap-meta" class="cap-meta"></p>
+    </div>
+
+    <!-- ficha de la percha / personalizador: panel lateral en escritorio, hoja inferior en móvil -->
+    <aside id="card" aria-live="polite" data-open="false" data-view="hanger" data-more="false" inert>
+      <div id="card-grip" class="grip"><i></i></div>
+      <button id="card-close" class="btn-round card-close" aria-label="Close">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+
+      <div class="view-hanger">
+        <p class="kicker"><span id="card-kit">Home kit</span> · <span id="card-group">Field</span></p>
+        <div class="card-head">
+          <span id="card-num" class="card-num">7</span>
+          <div class="card-who">
+            <p id="card-title" class="card-title">Your name here</p>
+            <p id="card-sub" class="card-sub">No. 7 is still unclaimed</p>
+          </div>
+        </div>
+        <dl class="card-data" id="card-data">
+          <div><dt>Jersey</dt><dd id="card-product">adidas Tiro 26 match jersey</dd></div>
+          <div><dt>Price</dt><dd id="card-price">$99.99</dd></div>
+          <div><dt>Printing</dt><dd>Name + number, official store</dd></div>
+          <div><dt>Season</dt><dd>2027 · Founders Edition</dd></div>
+        </dl>
+        <p id="card-copy" class="card-copy"></p>
+        <button id="card-more" class="card-more" type="button" aria-expanded="false" aria-controls="card-data">
+          <span class="more-on">More</span><span class="more-off">Less</span>
+        </button>
+        <div class="card-actions">
+          <button id="card-custom" class="btn btn-aqua">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 13.5l1-3.5 7-7 2.5 2.5-7 7zM9.5 4l2.5 2.5"/></svg>
+            Make it yours
+          </button>
+          <button id="card-share" class="btn-round" aria-label="Share this jersey">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 10V2M5 4.5L8 1.5l3 3M3 8v5.5h10V8"/></svg>
+          </button>
+          <button id="card-prev" class="btn-round" aria-label="Previous jersey">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
+          </button>
+          <button id="card-next" class="btn-round" aria-label="Next jersey">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3l5 5-5 5"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <form id="custom-form" class="view-custom" novalidate>
+        <p class="kicker">Customizer</p>
+        <h2 class="custom-title">Make it yours</h2>
+        <div class="fields">
+          <label class="field">
+            <span>Name</span>
+            <input id="cu-name" type="text" maxlength="12" placeholder="YOUR NAME" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="next">
+          </label>
+          <label class="field field-num">
+            <span>Number</span>
+            <input id="cu-num" type="text" inputmode="numeric" maxlength="2" placeholder="10" autocomplete="off" enterkeyhint="done">
+          </label>
+        </div>
+        <p class="fine">Up to 12 letters and 2 digits, like the store.</p>
+        <fieldset class="choices">
+          <legend>Kit</legend>
+          <label><input type="radio" name="kit" value="home" checked><span>Home</span></label>
+          <label><input type="radio" name="kit" value="away"><span>Away</span></label>
+          <label><input type="radio" name="kit" value="gk-orange"><span>GK orange</span></label>
+          <label><input type="radio" name="kit" value="gk-green"><span>GK green</span></label>
+        </fieldset>
+        <fieldset class="choices sizes">
+          <legend>Size</legend>
+          <label><input type="radio" name="size" value="S"><span>S</span></label>
+          <label><input type="radio" name="size" value="M" checked><span>M</span></label>
+          <label><input type="radio" name="size" value="L"><span>L</span></label>
+          <label><input type="radio" name="size" value="XL"><span>XL</span></label>
+          <label><input type="radio" name="size" value="2XL"><span>2XL</span></label>
+        </fieldset>
+        <a id="cu-buy" class="btn btn-aqua btn-buy" target="_blank" rel="noopener" aria-disabled="true">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 2.5h2l1.5 8h7l1.3-5.5H5M6.5 13.5h.01M11.5 13.5h.01"/></svg>
+          Add to cart · <span id="cu-price">$99.99</span>
+        </a>
+        <p class="fine">Opens the official PSLSC store with your name and number already on the jersey. Price and checkout happen there.</p>
+        <div id="cu-demo" class="demo" hidden>
+          <span>Demo · the store will receive</span>
+          <code id="cu-demo-url"></code>
+        </div>
+        <div class="custom-links">
+          <button id="cu-share" type="button" class="link">
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 10V2M5 4.5L8 1.5l3 3M3 8v5.5h10V8"/></svg>
+            Share design
+          </button>
+          <a id="cu-product" class="link" href="#" target="_blank" rel="noopener">See it in the store</a>
+          <button id="cu-back" type="button" class="link">Back to the rail</button>
+        </div>
+      </form>
+    </aside>
+
+    <div id="toast" role="status"></div>
+
+    <footer id="footer" class="hud">
+      <div class="foot-row">
+        <p class="foot-left">© 2026 Port St. Lucie SC · <span>Prototype v1 · store not connected yet</span></p>
+        <div class="foot-right">
+          <p id="hint" class="hint">Drag the rail · Click a jersey</p>
+          <button class="btn btn-aqua foot-cta" data-customize>Make it yours</button>
+        </div>
+      </div>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Anchored in glory</span><span>The first jersey in club history</span><span>Founders Edition</span><span>Port St. Lucie SC</span><span>2027 season</span><span>Pick your number</span>
+          <span>Anchored in glory</span><span>The first jersey in club history</span><span>Founders Edition</span><span>Port St. Lucie SC</span><span>2027 season</span><span>Pick your number</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- telón de entrada -->
+    <div id="loader" data-done="false">
+      <div class="loader-box">
+        <img src="assets/brand/crest-aqua.webp" alt="" width="562" height="600">
+        <p class="loader-title">The Locker Room</p>
+        <p class="loader-sub">Port St. Lucie SC · Founders Edition</p>
+        <div class="loader-bar"><div id="loader-bar"></div></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- sin WebGL -->
+  <section id="fallback" hidden>
+    <h2>The Locker Room needs WebGL</h2>
+    <p>Your browser could not start the 3D locker room. You can still order the jersey with your name and number in the official store.</p>
+  </section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

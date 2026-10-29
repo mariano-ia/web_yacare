@@ -1,0 +1,78 @@
+{
+  "jerseyHeightM": 0.74,
+  "kits": {
+    "home": {
+      "label": "Home \u00b7 black",
+      "size": [
+        721,
+        931
+      ],
+      "text": "#FFFFFF",
+      "name": {
+        "cx": 360.0,
+        "top": 169,
+        "bottom": 217
+      },
+      "number": {
+        "cx": 359.5,
+        "top": 250,
+        "bottom": 443
+      }
+    },
+    "away": {
+      "label": "Away \u00b7 white",
+      "size": [
+        738,
+        921
+      ],
+      "text": "#0C0C0A",
+      "name": {
+        "cx": 366.5,
+        "top": 163,
+        "bottom": 211
+      },
+      "number": {
+        "cx": 366.5,
+        "top": 244,
+        "bottom": 437
+      }
+    },
+    "gk-orange": {
+      "label": "Goalkeeper \u00b7 orange",
+      "size": [
+        703,
+        921
+      ],
+      "text": "#FFFFFF",
+      "name": {
+        "cx": 349.5,
+        "top": 164,
+        "bottom": 212
+      },
+      "number": {
+        "cx": 349.5,
+        "top": 245,
+        "bottom": 438
+      }
+    },
+    "gk-green": {
+      "label": "Goalkeeper \u00b7 green",
+      "size": [
+        703,
+        920
+      ],
+      "text": "#0C0C0A",
+      "name": {
+        "cx": 349.5,
+        "top": 164,
+        "bottom": 212
+      },
+      "number": {
+        "cx": 349.5,
+        "top": 245,
+        "bottom": 438
+      }
+    }
+  },
+  "metersPerPx": 0.0007948442534908701
+}
