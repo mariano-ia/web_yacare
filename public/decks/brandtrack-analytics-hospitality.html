@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · Analytics Hospitality · Brandtrack</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 20px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary);
+}
+.icon-list li i { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.price {
+  font-family: var(--font-display);
+  font-size: 3.5rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.price span {
+  font-size: 1rem; color: var(--text-muted);
+  font-family: var(--font-body); font-weight: 400;
+}
+.price-features { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.price-features li {
+  font-size: 0.85rem; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 10px;
+}
+.price-features li i { color: var(--text-muted); width: 16px; height: 16px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.checklist li i { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #fff; color: #000; background: #fff; cursor: pointer;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--cover h1 { font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider {
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.slide--divider h2 { font-size: clamp(2.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+
+.slide--thanks {
+  text-align: center; position: relative;
+}
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item i { color: var(--text-muted); }
+
+.badge-rec {
+  position: absolute; top: 16px; right: 20px;
+  background: var(--text-primary); color: #000;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn i { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 40px 20px;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 24px; }
+  .grid-2x2 { grid-template-columns: 1fr; gap: 16px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 16px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number { font-size: 2.5rem; }
+  .price { font-size: 2.2rem; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 0.95rem; }
+  .slide--divider h2 { font-size: 1.8rem; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 14px; }
+  .icon-list li { font-size: 0.88rem; gap: 12px; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, animate immediately (no IntersectionObserver delay) */
+  .anim {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint i { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  #chat-container { display: none !important; }
+}
+
+/* ═══════════════════════════════════════
+   DECK SPECIFIC: ANALYTICS HOSPITALITY
+   ═══════════════════════════════════════ */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+.split--top { align-items: start; }
+.slide .section-num { top: auto; bottom: 56px; transform: none; font-size: 8rem; }
+
+.stage-title { font-size: clamp(2.4rem, 4.5vw, 3.4rem); margin-bottom: 36px; }
+.icon-list li strong { color: var(--text-primary); font-weight: 600; }
+
+.btn--ghost { background: transparent; color: var(--text-primary); border-color: var(--border-medium); padding: 12px 28px; font-size: 0.9rem; }
+.btn--ghost:hover { border-color: var(--text-muted); }
+.btn i { width: 16px; height: 16px; }
+
+/* Antes / Ahora / Por qué */
+.ba { display: grid; grid-template-columns: 1fr 32px 1fr; gap: 16px; align-items: stretch; }
+.ba > svg { width: 20px; height: 20px; color: var(--text-muted); align-self: center; justify-self: center; }
+.ba-tag {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted); margin-bottom: 12px;
+}
+.ba p { margin: 0; font-size: 1rem; }
+.ba .ba-now p { color: var(--text-primary); }
+.ba-stack { display: flex; flex-direction: column; gap: 16px; }
+.ba-stack .card p { margin: 0; font-size: 0.98rem; }
+.ba-stack .ba-now p { color: var(--text-primary); }
+
+.why {
+  margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-medium);
+  max-width: 900px;
+}
+.why-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted); margin-bottom: 12px;
+}
+.why-label svg { width: 16px; height: 16px; }
+.why p { font-size: 1.2rem; font-weight: 500; line-height: 1.5; color: var(--text-primary); margin: 0; }
+.ba-stack + .why { margin-top: 20px; padding-top: 18px; }
+.ba-stack + .why p { font-size: 1.05rem; }
+
+.ba-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.ba-list li { display: flex; gap: 10px; align-items: center; margin: 0; font-size: 0.95rem; color: var(--text-primary); }
+.ba-list li svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Índice de cambios */
+.idx-card h4 { font-size: 1.15rem; margin-bottom: 6px; }
+.idx-card p { font-size: 0.95rem; margin: 0; }
+.idx-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--text-muted); line-height: 1; margin-bottom: 14px; display: block; }
+
+/* Problema */
+.obs { width: 100%; }
+.obs-row {
+  display: grid; grid-template-columns: 40px 1fr; gap: 20px; align-items: start;
+  padding: 22px 0; border-bottom: 1px solid var(--border-subtle);
+}
+.obs-row:last-child { border-bottom: none; }
+.obs-row svg { width: 22px; height: 22px; color: var(--text-muted); margin-top: 4px; }
+.obs-row p { margin: 0; font-size: 1.25rem; color: var(--text-primary); font-weight: 500; }
+.obs-row p span { display: block; font-size: 0.98rem; color: var(--text-secondary); font-weight: 400; margin-top: 4px; }
+
+/* Principios */
+.principle .p-num { font-family: var(--font-display); font-size: 1.6rem; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 16px; }
+.principle h4 { font-size: 1.25rem; margin-bottom: 12px; }
+.principle p { font-size: 0.95rem; margin: 0; }
+.principle em { font-style: normal; color: var(--text-primary); }
+
+/* Mockups (ilustrativos) */
+.mock {
+  border: 1px solid var(--border-medium); border-radius: 20px;
+  background: var(--bg-elevated); padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.mock-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.mock-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); }
+.mock-tabs { display: flex; gap: 6px; }
+.mock-tab { font-size: 0.68rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border-subtle); color: var(--text-muted); }
+.mock-tab--on { border-color: var(--border-medium); color: var(--text-primary); background: rgba(255,255,255,0.05); }
+.mock-note { font-size: 0.68rem; color: var(--text-muted); text-align: right; margin: 8px 0 0; }
+
+.hcard {
+  border: 1px solid var(--border-subtle); border-radius: 14px;
+  background: rgba(255,255,255,0.02); padding: 14px 16px;
+}
+.hcard-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.hcard-name { font-family: var(--font-display); text-transform: uppercase; font-size: 1rem; color: var(--text-primary); letter-spacing: -0.02em; }
+.hcard-aff { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-secondary); line-height: 1; }
+.hcard-aff small { font-family: var(--font-body); font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-left: 6px; }
+.bar { height: 4px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 12px; }
+.bar > span { display: block; height: 100%; background: rgba(255,255,255,0.45); border-radius: 4px; }
+.hcard-rows { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.hcard-rows div { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.4; }
+.hcard-rows b { display: block; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 2px; }
+.smart-off { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.62rem; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--border-medium); color: var(--text-primary); white-space: nowrap;
+}
+
+/* Afinidad */
+.def-big { font-family: var(--font-display); font-size: 6rem; font-weight: 700; color: var(--text-secondary); line-height: 1; letter-spacing: -0.04em; }
+.def-cap { font-size: 1.05rem; color: var(--text-primary); max-width: 380px; margin-top: 12px; }
+.case-rows { display: flex; flex-direction: column; }
+.case-row {
+  display: grid; grid-template-columns: 190px 1fr; gap: 24px;
+  padding: 18px 0; border-bottom: 1px solid var(--border-subtle);
+  align-items: baseline;
+}
+.case-row:last-child { border-bottom: none; }
+.case-row h4 { font-size: 1.05rem; margin: 0; color: var(--text-primary); }
+.case-row p { margin: 0; font-size: 1rem; }
+
+/* Tabla de casos 7b */
+.cases { width: 100%; }
+.cases-head, .cases-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px; align-items: center; }
+.cases-head {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted); padding-bottom: 12px; border-bottom: 1px solid var(--border-medium);
+}
+.cases-row { padding: 20px 0; border-bottom: 1px solid var(--border-subtle); }
+.cases-row:last-child { border-bottom: none; }
+.cases-row h4 { font-size: 1.15rem; margin: 0; }
+.cases-row p { margin: 0; font-size: 1rem; }
+.cases-row .ex { display: inline-flex; margin-top: 8px; font-size: 0.8rem; color: var(--text-primary); border: 1px solid var(--border-medium); border-radius: 999px; padding: 4px 12px; }
+
+@media (max-width: 768px) {
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stage-title { font-size: 1.9rem; margin-bottom: 22px; }
+  .ba { grid-template-columns: 1fr; gap: 10px; }
+  .ba > svg { transform: rotate(90deg); }
+  .ba p { font-size: 0.9rem; }
+  .why { margin-top: 20px; padding-top: 16px; }
+  .why p, .ba-stack + .why p { font-size: 1rem; }
+  .idx-card h4 { font-size: 0.95rem; }
+  .idx-card p { font-size: 0.8rem; }
+  .idx-num { font-size: 1.2rem; margin-bottom: 8px; }
+  .obs-row { grid-template-columns: 28px 1fr; gap: 12px; padding: 14px 0; }
+  .obs-row p { font-size: 1rem; }
+  .obs-row p span { font-size: 0.88rem; }
+  .principle h4 { font-size: 1.05rem; }
+  .mock { padding: 14px; }
+  .hcard--extra { display: none; }
+  .hcard-rows { grid-template-columns: 1fr 1fr; }
+  .def-big { font-size: 3.6rem; }
+  .def-cap { font-size: 0.95rem; }
+  .case-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+  .case-row h4 { font-size: 0.95rem; }
+  .case-row p { font-size: 0.9rem; }
+  .cases-head { display: none; }
+  .cases-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 0; }
+  .cases-row h4 { font-size: 1rem; }
+  .cases-row p { font-size: 0.9rem; }
+}
+.idx-card { position: relative; }
+.idx-tag {
+  position: absolute; top: 22px; right: 20px;
+  font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-primary); border: 1px solid var(--border-medium); border-radius: 999px; padding: 3px 10px;
+}
+
+/* Banner: ejemplo antes / ahora */
+.bn-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.bn { border: 1px solid var(--border-medium); border-radius: 18px; background: var(--bg-elevated); padding: 22px 24px; }
+.bn p { margin: 0; }
+.bn--before { display: flex; flex-direction: column; gap: 16px; opacity: 0.6; }
+.bn-hello { font-size: 1.15rem; color: var(--text-primary); font-weight: 600; }
+.bn-sub { font-size: 0.85rem; }
+.bn-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.bn-chips span { font-size: 0.7rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); border-radius: 999px; padding: 4px 10px; }
+.bn-insight { border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px 16px; }
+.bn-insight b { display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 4px; }
+.bn-insight p { font-size: 0.82rem; }
+.bn--after { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; align-items: center; }
+.bn-kicker { display: block; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px; }
+.bn-headline { font-family: var(--font-display); text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.15; font-size: 1.35rem; color: var(--text-primary); }
+.bn-illu { width: 100%; height: auto; color: var(--text-secondary); }
+
+@media (max-width: 768px) {
+  .bn-compare { grid-template-columns: 1fr; gap: 16px; }
+  .bn { padding: 16px; }
+  .bn-headline { font-size: 1.1rem; }
+  .idx-tag { top: 14px; right: 12px; font-size: 0.52rem; padding: 2px 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 10</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h1 class="shimmer-text anim">Analytics Hospitality</h1>
+    <p class="subtitle anim">Qué cambiamos en la vista de Analytics y por qué, desde la experiencia de uso.</p>
+    <div class="anim" style="margin-bottom:28px;">
+      <a class="btn btn--ghost" href="https://brandtrack-virid.vercel.app/analytics" target="_blank" rel="noopener"><i data-lucide="external-link"></i> Ver prototipo</a>
+    </div>
+    <p class="meta anim">Brandtrack · Octubre 2026 · Confidencial</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ EL PROBLEMA ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">Punto de partida</div>
+    <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:24px;">El problema</h2>
+    <div class="obs anim">
+      <div class="obs-row">
+        <i data-lucide="layout-dashboard"></i>
+        <p>El overview mostraba poca información relevante.<span>La primera pantalla de Analytics no respondía las preguntas que trae quien entra.</span></p>
+      </div>
+      <div class="obs-row">
+        <i data-lucide="lock"></i>
+        <p>Lo valioso dependía de que la locación fuera Smart.<span>Sin Smart, la pantalla quedaba vacía.</span></p>
+      </div>
+      <div class="obs-row">
+        <i data-lucide="eye-off"></i>
+        <p>La locación por defecto escondía el resto de la cuenta.<span>Era la solución anterior: resolvía la entrada, pero dejaba afuera a los demás hoteles.</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ TRES PRINCIPIOS ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">Criterios</div>
+    <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:36px;">Tres principios</h2>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1 principle">
+        <span class="p-num">01</span>
+        <h4>Experiencia y Operaciones no se mezclan</h4>
+        <p>Una responde <em>"¿suena como mi marca?"</em> y la otra <em>"¿funciona todo?"</em>.</p>
+      </div>
+      <div class="card card--sm card--accent-2 principle">
+        <span class="p-num">02</span>
+        <h4>Se compara solo lo que tiene un objetivo común</h4>
+        <p>La operación se compara entre locaciones. El sonido no, porque cada hotel busca algo distinto.</p>
+      </div>
+      <div class="card card--sm card--accent-3 principle">
+        <span class="p-num">03</span>
+        <h4>Smart suma, no condiciona</h4>
+        <p>La pantalla tiene contenido sin Smart y muestra qué se gana al activarlo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ LOS CAMBIOS ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">Qué cambiamos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:32px;">Ocho cambios</h2>
+    <div class="grid-4 anim">
+      <div class="card card--sm idx-card"><span class="idx-num">01</span><h4>Entrada</h4><p>Con varias locaciones se entra a "Todas las locaciones". Con una, directo a la locación.</p></div>
+      <div class="card card--sm idx-card"><span class="idx-num">02</span><h4>Locación por defecto</h4><p>Se eliminó "Set as default". Con un overview real deja de hacer falta.</p></div>
+      <div class="card card--sm idx-card"><span class="idx-num">03</span><h4>Pestaña</h4><p>Business pasa a llamarse Experiencia: marca, sonido y ambiente.</p></div>
+      <div class="card card--sm card--highlight card--accent-1 idx-card"><span class="idx-num">04</span><span class="idx-tag">Detalle</span><h4>Overview Experiencia</h4><p>Una card por hotel, sin ranking.</p></div>
+      <div class="card card--sm idx-card"><span class="idx-num">05</span><h4>Overview Operaciones</h4><p>Nuevo. KPIs de la cuenta y locaciones ordenadas por incidencias.</p></div>
+      <div class="card card--sm idx-card"><span class="idx-num">06</span><h4>Smart</h4><p>Donde falta el dato, "Activar Smart" en lugar de un aviso.</p></div>
+      <div class="card card--sm card--highlight card--accent-2 idx-card"><span class="idx-num">07</span><span class="idx-tag">Detalle</span><h4>Afinidad de marca</h4><p>Una métrica nueva, para todos los clientes.</p></div>
+      <div class="card card--sm card--highlight card--accent-3 idx-card"><span class="idx-num">08</span><span class="idx-tag">Ejemplo</span><h4>Banner</h4><p>Solo el titular de la semana, en la pantalla de entrada.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ CAMBIO 4: OVERVIEW DE EXPERIENCIA ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="split split--top">
+      <div>
+        <div class="label anim">Cambio 04</div>
+        <h2 class="stage-title anim" style="margin-bottom:24px;">Overview de Experiencia</h2>
+        <div class="ba-stack anim">
+          <div class="card card--sm"><div class="ba-tag">Antes</div><p>Una tabla con columnas que en su mayoría solo existían con Smart.</p></div>
+          <div class="card card--sm card--highlight card--accent-4 ba-now">
+            <div class="ba-tag">Ahora</div>
+            <p>Una card por hotel, sin ranking, con:</p>
+            <ul class="ba-list">
+              <li><i data-lucide="target"></i> afinidad de marca</li>
+              <li><i data-lucide="audio-lines"></i> sonido de la semana</li>
+              <li><i data-lucide="music"></i> lo que está sonando</li>
+              <li><i data-lucide="sparkles"></i> datos Smart o una invitación a activarlo</li>
+            </ul>
+          </div>
+        </div>
+        <div class="why anim">
+          <div class="why-label"><i data-lucide="lightbulb"></i> Por qué</div>
+          <p>Cualquier cuenta tiene contenido, con o sin Smart, y cada hotel se lee por separado porque cada uno busca su propio sonido.</p>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="mock">
+          <div class="mock-top">
+            <span class="mock-title">Todas las locaciones</span>
+            <div class="mock-tabs"><span class="mock-tab mock-tab--on">Experiencia</span><span class="mock-tab">Operaciones</span></div>
+          </div>
+          <div class="hcard">
+            <div class="hcard-head"><span class="hcard-name">Hotel Centro</span><span class="hcard-aff">86%<small>afinidad</small></span></div>
+            <div class="bar"><span style="width:86%"></span></div>
+            <div class="hcard-rows">
+              <div><b>Sonido de la semana</b>Lounge cálido</div>
+              <div><b>Sonando</b>Lobby · Jazz suave</div>
+              <div><b>Smart</b>Ocupación 72%</div>
+            </div>
+          </div>
+          <div class="hcard">
+            <div class="hcard-head"><span class="hcard-name">Hotel Playa</span><span class="hcard-aff">74%<small>afinidad</small></span></div>
+            <div class="bar"><span style="width:74%"></span></div>
+            <div class="hcard-rows">
+              <div><b>Sonido de la semana</b>Tropical luminoso</div>
+              <div><b>Sonando</b>Pool bar · Nu disco</div>
+              <div class="smart-off"><span><b>Smart</b>Desactivado</span><span class="pill">Activar</span></div>
+            </div>
+          </div>
+          <div class="hcard hcard--extra">
+            <div class="hcard-head"><span class="hcard-name">Hotel Puerto</span><span class="hcard-aff">91%<small>afinidad</small></span></div>
+            <div class="bar"><span style="width:91%"></span></div>
+            <div class="hcard-rows">
+              <div><b>Sonido de la semana</b>Acústico sereno</div>
+              <div><b>Sonando</b>Restaurante · Bossa</div>
+              <div><b>Smart</b>Ocupación 58%</div>
+            </div>
+          </div>
+        </div>
+        <p class="mock-note">Ilustrativo. Datos de ejemplo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ CAMBIO 7: AFINIDAD DE MARCA ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">Cambio 07 · Nueva métrica</div>
+    <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:36px;">Afinidad de marca</h2>
+    <div class="split split--top" style="grid-template-columns: 0.8fr 1.2fr;">
+      <div class="anim">
+        <div class="def-big">86%</div>
+        <p class="def-cap">del tiempo con música sonó lo programado.</p>
+      </div>
+      <div class="case-rows anim">
+        <div class="case-row"><h4>Qué es</h4><p>El porcentaje del tiempo con música en que sonó lo programado.</p></div>
+        <div class="case-row"><h4>De dónde sale el objetivo</h4><p>De la programación de cada locación, armada por Brandtrack o por el cliente. Nadie tiene que cargar nada.</p></div>
+        <div class="case-row"><h4>Qué no cuenta</h4><p>Los silencios, que se ven en Operaciones.</p></div>
+        <div class="case-row"><h4>Por qué</h4><p style="color:var(--text-primary);">Existe para todos los clientes y se puede comparar entre hoteles, porque cada uno se mide contra lo suyo.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ CAMBIO 7B: AFINIDAD SIN PROGRAMACIÓN ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">Cambio 07 · Casos borde</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:28px;">Afinidad sin programación</h2>
+    <div class="cases anim">
+      <div class="cases-head"><span>Caso</span><span>Qué se muestra</span></div>
+      <div class="cases-row"><h4>Todas las zonas programadas</h4><p>La afinidad, como siempre.</p></div>
+      <div class="cases-row"><h4>Algunas zonas programadas</h4><div><p>La afinidad calculada solo sobre esas zonas.</p><span class="ex">Calculado sobre 2 de 4 zonas</span></div></div>
+      <div class="cases-row"><h4>Ninguna zona programada</h4><div><p>"Sin programación" y el botón para resolverlo.</p><span class="ex">Programar música</span></div></div>
+    </div>
+    <div class="why anim">
+      <div class="why-label"><i data-lucide="lightbulb"></i> Por qué</div>
+      <p>Una playlist no tiene un objetivo contra el cual medir. Inventar uno daría un número sin sentido, así que el lugar vacío se usa para invitar a programar.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ CAMBIO 8: BANNER (EJEMPLO) ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">Cambio 08 · Ejemplo</div>
+    <h2 class="anim" style="font-size:2.4rem; margin-bottom:28px;">Banner</h2>
+
+    <div class="bn-compare anim">
+      <div>
+        <div class="ba-tag">Antes</div>
+        <div class="bn bn--before">
+          <div>
+            <p class="bn-hello">¡Hola! Bienvenido a Analytics</p>
+            <p class="bn-sub">Acá vas a encontrar la información de tus locaciones.</p>
+            <div class="bn-chips"><span>Últimos 7 días</span><span>Todas las zonas</span><span>Exportar</span></div>
+          </div>
+          <div class="bn-insight">
+            <b>Insight</b>
+            <p>Revisá los datos de tus locaciones para conocer más sobre tu audiencia.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ba-tag">Ahora</div>
+        <div class="bn bn--after">
+          <div>
+            <span class="bn-kicker">Esta semana</span>
+            <p class="bn-headline">Tus hoteles sonaron a su marca el 84% del tiempo con música.</p>
+          </div>
+          <svg class="bn-illu" viewBox="0 0 240 110" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="8" y1="104" x2="232" y2="104"/>
+            <rect x="40" y="62" width="150" height="42" rx="3"/>
+            <line x1="34" y1="62" x2="196" y2="62"/>
+            <line x1="115" y1="70" x2="115" y2="96"/>
+            <path d="M138 62 a10 10 0 0 1 20 0"/>
+            <line x1="148" y1="50" x2="148" y2="52"/>
+            <line x1="62" y1="62" x2="62" y2="34"/>
+            <path d="M50 34 h24 l-5 -14 h-14 z"/>
+            <rect x="96" y="12" width="44" height="30" rx="2"/>
+            <circle cx="106" cy="22" r="1.5"/><circle cx="118" cy="22" r="1.5"/><circle cx="130" cy="22" r="1.5"/>
+            <circle cx="106" cy="33" r="1.5"/><circle cx="118" cy="33" r="1.5"/><circle cx="130" cy="33" r="1.5"/>
+            <path d="M206 104 v-16 h16 v16"/>
+            <path d="M214 88 c-10 -8 -10 -22 -2 -30 M214 88 c8 -10 12 -20 6 -32 M214 88 c-2 -10 0 -24 0 -36"/>
+            <path d="M176 18 q6 -6 12 0 q6 6 12 0" opacity="0.6"/>
+            <path d="M180 30 q5 -5 10 0" opacity="0.6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <p class="mock-note" style="text-align:left;">Ilustrativo. El titular y la ilustración final están por definirse con diseño.</p>
+
+    <div class="why anim">
+      <div class="why-label"><i data-lucide="lightbulb"></i> Por qué</div>
+      <p>Ocupa la mitad de espacio y dice algo útil. Solo aparece en la pantalla de entrada: dentro de una locación lo que importa son los datos.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Brandtrack · Confidencial</span></div>
+</section>
+
+
+<!-- ══════════════ THANK YOU ══════════════ -->
+<section class="slide slide--thanks" data-slide="9">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Gracias</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">El prototipo está disponible para recorrerlo con el equipo.</p>
+    <div class="anim" style="margin-top:28px;">
+      <a class="btn btn--ghost" href="https://brandtrack-virid.vercel.app/analytics" target="_blank" rel="noopener"><i data-lucide="external-link"></i> Ver prototipo</a>
+    </div>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ CHAT ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre los cambios?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+
+      <!-- Messages area -->
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es la afinidad de marca?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué pasa sin Smart?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué se eliminó la locación por defecto?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime los cambios</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué cambió en el banner?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué no hay ranking?</button>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop only)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  const scrollTop = deck.scrollTop;
+  const vh = deck.clientHeight;
+  const currentIndex = Math.round(scrollTop / vh) + 1;
+  counterEl.textContent = Math.min(currentIndex, totalSlides) + ' / ' + totalSlides;
+}
+
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop only)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    // Don't intercept if user is typing in the chat input
+    if (e.target.id === 'chat-input') return;
+
+    const vh = deck.clientHeight;
+    const currentIndex = Math.round(deck.scrollTop / vh);
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        if (currentIndex < totalSlides - 1) {
+          deck.scrollTo({ top: (currentIndex + 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        if (currentIndex > 0) {
+          deck.scrollTo({ top: (currentIndex - 1) * vh, behavior: 'smooth' });
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        deck.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'End':
+        e.preventDefault();
+        deck.scrollTo({ top: (totalSlides - 1) * vh, behavior: 'smooth' });
+        break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Animate all .anim children inside this slide
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.add('anim--visible');
+        });
+      } else {
+        // Reset animations when slide leaves viewport
+        const anims = entry.target.querySelectorAll('.anim');
+        anims.forEach(function(el) {
+          el.classList.remove('anim--visible');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(function(slide) {
+    animObserver.observe(slide);
+  });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  } else {
+    // Navigate to the last slide (chat)
+    deck.scrollTo({ top: slides[totalSlides - 1].offsetTop, behavior: 'smooth' });
+    setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+  }
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme sobre cualquiera de los cambios en Analytics: la entrada, los overviews de Experiencia y Operaciones, Smart, la afinidad de marca o el banner.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado'],
+    answer: '¡De nada! Si te surge otra duda sobre los cambios, estoy acá. También podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'resumí', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'en pocas palabras', 'qué cambiaron', 'que cambiaron', 'cambios'],
+    answer: 'Reorganizamos Analytics Hospitality en ocho cambios: (1) con varias locaciones se entra a "Todas las locaciones"; (2) se eliminó la locación por defecto; (3) la pestaña Business pasa a llamarse Experiencia; (4) el overview de Experiencia es una card por hotel, sin ranking; (5) hay un overview nuevo de Operaciones, ordenado por incidencias; (6) donde falta Smart aparece una invitación a activarlo; (7) se suma la afinidad de marca, una métrica nueva; (8) el banner muestra solo el titular de la semana. Todo parte de tres principios: Experiencia y Operaciones no se mezclan, se compara solo lo que tiene un objetivo común, y Smart suma, no condiciona.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: el problema que había, los tres principios, cada uno de los ocho cambios, la afinidad de marca, qué pasa sin programación o el prototipo.'
+  },
+  // Contenido
+  {
+    keywords: ['problema', 'antes', 'por qué cambiar', 'por que cambiar', 'qué estaba mal', 'que estaba mal', 'vacía', 'vacia'],
+    answer: 'El overview mostraba poca información relevante, y lo valioso dependía de que la locación fuera Smart: sin Smart, la pantalla quedaba vacía. La solución anterior, una locación por defecto, escondía el resto de la cuenta.'
+  },
+  {
+    keywords: ['principio', 'principios', 'criterio', 'criterios', 'reglas'],
+    answer: 'Son tres. (1) Experiencia y Operaciones no se mezclan: una responde "¿suena como mi marca?" y la otra "¿funciona todo?". (2) Se compara solo lo que tiene un objetivo común: la operación se compara entre locaciones; el sonido no, porque cada hotel busca algo distinto. (3) Smart suma, no condiciona: la pantalla tiene contenido sin Smart y muestra qué se gana al activarlo.'
+  },
+  {
+    keywords: ['entrada', 'entrar', 'todas las locaciones', 'primera pantalla', 'una sola locación', 'una sola locacion', 'varios hoteles', 'selector'],
+    answer: 'Antes se entraba a una locación por defecto con un selector para cambiar. Ahora, con varias locaciones se entra a "Todas las locaciones"; con una sola, directo a la locación. Así quien tiene varios hoteles ve primero el conjunto, y quien tiene uno no pasa por un paso de más.'
+  },
+  {
+    keywords: ['por defecto', 'default', 'set as default', 'predeterminada', 'eliminó', 'elimino', 'eliminaron'],
+    answer: 'La opción "Set as default" se eliminó. Con un overview real deja de hacer falta, y es una configuración menos.'
+  },
+  {
+    keywords: ['pestaña', 'pestana', 'nombre', 'business', 'negocio', 'tab', 'renombr'],
+    answer: 'La pestaña Business (Negocio) pasa a llamarse Experiencia, porque el contenido es la experiencia de quien entra al lugar (marca, sonido, ambiente), no el negocio.'
+  },
+  {
+    keywords: ['overview de experiencia', 'experiencia', 'card por hotel', 'cards', 'tabla', 'ranking', 'sonido de la semana', 'sonando'],
+    answer: 'Antes el overview de Experiencia era una tabla con columnas que en su mayoría solo existían con Smart. Ahora es una card por hotel, sin ranking, con la afinidad de marca, el sonido de la semana, lo que está sonando y los datos Smart (o una invitación a activarlo). Así cualquier cuenta tiene contenido, con o sin Smart, y cada hotel se lee por separado porque cada uno busca su propio sonido.'
+  },
+  {
+    keywords: ['por qué no hay ranking', 'por que no hay ranking', 'sin ranking', 'comparar', 'comparación', 'comparacion', 'comparan'],
+    answer: 'Se compara solo lo que tiene un objetivo común. La operación sí se compara entre locaciones, porque todas deberían estar online y sin silencios. El sonido no se rankea, porque cada hotel busca algo distinto. La afinidad de marca sí se puede comparar entre hoteles, porque cada uno se mide contra su propia programación.'
+  },
+  {
+    keywords: ['operaciones', 'operación', 'operacion', 'incidencias', 'incidencia', 'kpi', 'kpis', 'online', 'offline', 'roto', 'conexión', 'conexion'],
+    answer: 'El overview de Operaciones antes no existía. Ahora muestra KPIs de toda la cuenta y las locaciones ordenadas por incidencias. Acá comparar sí sirve: todas deberían estar online y sin silencios, así que lo que está roto queda arriba. Dentro de una locación se ve el estado de las zonas, la conexión, los silencios y el feedback del personal.'
+  },
+  {
+    keywords: ['smart', 'sin smart', 'activar smart', 'desactivado', 'dato faltante'],
+    answer: 'Antes, cuando faltaba Smart, aparecía un aviso de dato faltante. Ahora aparece "Smart está desactivado" y el botón "Activar Smart", en el lugar donde iría el dato. Deja de ser un hueco y pasa a ser una invitación, justo donde se nota lo que falta. Además, la pantalla ya no depende de Smart para tener contenido.'
+  },
+  {
+    keywords: ['afinidad', 'afinidad de marca', 'métrica', 'metrica', 'qué es la afinidad', 'que es la afinidad', 'porcentaje', 'programado'],
+    answer: 'La afinidad de marca es una métrica nueva: el porcentaje del tiempo con música en que sonó lo programado. El objetivo sale de la programación de cada locación, armada por Brandtrack o por el cliente, así que nadie tiene que cargar nada. No cuenta los silencios (esos se ven en Operaciones). Existe para todos los clientes y se puede comparar entre hoteles, porque cada uno se mide contra lo suyo.'
+  },
+  {
+    keywords: ['silencio', 'silencios'],
+    answer: 'Los silencios no cuentan en la afinidad de marca: se ven en Operaciones, junto con el estado de las zonas y la conexión. En el overview de Operaciones, las locaciones con silencios o zonas caídas quedan arriba.'
+  },
+  {
+    keywords: ['sin programación', 'sin programacion', 'programación', 'programacion', 'no tiene programacion', 'playlist', 'programar música', 'programar musica', 'zonas programadas', 'algunas zonas', 'ninguna zona', 'caso borde'],
+    answer: 'Depende de cuántas zonas estén programadas. Si están todas, se muestra la afinidad como siempre. Si están algunas, la afinidad se calcula solo sobre esas zonas y se aclara, por ejemplo "Calculado sobre 2 de 4 zonas". Si no hay ninguna, se muestra "Sin programación" y el botón "Programar música". Una playlist no tiene un objetivo contra el cual medir, e inventar uno daría un número sin sentido.'
+  },
+  {
+    keywords: ['banner', 'saludo', 'titular', 'ilustración', 'ilustracion', 'insight', 'chips', 'recepción', 'recepcion'],
+    answer: 'Antes el banner tenía un saludo genérico, chips y una tarjeta de insight aparte. Ahora muestra el titular de la semana y una ilustración de recepción, nada más, y solo en la pantalla de entrada. Ocupa la mitad de espacio y dice algo útil. Dentro de una locación no aparece, porque ahí lo que importa son los datos.'
+  },
+  {
+    keywords: ['prototipo', 'link', 'demo', 'url', 'vercel'],
+    answer: 'El prototipo está en https://brandtrack-virid.vercel.app/analytics. También tenés el botón "Ver prototipo" en la portada y en el cierre.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'quiénes', 'quienes', 'contacto'],
+    answer: 'Yacaré (yacare.io) es el estudio de producto que trabajó en esta reorganización con Brandtrack. Para consultas podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en esta presentación. Podés reformular la pregunta o escribir a contact@yacare.io. También podés preguntarme por la afinidad de marca, Smart, los overviews o el banner.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (q.includes(kwNorm)) {
+        // Longer keyword matches are worth more
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  // Hide all suggestions after clicking one
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  // Set input and send
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // User message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  // Simulate brief delay for natural feel
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
