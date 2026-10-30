@@ -9,23 +9,28 @@ export const METERS_PER_PX = 0.74 / 931;
 /**
  * Kits. `size` es el lienzo de las texturas (assets/kits/<kit>-{front,back}.webp) y `name`/`number` dónde va el
  * estampado en la espalda, en px de ese lienzo (lo mide tools/prep_kits.py sobre el "NAME 10" de muestra de las
- * fotos de producto). `ink` es la tinta del estampado y `lining` el color del interior de la prenda.
+ * fotos de producto). `ink` es la tinta del estampado, `lining` el color del interior y de los costados, y `model`
+ * la camiseta simulada en Blender (assets/models/, de tools/kit/); sin `model` se usan los dos paneles de la v1.
  */
 export const KITS = {
   home: {
     label: 'Home kit', group: 'HOME', size: [721, 931], ink: '#FFFFFF', lining: '#1c1c1c', anchor: 'white',
+    model: 'jersey-home.glb',
     name: { cx: 360, top: 169, bottom: 217 }, number: { cx: 361, top: 250, bottom: 443 },
   },
   away: {
     label: 'Away kit', group: 'AWAY', size: [738, 921], ink: '#0C0C0A', lining: '#d9d9d6', anchor: 'black',
+    model: 'jersey-away.glb',
     name: { cx: 366.5, top: 163, bottom: 211 }, number: { cx: 366.5, top: 244, bottom: 437 },
   },
   'gk-orange': {
     label: 'Goalkeeper kit · orange', group: 'GK', size: [703, 921], ink: '#FFFFFF', lining: '#b8491f', anchor: 'white',
+    model: 'jersey-gk-orange.glb',
     name: { cx: 349.5, top: 164, bottom: 212 }, number: { cx: 349.5, top: 245, bottom: 438 },
   },
   'gk-green': {
     label: 'Goalkeeper kit · green', group: 'GK', size: [703, 920], ink: '#0C0C0A', lining: '#3f9a4c', anchor: 'black',
+    model: 'jersey-gk-green.glb',
     name: { cx: 349.5, top: 164, bottom: 212 }, number: { cx: 349.5, top: 245, bottom: 438 },
   },
 };

@@ -1,5 +1,7 @@
 // Texturas de las camisetas: las fotos recortadas de cada kit y el estampado (nombre + dorsal) pintado en un canvas.
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { KITS, SHOP } from './data.js';
 
 const ASSETS = new URL('../assets/', import.meta.url).href;
@@ -21,24 +23,79 @@ function image(src) {
   });
 }
 
-/** Carga las fotos de todos los kits y las anclas del dorsal. `onProgress(0..1)`. */
+/**
+ * Geometrías del .glb simulado (tools/kit/sim.py), en el espacio del modelo (origen en la barra) y con las UV
+ * en la convención de three.js (v = 0 abajo), para usarlas con las mismas texturas que los paneles.
+ */
+function extractModel(gltf) {
+  gltf.scene.updateMatrixWorld(true);
+  const parts = {};
+  gltf.scene.traverse((o) => {
+    if (!o.isMesh) return;
+    const g = o.geometry.clone().applyMatrix4(o.matrixWorld);
+    const uv = g.attributes.uv;
+    if (uv) {
+      for (let i = 0; i < uv.count; i++) uv.setY(i, 1 - uv.getY(i));
+      uv.needsUpdate = true;
+    }
+    parts[o.material?.name || o.name] = g;
+  });
+  for (const k of ['front', 'back', 'gusset', 'hanger', 'hook']) if (!parts[k]) throw new Error(`Falta "${k}" en el modelo`);
+  return parts;
+}
+
+/** Carga las fotos de todos los kits, las anclas del dorsal y, si lo hay, el modelo simulado. `onProgress(0..1)`. */
 export async function loadKitAssets(onProgress) {
   const [anchorWhite, anchorBlack] = await Promise.all([image(`${ASSETS}brand/anchor-white.png`), image(`${ASSETS}brand/anchor-black.webp`)]);
   const keys = Object.keys(KITS);
   const kits = {};
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder); // los .glb van comprimidos con meshopt
   let done = 0;
   await Promise.all(
     keys.map(async (key) => {
-      const [front, back] = await Promise.all([image(`${ASSETS}kits/${key}-front.webp`), image(`${ASSETS}kits/${key}-back.webp`)]);
-      kits[key] = { ...KITS[key], key, front, back, anchorImg: KITS[key].anchor === 'white' ? anchorWhite : anchorBlack };
+      const [front, back, model] = await Promise.all([
+        image(`${ASSETS}kits/${key}-front.webp`),
+        image(`${ASSETS}kits/${key}-back.webp`),
+        KITS[key].model
+          ? loader.loadAsync(`${ASSETS}models/${KITS[key].model}`).then(extractModel).catch((err) => {
+              console.warn(`Sin modelo simulado para ${key}, se usan los paneles:`, err.message);
+              return null;
+            })
+          : null,
+      ]);
+      kits[key] = { ...KITS[key], key, front, back, model, anchorImg: KITS[key].anchor === 'white' ? anchorWhite : anchorBlack };
+      if (model) {
+        // la camiseta simulada no recorta por transparencia: texturas opacas con el borde extendido hacia afuera,
+        // para que los triángulos del contorno no tomen el fondo de la foto
+        kits[key].frontBase = bleed(front, KITS[key].lining);
+        kits[key].backBase = bleed(back, KITS[key].lining);
+      }
       onProgress?.(++done / keys.length);
     }),
   );
   return { kits };
 }
 
+/**
+ * Copia opaca de una foto recortada: debajo, el color del forro y la foto corrida unos píxeles en ocho direcciones
+ * (el borde de la prenda se extiende hacia afuera); encima, la foto.
+ */
+function bleed(img, fill) {
+  const c = document.createElement('canvas');
+  c.width = img.naturalWidth || img.width;
+  c.height = img.naturalHeight || img.height;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = fill;
+  ctx.fillRect(0, 0, c.width, c.height);
+  for (const r of [14, 9, 6, 4, 2, 1]) {
+    for (let a = 0; a < 8; a++) ctx.drawImage(img, Math.round(Math.cos((a * Math.PI) / 4) * r), Math.round(Math.sin((a * Math.PI) / 4) * r));
+  }
+  ctx.drawImage(img, 0, 0);
+  return c;
+}
+
 export function frontTexture(kit, anisotropy) {
-  const tex = new THREE.Texture(kit.front);
+  const tex = kit.frontBase ? new THREE.CanvasTexture(kit.frontBase) : new THREE.Texture(kit.front);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = anisotropy;
   tex.needsUpdate = true;
@@ -103,7 +160,7 @@ export function backTexture(kit, name, number, k, anisotropy) {
   canvas.width = Math.round(W * k);
   canvas.height = Math.round(H * k);
   const ctx = canvas.getContext('2d');
-  ctx.drawImage(kit.back, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(kit.backBase ?? kit.back, 0, 0, canvas.width, canvas.height);
   ctx.setTransform(k, 0, 0, k, 0, 0);
   stamp(ctx, kit, name, number);
   const tex = new THREE.CanvasTexture(canvas);

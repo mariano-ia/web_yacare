@@ -35,9 +35,10 @@ uniform float uPhase;
 uniform float uAmp;
 uniform float uTwist;
 uniform float uHeight;
+uniform float uTop;
 uniform vec2 uBend;
-// 0 en los hombros (apoyados en la percha), 1 en el bajo; -p.y es la distancia al cuello
-float clothWeight(vec3 p) { return smoothstep(0.1, uHeight * 0.92, -p.y); }
+// 0 en los hombros (apoyados en la percha), 1 en el bajo; uTop - p.y es la distancia al cuello
+float clothWeight(vec3 p) { return smoothstep(0.1, uHeight * 0.92, uTop - p.y); }
 // x: altura de la onda; yz: su pendiente, para corregir la normal
 vec3 clothWave(vec3 p) {
   float a = uTime * 1.3 + p.x * 7.0 + p.y * 8.0 + uPhase;
@@ -70,17 +71,30 @@ function patchCloth(shader, uniforms) {
     .replace('#include <begin_vertex>', `#include <begin_vertex>\n${CLOTH_POSITION}`);
 }
 
-/** Material de un panel de la camiseta (foto con alfa); por dentro, tela lisa del color del forro. */
+/**
+ * Material de una parte de la camiseta: por fuera la foto (con el brillo satinado del poliéster), por dentro tela
+ * lisa del color del forro. Lo que depende del kit (recorte por transparencia, oclusión en los colores de vértice)
+ * lo fija `LockerRoom.dress`.
+ */
 function clothMaterial(map, uniforms) {
-  const material = new THREE.MeshStandardMaterial({ map, roughness: 0.74, metalness: 0, alphaTest: 0.45, side: THREE.DoubleSide });
+  const material = new THREE.MeshPhysicalMaterial({
+    map,
+    roughness: 0.72,
+    metalness: 0,
+    side: THREE.DoubleSide,
+    // brillo satinado del poliéster en los cantos; poco, que la tira de luz aguamarina no tiña las camisetas oscuras
+    sheen: 0.14,
+    sheenRoughness: 0.6,
+    sheenColor: new THREE.Color(0xffffff),
+  });
   material.onBeforeCompile = (shader) => {
     patchCloth(shader, uniforms);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\nuniform vec3 uLining;')
       .replace('#include <map_fragment>', '#include <map_fragment>\nif (!gl_FrontFacing) diffuseColor.rgb = uLining;');
   };
-  // la sombra tiene que recortarse y deformarse igual que la tela
-  const depth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map, alphaTest: 0.45, side: THREE.DoubleSide });
+  // la sombra tiene que deformarse (y, en los paneles de la v1, recortarse) igual que la tela
+  const depth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide });
   depth.onBeforeCompile = (shader) => patchCloth(shader, uniforms);
   return { material, depth };
 }
@@ -184,19 +198,38 @@ export class LockerRoom {
     this.last = performance.now();
     this.tanHalf = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
 
-    // geometrías y texturas de pecho compartidas por kit
+    // geometrías y texturas de pecho compartidas por kit. Con modelo simulado (.glb) la camiseta, la percha y el
+    // gancho vienen de Blender, ya en el espacio de la barra; sin él, los dos paneles abombados de la v1.
+    this.hangerGeo = hangerGeometry();
+    this.hookGeo = hookGeometry();
     this.geos = {};
     this.frontTex = {};
     this.size = { width: 0, bottom: 0 };
     for (const [key, kit] of Object.entries(assets.kits)) {
       const W = kit.size[0] * METERS_PER_PX, H = kit.size[1] * METERS_PER_PX;
-      this.geos[key] = { front: panelGeometry(W, H, false), back: panelGeometry(W, H, true), width: W, height: H };
+      let geo;
+      // top/bottom: en el espacio del pivote (la barra); localTop: lo alto de la tela en el espacio de su malla
+      if (kit.model) {
+        const m = kit.model;
+        m.front.computeBoundingBox();
+        m.back.computeBoundingBox();
+        const box = m.front.boundingBox.clone().union(m.back.boundingBox);
+        geo = {
+          mode: 'glb', front: m.front, back: m.back, gusset: m.gusset, hanger: m.hanger, hook: m.hook,
+          width: box.max.x - box.min.x, height: box.max.y - box.min.y, top: box.max.y, bottom: box.min.y, localTop: box.max.y, offset: 0,
+          ao: !!m.front.attributes.color,
+        };
+      } else {
+        geo = {
+          mode: 'panel', front: panelGeometry(W, H, false), back: panelGeometry(W, H, true), gusset: null, hanger: this.hangerGeo, hook: this.hookGeo,
+          width: W, height: H, top: -HANG, bottom: -(HANG + H), localTop: 0, offset: -HANG, ao: false,
+        };
+      }
+      this.geos[key] = geo;
       this.frontTex[key] = frontTexture(kit, this.anisotropy);
-      this.size.width = Math.max(this.size.width, W);
-      this.size.bottom = Math.min(this.size.bottom, -(HANG + H));
+      this.size.width = Math.max(this.size.width, geo.width);
+      this.size.bottom = Math.min(this.size.bottom, geo.bottom);
     }
-    this.hangerGeo = hangerGeometry();
-    this.hookGeo = hookGeometry();
     this.wood = new THREE.MeshPhysicalMaterial({ color: 0x9a6a3a, roughness: 0.42, clearcoat: 0.5, clearcoatRoughness: 0.35 });
     this.metal = new THREE.MeshStandardMaterial({ color: 0xd8d8d4, roughness: 0.25, metalness: 1 });
 
@@ -217,7 +250,6 @@ export class LockerRoom {
 
   add(data, i, onRail) {
     const kit = this.assets.kits[data.kit];
-    const geo = this.geos[data.kit];
     const phase = (i * 2.399) % 6.283;
     const uniforms = {
       uTime: this.clothTime,
@@ -225,27 +257,28 @@ export class LockerRoom {
       uAmp: { value: this.reduced ? 0 : 0.009 },
       uTwist: { value: 0 },
       uBend: { value: new THREE.Vector2() },
-      uHeight: { value: geo.height },
-      uLining: { value: new THREE.Color(kit.lining) },
+      uHeight: { value: 0 },
+      uTop: { value: 0 },
+      uLining: { value: new THREE.Color() },
     };
     const lowRes = backTexture(kit, data.name, String(data.number), LOW, this.anisotropy);
     const fm = clothMaterial(this.frontTex[data.kit], uniforms);
     const bm = clothMaterial(lowRes, uniforms);
-    const front = new THREE.Mesh(geo.front, fm.material);
+    const gm = clothMaterial(null, uniforms);
+    const front = new THREE.Mesh(undefined, fm.material);
     front.customDepthMaterial = fm.depth;
-    const back = new THREE.Mesh(geo.back, bm.material);
+    const back = new THREE.Mesh(undefined, bm.material);
     back.customDepthMaterial = bm.depth;
-    for (const m of [front, back]) {
-      m.castShadow = m.receiveShadow = true;
-      m.position.y = -HANG;
-    }
-    const hanger = new THREE.Mesh(this.hangerGeo, this.wood);
+    const gusset = new THREE.Mesh(undefined, gm.material);
+    gusset.customDepthMaterial = gm.depth;
+    for (const m of [front, back, gusset]) m.castShadow = m.receiveShadow = true;
+    const hanger = new THREE.Mesh(undefined, this.wood);
     hanger.castShadow = true;
-    const hook = new THREE.Mesh(this.hookGeo, this.metal);
+    const hook = new THREE.Mesh(undefined, this.metal);
     hook.rotation.y = Math.PI / 2;
     hook.castShadow = true;
     const turn = new THREE.Group();
-    turn.add(front, back, hanger);
+    turn.add(front, back, gusset, hanger);
     const pivot = new THREE.Group();
     pivot.position.y = RAIL_Y;
     pivot.add(turn, hook);
@@ -257,19 +290,48 @@ export class LockerRoom {
     }
     this.rail.add(pivot);
     const item = {
-      data, pivot, turn, hook, hookYaw: Math.PI / 2, front, back, uniforms, lowRes, hiRes: undefined, hiK: 0, phase,
+      data, pivot, turn, hook, hanger, hookYaw: Math.PI / 2, front, back, gusset, uniforms, lowRes, hiRes: undefined, hiK: 0, phase,
       active: onRail, restX: 0, x: 0, y: 0, z: 0, yaw: YAW_REST, scale: 1,
       // arrancan meciéndose, como si alguien acabara de pasar la mano por la barra
       swing: this.reduced ? 0 : 0.2 * Math.sin(i * 1.3 + 0.6), swingVel: 0, prevWorldX: 0, prevVel: 0,
       lagYaw: YAW_REST, lagYawVel: 0, lagSwing: 0, lagSwingVel: 0,
     };
+    this.dress(item, data.kit);
+    this.setBackMap(item, lowRes);
     this.items.push(item);
     return item;
   }
 
+  /** Viste una percha con un kit: geometrías, forro, recorte por transparencia (solo paneles) y oclusión horneada. */
+  dress(it, key) {
+    const kit = this.assets.kits[key];
+    const geo = this.geos[key];
+    it.front.geometry = geo.front;
+    it.back.geometry = geo.back;
+    // el fuelle (los costados) solo existe en la camiseta simulada
+    it.gusset.geometry = geo.gusset ?? new THREE.BufferGeometry();
+    it.gusset.visible = !!geo.gusset;
+    it.hanger.geometry = geo.hanger;
+    it.hook.geometry = geo.hook;
+    for (const m of [it.front, it.back, it.gusset]) m.position.y = geo.offset;
+    it.uniforms.uHeight.value = geo.height;
+    it.uniforms.uTop.value = geo.localTop;
+    it.uniforms.uLining.value.set(kit.lining);
+    it.gusset.material.color.set(kit.lining);
+    const cut = geo.mode === 'panel' ? 0.45 : 0;
+    for (const m of [it.front, it.back, it.gusset]) {
+      m.material.alphaTest = m === it.gusset ? 0 : cut;
+      m.material.vertexColors = geo.ao;
+      m.customDepthMaterial.alphaTest = m.material.alphaTest;
+      m.material.needsUpdate = m.customDepthMaterial.needsUpdate = true;
+    }
+    it.front.material.map = this.frontTex[key];
+    it.front.customDepthMaterial.map = cut ? this.frontTex[key] : null;
+  }
+
   setBackMap(it, tex) {
     it.back.material.map = tex;
-    it.back.customDepthMaterial.map = tex;
+    it.back.customDepthMaterial.map = it.back.material.alphaTest ? tex : null;
   }
 
   /** Acorta el plano de entrada (cualquier clic o tecla durante la intro) */
@@ -329,13 +391,7 @@ export class LockerRoom {
     const it = this.custom;
     if (kit !== it.data.kit) {
       it.data.kit = kit;
-      const geo = this.geos[kit];
-      it.front.geometry = geo.front;
-      it.back.geometry = geo.back;
-      it.uniforms.uHeight.value = geo.height;
-      it.uniforms.uLining.value.set(this.assets.kits[kit].lining);
-      it.front.material.map = this.frontTex[kit];
-      it.front.customDepthMaterial.map = this.frontTex[kit];
+      this.dress(it, kit);
     }
     it.data.name = name;
     it.data.number = number;
@@ -409,7 +465,7 @@ export class LockerRoom {
     const d = 2.1, r = this.stageRect;
     const vh = 2 * d * this.tanHalf, vw = vh * this.camera.aspect;
     const geo = this.geos[(this.selected ?? this.custom).data.kit];
-    const height = 0.03 + HANG + geo.height; // del gancho al bajo
+    const height = 0.03 - geo.bottom; // del gancho al bajo
     const width = geo.width + 0.04;
     const rh = (r.y1 - r.y0) * vh, rw = (r.x1 - r.x0) * vw;
     const scale = Math.max(0.2, Math.min(1.25, (rh * 0.9) / height / (1 - r.tuck), (rw * 0.92) / width));
