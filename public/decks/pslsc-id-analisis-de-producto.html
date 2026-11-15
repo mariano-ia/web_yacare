@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · PSLSC ID, análisis de producto, negocio y etapas</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.lead { font-size: 1.15rem; color: var(--text-primary); }
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip--accent {
+  background: transparent;
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem; padding: 11px 24px;
+}
+
+/* Lucide reemplaza cada <i> por un <svg>: que nunca se achique dentro de un flex */
+svg.lucide { flex-shrink: 0; }
+
+/* Card header: icon + title */
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-head svg { width: 22px; height: 22px; color: var(--text-muted); flex-shrink: 0; }
+.card-head h4 { font-size: 1.25rem; margin: 0; }
+.card-sub {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary); margin-bottom: 14px;
+}
+.card-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+  font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;
+}
+.card-note svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+.card p.card-body { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* Compact list inside cards */
+.dot-list li {
+  position: relative; padding: 7px 0 7px 18px; margin: 0;
+  font-size: 0.95rem; line-height: 1.4; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dot-list li:last-child { border-bottom: none; }
+.dot-list li::before {
+  content: ''; position: absolute; left: 2px; top: calc(7px + 0.7em);
+  width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* Checklist with icons (slide 12) */
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 0; margin: 0; border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.98rem; line-height: 1.45; color: var(--text-primary);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Footnote with icon */
+.foot-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 1rem; color: var(--text-primary); line-height: 1.5; max-width: 900px;
+}
+.foot-note svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Aclaración chica */
+.aside-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 24px; padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
+}
+.aside-note svg { width: 15px; height: 15px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+
+/* Rows with icon */
+.moments { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.moment {
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary); line-height: 1.4;
+}
+.moment svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Nodo con borde degradado (reutilizado en varias slides) */
+.gnode {
+  border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+}
+.gnode svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   COVER
+   ═══════════════════════════════════════ */
+.slide--cover { text-align: center; position: relative; overflow: hidden; }
+.slide--cover h1 { font-size: clamp(4rem, 9vw, 7.5rem); margin-bottom: 10px; letter-spacing: -0.03em; line-height: 1; }
+.cover-kicker {
+  font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary);
+  margin: 0 0 30px;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; opacity: 0.7; margin-bottom: 40px; }
+
+/* ═══════════════════════════════════════
+   HITOS / MOMENTOS (slide 3)
+   ═══════════════════════════════════════ */
+.milestones {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.ms-rail {
+  position: absolute; top: 26px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.ms-arrow {
+  position: absolute; top: 26px; right: -6px; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #D1249D;
+}
+.ms-item { position: relative; z-index: 1; }
+.ms-node {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  margin-bottom: 22px;
+}
+.ms-node svg { width: 22px; height: 22px; color: var(--text-secondary); }
+.ms-item:nth-child(2) .ms-node { border-color: rgba(255,255,255,0.45); }
+.ms-item:nth-child(3) .ms-node { border-color: rgba(255,255,255,0.7); }
+.ms-node--on {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: ms-pulse 3.2s ease-in-out infinite;
+}
+.ms-node--on svg { color: var(--text-primary); }
+@keyframes ms-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 18px rgba(138, 94, 255, 0.2); }
+  50%      { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 52px rgba(138, 94, 255, 0.6); }
+}
+.ms-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px;
+}
+.ms-body h4 { font-size: 1.35rem; margin-bottom: 10px; }
+.ms-body p { font-size: 0.98rem; margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   CAPAS (slide 5): la web de la School arriba,
+   debajo las cuatro bases de PSLSC ID
+   ═══════════════════════════════════════ */
+.layers { width: 100%; }
+.layer-top { display: flex; justify-content: center; }
+.layer-chip {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-size: 0.92rem; font-weight: 500; line-height: 1.3; color: var(--text-primary);
+}
+.layer-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.layer-link { width: 1px; height: 30px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.3), #8A63F2); }
+.layer-bar { height: 1px; margin: 0 calc(12.5% - 8px); background: linear-gradient(90deg, #8A63F2, #D1249D); opacity: 0.8; }
+.layer-drops { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; height: 20px; }
+.layer-drops span { display: block; width: 1px; height: 100%; margin: 0 auto; background: rgba(255,255,255,0.25); }
+.found-node { width: 44px; height: 44px; margin-bottom: 16px; }
+.found-node svg { width: 20px; height: 20px; }
+.found h4 { font-size: 1.3rem; margin-bottom: 8px; }
+.found p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* ═══════════════════════════════════════
+   MOTOR (slide 6): cuatro pasos en línea y un arco que vuelve al inicio
+   ═══════════════════════════════════════ */
+.loop { width: 100%; }
+.loop-return {
+  position: relative; height: 26px; margin: 0 calc(12.5% - 10px) -1px;
+  border: 1px solid rgba(255,255,255,0.22); border-bottom: none;
+  border-radius: 20px 20px 0 0;
+}
+.loop-return svg {
+  position: absolute; left: -8.5px; bottom: 3px;
+  width: 16px; height: 16px; color: #D1249D;
+  background: var(--bg-primary); border-radius: 50%;
+}
+.loop-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.loop-rail {
+  position: absolute; top: 26px; left: 12.5%; right: 12.5%; height: 1px;
+  background: linear-gradient(90deg, #8A63F2, #D1249D);
+}
+.loop-step { position: relative; z-index: 1; text-align: center; }
+.loop-node {
+  width: 52px; height: 52px; margin: 0 auto 18px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  animation: loop-glow 4.8s ease-in-out infinite;
+}
+.loop-step:nth-child(2) .loop-node { animation-delay: 1.2s; }
+.loop-step:nth-child(3) .loop-node { animation-delay: 2.4s; }
+.loop-step:nth-child(4) .loop-node { animation-delay: 3.6s; }
+.loop-node svg { width: 22px; height: 22px; }
+@keyframes loop-glow {
+  0%, 30%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 0 rgba(138, 94, 255, 0); }
+  12%           { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 42px rgba(138, 94, 255, 0.7); }
+}
+.loop-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 6px;
+}
+.loop-body h4 { font-size: 1.35rem; margin-bottom: 8px; }
+.loop-body p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+.plus-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.plus-row .club-chip { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--text-primary); font-size: 0.95rem; padding: 10px 18px; }
+.plus-row .club-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.plus-row > span.plus { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-secondary); line-height: 1; }
+
+/* Destello animado sobre las monedas */
+.coin-glint { position: relative; display: block; line-height: 0; }
+.coin-glint::before, .coin-glint::after {
+  content: ''; position: absolute;
+  left: var(--gx); top: var(--gy);
+  pointer-events: none; z-index: 2;
+  mix-blend-mode: screen;
+}
+.coin-glint::before {
+  width: var(--gs); aspect-ratio: 1 / 1; margin: calc(var(--gs) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,224,150,0.4) 32%, transparent 68%);
+  animation: glint-halo 3.6s ease-in-out infinite;
+}
+.coin-glint::after {
+  width: calc(var(--gs) * 1.9); aspect-ratio: 1 / 1;
+  margin: calc(var(--gs) * -0.95);
+  background:
+    linear-gradient(to right, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%),
+    linear-gradient(to bottom, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  animation: glint-star 3.6s ease-in-out infinite;
+}
+@keyframes glint-halo {
+  0%, 100% { opacity: 0.22; transform: scale(0.75); }
+  50%      { opacity: 0.95; transform: scale(1.15); }
+}
+@keyframes glint-star {
+  0%, 100% { opacity: 0.12; transform: rotate(0deg) scale(0.6); }
+  50%      { opacity: 1;    transform: rotate(45deg) scale(1.1); }
+}
+.coin-glint.coins-glint {
+  position: absolute; top: -16px; right: 0;
+  width: 250px; z-index: 1; pointer-events: none;
+}
+.coins-img { display: block; width: 100%; height: auto; }
+
+/* ═══════════════════════════════════════
+   CADENA (slide 7): participación, consumo, recompensa, nueva participación
+   ═══════════════════════════════════════ */
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.chain-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary);
+  white-space: nowrap;
+}
+.chain-item svg { width: 18px; height: 18px; color: var(--text-secondary); }
+.chain > svg.lucide { width: 18px; height: 18px; color: var(--text-muted); }
+.chain-item--loop {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 24px rgba(138, 94, 255, 0.25);
+}
+.chain-item--loop svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   MOBILE (slide 9): texto a la izquierda, teléfono a la derecha
+   ═══════════════════════════════════════ */
+.slide--phone .slide-content { max-width: 1180px; }
+.phone-text { max-width: 600px; }
+.phone-text .moments { margin: 24px 0; }
+.phone-img {
+  position: absolute; right: 0; top: 7vh;
+  height: 85vh; width: auto; z-index: 0; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   RECORRIDO EN EL ESTADIO (slide 10)
+   ═══════════════════════════════════════ */
+.journey {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+  padding-top: 4px;
+}
+.jr-rail {
+  position: absolute; top: 30px; left: 8.33%; right: 8.33%; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #8A63F2 50%, #D1249D 100%);
+}
+.jr-spark {
+  position: absolute; top: 30px; left: 8.33%;
+  width: 8px; height: 8px; margin: -4px; border-radius: 50%;
+  background: #ffffff; box-shadow: 0 0 16px 4px rgba(138, 94, 255, 0.55);
+  animation: jr-travel 5.5s linear infinite; z-index: 0;
+}
+@keyframes jr-travel {
+  0%   { left: 8.33%;  opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { left: 91.67%; opacity: 0; }
+}
+.jr-item {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+}
+.jr-node {
+  width: 52px; height: 52px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+}
+.jr-node svg { width: 22px; height: 22px; }
+.jr-label {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   ROADMAP (slide 11)
+   ═══════════════════════════════════════ */
+.roadmap {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+}
+.rm-rail {
+  position: absolute; top: 6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.rm-item { position: relative; z-index: 1; padding-top: 34px; }
+.rm-dot {
+  position: absolute; top: 0; left: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.rm-item:nth-child(3) .rm-dot { border-color: rgba(255,255,255,0.35); }
+.rm-item:nth-child(4) .rm-dot { border-color: rgba(255,255,255,0.55); }
+.rm-item:nth-child(5) .rm-dot { border-color: rgba(255,255,255,0.75); }
+.rm-item:nth-child(6) .rm-dot { border-color: #ffffff; }
+.rm-date {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary);
+  line-height: 1.35; min-height: 2.7em; margin-bottom: 6px;
+}
+.rm-month {
+  font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: -0.02em; line-height: 1;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.rm-desc { font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+/* ═══════════════════════════════════════
+   THANKS
+   ═══════════════════════════════════════ */
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item svg { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   DESKTOP ANGOSTO — 901 a 1300px: teléfono más chico
+   ═══════════════════════════════════════ */
+@media (max-width: 1300px) and (min-width: 901px) {
+  .phone-img { height: 72vh; top: 14vh; right: -2vw; }
+  .phone-text { max-width: 54%; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET — <=1100px
+   ═══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .slide { padding: 48px; }
+  .brand-bar { left: 48px; right: 96px; }
+  .loop-steps { gap: 20px; }
+  .coin-glint.coins-glint { width: 200px; }
+  .roadmap { gap: 18px; }
+  .rm-month { font-size: 1.45rem; }
+}
+
+/* ═══════════════════════════════════════
+   PANTALLAS BAJAS (laptops de 720px, tablets apaisadas): menos aire vertical.
+   Va después del bloque de 1100px para que su padding no lo pise.
+   ═══════════════════════════════════════ */
+@media (min-width: 901px) and (max-height: 800px) {
+  .slide { padding-top: 36px; padding-bottom: 36px; }
+  .brand-bar { bottom: 12px; }
+  .phone-text .moments { margin: 18px 0; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET VERTICAL — <=900px (y celulares en horizontal)
+   Columnas apiladas, líneas de tiempo verticales
+   ═══════════════════════════════════════ */
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+
+  .milestones { grid-template-columns: 1fr; gap: 26px; }
+  .ms-rail { top: 0; bottom: 0; left: 21px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .ms-arrow { display: none; }
+  .ms-item { display: flex; gap: 18px; align-items: flex-start; }
+  .ms-node { width: 44px; height: 44px; min-width: 44px; margin: 0; }
+  .ms-node svg { width: 20px; height: 20px; }
+
+  .layer-bar, .layer-drops { display: none; }
+  .layer-link { height: 22px; margin-bottom: 14px; }
+
+  .loop-return, .loop-rail { display: none; }
+  .loop-steps { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .loop-step { text-align: left; display: flex; gap: 14px; align-items: flex-start; }
+  .loop-node { width: 44px; height: 44px; min-width: 44px; margin: 0; box-shadow: none; animation: none; }
+  .loop-node svg { width: 20px; height: 20px; }
+  .loop-body h4 { font-size: 1.15rem; margin-bottom: 6px; }
+  .loop-body p { font-size: 0.9rem; }
+  .coin-glint.coins-glint {
+    position: relative; top: auto; right: auto; width: 140px;
+    display: block; margin: 0 0 14px auto;
+  }
+
+  .phone-text { max-width: 100%; }
+  .phone-img {
+    position: static; height: auto;
+    width: 100%; max-width: 240px; display: block; margin: 24px auto 0;
+  }
+
+  .journey { grid-template-columns: repeat(3, 1fr); gap: 20px 12px; padding-top: 0; }
+  .jr-rail, .jr-spark { display: none; }
+  .jr-node { width: 46px; height: 46px; box-shadow: none; }
+  .jr-node svg { width: 20px; height: 20px; }
+  .jr-label { font-size: 0.85rem; }
+
+  .roadmap { grid-template-columns: 1fr; gap: 20px; padding-left: 24px; }
+  .rm-rail { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .rm-item { padding-top: 0; }
+  .rm-dot { top: 6px; left: -24px; }
+  .rm-date { min-height: 0; margin-bottom: 4px; }
+  .rm-month { font-size: 1.4rem; margin-bottom: 6px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px (y celulares en horizontal)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 56px 20px 40px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide--chat { padding-top: 76px; }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .grid-2x2, .grid-3, .grid-4 { gap: 12px; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 3.6rem; }
+  .cover-kicker { font-size: 1.05rem; margin-bottom: 22px; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .card-head h4 { font-size: 1.05rem; }
+  .card-head svg { width: 18px; height: 18px; }
+  .card-note { font-size: 0.82rem; }
+  .card p.card-body { font-size: 0.88rem; }
+
+  .dot-list li { font-size: 0.85rem; padding: 5px 0 5px 16px; }
+  .checklist li { font-size: 0.9rem; padding: 9px 0; }
+  .foot-note { font-size: 0.88rem; }
+  .lead { font-size: 1rem; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .moments { gap: 6px; }
+  .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+  .club-chip--accent { font-size: 0.85rem; padding: 9px 16px; text-align: center; }
+  .plus-row .club-chip { font-size: 0.85rem; padding: 8px 14px; }
+  .aside-note { font-size: 0.78rem; padding: 10px 14px; margin-top: 18px; }
+
+  .milestones { gap: 22px; }
+  .ms-rail { left: 19px; }
+  .ms-item { gap: 14px; }
+  .ms-node { width: 40px; height: 40px; min-width: 40px; box-shadow: 0 0 0 4px var(--bg-primary); }
+  .ms-node svg { width: 18px; height: 18px; }
+  .ms-num { font-size: 0.65rem; margin-bottom: 4px; }
+  .ms-body h4 { font-size: 1.05rem; margin-bottom: 6px; }
+  .ms-body p { font-size: 0.88rem; }
+
+  .layer-chip { font-size: 0.82rem; padding: 8px 14px; }
+  .found-node { width: 38px; height: 38px; margin-bottom: 12px; }
+  .found-node svg { width: 17px; height: 17px; }
+  .found h4 { font-size: 1.05rem; }
+  .found p { font-size: 0.88rem; }
+
+  .loop-steps { grid-template-columns: 1fr; gap: 12px; }
+  .loop-node { width: 40px; height: 40px; min-width: 40px; }
+  .loop-node svg { width: 18px; height: 18px; }
+  .loop-body h4 { font-size: 1.05rem; }
+  .loop-body p { font-size: 0.85rem; }
+  .coin-glint.coins-glint { width: 110px; margin-bottom: 8px; }
+
+  .chain { gap: 8px; }
+  .chain-item { font-size: 0.82rem; padding: 9px 14px; gap: 8px; white-space: normal; }
+  .chain-item svg { width: 15px; height: 15px; }
+  .chain > svg.lucide { width: 15px; height: 15px; }
+
+  .jr-node { width: 40px; height: 40px; }
+  .jr-node svg { width: 18px; height: 18px; }
+  .jr-label { font-size: 0.78rem; white-space: normal; }
+
+  .roadmap { gap: 18px; padding-left: 22px; }
+  .rm-dot { top: 4px; left: -22px; width: 11px; height: 11px; }
+  .rm-date { font-size: 0.66rem; }
+  .rm-month { font-size: 1.2rem; }
+  .rm-desc { font-size: 0.85rem; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, show content immediately (no entry animation) */
+  .anim, .anim.anim--visible {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Tablet chica vertical: más aire a los costados */
+@media (min-width: 601px) and (max-width: 768px) {
+  .slide { padding: 48px 40px; }
+  .slide--chat { padding-top: 76px; }
+}
+
+/* Celular: grillas a una columna */
+@media (max-width: 600px) {
+  .grid-2x2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .journey { grid-template-columns: repeat(2, 1fr); }
+  .plus-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .plus-row > span.plus { padding-left: 18px; font-size: 1.2rem; }
+}
+
+/* ═══════════════════════════════════════
+   EXTRAS DE ESTE DECK: stats, tablas, teléfonos, flujo, ecosistema
+   ═══════════════════════════════════════ */
+.stat-number {
+  font-family: var(--font-display); font-size: 2.6rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.03em; color: var(--text-secondary); margin-bottom: 10px;
+}
+.tbl-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: 16px; background: rgba(255,255,255,0.02); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; line-height: 1.4; }
+.tbl th, .tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; color: var(--text-secondary); }
+.tbl th { font-family: var(--font-display); font-size: 0.92rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary); background: rgba(255,255,255,0.03); }
+.tbl td:first-child { color: var(--text-primary); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl--compact th, .tbl--compact td { padding: 8px 12px; font-size: 0.84rem; }
+.tbl td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.phone { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.phone img { display: block; width: auto; max-width: 100%; max-height: 60vh; border-radius: 26px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.phone figcaption, .shot figcaption { font-size: 0.86rem; line-height: 1.45; color: var(--text-secondary); text-align: center; max-width: 320px; }
+.phone figcaption strong, .shot figcaption strong { color: var(--text-primary); font-weight: 600; }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.shot img { display: block; width: auto; max-width: 100%; height: 42vh; object-fit: contain; border-radius: 14px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.shot figcaption { max-width: 520px; }
+.flow3 { display: grid; grid-template-columns: 1fr 44px 1.15fr 44px 1fr; gap: 14px; align-items: center; width: 100%; }
+.flow3-col { display: flex; flex-direction: column; gap: 12px; }
+.flow3-col .card--sm { padding: 16px 18px; }
+.flow3-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.flow3-arrow svg { width: 26px; height: 26px; }
+.eco { width: 100%; color: #d6dbd9; }
+.eco svg { width: 100%; height: auto; display: block; font-family: var(--font-body); }
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .phones { grid-template-columns: 1fr; gap: 20px; }
+  .phone img { max-height: none; width: 220px; }
+  .shots { grid-template-columns: 1fr; }
+  .flow3 { grid-template-columns: 1fr; }
+  .flow3-arrow { transform: rotate(90deg); }
+  .stat-number { font-size: 2rem; }
+}
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  .tbl { font-size: 0.78rem; }
+  .tbl th, .tbl td { padding: 8px 10px; }
+  .phone figcaption, .shot figcaption { font-size: 0.8rem; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint svg { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .ms-node--on, .loop-node, .coin-glint::before, .coin-glint::after { animation: none !important; }
+  .jr-spark { display: none !important; }
+  .phone-img { position: static; height: auto; width: 100%; max-width: 260px; display: block; margin: 24px auto 0; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 49</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+<!-- ══════════════ 1. COVER ══════════════ -->
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;"><span class="club-chip">Port St. Lucie SC</span></div>
+    <h1 class="shimmer-text anim">PSLSC ID</h1>
+    <div class="cover-kicker anim">Análisis de producto, negocio y etapas</div>
+    <div class="anim" style="margin-bottom:28px;"><span class="club-chip club-chip--accent">De la School al estadio: qué construimos, por qué es un negocio y cómo lo hacemos.</span></div>
+    <p class="meta anim" style="margin-top:8px;">Port St. Lucie SC · Yacaré · Noviembre 2026</p>
+  </div>
+</section>
+
+<!-- ══════════════ 2. CÓMO LEER ══════════════ -->
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">Este documento</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">En octubre contamos la visión. Hoy la bajamos a tierra.</h2>
+        <p class="anim">Aquel deck proponía una identidad, una economía de créditos y una relación continua con el club, empezando por la School.</p>
+        <p class="anim lead" style="margin-top:20px;">Este es el análisis de producto que convierte esa visión en algo que se puede construir, medir y vender.</p>
+        <p class="anim">Tomamos las decisiones de octubre como punto de partida, no como límite. Donde el análisis nos llevó a otro lugar, lo decimos.</p>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Seis partes</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="search"></i><span><strong>01 · Análisis.</strong> Contexto, mercado, personas, lo que aprendimos.</span></div>
+          <div class="moment"><i data-lucide="compass"></i><span><strong>02 · Estrategia.</strong> Tesis, principios, posicionamiento, métricas.</span></div>
+          <div class="moment"><i data-lucide="smartphone"></i><span><strong>03 · Producto.</strong> Qué es, cómo funciona, interfaces.</span></div>
+          <div class="moment"><i data-lucide="chart-line"></i><span><strong>04 · Negocio.</strong> Palancas, supuestos, proyección, costos.</span></div>
+          <div class="moment"><i data-lucide="route"></i><span><strong>05 · Etapas.</strong> Roadmap, alcance, equipo, riesgos.</span></div>
+          <div class="moment"><i data-lucide="check-square"></i><span><strong>06 · Decisiones.</strong> Qué necesitamos del club.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 3. SECCIÓN 01 ══════════════ -->
+<section class="slide" data-slide="3">
+  <div class="section-num">01</div>
+  <div class="slide-content" style="text-align:center;">
+    <div class="label anim" style="justify-content:center;">Parte 01</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.6rem,5vw,4.2rem); margin-bottom:16px;">El análisis</h2>
+    <p class="anim lead" style="max-width:640px; margin:0 auto;">Dónde está el club hoy, qué dice el mercado, a quién le hablamos y qué aprendimos de treinta productos.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 4. PUNTO DE PARTIDA ══════════════ -->
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">01 · El punto de partida</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Un club sin hinchas todavía, con familias desde el primer día.</h2>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Lo que el club tiene</div>
+        <ul class="dot-list">
+          <li>Una marca nueva, un personaje (Luca) y una ciudad que crece.</li>
+          <li>Un primer equipo que debuta en USL League One en 2027.</li>
+          <li>Un estadio de 6.000 localidades previsto para 2028.</li>
+          <li>Una Soccer School para chicos de 5 a 13 años que empieza ahora.</li>
+          <li>Una lista de familias preinscriptas.</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Lo que el club no tiene</div>
+        <ul class="dot-list">
+          <li>Un sistema con cuentas, datos y dinero: hoy no hay backend.</li>
+          <li>Una base de clientes propia: las personas viven en una herramienta de email.</li>
+          <li>Una tienda propia: el merchandising lo vende un tercero.</li>
+          <li>Hábito: nadie usa nada del club todas las semanas, todavía.</li>
+          <li>Hinchas con historia: el hincha de PSLSC se está formando.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:28px;"><i data-lucide="lightbulb"></i><span>La conclusión del análisis: la única relación frecuente que el club va a tener antes del estadio es la de las familias de la School. Ahí nace el producto.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 5. EL MERCADO ══════════════ -->
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">01 · El mercado</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Una ciudad que crece, padres que pagan y nadie que ofrezca fútbol mensual.</h2>
+    <div class="grid-4" style="margin-bottom:22px;">
+      <div class="card card--sm anim"><div class="stat-number">+29,6 %</div><p class="card-body">Creció Port St. Lucie en cinco años. La ciudad de más de 250.000 habitantes que más crece en EE. UU.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">1 de 3</div><p class="card-body">Hogares de la ciudad tiene chicos. Unos 26.700 chicos de 5 a 14 años en la ciudad, 40.000 en el condado.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">44 %</div><p class="card-body">De los padres demoró o salteó una inscripción por no poder pagar. El costo es el dolor número uno.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">119 a 175</div><p class="card-body">Dólares por mes que ya pagan por natación, gimnasia o artes marciales. Nadie ofrece fútbol mensual para 5 a 13.</p></div>
+    </div>
+    <div class="grid-3">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="message-square"></i><h4>Comunicación</h4></div><p class="card-body">La tecnología del club pesa para el 91 % de los padres y solo el 44 % está muy satisfecho. Un tercio pagaría más por mejores avisos e inscripción.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="shield-check"></i><h4>Seguridad</h4></div><p class="card-body">El 88 % quiere coaches con antecedentes verificados y uno de cada cuatro no sabe si el suyo los pasó.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="heart"></i><h4>Diversión</h4></div><p class="card-body">Los chicos juegan para divertirse y por los amigos. La edad promedio de abandono es 12,9 años: el techo de la School.</p></div>
+    </div>
+    <div class="aside-note anim"><i data-lucide="book-open"></i><span>Fuentes: Census y ACS, Aspen Institute Project Play, encuestas de padres de TeamSnap, PlayMetrics y Baseline, precios publicados de la oferta local. Detalle en el documento de mercado.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 6. PERSONAS ══════════════ -->
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="label anim">01 · A quién le hablamos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Una familia es cliente e hincha a la vez. Hoy ningún sistema sabe las dos cosas.</h2>
+    <div class="grid-4">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Organiza y paga</div>
+        <h4 style="font-size:1.3rem; margin-bottom:8px;">Carolina</h4>
+        <p class="card-body">Dos chicos, bilingüe, ya paga natación. Quiere saber cuándo, dónde y cuánto en un solo lugar, y pagar mes a mes sin sorpresas. Es quien abre la cuenta y a quien hay que convencer.</p>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Vive la experiencia</div>
+        <h4 style="font-size:1.3rem; margin-bottom:8px;">Mía, 7 y Tomás, 12</h4>
+        <p class="card-body">Mía recién empieza: si no se divierte, la familia no vuelve. Tomás está en la edad promedio de abandono: el producto tiene que preguntarle por qué antes de que se vaya.</p>
+      </div>
+      <div class="card card--sm card--accent-3 anim">
+        <div class="card-sub">Hace que funcione</div>
+        <h4 style="font-size:1.3rem; margin-bottom:8px;">Diego y Valeria</h4>
+        <p class="card-body">Coach y coordinadora. Lista del grupo en el teléfono, presentes en 30 segundos, packs cargados una vez, cero planillas. Si no lo usan, el producto no existe.</p>
+      </div>
+      <div class="card card--sm card--accent-4 anim">
+        <div class="card-sub">Llega después</div>
+        <h4 style="font-size:1.3rem; margin-bottom:8px;">Marco, 35</h4>
+        <p class="card-body">El hincha del rediseño web: raíces latinas, un hijo que juega, ganas de creer. Entra por un partido o por la camiseta, con la misma cuenta.</p>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:24px;"><i data-lucide="user-round-check"></i><span>El adulto decide, el chico vive, el staff opera. El hincha entra por la misma puerta. Diseñamos para los cuatro, en ese orden.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 7. JOBS ══════════════ -->
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">01 · Lo que vienen a resolver</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis trabajos. Cuatro de la familia, dos del club.</h2>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">La familia</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="calendar-clock"></i><span><strong>Saber cuándo, dónde y cuánto</strong>, sin preguntar por WhatsApp.</span></div>
+          <div class="moment"><i data-lucide="credit-card"></i><span><strong>Pagar sin dolor</strong>: mes a mes, sin recargos, sin planillas.</span></div>
+          <div class="moment"><i data-lucide="trending-up"></i><span><strong>Ver que su hijo progresa y está seguro</strong>, con un coach verificado.</span></div>
+          <div class="moment"><i data-lucide="badge-check"></i><span><strong>Sentirse parte del club</strong>, no cliente de una escuela.</span></div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">El club</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="clipboard-check"></i><span><strong>Operar sin planillas</strong>: cupos, cobros, asistencia y contactos en un lugar.</span></div>
+          <div class="moment"><i data-lucide="users-round"></i><span><strong>Convertir familias en hinchas</strong> antes de que exista el estadio.</span></div>
+        </div>
+        <div class="aside-note" style="margin-top:18px;"><i data-lucide="target"></i><span>Cada pantalla del producto responde a uno de estos seis trabajos. Lo que no responde a ninguno, no entra.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 8. BENCHMARK ══════════════ -->
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">01 · Lo que aprendimos de treinta productos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Dos universos de software que no se tocan. PSLSC ID vive en el medio.</h2>
+    <div class="grid-3" style="margin-bottom:22px;">
+      <div class="card card--sm anim">
+        <div class="card-head"><i data-lucide="clipboard-list"></i><h4>Operación de academia</h4></div>
+        <p class="card-body">PlayMetrics, SportsEngine, iClassPro, Upper Hand, 360Player. La familia paga, inscribe, firma. Nadie sabe si el padre va al estadio.</p>
+      </div>
+      <div class="card card--sm anim">
+        <div class="card-head"><i data-lucide="trophy"></i><h4>Loyalty de hinchas</h4></div>
+        <p class="card-body">FanMaker, CrowdPlay, Fortress, Socios. El adulto suma puntos por ir, compartir, votar. Nadie sabe que el hijo entrena los martes.</p>
+      </div>
+      <div class="card card--sm card--highlight card--accent-1 anim">
+        <div class="card-head"><i data-lucide="id-card"></i><h4>El hueco</h4></div>
+        <p class="card-body">Academia e hinchada en una sola cuenta, con una sola moneda, para un club mediano. Nadie lo hace. Fortress vende a ligas grandes; Spond, al club de barrio.</p>
+      </div>
+    </div>
+    <div class="grid-4">
+      <div class="card card--sm anim"><div class="card-sub">De iClassPro</div><p class="card-body">Los make-up tokens, el crédito más parecido en deporte infantil. Y familias que se inscriben solas.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">De TOCA y Upper Hand</div><p class="card-body">Membresías que empaquetan sesiones, reglas de cancelación que las familias ya conocen, sesión inicial gratis.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">De Starbucks y Disney</div><p class="card-body">Saldo prepago separado de los puntos. Una identidad que atraviesa todo y carga el gasto a la cuenta familiar.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">De Techne y Duolingo</div><p class="card-body">Progresión visible y simple para chicos: rangos, rachas, insignias. El personaje como guía.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 9. QUÉ HARÍAMOS DISTINTO ══════════════ -->
+<section class="slide" data-slide="9">
+  <div class="slide-content">
+    <div class="label anim">01 · Lo que el análisis cambió respecto de octubre</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis correcciones de rumbo, con su porqué.</h2>
+    <div class="grid-3">
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="id-card"></i><h4>Pertenencia antes que puntos</h4></div><p class="card-body">En octubre el centro eran los créditos. El análisis dice que el centro es el carnet: la cuenta que te hace del club. Los tokens son la mecánica, no el producto.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="credit-card"></i><h4>La mensualidad va a la tarjeta</h4></div><p class="card-body">No a los créditos. Nadie debería tener que entender los tokens para pagar la School. Los tokens quedan para lo suelto, donde suman valor.</p></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-head"><i data-lucide="coins"></i><h4>Tokens con tres razones para existir</h4></div><p class="card-body">Bono por prepago, cosas que solo se compran con tokens, regalos por hitos. Sin esas tres, un token es fricción. Con ellas, es un motivo para volver.</p></div>
+      <div class="card card--sm card--accent-4 anim"><div class="card-head"><i data-lucide="sparkles"></i><h4>Gamificar al chico, no al gasto</h4></div><p class="card-body">La progresión es del hijo: clases, rachas, insignias, Luca. Los tokens caen en la cuenta del adulto. Premiamos hábitos, no compras.</p></div>
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="shirt"></i><h4>La tienda antes que el estadio</h4></div><p class="card-body">La camiseta es el primer gesto de pertenencia, lo dijo el descubrimiento de junio. Con Shopify y tokens, la tienda es la segunda etapa, no la cuarta.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="smartphone"></i><h4>Web instalable ahora, app cuando haya hábito</h4></div><p class="card-body">La app nativa envuelve la misma web cuando haya razones para volver todos los días. Y los tokens nunca se venden adentro de la app, por las reglas de Apple.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 10. RIESGOS DE PRODUCTO ══════════════ -->
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="label anim">01 · Lo que puede salir mal</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Cinco riesgos de producto y cómo los diseñamos afuera.</h2>
+    <div class="moments anim">
+      <div class="moment"><i data-lucide="alert-triangle"></i><span><strong>Los tokens confunden.</strong> Si una familia se pregunta por qué no paga con tarjeta, perdimos. Respuesta: la mensualidad va a la tarjeta y cada compra suelta se puede pagar con tarjeta convirtiendo tokens al instante. Nadie se bloquea.</span></div>
+      <div class="moment"><i data-lucide="alert-triangle"></i><span><strong>El regalo cuesta plata real.</strong> Si los tokens de regalo pagan la mensualidad, cada uno vale un dólar de ingreso. Respuesta: pagan lo suelto, con cupo libre, y tres topes: por acción, por familia, global.</span></div>
+      <div class="moment"><i data-lucide="alert-triangle"></i><span><strong>Los coaches no lo usan.</strong> Sin presentes marcados no hay progresión ni hitos. Respuesta: la lista del coach es una pantalla de 30 segundos en el teléfono, y es la única que necesita.</span></div>
+      <div class="moment"><i data-lucide="alert-triangle"></i><span><strong>Datos de menores.</strong> La School es de 5 a 13. Respuesta: la cuenta es del adulto, el chico no tiene login ni email, nombre e inicial en todo lo público, coach verificado visible.</span></div>
+      <div class="moment"><i data-lucide="alert-triangle"></i><span><strong>Dependemos de terceros.</strong> Shopify, vivenu, Apple. Respuesta: cada etapa funciona sola, cada integración tiene un nivel básico sin API (enlaces y códigos) y uno completo cuando el tercero lo permite.</span></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 11. SECCIÓN 02 ══════════════ -->
+<section class="slide" data-slide="11">
+  <div class="section-num">02</div>
+  <div class="slide-content" style="text-align:center;">
+    <div class="label anim" style="justify-content:center;">Parte 02</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.6rem,5vw,4.2rem); margin-bottom:16px;">La estrategia</h2>
+    <p class="anim lead" style="max-width:640px; margin:0 auto;">Una tesis, seis principios, un posicionamiento y las métricas que nos van a decir si funciona.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 12. TESIS ══════════════ -->
+<section class="slide" data-slide="12">
+  <div class="slide-content">
+    <div class="label anim">02 · La tesis</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">La frecuencia la da la School. La escala la da el estadio. El puente es la tienda.</h2>
+    <div class="milestones anim" style="margin-bottom:30px;">
+      <div class="ms-rail"></div>
+      <i data-lucide="chevron-right" class="ms-arrow"></i>
+      <div class="ms-item">
+        <div class="ms-node ms-node--on"><i data-lucide="graduation-cap"></i></div>
+        <div class="ms-num">2027 · Frecuencia</div>
+        <div class="ms-body"><h4>La School</h4><p>Familias todas las semanas, cobro todos los meses, chicos que progresan. El hábito nace acá.</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-node"><i data-lucide="shirt"></i></div>
+        <div class="ms-num">2027 · Pertenencia</div>
+        <div class="ms-body"><h4>La tienda y el partido</h4><p>La camiseta, las noticias, el primer equipo en la cancha. La familia de la School se vuelve hincha.</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-node"><i data-lucide="building-2"></i></div>
+        <div class="ms-num">2028 · Escala</div>
+        <div class="ms-body"><h4>El estadio</h4><p>Entradas, acceso, locales, comercios amigos. La misma cuenta, miles de personas, un día de partido.</p></div>
+      </div>
+    </div>
+    <div class="card card--highlight card--accent-1 anim" style="padding:24px 32px;">
+      <p class="quote-text">Una familia es cliente de la School e hincha del club a la vez. PSLSC ID es el único lugar donde esas dos cosas son la misma cuenta.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 13. PRINCIPIOS ══════════════ -->
+<section class="slide" data-slide="13">
+  <div class="slide-content">
+    <div class="label anim">02 · Principios de producto</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis reglas que deciden cada pantalla.</h2>
+    <div class="grid-3">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="hand-coins"></i><h4>Nadie necesita entender los tokens para comprar</h4></div><p class="card-body">La mensualidad va a la tarjeta. Lo suelto se paga con tokens o con tarjeta que se convierte al instante.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="users"></i><h4>La cuenta es del adulto, el progreso es del chico</h4></div><p class="card-body">Un perfil por hijo, compras y asistencia por hijo. El chico ve su progreso desde la cuenta de su madre o su padre.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="repeat"></i><h4>Todo lo que el club vende se compra con lo mismo</h4></div><p class="card-body">Una moneda, un saldo, un carnet. Hoy la School, mañana la tienda, después el estadio. Nada se rehace.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="gift"></i><h4>Lo que se regala cuesta poco y trae gente</h4></div><p class="card-body">Los tokens de regalo compran plazas con cupo libre. Lo que más paga es lo que trae plata o retención: el referido y la asistencia.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="layers"></i><h4>Cada etapa funciona sola</h4></div><p class="card-body">La School sin tienda ya sirve. La tienda sin estadio ya sirve. Ninguna etapa depende de la siguiente para dar valor.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="landmark"></i><h4>El club es dueño de la relación y de la plata</h4></div><p class="card-body">Stripe cobra a nombre del club. Los datos son del club. Yacaré construye y opera, nunca retiene fondos.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 14. POSICIONAMIENTO ══════════════ -->
+<section class="slide" data-slide="14">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">02 · Posicionamiento</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Para la familia es la app de la School. Para el club es el carnet de todos.</h2>
+        <p class="anim">No vendemos un programa de puntos. Vendemos una cuenta que te hace del club, que empieza siendo útil para algo concreto: la School de tus hijos.</p>
+        <p class="anim lead" style="margin-top:20px;">"Your PSLSC ID. Your kids' school today. Your club, always."</p>
+        <p class="anim">En inglés para las familias, porque el producto se usa en inglés. En español como ventaja de cercanía: uno de cada cinco hogares de la ciudad habla español.</p>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Qué prometemos a cada uno</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="user-round"></i><span><strong>A Carolina:</strong> todo lo de la School en un lugar, pagando mes a mes, viendo progresar a sus hijos.</span></div>
+          <div class="moment"><i data-lucide="baby"></i><span><strong>A Mía y Tomás:</strong> cada clase cuenta. Insignias, rachas, Luca celebrando.</span></div>
+          <div class="moment"><i data-lucide="whistle"></i><span><strong>A Diego y Valeria:</strong> cero planillas, lista en el teléfono, presentes en 30 segundos.</span></div>
+          <div class="moment"><i data-lucide="flag"></i><span><strong>A Marco:</strong> el carnet del club desde antes del primer partido.</span></div>
+          <div class="moment"><i data-lucide="building"></i><span><strong>Al club:</strong> cobro recurrente, datos propios, una comunidad que crece antes del estadio.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ 15. MÉTRICAS ══════════════ -->
+<section class="slide" data-slide="15">
+  <div class="slide-content">
+    <div class="label anim">02 · Cómo sabemos si funciona</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Una métrica norte y cinco que la explican.</h2>
+    <div class="card card--highlight card--accent-1 anim" style="padding:24px 32px; margin-bottom:22px;">
+      <div class="card-sub">Métrica norte</div>
+      <p class="quote-text">Familias activas por mes: con mensualidad al día y al menos una sesión asistida. Si ese número crece, todo lo demás crece.</p>
+    </div>
+    <div class="grid-4" style="margin-bottom:0;">
+      <div class="card card--sm anim"><div class="card-sub">Retención</div><p class="card-body">Mensualidades que se renuevan mes a mes. Objetivo: más del 90 % en el primer período.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">Frecuencia</div><p class="card-body">Sesiones asistidas por familia por mes, marcadas por el coach. Es lo que alimenta la progresión.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">Extras</div><p class="card-body">Tokens gastados en clínicas y daycare por familia. Mide si los tokens tienen razón de ser.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">Regalo y referidos</div><p class="card-body">Tasa de regalo sobre ingresos, entre 3 y 7 %. Referidos que pagan su primer mes.</p></div>
+    </div>
+    <div class="aside-note anim"><i data-lucide="gauge"></i><span>Todas salen del ledger y del check-in, sin encuestas. El club las ve en un tablero mensual desde la primera etapa.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+<!-- ══════════════ SECCIÓN 03 ══════════════ -->
+<section class="slide" data-slide="16">
+  <div class="section-num">03</div>
+  <div class="slide-content" style="text-align:center;">
+    <div class="label anim" style="justify-content:center;">Parte 03</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.6rem,5vw,4.2rem); margin-bottom:16px;">El producto</h2>
+    <p class="anim lead" style="max-width:640px; margin:0 auto;">Seis conceptos, un circuito, dieciséis pantallas. Lo que una familia y el club van a tener en la mano.</p>
+  </div>
+</section>
+
+<!-- ══════════════ CONCEPTOS ══════════════ -->
+<section class="slide" data-slide="17">
+  <div class="slide-content">
+    <div class="label anim">03 · Qué es PSLSC ID</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis conceptos y ninguno más.</h2>
+    <div class="grid-3">
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="user-round"></i><h4>Cuenta</h4></div><p class="card-body">El padre o la madre, con login por magic link. Es su PSLSC ID. Debajo, sus hijos: nombre, fecha de nacimiento, contacto de emergencia, notas médicas, consentimiento.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="coins"></i><h4>Token</h4></div><p class="card-body">La moneda del club. Un token vale un dólar, no vence y solo sirve en el club. Entra por Stripe o por hitos, sale por lo que el club vende.</p></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-head"><i data-lucide="credit-card"></i><h4>Carga</h4></div><p class="card-body">La mensualidad de cada hijo, cobrada a la tarjeta como cualquier suscripción. Y packs de tokens para lo suelto, con bono en los grandes. Todo por Stripe, a nombre del club.</p></div>
+      <div class="card card--sm card--accent-4 anim"><div class="card-head"><i data-lucide="calendar-days"></i><h4>Actividad y SKU</h4></div><p class="card-body">La actividad es cuándo y dónde pasa: grupo por edad, día y hora, sede, coach, cupo por fecha. El SKU es lo que se vende para ella. Los crea el club desde su panel.</p></div>
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="ticket"></i><h4>Compra y plaza</h4></div><p class="card-body">Un SKU para un hijo. Queda en el ledger y le da una plaza: el mes entero si es la mensualidad, una fecha si es una clínica o un día de daycare.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="award"></i><h4>Hito</h4></div><p class="card-body">Algo que el hijo o la familia logra: asistió a todas las clases del mes, completó sus datos, trajo a otra familia. Da una insignia al hijo y tokens de regalo a la cuenta.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ECONOMÍA ══════════════ -->
+<section class="slide" data-slide="18">
+  <div class="slide-content">
+    <div class="label anim">03 · La economía, en una línea</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">La mensualidad va a la tarjeta. Los tokens pagan lo suelto. Los hitos regalan.</h2>
+    <div class="flow3 anim">
+      <div class="flow3-col">
+        <div class="card-sub">Entran</div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Mensualidad de la School</h4><p class="card-body">Una suscripción por hijo, a la tarjeta, hasta que la das de baja. Anual con bono en tokens.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Packs de tokens</h4><p class="card-body">Compra única, sin compromiso. Los packs grandes bonifican más.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Tokens de regalo</h4><p class="card-body">Por hitos y bonos. El club elige cuáles pagan y cuánto.</p></div>
+      </div>
+      <div class="flow3-arrow"><i data-lucide="arrow-right"></i></div>
+      <div class="flow3-col">
+        <div class="card-sub">El wallet</div>
+        <div class="card card--highlight card--accent-1" style="padding:26px;">
+          <h4 style="font-size:1.4rem; margin-bottom:12px;">Un saldo por familia</h4>
+          <ul class="dot-list">
+            <li>1 token = 1 USD, siempre</li>
+            <li>Nada vence</li>
+            <li>Dos registros internos: cargados y de regalo. Se gastan primero los de regalo</li>
+            <li>Cada movimiento queda en el ledger</li>
+            <li>Sin cash-out, sin transferencias</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow3-arrow"><i data-lucide="arrow-right"></i></div>
+      <div class="flow3-col">
+        <div class="card-sub">Salen</div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Hoy: lo de la School</h4><p class="card-body">Clínicas, sesiones sueltas, eventos exclusivos, un día o una tarde de daycare.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">2027: la tienda y los partidos</h4><p class="card-body">La camiseta en Shopify, entradas a eventos propios, después vivenu.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">2028: el estadio</h4><p class="card-body">Locales, comercios amigos, acceso con el carnet.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ CIRCUITO FAMILIA ══════════════ -->
+<section class="slide" data-slide="19">
+  <div class="slide-content">
+    <div class="label anim">03 · Cómo lo vive una familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">De preinscripta a primer canje, en ocho pasos.</h2>
+    <div class="grid-4">
+      <div class="card card--sm anim"><div class="card-sub">1</div><h4 style="font-size:1.1rem;">Entra desde la School</h4><p class="card-body">Email, link mágico, listo. Carga a sus hijos con sus datos y consentimientos.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">2</div><h4 style="font-size:1.1rem;">Elige el pack de cada hijo</h4><p class="card-body">Ve los packs de la categoría de cada uno: días, horario, sede, coach, cupos, precio mensual.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">3</div><h4 style="font-size:1.1rem;">Paga el mes con la tarjeta</h4><p class="card-body">Un solo paso. Se cobra cada mes; puede cancelar cuando quiera para el ciclo siguiente.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">4</div><h4 style="font-size:1.1rem;">Recibe confirmación</h4><p class="card-body">Email con el recibo y las próximas fechas. El hijo ya tiene plaza y aparece en la lista del coach.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">5</div><h4 style="font-size:1.1rem;">Carga tokens para lo suelto</h4><p class="card-body">Un pack de tokens con bono. Elige una clínica o un día de daycare en el calendario, para un hijo.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">6</div><h4 style="font-size:1.1rem;">El coach marca presente</h4><p class="card-body">Cada clase suma a la racha y al progreso del hijo. Luca lo celebra en la cuenta de la familia.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">7</div><h4 style="font-size:1.1rem;">Gana tokens por hitos</h4><p class="card-body">Mes de asistencia perfecta, perfil completo, una familia referida que paga. Los tokens caen en el saldo.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">8</div><h4 style="font-size:1.1rem;">Vuelve a canjear</h4><p class="card-body">Una clínica, un evento solo para socios, pronto la camiseta. Y muestra su carnet con QR donde haga falta.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ CIRCUITO CLUB ══════════════ -->
+<section class="slide" data-slide="20">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">03 · Cómo lo vive el club</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Cinco pantallas y cero planillas.</h2>
+        <p class="anim">La coordinadora crea las actividades una vez. Los cobros entran solos. El coach abre una lista en el teléfono y marca presentes en 30 segundos.</p>
+        <p class="anim lead" style="margin-top:20px;">Todo lo que hoy se resuelve por WhatsApp y Excel queda en un lugar, con contacto de emergencia y notas médicas a mano.</p>
+      </div>
+      <div class="anim">
+        <div class="moments">
+          <div class="moment"><i data-lucide="calendar-plus"></i><span><strong>Actividades.</strong> Grupo por edad, días, horario, sede, coach, cupo por fecha, y lo que se vende para cada una.</span></div>
+          <div class="moment"><i data-lucide="users"></i><span><strong>Socios.</strong> Las familias: quién es, qué hijos tiene, qué tiene activo, qué compró.</span></div>
+          <div class="moment"><i data-lucide="list-checks"></i><span><strong>Quiénes asisten y check-in.</strong> Por actividad y fecha, con contacto y notas médicas. El coach marca presentes.</span></div>
+          <div class="moment"><i data-lucide="gift"></i><span><strong>Hitos.</strong> Qué acciones regalan tokens, cuánto, con qué tope. La tasa de regalo del mes.</span></div>
+          <div class="moment"><i data-lucide="receipt"></i><span><strong>Movimientos.</strong> Cargas, compras, reversas, y el total que cierra cada noche contra Stripe.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ MAPA DEL ECOSISTEMA ══════════════ -->
+<section class="slide" data-slide="21">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · El ecosistema</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:18px;">Tres frentes sobre un solo núcleo. Línea llena hoy, punteado después.</h2>
+    <div class="eco anim"><svg viewBox="0 0 1180 816" role="img" aria-label="Mapa del ecosistema de PSLSC ID" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" fill-opacity="0.8"/></marker><marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"><circle cx="5" cy="5" r="3.5" fill="currentColor" fill-opacity="0.8"/></marker></defs>
+<rect x="16" y="12" width="1148" height="108" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="30" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">PERSONAS</text>
+<rect x="16" y="132" width="1148" height="206" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="150" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">FRENTES</text>
+<rect x="16" y="350" width="1148" height="270" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="368" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">NÚCLEO · BACKEND EN SUPABASE</text>
+<rect x="16" y="632" width="1148" height="176" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="650" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">SERVICIOS EXTERNOS</text>
+<rect x="60" y="46" width="220" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="72" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Familia</text>
+<text x="72" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Tutor en el teléfono, un perfil por hijo</text>
+<rect x="520" y="46" width="220" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="532" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Staff del club</text>
+<text x="532" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Coach y coordinadora</text>
+<rect x="800" y="46" width="200" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="812" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Comercio amigo</text>
+<text x="812" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Cámara de cualquier teléfono</text>
+<rect x="1020" y="46" width="130" height="60" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="1032" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">Hincha</text>
+<text x="1032" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">con Matchday</text>
+<rect x="40" y="160" width="170" height="66" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Sitio del club</text>
+<text x="52" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">WordPress de la USL</text>
+<text x="52" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Solo enlaza</text>
+<rect x="40" y="246" width="170" height="66" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="266" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Landing de la School</text>
+<text x="52" y="284" font-size="12" fill="currentColor" fill-opacity="0.75">Vercel · /school</text>
+<text x="52" y="299" font-size="12" fill="currentColor" fill-opacity="0.75">Preinscripción</text>
+<rect x="240" y="160" width="290" height="152" rx="8" style="fill:#0d0d0d;stroke:#8A63F2" stroke-width="2.2"/>
+<text x="252" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">PSLSC ID · web y PWA</text>
+<text x="252" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Vercel, dominio del club</text>
+<text x="252" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Mi cuenta y mis hijos</text>
+<text x="252" y="228" font-size="12" fill="currentColor" fill-opacity="0.75">Packs y pago del mes</text>
+<text x="252" y="243" font-size="12" fill="currentColor" fill-opacity="0.75">Wallet y canje</text>
+<text x="252" y="258" font-size="12" fill="currentColor" fill-opacity="0.75">Mi PSLSC ID: QR que rota cada minuto</text>
+<text x="252" y="273" font-size="12" fill="currentColor" fill-opacity="0.75">Luca en todas las pantallas</text>
+<rect x="560" y="160" width="210" height="152" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="572" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Panel del club</text>
+<text x="572" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Mismo web, rol staff</text>
+<text x="572" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">ABM: packs, clínicas, eventos</text>
+<text x="572" y="228" font-size="12" fill="currentColor" fill-opacity="0.75">Acciones que pagan tokens</text>
+<text x="572" y="243" font-size="12" fill="currentColor" fill-opacity="0.75">Beneficios de comercios</text>
+<text x="572" y="258" font-size="12" fill="currentColor" fill-opacity="0.75">Cupos, inscriptos, reportes</text>
+<text x="572" y="273" font-size="12" fill="currentColor" fill-opacity="0.75">Check-in del coach</text>
+<rect x="800" y="160" width="200" height="80" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="812" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Página de validación</text>
+<text x="812" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Escanea el QR, ve "válido"</text>
+<text x="812" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Botón aplicar. Sin app.</text>
+<rect x="1020" y="160" width="130" height="80" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="1032" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">App nativa</text>
+<text x="1032" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">después</text>
+<text x="1032" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">sin compra de tokens</text>
+<rect x="40" y="372" width="1100" height="40" rx="8" style="fill:#0d0d0d;stroke:#8A63F2" stroke-width="2.2"/>
+<text x="52" y="392" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">API y reglas de negocio</text>
+<text x="1128" y="397" font-size="12" fill="currentColor" fill-opacity="0.7" text-anchor="end">todo pasa por acá; nada toca la base directo</text>
+<rect x="40" y="430" width="200" height="84" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="450" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Identidad</text>
+<text x="52" y="468" font-size="12" fill="currentColor" fill-opacity="0.75">Supabase Auth: passkeys, magic link</text>
+<text x="52" y="483" font-size="12" fill="currentColor" fill-opacity="0.75">Proveedor OpenID Connect</text>
+<text x="52" y="498" font-size="12" fill="currentColor" fill-opacity="0.75">para tienda, ticketing, estadio</text>
+<rect x="40" y="524" width="200" height="74" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="544" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Jobs y auditoría</text>
+<text x="52" y="562" font-size="12" fill="currentColor" fill-opacity="0.75">Conciliación nocturna vs Stripe</text>
+<text x="52" y="577" font-size="12" fill="currentColor" fill-opacity="0.75">Holds, log de auditoría, backups</text>
+<rect x="262" y="430" width="600" height="168" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.3"/>
+<text x="276" y="448" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75">Postgres con RLS por club</text>
+<rect x="276" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="288" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Catálogo</text>
+<text x="288" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">packs, clínicas, eventos, cupos</text>
+<rect x="468" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="480" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Reglas de earn</text>
+<text x="480" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">catálogo de acciones por club</text>
+<rect x="660" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="672" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Beneficios y usos</text>
+<text x="672" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">comercios, QR validados</text>
+<rect x="276" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="288" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Hogares y perfiles</text>
+<text x="288" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">tutores, hijos, consentimientos</text>
+<rect x="468" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="480" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Ledger de tokens</text>
+<text x="480" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">doble entrada, dos registros</text>
+<rect x="660" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="672" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Inscripciones</text>
+<text x="672" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">asistencia, check-in, make-up</text>
+<rect x="880" y="430" width="260" height="84" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="892" y="450" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Roles y permisos</text>
+<text x="892" y="468" font-size="12" fill="currentColor" fill-opacity="0.75">coach, coordinador, admin, soporte</text>
+<text x="892" y="483" font-size="12" fill="currentColor" fill-opacity="0.75">asignaciones manuales con aprobación</text>
+<rect x="880" y="524" width="260" height="74" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="892" y="544" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">API de wallet</text>
+<text x="892" y="562" font-size="12" fill="currentColor" fill-opacity="0.75">saldo, débito, crédito, idempotente</text>
+<text x="892" y="577" font-size="12" fill="currentColor" fill-opacity="0.75">para tienda y POS. Se diseña ahora</text>
+<rect x="271" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="283" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">ActiveCampaign</text>
+<text x="283" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">CRM de marketing</text>
+<text x="283" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Preinscriptos entran</text>
+<text x="283" y="720" font-size="12" fill="currentColor" fill-opacity="0.75">Contactos y eventos salen</text>
+<rect x="463" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="475" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Stripe Connect</text>
+<text x="475" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">El club es el vendedor</text>
+<text x="475" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Suscripciones y cargas</text>
+<text x="475" y="720" font-size="12" fill="currentColor" fill-opacity="0.75">Webhooks, disputas, Radar</text>
+<rect x="655" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="667" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Email transaccional</text>
+<text x="667" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">Confirmaciones, recibos</text>
+<text x="667" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Avisos, encuesta</text>
+<rect x="870" y="644" width="270" height="156" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.4" stroke-dasharray="6 4"/>
+<text x="884" y="662" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75">Después: pensado y validado en 2027</text>
+<rect x="884" y="672" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="688" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">vivenu · ticketing de la USL</text>
+<text x="896" y="703" font-size="11.5" fill="currentColor" fill-opacity="0.7">cupones primero, API después</text>
+<rect x="884" y="716" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="732" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">Tienda · Shopify</text>
+<text x="896" y="747" font-size="11.5" fill="currentColor" fill-opacity="0.7">códigos primero, API después</text>
+<rect x="884" y="760" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="776" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">POS del estadio</text>
+<text x="896" y="791" font-size="11.5" fill="currentColor" fill-opacity="0.7">identidad y wallet por API</text>
+<path d="M170,106 L385,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="284" y="128" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle">usa</text>
+<path d="M100,106 L100,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="106" y="126" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">visita</text>
+<path d="M210,193 L240,193" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="225" y="186" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle">enlace</text>
+<path d="M125,226 L125,246" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M630,106 L665,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="656" y="128" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">opera</text>
+<path d="M900,106 L900,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="906" y="138" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">escanea</text>
+<path d="M1085,106 L1085,160" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<path d="M125,312 L125,328 L24,328 L24,640 L300,640 L300,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="17" y="490" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle" transform="rotate(-90 17 490)">preinscripción</text>
+<path d="M385,312 L385,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="391" y="346" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">HTTPS</text>
+<path d="M665,312 L665,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M900,240 L900,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="906" y="310" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">valida el QR</text>
+<path d="M1085,240 L1085,372" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<path d="M140,412 L140,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M562,412 L562,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M1010,412 L1010,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M366,584 L366,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#dot)"/>
+<text x="372" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">contactos y eventos</text>
+<path d="M558,584 L558,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#dot)"/>
+<text x="564" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">cobros y webhooks</text>
+<path d="M750,584 L750,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="756" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">confirmaciones</text>
+<path d="M1010,598 L1010,644" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+</svg></div>
+    <p class="anim" style="font-size:0.85rem; margin-top:14px; max-width:980px;">La familia entra por la web de PSLSC ID, el staff por el panel, el comercio por una página de validación. Todo pasa por una API sobre Supabase; Stripe cobra a nombre del club; el sitio de la USL solo enlaza. vivenu, la tienda y el estadio se conectan después, sobre lo mismo.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ PATRONES ══════════════ -->
+<section class="slide" data-slide="22">
+  <div class="slide-content">
+    <div class="label anim">03 · Patrones de interfaz que copiamos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">No inventamos pantallas. Tomamos las que ya funcionan y les ponemos el escudo.</h2>
+    <div class="grid-3">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="wallet"></i><h4>El wallet, de Starbucks</h4></div><p class="card-body">Saldo grande con "cargar" debajo, el QR en la mitad baja de la pantalla, montos sugeridos al recargar y recarga automática con dos campos: cuando baje de tanto, cargar tanto.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="flame"></i><h4>La racha, de Duolingo</h4></div><p class="card-body">Una llama, un calendario con tildes, la racha en riesgo avisada antes de romperse y las notificaciones firmadas por el personaje. Sin leaderboards para menores de 13.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="medal"></i><h4>Las medias, de Techne</h4></div><p class="card-body">Niveles como medias de color, de la blanca a la negra, ganadas por horas entrenadas. Es el patrón más directo para Luca y la progresión de un chico de la School.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="scan-line"></i><h4>El botón Scan, de Charlotte FC</h4></div><p class="card-body">Un botón central que paga y suma puntos en un solo gesto, y una recompensa diaria para reclamar. El QR del carnet es a la vez identidad, check-in y medio de pago.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="qr-code"></i><h4>El código que rota, de Ticketmaster</h4></div><p class="card-body">El QR cambia cada pocos segundos y la captura de pantalla no sirve. Estados con nombre cuando algo falla. Y un pase de Wallet con el código legible debajo.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="list-checks"></i><h4>El check-in, de iClassPro</h4></div><p class="card-body">Un tilde por chico, "todos presentes" y ajuste individual, marcas de llegó tarde o se fue antes, y permisos por coach: cada uno ve solo sus clases. Si hay una duda de pago, el chico entra igual y se marca para revisar.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTERFACES FAMILIA 1 ══════════════ -->
+<section class="slide" data-slide="23">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Entrar, ver a los hijos, ver cómo progresan.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/01-signin.png" alt="Sign in"><figcaption><strong>Sign in.</strong> Email y link mágico. Sin contraseñas que olvidar.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/02-home.png" alt="Home"><figcaption><strong>Home.</strong> Los hijos, la próxima sesión de cada uno, el saldo, lo que falta hacer para ganar tokens.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/03-kid-progress.png" alt="Progreso"><figcaption><strong>Progreso.</strong> Clases asistidas, racha, insignias ganadas y la próxima. Luca celebra.</figcaption></figure>
+    </div>
+    <p class="anim" style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">Pantallas ilustrativas en inglés, el idioma del producto. Los rangos de edad son de ejemplo hasta que el club los defina.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTERFACES FAMILIA 2 ══════════════ -->
+<section class="slide" data-slide="24">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Elegir un pack, pagar el mes, cargar tokens.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/04-packs.png" alt="Packs"><figcaption><strong>Packs.</strong> Los de la categoría del hijo: días, horario, sede, coach, cupos, precio por mes. Y los extras.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/05-pay-month.png" alt="Inscribir y pagar"><figcaption><strong>Pagar el mes.</strong> Un solo paso con tarjeta o Apple Pay. Se cobra cada mes; se cancela cuando quieras.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/06-buy-tokens.png" alt="Cargar tokens"><figcaption><strong>Cargar tokens.</strong> Packs de 50, 100 y 250 con bono. Un token es un dólar y nunca vence.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTERFACES FAMILIA 3 ══════════════ -->
+<section class="slide" data-slide="25">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Gastar tokens, ver el saldo, mostrar el carnet.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/07-spend-tokens.png" alt="Comprar con tokens"><figcaption><strong>Comprar con tokens.</strong> Una clínica o un día de daycare: fecha con cupo, hijo, confirmar.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/08-wallet.png" alt="Wallet"><figcaption><strong>Wallet.</strong> El saldo con su detalle, cargados y de regalo, y cada movimiento.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/09-my-id.png" alt="Mi PSLSC ID"><figcaption><strong>Mi PSLSC ID.</strong> El carnet: escudo, nombre, estado y un QR que rota. Mañana lo escanea un comercio o el estadio.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTERFACES CLUB 1 ══════════════ -->
+<section class="slide" data-slide="26">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · El club</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Crear actividades y saber quién viene.</h2>
+    <div class="shots anim">
+      <figure class="shot"><img src="pslsc-id/screens/10-admin-activities.png" alt="Actividades"><figcaption><strong>Actividades.</strong> Grupo, días, horario, sede, coach, cupo por fecha, y lo que se vende para cada una.</figcaption></figure>
+      <figure class="shot"><img src="pslsc-id/screens/11-admin-attendance-checkin.png" alt="Quiénes asisten"><figcaption><strong>Quiénes asisten y check-in.</strong> La lista con contacto y notas médicas, y el coach marcando presentes desde el teléfono.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTERFACES CLUB 2 ══════════════ -->
+<section class="slide" data-slide="27">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · El club</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Decidir qué se regala y que la caja cierre.</h2>
+    <div class="shots anim">
+      <figure class="shot"><img src="pslsc-id/screens/12-admin-milestones.png" alt="Hitos"><figcaption><strong>Hitos.</strong> Qué acciones regalan tokens, cuánto, el tope por familia y el global. La tasa de regalo del mes a la vista.</figcaption></figure>
+      <figure class="shot"><img src="pslsc-id/screens/13-admin-transactions.png" alt="Movimientos"><figcaption><strong>Movimientos.</strong> Cargas, compras, reversas, y el total que cierra cada noche contra Stripe.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ GAMIFICACIÓN ══════════════ -->
+<section class="slide" data-slide="28">
+  <div class="slide-content">
+    <div class="label anim">03 · Gamificación</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">El chico progresa. La familia gana. El club decide cuánto.</h2>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Lo que ve el chico, desde la cuenta de su familia</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="flame"></i><span><strong>Racha.</strong> Clases seguidas sin faltar. Se ve en riesgo antes de romperse.</span></div>
+          <div class="moment"><i data-lucide="medal"></i><span><strong>Insignias.</strong> Primera clase, diez clases, mes perfecto, pase de categoría. Con Luca.</span></div>
+          <div class="moment"><i data-lucide="trending-up"></i><span><strong>Progreso.</strong> Lo que el coach marca: asistencia, hitos, el pase de categoría a fin de período.</span></div>
+          <div class="moment"><i data-lucide="eye-off"></i><span><strong>Sin leaderboards en la Etapa 1.</strong> La progresión es personal. Comparar llega después, con nombre e inicial.</span></div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Hitos que regalan tokens, propuesta inicial</div>
+        <div class="tbl-wrap">
+          <table class="tbl tbl--compact">
+            <thead><tr><th>Hito</th><th>Tokens</th><th>Cuándo</th></tr></thead>
+            <tbody>
+              <tr><td>Completar el perfil y los hijos</td><td>10</td><td>Una vez</td></tr>
+              <tr><td>Primer mes pagado</td><td>10</td><td>Una vez</td></tr>
+              <tr><td>Asistencia perfecta en el mes</td><td>5 % del pack</td><td>Por mes</td></tr>
+              <tr><td>Referir a una familia que paga su primer mes</td><td>25 y 25 al nuevo</td><td>Hasta tres por año</td></tr>
+              <tr><td>Encuesta de fin de período</td><td>5</td><td>Por período</td></tr>
+              <tr><td>Pack mediano y grande, anual</td><td>5 %, 10 %, un mes</td><td>Al cargar</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="aside-note" style="margin-top:14px;"><i data-lucide="shield-check"></i><span>Tres topes: por acción, 10 % de lo pagado por familia por mes, y 5 % de los ingresos del club por mes. Los tokens de regalo compran lo suelto, nunca la mensualidad. Se gastan primero.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ LOS TOKENS ══════════════ -->
+<section class="slide" data-slide="29">
+  <div class="slide-content">
+    <div class="label anim">03 · Los tokens</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Cuatro reglas, tres razones para existir y lo que nunca van a ser.</h2>
+    <div class="grid-3">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Cuatro reglas</div>
+        <ul class="dot-list">
+          <li>Un token vale un dólar, siempre.</li>
+          <li>No vencen, ni los cargados ni los de regalo.</li>
+          <li>Se compran con tarjeta, en la web, por Stripe.</li>
+          <li>Sirven para todo lo del club y para nada más.</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Tres razones para tenerlos</div>
+        <ul class="dot-list">
+          <li><strong>Bono por prepago.</strong> Cargar más, o pagar el año, da tokens de regalo.</li>
+          <li><strong>Cosas que solo se compran con tokens.</strong> Eventos exclusivos, clínicas con el primer equipo.</li>
+          <li><strong>Regalos por hitos.</strong> Asistir, completar, referir. Un saldo que crece solo.</li>
+        </ul>
+        <div class="card-note"><i data-lucide="info"></i><span>Y una cuarta cuando llegue: un solo saldo para la tienda, las entradas y el estadio.</span></div>
+      </div>
+      <div class="card card--sm card--accent-3 anim">
+        <div class="card-sub">Lo que nunca</div>
+        <ul class="dot-list">
+          <li>No se cambian por dinero.</li>
+          <li>No se pasan de una cuenta a otra. Regalar es cargar a nombre de otra familia.</li>
+          <li>No compran nada digital. Insignias, progreso y Luca son gratis.</li>
+          <li>No son cripto. Son un saldo del club, con reglas de Florida y de FinCEN a validar con un abogado.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:24px;"><i data-lucide="scale"></i><span>Circuito cerrado: lo cargado no vence ni tiene fees; tope de saldo propuesto de 1.500 dólares; lo no canjeado queda en el club; Yacaré nunca tiene la plata. Ocho principios para validar en una consulta antes de abrir ventas.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ DESPUÉS DE LA SCHOOL ══════════════ -->
+<section class="slide" data-slide="30">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Después de la School</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">La misma cuenta sirve para el hincha.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/14-fan-home.png" alt="Home de hincha"><figcaption><strong>Home de hincha.</strong> Próximo partido, noticias del sitio, tokens y carnet. Si tenés hijos en la School, ellos van arriba.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/15-store.png" alt="Tienda"><figcaption><strong>Tienda.</strong> Los productos de Shopify dentro de PSLSC ID. Pagás con tokens o con tarjeta. El club despacha desde Shopify.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/16-tickets.png" alt="Entradas"><figcaption><strong>Entradas.</strong> Un evento propio con QR validado por nosotros. Un partido con vivenu, el ticketing de la USL.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ INTEGRACIONES ══════════════ -->
+<section class="slide" data-slide="31">
+  <div class="slide-content">
+    <div class="label anim">03 · Integraciones</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Cada sistema externo se conecta en tres niveles: enlaces, identidad, wallet.</h2>
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="shopping-bag"></i><h4>Shopify</h4></div><p class="card-body">Nivel 1: enlace y códigos de descuento pagados con tokens. Nivel 2: la vidriera adentro de PSLSC ID, con órdenes pagadas con tokens creadas por API. Nivel 3: tokens por cada compra. Shopify queda como inventario y despacho.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="ticket"></i><h4>vivenu</h4></div><p class="card-body">El ticketing oficial de la USL desde marzo de 2026. Primero cupones emitidos por nosotros; con acceso a la API, compra desde la app y tokens por asistir. El acceso se pide a través de la liga.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="globe"></i><h4>El sitio del club</h4></div><p class="card-body">Corre en el WordPress de la USL y solo puede enlazar. Pero sus noticias y eventos ya salen por API pública: están en la app en días.</p></div>
+    </div>
+    <div class="grid-3">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="mail"></i><h4>ActiveCampaign y Stripe</h4></div><p class="card-body">ActiveCampaign sigue como CRM: los preinscriptos entran, los contactos y eventos salen. Stripe Connect cobra todo a nombre del club; Yacaré nunca retiene fondos.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="qr-code"></i><h4>Comercios amigos, sin integrar nada</h4></div><p class="card-body">El club carga el beneficio. La familia muestra su QR. El comercio lo escanea con cualquier teléfono y ve "válido" en una página nuestra. El descuento lo hace en su caja; nosotros registramos el uso.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="building-2"></i><h4>El estadio, en 2028</h4></div><p class="card-body">Ticketing, tienda y punto de venta se eligen con un criterio: que acepten identidad y wallet de PSLSC ID por API. Si se eligen proveedores cerrados, el ecosistema se frena ahí.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+<!-- ══════════════ SECCIÓN 04 ══════════════ -->
+<section class="slide" data-slide="32">
+  <div class="section-num">04</div>
+  <div class="slide-content" style="text-align:center;">
+    <div class="label anim" style="justify-content:center;">Parte 04</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.6rem,5vw,4.2rem); margin-bottom:16px;">El negocio</h2>
+    <p class="anim lead" style="max-width:640px; margin:0 auto;">Cinco palancas, los supuestos con fuente, una proyección a tres años y lo que cuesta operarlo.</p>
+  </div>
+</section>
+
+<!-- ══════════════ PALANCAS ══════════════ -->
+<section class="slide" data-slide="33">
+  <div class="slide-content">
+    <div class="label anim">04 · Por qué es un negocio</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Cinco palancas, en el orden en que llegan.</h2>
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="repeat"></i><h4>Ingreso recurrente que se cobra solo</h4></div><p class="card-body">La mensualidad por hijo es una suscripción. Sin cobrar a mano, sin morosidad escondida en planillas, con el precio del mes a la vista. Es la base: predecible y creciente.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="coins"></i><h4>Caja anticipada y más frecuencia</h4></div><p class="card-body">Los packs de tokens y el anual se cobran antes de usarse. Un saldo cargado pide ser gastado: clínicas, daycare, eventos. El club vende lo suelto sin volver a pedir la tarjeta.</p></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-head"><i data-lucide="database"></i><h4>Datos propios</h4></div><p class="card-body">Quién viene, a qué, cada cuánto, cuánto gasta, a quién trajo. Hoy el club no tiene ninguno de esos números. Con ellos se decide qué abrir, qué cerrar y a quién hablarle.</p></div>
+    </div>
+    <div class="grid-2x2" style="grid-template-columns:1fr 1fr;">
+      <div class="card card--sm card--accent-4 anim"><div class="card-head"><i data-lucide="shirt"></i><h4>La tienda y las entradas, sobre la misma cuenta</h4></div><p class="card-body">Desde 2027, la camiseta y las entradas a eventos se compran con el mismo saldo. Cada familia de la School es un comprador de merchandising con la tarjeta ya cargada.</p></div>
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="building-2"></i><h4>El estadio, con la relación ya hecha</h4></div><p class="card-body">En 2028 el club llega al estadio con cientos de familias con cuenta, carnet y saldo, y con hábito. Entradas, locales y comercios amigos arrancan sobre una comunidad, no desde cero.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ SUPUESTOS ══════════════ -->
+<section class="slide" data-slide="34">
+  <div class="slide-content">
+    <div class="label anim">04 · Los supuestos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:22px;">Cada número de la proyección tiene una fuente o está marcado como estimación.</h2>
+    <div class="tbl-wrap anim">
+      <table class="tbl tbl--compact">
+        <thead><tr><th>Variable</th><th>Valor base</th><th>De dónde sale</th></tr></thead>
+        <tbody>
+          <tr><td>Mensualidad por chico</td><td class="num">US$ 120</td><td>Banda de US$ 80 a 150 de la oferta local; las familias ya pagan 119 a 175 por natación o gimnasia</td></tr>
+          <tr><td>Chicos por coach</td><td class="num">10</td><td>Canada Soccer y US Soccer: ideal 8, máximo 12 entre 8 y 13 años</td></tr>
+          <tr><td>Coach, por hora de sesión</td><td class="num">US$ 25</td><td>Avisos en Florida, 20 a 26 por hora</td></tr>
+          <tr><td>Cancha municipal con luces, por hora</td><td class="num">US$ 30</td><td>Port St. Lucie 20,28 más luces 8,64; Palm Beach 25. Cero desde 2028 en campos propios</td></tr>
+          <tr><td>Semanas operativas por año</td><td class="num">42</td><td>Estimación propia</td></tr>
+          <tr><td>Retención anual de familias</td><td class="num">75 %</td><td>Sprocket 2023, clubes U8 a U13: 74 a 78 %</td></tr>
+          <tr><td>Procesamiento de tarjeta</td><td class="num">3,15 %</td><td>Stripe, 2,9 % más 30 centavos sobre US$ 120</td></tr>
+          <tr><td>Presupuesto de tokens de regalo</td><td class="num">3 %</td><td>Programas de consumo devuelven entre 1 y 6 %; Starbucks y Dunkin' cerca del 6</td></tr>
+          <tr><td>Saldo cargado que nunca se usa</td><td class="num">1,5 %</td><td>Starbucks, balance 2025: 222 millones sobre 15.246 diferidos. No se cuenta como ingreso el primer año</td></tr>
+          <tr><td>Asistencia promedio, estreno del estadio</td><td class="num">3.300</td><td>FC Naples año 1: 3.488 en 5.000 plazas; promedio de la liga 2026: 3.008</td></tr>
+          <tr><td>Entrada ponderada y abono</td><td class="num">US$ 14 y US$ 200</td><td>Abonos de la liga a 10 a 15 por partido en general; hasta 65 premium</td></tr>
+          <tr><td>Comida y bebida por asistente</td><td class="num">US$ 12</td><td>Estimación propia, entre 8 y 15; único dato publicado: 14 en ligas menores</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="aside-note anim"><i data-lucide="book-open"></i><span>Infraestructura verificada en páginas primarias el 15 de noviembre de 2026: Supabase Pro 25, Vercel Pro 20, email 15 a 20, Apple 99 al año, Google 25 una vez, Shopify Basic 39 al mes. Detalle y rangos en el documento de supuestos.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ LA SCHOOL EN NÚMEROS ══════════════ -->
+<section class="slide" data-slide="35">
+  <div class="slide-content">
+    <div class="label anim">04 · La School, en números</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Un grupo de diez chicos deja más de la mitad de lo que factura. Y hay espacio para treinta grupos.</h2>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Un grupo, por mes</div>
+        <div class="tbl-wrap">
+          <table class="tbl tbl--compact">
+            <tbody>
+              <tr><td>Diez chicos a US$ 120</td><td class="num">US$ 1.200</td></tr>
+              <tr><td>Coach: dos sesiones por semana</td><td class="num">-US$ 193</td></tr>
+              <tr><td>Cancha alquilada, hasta 2027</td><td class="num">-US$ 231</td></tr>
+              <tr><td><strong>Margen directo con cancha alquilada</strong></td><td class="num">65 %</td></tr>
+              <tr><td><strong>Margen directo en campos propios, desde 2028</strong></td><td class="num">84 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="aside-note" style="margin-top:14px;"><i data-lucide="info"></i><span>Antes de coordinación, seguros, equipamiento y marketing. Es el margen que paga todo lo demás.</span></div>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Proyección base, en miles de dólares</div>
+        <div class="tbl-wrap">
+          <table class="tbl tbl--compact">
+            <thead><tr><th></th><th>2027</th><th>2028</th><th>2029</th></tr></thead>
+            <tbody>
+              <tr><td>Chicos activos, promedio</td><td class="num">115</td><td class="num">220</td><td class="num">300</td></tr>
+              <tr><td>Familias</td><td class="num">88</td><td class="num">169</td><td class="num">231</td></tr>
+              <tr><td>Mensualidades</td><td class="num">138</td><td class="num">317</td><td class="num">432</td></tr>
+              <tr><td>Clínicas y daycare con tokens</td><td class="num">11</td><td class="num">24</td><td class="num">33</td></tr>
+              <tr><td>Coaches y cancha</td><td class="num">-49</td><td class="num">-51</td><td class="num">-69</td></tr>
+              <tr><td><strong>Margen directo de la School</strong></td><td class="num">100</td><td class="num">290</td><td class="num">396</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:0.8rem; margin-top:10px;">2027 son diez meses desde marzo, arrancando con unos 60 chicos preinscriptos y sumando doce por mes. 2028 y 2029 asumen retención del 75 % y crecimiento con el primer equipo y el estadio. Un extra de US$ 40 por mes en tres de cada diez familias.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ LO QUE CUESTA ══════════════ -->
+<section class="slide" data-slide="36">
+  <div class="slide-content">
+    <div class="label anim">04 · Lo que cuesta operar PSLSC ID</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">La plataforma cuesta menos del 1 % de lo que cobra. Lo que pesa es Stripe y el regalo, y los dos tienen tope.</h2>
+    <div class="tbl-wrap anim">
+      <table class="tbl">
+        <thead><tr><th>Por año, en dólares</th><th>2027</th><th>2028</th><th>2029</th><th>Qué es</th></tr></thead>
+        <tbody>
+          <tr><td>Infraestructura</td><td class="num">US$ 750</td><td class="num">US$ 1.200</td><td class="num">US$ 1.560</td><td>Supabase, Vercel, email, dominio. Crece con las familias, no con las ventas.</td></tr>
+          <tr><td>Shopify, tienda y punto de venta</td><td class="num">US$ 234</td><td class="num">US$ 2.328</td><td class="num">US$ 2.328</td><td>Basic desde julio de 2027; Grow y un POS en el estadio desde 2028.</td></tr>
+          <tr><td>Apple, Google, dominio</td><td class="num">US$ 135</td><td class="num">US$ 110</td><td class="num">US$ 110</td><td>Cuentas a nombre del club.</td></tr>
+          <tr><td>Procesamiento de tarjeta, 3,15 %</td><td class="num">US$ 4.933</td><td class="num">US$ 12.322</td><td class="num">US$ 16.545</td><td>Sobre mensualidades, tokens y tienda. Las entradas de vivenu van aparte.</td></tr>
+          <tr><td>Tokens de regalo, tope del 3 %</td><td class="num">US$ 4.458</td><td class="num">US$ 10.235</td><td class="num">US$ 13.957</td><td>Contado a valor nominal. En la práctica cuesta menos: compra plazas con cupo libre y una parte no se canjea.</td></tr>
+          <tr><td><strong>Total sobre lo que pasa por PSLSC ID</strong></td><td class="num">6,7 %</td><td class="num">6,7 %</td><td class="num">6,6 %</td><td>Sin contar las horas de construcción y acompañamiento de Yacaré, que están en la Parte 05.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="card card--sm anim"><div class="card-sub">Captar una familia</div><p class="card-body">Con anuncios cuesta unos US$ 80 por familia. Un referido cuesta 50 tokens entre las dos familias, y solo se paga si la nueva paga su primer mes.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">Lo que no se usa</div><p class="card-body">Alrededor del 1,5 % del saldo cargado nunca se gasta, como en Starbucks. No lo contamos como ingreso hasta tener un año de historial.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">Lo que no está acá</div><p class="card-body">Coordinación, seguros, equipamiento y marketing del club. Son costos de la School, con o sin PSLSC ID.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ EL ESTADIO EN NÚMEROS ══════════════ -->
+<section class="slide" data-slide="37">
+  <div class="slide-content">
+    <div class="label anim">04 · 2028: el estadio, en números</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Casi sesenta mil personas por temporada. PSLSC ID no vende las entradas: hace que cada una valga más.</h2>
+    <div class="grid-4" style="margin-bottom:20px;">
+      <div class="card card--sm anim"><div class="stat-number">59 mil</div><p class="card-body">Asistentes por temporada: 3.300 de promedio en 18 fechas de local, el año del estreno.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">832 mil</div><p class="card-body">Dólares en entradas a US$ 14 de promedio ponderado. Las cobra vivenu.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">713 mil</div><p class="card-body">Dólares en comida y bebida a US$ 12 por persona. Estimación propia; la parte del club depende del concesionario.</p></div>
+      <div class="card card--sm anim"><div class="stat-number">119 mil</div><p class="card-body">Dólares en merchandising a US$ 2 por asistente, como en las ligas menores de béisbol.</p></div>
+    </div>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Lo que pasa por PSLSC ID el primer año</div>
+        <ul class="dot-list">
+          <li>Cuatro de cada diez entradas vinculadas a una cuenta: US$ 332.640 en entradas con nombre y apellido.</li>
+          <li>Un 15 % de la comida y bebida pagada con tokens: US$ 106.920.</li>
+          <li>Cuatro de cada diez compras de merchandising con el carnet: US$ 47.520.</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Lo que agrega</div>
+        <ul class="dot-list">
+          <li>Quién vino, cuántas veces y cuánto gastó. Hoy el club no va a saber nada de eso.</li>
+          <li>Tokens por asistir, que traen al hincha al partido siguiente. Los estadios cashless reportan subas de gasto por persona de dos dígitos; no lo contamos hasta medirlo.</li>
+          <li>Las familias de la School llegan al estadio con cuenta, saldo y hábito. El segundo año de FC Naples cayó un 28 %: la retención es el problema que PSLSC ID viene a resolver.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ TABLERO ══════════════ -->
+<section class="slide" data-slide="38">
+  <div class="slide-content">
+    <div class="label anim">04 · El tablero del club</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Lo que el club mira cada mes, etapa por etapa.</h2>
+    <div class="grid-4">
+      <div class="card card--sm card--accent-1 anim"><div class="card-sub">Etapa 1 · La School funciona</div><ul class="dot-list"><li>80 % de los preinscriptos con cuenta a 30 días</li><li>Cobro automático exitoso mayor al 95 %</li><li>Presentes marcados en más del 90 % de las sesiones</li><li>Tasa de regalo entre 3 y 7 %</li><li>Menos de cinco pedidos de soporte por semana</li></ul></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-sub">Etapa 2 · A fondo y la cara de hincha</div><ul class="dot-list"><li>Retención mensual de la School mayor al 90 %</li><li>30 % de las familias compra un extra con tokens por mes</li><li>Cuentas de hinchas sin hijos en la School</li><li>Órdenes de la tienda pagadas con tokens</li><li>Apertura de notificaciones mayor al 40 %</li></ul></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-sub">Etapa 3 · La app y el club conectado</div><ul class="dot-list"><li>Instalaciones de la app sobre cuentas activas</li><li>Opt-in de notificaciones</li><li>Beneficios usados en comercios amigos por mes</li><li>Hinchas que suman tokens por asistir</li><li>Referidos que pagan su primer mes</li></ul></div>
+      <div class="card card--sm card--accent-4 anim"><div class="card-sub">Etapa 4 · El estadio</div><ul class="dot-list"><li>Entradas vinculadas a una cuenta</li><li>Gasto por persona con y sin PSLSC ID</li><li>Tokens canjeados en locales</li><li>Abonados que renuevan</li><li>Familias de la School que van al partido</li></ul></div>
+    </div>
+    <div class="foot-note anim" style="margin-top:22px;"><i data-lucide="gauge"></i><span>Todo sale del ledger, del check-in y de las integraciones. Sin encuestas, sin planillas, en un tablero que el club abre cuando quiere.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+<!-- ══════════════ LEGAL ══════════════ -->
+<section class="slide" data-slide="39">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">04 · Las reglas del juego</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Ocho principios que mantienen a los tokens simples y dentro de la ley.</h2>
+        <p class="anim">Son nuestra lectura de las normas de Florida y de FinCEN, no asesoramiento. Proponemos validarlos con un abogado de pagos de Florida antes de abrir ventas.</p>
+        <p class="anim lead" style="margin-top:20px;">Mientras los tokens solo se gasten en el club, no se cambien por plata y no se transfieran, son un certificado prepago, no dinero.</p>
+      </div>
+      <div class="anim">
+        <ul class="checklist">
+          <li><i data-lucide="circle-dot"></i><span>Circuito cerrado: solo se canjean por lo que el club vende o entrega.</span></li>
+          <li><i data-lucide="infinity"></i><span>Lo cargado no vence ni tiene fees. Lo de regalo, tampoco.</span></li>
+          <li><i data-lucide="gauge"></i><span>Tope de saldo por familia, propuesto en 1.500 dólares, por debajo del límite federal.</span></li>
+          <li><i data-lucide="ban"></i><span>Sin cash-out. Solo devolución de la compra original, por error.</span></li>
+          <li><i data-lucide="arrow-left-right"></i><span>Sin transferencias entre cuentas.</span></li>
+          <li><i data-lucide="gift"></i><span>Regalar es cargar tokens a nombre de otra familia.</span></li>
+          <li><i data-lucide="landmark"></i><span>Lo no canjeado queda en el club.</span></li>
+          <li><i data-lucide="shield"></i><span>Yacaré nunca tiene la plata: Stripe cobra a nombre del club.</span></li>
+        </ul>
+        <div class="aside-note" style="margin-top:14px;"><i data-lucide="baby"></i><span>Menores: la cuenta es del adulto, el chico no tiene login ni email, nombre e inicial en todo lo público. El daycare, por ser cuidado de menores, se consulta aparte.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+<!-- ══════════════ SECCIÓN 05 ══════════════ -->
+<section class="slide" data-slide="40">
+  <div class="section-num">05</div>
+  <div class="slide-content" style="text-align:center;">
+    <div class="label anim" style="justify-content:center;">Parte 05</div>
+    <h2 class="shimmer-text anim" style="font-size:clamp(2.6rem,5vw,4.2rem); margin-bottom:16px;">Las etapas</h2>
+    <p class="anim lead" style="max-width:640px; margin:0 auto;">Cuatro etapas con fechas, alcance, horas, equipo y riesgos. Cada una funciona sola y deja la base de la siguiente.</p>
+  </div>
+</section>
+
+<!-- ══════════════ ROADMAP ══════════════ -->
+<section class="slide" data-slide="41">
+  <div class="slide-content">
+    <div class="label anim">05 · Roadmap</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">De la School al estadio en cuatro etapas.</h2>
+    <div class="roadmap anim" style="margin-bottom:28px;">
+      <div class="rm-rail"></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Noviembre y diciembre 2026</div><div class="rm-month">Decisiones</div><p class="rm-desc">Rangos de edad, precios y packs, fecha de apertura, Stripe del club, abogado. Arranca la base técnica.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Diciembre 2026 a marzo 2027</div><div class="rm-month">Etapa 1</div><p class="rm-desc">La School funciona: cuenta, hijos, mensualidad, tokens, clínicas y daycare, check-in, progreso, carnet. Piloto en marzo y apertura.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Abril a julio 2027</div><div class="rm-month">Etapa 2</div><p class="rm-desc">La School a fondo y la cara de hincha: noticias, partidos, tienda con tokens, entradas propias, bilingüe, push.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Agosto a diciembre 2027</div><div class="rm-month">Etapa 3</div><p class="rm-desc">La app en las tiendas, pase de Wallet, comercios amigos en piloto, vivenu conectado, reglas legales cerradas.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">2028</div><div class="rm-month">Etapa 4</div><p class="rm-desc">El estadio: entradas y abonos, acceso con el carnet, locales que cobran en tokens, comercios operativos.</p></div>
+    </div>
+    <div class="aside-note anim" style="margin-top:0; max-width:900px;"><i data-lucide="link"></i><span>Las fechas ordenan el trabajo. Si la School abre antes de marzo, se arma un puente de pago en dos o tres días y la plataforma lo absorbe al abrir. Si el primer equipo juega desde marzo, conviene ampliar la capacidad y adelantar la cara de hincha.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ETAPA 1 SPRINTS ══════════════ -->
+<section class="slide" data-slide="42">
+  <div class="slide-content">
+    <div class="label anim">05 · Etapa 1 en detalle</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Siete sprints de dos semanas. Cada uno termina con algo que se puede mostrar.</h2>
+    <div class="tbl-wrap anim">
+      <table class="tbl">
+        <thead><tr><th>Sprint</th><th>Fechas</th><th>Qué se construye</th><th>Qué se muestra al final</th></tr></thead>
+        <tbody>
+          <tr><td>0 · Preparación</td><td>23 nov a 4 dic</td><td>Base técnica, pantallas finales, textos. El club entrega rangos de edad, precios, packs y fecha.</td><td>Entornos funcionando, pantallas aprobadas.</td></tr>
+          <tr><td>1 · Cuenta e hijos</td><td>7 a 18 dic</td><td>Magic link, hogar, hijos con consentimientos, dashboard vacío.</td><td>Una familia crea su cuenta y carga a sus hijos desde el teléfono.</td></tr>
+          <tr><td>2 · Wallet y packs</td><td>21 dic a 8 ene</td><td>Ledger, packs con Stripe, webhook, bonos. Fiestas en el medio.</td><td>Comprar un pack y ver subir el saldo.</td></tr>
+          <tr><td>3 · Actividades y compra</td><td>11 a 22 ene</td><td>Actividades con fechas y cupo, catálogo por hijo, compra con tokens, quiénes asisten.</td><td>Comprar una clínica para un hijo y verlo en la lista del club.</td></tr>
+          <tr><td>4 · Mensualidad</td><td>25 ene a 5 feb</td><td>Suscripción por hijo, plaza, cobro fallido, gracia, baja, anual.</td><td>Inscribir a un hijo y ver el cobro automático en Stripe.</td></tr>
+          <tr><td>5 · Check-in y progreso</td><td>8 a 19 feb</td><td>Presentes desde el teléfono, hitos con topes, insignias, racha, Luca.</td><td>El coach marca presentes; el hijo gana una insignia y la familia, tokens.</td></tr>
+          <tr><td>6 · Carnet y cierre</td><td>22 feb a 5 mar</td><td>Mi PSLSC ID con QR, movimientos, conciliación, QA.</td><td>El circuito completo, conciliado contra Stripe.</td></tr>
+          <tr><td>Piloto cerrado</td><td>8 a 19 mar</td><td>10 a 20 familias preinscriptas, una actividad real, ajustes.</td><td>Métricas del piloto.</td></tr>
+          <tr><td>Apertura</td><td>Semana del 22 mar</td><td>Importación de preinscriptos, email de apertura.</td><td>La School abre en PSLSC ID.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="aside-note anim"><i data-lucide="fast-forward"></i><span>Con 120 horas por mes los sprints duran nueve días hábiles, el piloto va del 15 al 26 de febrero y la apertura es la semana del 1 de marzo.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ ALCANCE POR ETAPA ══════════════ -->
+<section class="slide" data-slide="43">
+  <div class="slide-content">
+    <div class="label anim">05 · Alcance por etapa</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Qué entra en cada etapa y qué queda afuera a propósito.</h2>
+    <div class="grid-4">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Etapa 1 · 330 horas</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">La School funciona</h4>
+        <ul class="dot-list">
+          <li>Cuenta del adulto, un perfil por hijo</li>
+          <li>Mensualidad a la tarjeta, por hijo</li>
+          <li>Tokens, packs con bono, clínicas y daycare</li>
+          <li>Actividades, cupos, quiénes asisten</li>
+          <li>Check-in, hitos, insignias, racha, Luca</li>
+          <li>Carnet con QR, panel del club, conciliación</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin tienda, sin partidos, sin app nativa.</span></div>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Etapa 2 · 390 horas</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">A fondo y la cara de hincha</h4>
+        <ul class="dot-list">
+          <li>Eventos exclusivos, make-up, lista de espera</li>
+          <li>Comunicación al grupo, reportes, bilingüe</li>
+          <li>Noticias y partidos del sitio por API</li>
+          <li>Home que se ordena según quién sos</li>
+          <li>Tienda Shopify: códigos, después vidriera con tokens</li>
+          <li>Entradas a eventos propios con QR</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin app nativa, sin comercios, sin vivenu.</span></div>
+      </div>
+      <div class="card card--sm card--accent-3 anim">
+        <div class="card-sub">Etapa 3 · 310 horas</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">La app y el club conectado</h4>
+        <ul class="dot-list">
+          <li>App en App Store y Google Play sobre la misma web</li>
+          <li>Push nativo, cámara, pase de Wallet</li>
+          <li>Comercios amigos en piloto con dos comercios</li>
+          <li>vivenu por cupones y, con acceso, por API</li>
+          <li>Leaderboards con nombre e inicial</li>
+          <li>Consulta legal cerrada</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin estadio, sin cobrar tokens en cajas ajenas.</span></div>
+      </div>
+      <div class="card card--sm card--accent-4 anim">
+        <div class="card-sub">Etapa 4 · 340 horas, según proveedores</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">El estadio</h4>
+        <ul class="dot-list">
+          <li>vivenu a fondo: abonos, asientos, entradas en el wallet</li>
+          <li>Acceso con el carnet</li>
+          <li>Punto de venta con identidad y wallet por API</li>
+          <li>Locales y comercios con liquidación</li>
+          <li>Matchday: estacionamiento, mapa, menús</li>
+        </ul>
+        <div class="card-note"><i data-lucide="key"></i><span>Criterio para elegir proveedores: que acepten PSLSC ID por API.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ EQUIPO Y CAPACIDAD ══════════════ -->
+<section class="slide" data-slide="44">
+  <div class="slide-content">
+    <div class="label anim">05 · Equipo y capacidad</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Un equipo chico de Yacaré, IT del club como revisor y la coordinadora como dueña de la operación.</h2>
+    <div class="split" style="align-items:start; gap:32px;">
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Roles</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="pen-tool"></i><span><strong>Producto y diseño, Yacaré.</strong> Alcance, pantallas, textos, demo quincenal. 25 % de las horas.</span></div>
+          <div class="moment"><i data-lucide="code"></i><span><strong>Desarrollo, Yacaré.</strong> Supabase, Vercel, Stripe, integraciones. 55 %.</span></div>
+          <div class="moment"><i data-lucide="bug"></i><span><strong>QA, piloto y soporte, Yacaré.</strong> Casos reales, familias en la apertura. 10 %.</span></div>
+          <div class="moment"><i data-lucide="life-buoy"></i><span><strong>Acompañamiento al club, Yacaré.</strong> Capacitar a coordinadora y coaches. 10 %.</span></div>
+          <div class="moment"><i data-lucide="shield"></i><span><strong>IT de PSLSC.</strong> Revisa seguridad y es dueño de accesos y cuentas. 4 a 8 horas por mes.</span></div>
+          <div class="moment"><i data-lucide="whistle"></i><span><strong>Coordinadora y coaches.</strong> Cargan actividades y precios, marcan presentes. 4 horas por semana al inicio; 2 minutos por clase.</span></div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Con 80 o con 120 horas por mes</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Etapa</th><th>Horas</th><th>Con 80 h/mes</th><th>Con 120 h/mes</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>330</td><td>Apertura 22 de marzo</td><td>Apertura 1 de marzo</td></tr>
+              <tr><td>2</td><td>390</td><td>Hasta fines de agosto</td><td>Hasta mediados de julio</td></tr>
+              <tr><td>3</td><td>310</td><td>Agosto a noviembre</td><td>Tres meses</td></tr>
+              <tr><td>4</td><td>340</td><td colspan="2">Según el calendario del estadio y los proveedores</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="aside-note" style="margin-top:16px;"><i data-lucide="clock"></i><span>Con 80 horas el plan cierra, pero la cara de hincha llega después de empezada la temporada 2027. Si el primer equipo juega desde marzo, recomendamos 120 horas por mes de diciembre a julio.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ RIESGOS ══════════════ -->
+<section class="slide" data-slide="45">
+  <div class="slide-content">
+    <div class="label anim">05 · Riesgos y mitigaciones</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Los ocho riesgos que importan y qué hacemos con cada uno.</h2>
+    <div class="tbl-wrap anim">
+      <table class="tbl">
+        <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
+        <tbody>
+          <tr><td>La School abre antes de que la plataforma esté lista</td><td>Puente con enlaces de pago de Stripe y un formulario, en dos o tres días. Las suscripciones ya quedan creadas y se vinculan al abrir.</td></tr>
+          <tr><td>80 horas por mes no alcanzan para marzo</td><td>Decidir en diciembre si se amplía a 120. Lo que no entre cae en Etapa 2, no en el medio.</td></tr>
+          <tr><td>Apple rechaza la app por los tokens</td><td>Web instalable primero. En la app los tokens se cargan en la web y nunca compran nada digital; lo físico se cobra con Stripe adentro, como exige Apple.</td></tr>
+          <tr><td>Sin acceso a la API de vivenu</td><td>Pedirlo a través de la USL desde la Etapa 1. Mientras tanto, cupones y enlaces.</td></tr>
+          <tr><td>El plan de Shopify limita la integración</td><td>Elegir el plan con la integración en mente. La vidriera va dentro de PSLSC ID con órdenes por API; no dependemos de Multipass.</td></tr>
+          <tr><td>El daycare requiere licencia de child care en Florida</td><td>Consulta legal antes de venderlo. Si hace falta, se vende como programa recreativo o se posterga.</td></tr>
+          <tr><td>Cobros recurrentes fallidos</td><td>Reintentos de Stripe, aviso con link para actualizar la tarjeta, gracia corta, baja automática. Meta: menos del 5 % de fallos.</td></tr>
+          <tr><td>Los coaches no marcan presentes</td><td>Check-in de un toque, lista de respaldo, capacitación de 20 minutos y la coordinadora ve qué sesiones quedaron sin marcar.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ LO QUE NO ══════════════ -->
+<section class="slide" data-slide="46">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">05 · Lo que no construimos</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Decir que no también es diseño de producto.</h2>
+        <p class="anim">Cada una de estas cosas apareció en el camino. Las sacamos por una razón concreta, no por falta de ganas.</p>
+        <p class="anim lead" style="margin-top:20px;">Lo que queda afuera es lo que mantiene simple todo lo demás.</p>
+      </div>
+      <div class="anim">
+        <ul class="checklist">
+          <li><i data-lucide="tv"></i><span><strong>Streaming y resultados en vivo.</strong> Los da la USL. Nosotros enlazamos.</span></li>
+          <li><i data-lucide="message-circle-off"></i><span><strong>Red social o chat.</strong> La moderación no vale la pena. El muro del groundbreaking vive en su micrositio.</span></li>
+          <li><i data-lucide="store"></i><span><strong>Cobrar en tokens en la caja de un comercio.</strong> Sin un partner con licencia, en Florida es transmisión de dinero.</span></li>
+          <li><i data-lucide="user-x"></i><span><strong>Cuentas para menores de 13.</strong> La cuenta es del adulto; el chico es un perfil.</span></li>
+          <li><i data-lucide="ban"></i><span><strong>Criptomonedas.</strong> Los tokens son un saldo del club, no un activo. Nada en blockchain.</span></li>
+          <li><i data-lucide="arrow-left-right"></i><span><strong>Transferencias y cash-out.</strong> Regalar es cargar tokens a nombre de otra familia. Nunca de una cuenta a otra ni a dinero.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ SECCIÓN 06 · DECISIONES ══════════════ -->
+<section class="slide" data-slide="47">
+  <div class="slide-content">
+    <div class="split" style="align-items:start; margin-bottom:28px;">
+      <div>
+        <div class="label anim">06 · Lo que necesitamos del club</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Siete decisiones para arrancar el 23 de noviembre.</h2>
+        <p class="anim">Yacaré analiza, recomienda, diseña y construye. Las decisiones de negocio son del club, y estas siete destraban la Etapa 1.</p>
+        <p class="anim lead" style="margin-top:20px;">Con esto cerrado, la School abre en PSLSC ID en marzo.</p>
+      </div>
+      <div class="anim">
+        <div class="card card--sm card--accent-1">
+          <div class="card-sub">Para el 4 de diciembre</div>
+          <ul class="checklist">
+            <li><i data-lucide="ruler"></i><span>Rangos de edad por categoría.</span></li>
+            <li><i data-lucide="calendar"></i><span>Fecha de apertura de la School y dónde se entrena.</span></li>
+            <li><i data-lucide="tag"></i><span>Packs y precios del primer período, descuento por hermanos, bono por prepago.</span></li>
+            <li><i data-lucide="coins"></i><span>Qué hitos regalan tokens y cuánto. Nuestra propuesta está en la Parte 03.</span></li>
+            <li><i data-lucide="map-pin"></i><span>Dónde y cuándo juega el primer equipo en 2027.</span></li>
+            <li><i data-lucide="shopping-bag"></i><span>Quién administra la tienda en Shopify y qué plan contrata.</span></li>
+            <li><i data-lucide="scale"></i><span>Un abogado de pagos en Florida para validar tokens y daycare.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card card--highlight card--accent-1 anim" style="padding:24px 32px;">
+      <p class="quote-text">Y una decisión de ritmo: con 80 horas por mes la School abre el 22 de marzo; con 120, el 1 de marzo y la cara de hincha llega con la temporada.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<!-- ══════════════ CIERRE ══════════════ -->
+<section class="slide slide--thanks" data-slide="48">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Let's build PSLSC ID.</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:640px; margin-left:auto; margin-right:auto;">La cuenta del club. Para la School hoy, para todo el club mañana.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CHAT ══════════════ -->
+<section class="slide slide--chat" data-slide="49">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre PSLSC ID?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la propuesta</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funcionan los tokens?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué es un negocio?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuándo abre la School?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué pasa con la app y Apple?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué necesitan del club?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..." style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;" onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="send" style="width:18px; height:18px;"></i></button>
+      </div>
+    </div>
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.</p>
+  </div>
+</section>
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+// Same breakpoint as the MOBILE block in the CSS
+const isMobile = window.matchMedia('(max-width: 768px), (max-height: 500px) and (orientation: landscape)').matches;
+
+// Current slide: the last one whose top has passed the upper 35% of the screen.
+// Uses real slide positions, so it still works if a slide is taller than the screen.
+function currentIndex() {
+  const pos = deck.scrollTop + deck.clientHeight * 0.35;
+  let idx = 0;
+  slides.forEach(function(s, i) { if (s.offsetTop <= pos) idx = i; });
+  return idx;
+}
+
+function goToSlide(i) {
+  deck.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (hidden on mobile via CSS)
+// ═══════════════════════════════════════
+function updateCounter() {
+  counterEl.textContent = (currentIndex() + 1) + ' / ' + totalSlides;
+}
+
+deck.addEventListener('scroll', updateCounter, { passive: true });
+updateCounter();
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+document.addEventListener('keydown', function(e) {
+  // Don't intercept if user is typing in the chat input
+  if (e.target.id === 'chat-input') return;
+
+  const vh = deck.clientHeight;
+  const i = currentIndex();
+  const s = slides[i];
+
+  switch (e.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+    case ' ':
+    case 'PageDown': {
+      e.preventDefault();
+      const slideBottom = s.offsetTop + s.offsetHeight;
+      if (slideBottom - (deck.scrollTop + vh) > 4) {
+        // Slide taller than the screen: show the rest of it first
+        deck.scrollTo({ top: Math.min(deck.scrollTop + vh * 0.85, slideBottom - vh), behavior: 'smooth' });
+      } else if (i < totalSlides - 1) {
+        goToSlide(i + 1);
+      }
+      break;
+    }
+    case 'ArrowUp':
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      if (deck.scrollTop - s.offsetTop > 4) {
+        deck.scrollTo({ top: Math.max(s.offsetTop, deck.scrollTop - vh * 0.85), behavior: 'smooth' });
+      } else if (i > 0) {
+        goToSlide(i - 1);
+      }
+      break;
+    case 'Home':
+      e.preventDefault();
+      goToSlide(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      goToSlide(totalSlides - 1);
+      break;
+  }
+});
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// (on mobile the CSS keeps content visible with no animation)
+// ═══════════════════════════════════════
+const animObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    const anims = entry.target.querySelectorAll('.anim');
+    anims.forEach(function(el) {
+      el.classList.toggle('anim--visible', entry.isIntersecting);
+    });
+  });
+}, { threshold: 0.3 });
+
+slides.forEach(function(slide) {
+  animObserver.observe(slide);
+});
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    goToSlide(totalSlides - 1);
+  }
+  setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  { keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme qué es PSLSC ID, cómo funcionan los tokens y la mensualidad, por qué es un negocio, qué pantallas tiene, cuándo abre la School, cómo son las etapas, qué pasa con la app y Apple, o qué decisiones necesitamos del club.' },
+  { keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'dale'],
+    answer: '¡De nada! Si te surge otra duda sobre PSLSC ID, estoy acá. También podés escribir a contact@yacare.io.' },
+  { keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda, volvé a consultar acá o escribí a contact@yacare.io.' },
+  { keywords: ['resumen', 'resumime', 'propuesta', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'en pocas palabras'],
+    answer: 'PSLSC ID es la cuenta del club: una cuenta por familia, un perfil por hijo, una moneda del club (los tokens) y un carnet con QR. Empieza por la Soccer School: la mensualidad de cada hijo se cobra a la tarjeta, los tokens pagan lo suelto (clínicas, daycare), los hitos regalan tokens y los chicos progresan con cada clase. En 2027 la misma cuenta suma noticias, partidos, la tienda en Shopify y entradas; en 2028, el estadio. La School abre en PSLSC ID en marzo de 2027 y el plan tiene cuatro etapas con horas, equipo y riesgos definidos.' },
+  { keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'opciones'],
+    answer: 'Podés preguntarme por el análisis (mercado, personas, lo que cambió desde octubre), la estrategia (tesis, principios, métricas), el producto (conceptos, tokens, mensualidad, hitos, pantallas, integraciones), el negocio (palancas, supuestos, proyección, costos, reglas legales), las etapas (fechas, horas, equipo, riesgos) y las decisiones que necesitamos del club.' },
+  { keywords: ['octubre', 'cambió', 'cambio', 'distinto', 'diferente', 'correcciones', 'rumbo', 'visión', 'vision'],
+    answer: 'Respecto del deck de octubre, el análisis cambió seis cosas: el centro es la pertenencia (el carnet), no los puntos; la mensualidad va a la tarjeta y no a los créditos; los tokens tienen tres razones concretas para existir (bono por prepago, cosas que solo se compran con tokens, regalos por hitos); se gamifica la progresión del chico, no el gasto del padre; la tienda pasa a la segunda etapa, antes que el estadio; y la app nativa llega cuando haya hábito, envolviendo la misma web, sin vender tokens adentro.' },
+  { keywords: ['mercado', 'ciudad', 'port st. lucie', 'crecimiento', 'demograf', 'padres', 'costo', 'encuesta', 'datos', 'cifras'],
+    answer: 'Port St. Lucie creció 29,6 % en cinco años y es la ciudad de más de 250.000 habitantes que más crece en EE. UU.; un tercio de los hogares tiene chicos. El costo es el dolor número uno: 44 % de los padres demoró o salteó una inscripción por no poder pagar. Las familias ya pagan entre 119 y 175 dólares por mes por natación, gimnasia o artes marciales, y nadie en la zona ofrece fútbol mensual para chicos de 5 a 13. La comunicación pesa para el 91 % y el 88 % quiere coaches con antecedentes verificados.' },
+  { keywords: ['persona', 'personas', 'carolina', 'mía', 'mia', 'tomás', 'tomas', 'diego', 'valeria', 'marco', 'a quién', 'a quien', 'usuarios'],
+    answer: 'Diseñamos para cuatro: Carolina, que organiza y paga (dos chicos, bilingüe, ya paga natación); Mía de 7 y Tomás de 12, que viven la experiencia (Tomás está en la edad promedio de abandono); Diego y Valeria, coach y coordinadora, que operan la School; y Marco, el hincha, que llega después con la misma cuenta.' },
+  { keywords: ['tesis', 'estrategia', 'frecuencia', 'escala', 'puente', 'principios', 'posicionamiento'],
+    answer: 'La tesis: la frecuencia la da la School, la escala la da el estadio y el puente es la tienda. Seis principios: nadie necesita entender los tokens para comprar; la cuenta es del adulto y el progreso del chico; todo lo que el club vende se compra con lo mismo; lo que se regala cuesta poco y trae gente; cada etapa funciona sola; el club es dueño de la relación y de la plata.' },
+  { keywords: ['métrica', 'metrica', 'kpi', 'medir', 'medimos', 'norte', 'retención', 'retencion', 'funciona'],
+    answer: 'La métrica norte es familias activas por mes: con mensualidad al día y al menos una sesión asistida. La explican cinco: retención mensual (objetivo más del 90 %), sesiones asistidas por familia, tokens gastados en extras, tasa de regalo sobre ingresos (entre 3 y 7 %) y referidos que pagan su primer mes. Todas salen del ledger y del check-in, sin encuestas.' },
+  { keywords: ['token', 'tokens', 'moneda', 'coins', 'créditos', 'creditos', 'saldo', 'wallet', 'billetera', 'cómo funcionan', 'como funcionan', 'vencen', 'vence'],
+    answer: 'Un token vale un dólar, siempre. No vencen, ni los cargados ni los de regalo. Se compran con tarjeta, en la web, por Stripe, y sirven para todo lo del club y nada más. Pagan lo suelto: clínicas, daycare, eventos exclusivos, y desde 2027 la tienda y las entradas. Tienen tres razones para existir: bono por prepago, cosas que solo se compran con tokens y regalos por hitos. No se cambian por dinero, no se pasan de una cuenta a otra y no compran nada digital.' },
+  { keywords: ['mensualidad', 'suscripción', 'suscripcion', 'tarjeta', 'cobro', 'cobra', 'pago mensual', 'cancelar', 'baja'],
+    answer: 'La mensualidad de cada hijo es una suscripción de Stripe cobrada a la tarjeta cada mes, hasta que la familia la da de baja. Pagar el año adelantado bonifica en tokens. Si un cobro falla, hay reintentos, aviso con link para actualizar la tarjeta y unos días de gracia. Nadie necesita entender los tokens para pagar la School.' },
+  { keywords: ['hito', 'hitos', 'regalo', 'regalan', 'gamific', 'insignia', 'racha', 'progreso', 'luca', 'referido', 'asistencia perfecta'],
+    answer: 'Los hitos regalan tokens a la familia y dan insignias al chico: completar el perfil (10 tokens), primer mes pagado (10), asistencia perfecta en el mes (5 % del pack), referir a una familia que paga su primer mes (25 tokens para cada una, hasta tres por año) y la encuesta de fin de período (5). Los packs grandes y el anual bonifican. Tres topes: por acción, 10 % de lo pagado por familia por mes y 5 % de los ingresos del club. Los tokens de regalo compran lo suelto, nunca la mensualidad. El chico ve racha, insignias y progreso con Luca; sin leaderboards en la primera etapa.' },
+  { keywords: ['daycare', 'guardería', 'guarderia', 'clínica', 'clinica', 'clínicas', 'extras', 'lo suelto'],
+    answer: 'Lo suelto se paga con tokens: una clínica en su fecha, un día o una tarde de daycare en la fecha que la familia elige, con cupo por fecha, y eventos exclusivos. El daycare es cuidado del chico por el día o la tarde; por ser cuidado de menores, el club lo consulta con su abogado antes de venderlo.' },
+  { keywords: ['pantalla', 'pantallas', 'interfaz', 'interfaces', 'mockup', 'app', 'cómo se ve', 'como se ve', 'diseño'],
+    answer: 'Hay dieciséis pantallas ilustrativas. Nueve de la familia: sign in, home, progreso del hijo, packs, pagar el mes, cargar tokens, comprar con tokens, wallet y Mi PSLSC ID con QR. Cuatro del club: actividades, quiénes asisten con check-in del coach, hitos y movimientos. Y tres del futuro: home de hincha, tienda y entradas. Están en inglés porque es el idioma del producto.' },
+  { keywords: ['club', 'coordinadora', 'coach', 'panel', 'admin', 'check-in', 'check in', 'presentes', 'quiénes asisten', 'quienes asisten', 'planilla'],
+    answer: 'El club tiene cinco pantallas: actividades (grupo, días, horario, sede, coach, cupo por fecha y lo que se vende), socios, quiénes asisten con contacto de emergencia y notas médicas, hitos (qué acciones regalan tokens y con qué tope) y movimientos con la conciliación contra Stripe. El coach abre la lista en el teléfono y marca presentes en 30 segundos; eso alimenta la progresión y los hitos.' },
+  { keywords: ['shopify', 'tienda', 'merch', 'camiseta', 'remera', 'store'],
+    answer: 'La tienda corre en Shopify y se integra en tres niveles: enlace y códigos de descuento pagados con tokens; la vidriera dentro de PSLSC ID con órdenes pagadas con tokens creadas por API; y tokens por cada compra. Shopify queda como inventario y despacho. Llega en la Etapa 2, en 2027, porque la camiseta es el primer gesto de pertenencia.' },
+  { keywords: ['vivenu', 'entradas', 'entrada', 'ticket', 'abono', 'partido', 'partidos', 'matchday'],
+    answer: 'Las entradas a eventos propios del club se venden desde la primera cara de hincha, con QR validado por nosotros. Los partidos de la USL los vende vivenu, el ticketing oficial de la liga desde marzo de 2026: primero cupones emitidos por nosotros, y con acceso a la API, compra desde la app y tokens por asistir. El acceso se pide a través de la liga.' },
+  { keywords: ['comercio', 'comercios', 'descuento', 'descuentos', 'partner', 'partners', 'qr', 'beneficio', 'beneficios'],
+    answer: 'Los comercios amigos no integran nada: el club carga el beneficio, la familia muestra el QR de su carnet, el comercio lo escanea con cualquier teléfono y ve "válido" en una página nuestra, hace el descuento en su caja y nosotros registramos el uso. Se prueba con dos comercios en la Etapa 3. Lo que no hacemos es cobrar en tokens en la caja del comercio: en Florida es transmisión de dinero sin un partner con licencia.' },
+  { keywords: ['apple', 'app store', 'google play', 'comisión', 'comision', 'nativa', 'ios', 'android', 'notificaciones', 'push'],
+    answer: 'Primero la web instalable, sin tiendas de apps. La app nativa llega en la Etapa 3, envolviendo la misma web con push, cámara y pase de Wallet. Apple cobra comisión solo por bienes digitales; la mensualidad, las clínicas, la remera y las entradas son servicios y bienes del mundo real y se cobran con Stripe dentro de la app sin comisión. Lo único en zona gris es vender tokens adentro: por eso los tokens se cargan en la web y nunca compran nada digital.' },
+  { keywords: ['ecosistema', 'arquitectura', 'supabase', 'vercel', 'stripe', 'backend', 'api', 'tecnolog', 'activecampaign'],
+    answer: 'Tres frentes sobre un solo núcleo: la web de PSLSC ID para la familia, el panel para el staff y la página de validación para los comercios. Todo pasa por una API sobre Supabase, con la base por club; Stripe Connect cobra a nombre del club; ActiveCampaign sigue como CRM; el sitio de la USL solo enlaza, aunque sus noticias y eventos ya salen por API pública. vivenu, Shopify y el punto de venta del estadio se conectan después sobre lo mismo.' },
+  { keywords: ['legal', 'ley', 'florida', 'fincen', 'abogado', 'circuito cerrado', 'cash', 'transferencia', 'menores', 'coppa', 'reglas'],
+    answer: 'Ocho principios a validar con un abogado de pagos de Florida: circuito cerrado; lo cargado no vence ni tiene fees; tope de saldo de 1.500 dólares por familia; sin cash-out; sin transferencias entre cuentas; regalar es cargar a nombre de otra familia; lo no canjeado queda en el club; Yacaré nunca tiene la plata. Menores: la cuenta es del adulto, el chico no tiene login ni email, nombre e inicial en todo lo público.' },
+  { keywords: ['etapa', 'etapas', 'roadmap', 'fechas', 'cuándo', 'cuando', 'calendario', 'cronograma', 'plazos', 'marzo', '2027', '2028'],
+    answer: 'Cuatro etapas. Etapa 1, de diciembre a marzo: la School funciona, con piloto en marzo y apertura la semana del 22 de marzo de 2027 (o del 1 de marzo con 120 horas por mes). Etapa 2, de abril a julio de 2027: la School a fondo y la cara de hincha, con noticias, partidos, tienda y entradas propias. Etapa 3, de agosto a diciembre de 2027: la app en las tiendas, comercios amigos en piloto y vivenu. Etapa 4, 2028: el estadio.' },
+  { keywords: ['sprint', 'sprints', 'construcción', 'construccion', 'piloto', 'apertura', 'abre', 'puente'],
+    answer: 'La Etapa 1 son siete sprints de dos semanas: preparación (23 de noviembre), cuenta e hijos (7 de diciembre), wallet y packs (21 de diciembre), actividades y compra (11 de enero), mensualidad (25 de enero), check-in y progreso (8 de febrero) y carnet y cierre (22 de febrero). Piloto cerrado con 10 a 20 familias del 8 al 19 de marzo y apertura la semana del 22 de marzo. Si la School abre antes, hay un puente de pago en dos o tres días.' },
+  { keywords: ['hora', 'horas', 'equipo', 'capacidad', '80', '120', 'quién construye', 'quien construye', 'yacaré', 'yacare', 'it'],
+    answer: 'Construye Yacaré sobre Supabase, Vercel y Stripe; IT del club revisa seguridad y es dueño de accesos (4 a 8 horas por mes); la coordinadora carga actividades y los coaches marcan presentes. Horas de punto medio: Etapa 1, 330; Etapa 2, 390; Etapa 3, 310; Etapa 4, 340 según proveedores. Con 80 horas por mes la School abre el 22 de marzo; con 120, el 1 de marzo y la cara de hincha llega con la temporada.' },
+  { keywords: ['riesgo', 'riesgos', 'mitigación', 'mitigacion', 'qué puede salir mal', 'que puede salir mal', 'peligro'],
+    answer: 'Los riesgos que importan: que la School abra antes (puente de pago en días), que 80 horas no alcancen (decidir en diciembre si se amplía), que Apple rechace la app por los tokens (web primero, tokens solo en la web), no tener acceso a la API de vivenu (cupones mientras tanto), el plan de Shopify, la licencia del daycare, cobros fallidos, datos de menores, coaches que no marcan presentes y el scope creep.' },
+  { keywords: ['negocio', 'por qué es un negocio', 'por que es un negocio', 'palanca', 'palancas', 'ingreso', 'ingresos', 'gana', 'plata', 'rentab'],
+    answer: 'Cinco palancas: ingreso recurrente que se cobra solo (la mensualidad), caja anticipada y más frecuencia (packs y anual), datos propios de quién viene y cuánto gasta, la tienda y las entradas sobre la misma cuenta desde 2027, y el estadio en 2028 con la relación ya hecha. La Parte 04 trae los supuestos con fuente, la proyección a tres años y los costos de operar.' },
+  { keywords: ['decisión', 'decision', 'decisiones', 'necesitan', 'necesitamos', 'qué falta', 'que falta', 'pendiente', 'arrancar', 'empezar'],
+    answer: 'Siete decisiones para el 4 de diciembre: rangos de edad por categoría; fecha de apertura de la School y dónde se entrena; packs y precios, descuento por hermanos y bono por prepago; qué hitos regalan tokens y cuánto; dónde y cuándo juega el primer equipo en 2027; quién administra la tienda en Shopify y qué plan; y un abogado de pagos en Florida. Más una decisión de ritmo: 80 o 120 horas por mes.' },
+  { keywords: ['no construimos', 'no vamos a hacer', 'streaming', 'red social', 'chat', 'cripto', 'crypto', 'blockchain'],
+    answer: 'No construimos streaming ni resultados en vivo (los da la USL), red social ni chat (moderación), cobrar en tokens en la caja de un comercio sin partner licenciado, cuentas para menores de 13, nada en blockchain, ni transferencias o cash-out de tokens.' },
+  { keywords: ['costo', 'cuánto cuesta', 'cuanto cuesta', 'inversión', 'inversion', 'presupuesto', 'honorarios', 'precio del proyecto'],
+    answer: 'El plan está expresado en horas por etapa (330, 390, 310 y 340 de punto medio) y en los costos de operar la plataforma que muestra la Parte 04. Para cualquier detalle sobre inversión, escribí a contact@yacare.io.' }
+];
+
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme por qué empezar por la School, cómo funcionan los créditos, cuándo llega la app, cómo es el roadmap o qué falta decidir.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
