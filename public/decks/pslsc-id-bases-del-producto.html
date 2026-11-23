@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · PSLSC ID, las bases del producto</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.lead { font-size: 1.15rem; color: var(--text-primary); }
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip--accent {
+  background: transparent;
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem; padding: 11px 24px;
+}
+
+/* Lucide reemplaza cada <i> por un <svg>: que nunca se achique dentro de un flex */
+svg.lucide { flex-shrink: 0; }
+
+/* Card header: icon + title */
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-head svg { width: 22px; height: 22px; color: var(--text-muted); flex-shrink: 0; }
+.card-head h4 { font-size: 1.25rem; margin: 0; }
+.card-sub {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary); margin-bottom: 14px;
+}
+.card-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+  font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;
+}
+.card-note svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+.card p.card-body { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* Compact list inside cards */
+.dot-list li {
+  position: relative; padding: 7px 0 7px 18px; margin: 0;
+  font-size: 0.95rem; line-height: 1.4; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dot-list li:last-child { border-bottom: none; }
+.dot-list li::before {
+  content: ''; position: absolute; left: 2px; top: calc(7px + 0.7em);
+  width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* Checklist with icons (slide 12) */
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 0; margin: 0; border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.98rem; line-height: 1.45; color: var(--text-primary);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Footnote with icon */
+.foot-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 1rem; color: var(--text-primary); line-height: 1.5; max-width: 900px;
+}
+.foot-note svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Aclaración chica */
+.aside-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 24px; padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
+}
+.aside-note svg { width: 15px; height: 15px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+
+/* Rows with icon */
+.moments { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.moment {
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary); line-height: 1.4;
+}
+.moment svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Nodo con borde degradado (reutilizado en varias slides) */
+.gnode {
+  border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+}
+.gnode svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   COVER
+   ═══════════════════════════════════════ */
+.slide--cover { text-align: center; position: relative; overflow: hidden; }
+.slide--cover h1 { font-size: clamp(4rem, 9vw, 7.5rem); margin-bottom: 10px; letter-spacing: -0.03em; line-height: 1; }
+.cover-kicker {
+  font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary);
+  margin: 0 0 30px;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; opacity: 0.7; margin-bottom: 40px; }
+
+/* ═══════════════════════════════════════
+   HITOS / MOMENTOS (slide 3)
+   ═══════════════════════════════════════ */
+.milestones {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.ms-rail {
+  position: absolute; top: 26px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.ms-arrow {
+  position: absolute; top: 26px; right: -6px; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #D1249D;
+}
+.ms-item { position: relative; z-index: 1; }
+.ms-node {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  margin-bottom: 22px;
+}
+.ms-node svg { width: 22px; height: 22px; color: var(--text-secondary); }
+.ms-item:nth-child(2) .ms-node { border-color: rgba(255,255,255,0.45); }
+.ms-item:nth-child(3) .ms-node { border-color: rgba(255,255,255,0.7); }
+.ms-node--on {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: ms-pulse 3.2s ease-in-out infinite;
+}
+.ms-node--on svg { color: var(--text-primary); }
+@keyframes ms-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 18px rgba(138, 94, 255, 0.2); }
+  50%      { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 52px rgba(138, 94, 255, 0.6); }
+}
+.ms-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px;
+}
+.ms-body h4 { font-size: 1.35rem; margin-bottom: 10px; }
+.ms-body p { font-size: 0.98rem; margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   CAPAS (slide 5): la web de la School arriba,
+   debajo las cuatro bases de PSLSC ID
+   ═══════════════════════════════════════ */
+.layers { width: 100%; }
+.layer-top { display: flex; justify-content: center; }
+.layer-chip {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-size: 0.92rem; font-weight: 500; line-height: 1.3; color: var(--text-primary);
+}
+.layer-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.layer-link { width: 1px; height: 30px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.3), #8A63F2); }
+.layer-bar { height: 1px; margin: 0 calc(12.5% - 8px); background: linear-gradient(90deg, #8A63F2, #D1249D); opacity: 0.8; }
+.layer-drops { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; height: 20px; }
+.layer-drops span { display: block; width: 1px; height: 100%; margin: 0 auto; background: rgba(255,255,255,0.25); }
+.found-node { width: 44px; height: 44px; margin-bottom: 16px; }
+.found-node svg { width: 20px; height: 20px; }
+.found h4 { font-size: 1.3rem; margin-bottom: 8px; }
+.found p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* ═══════════════════════════════════════
+   MOTOR (slide 6): cuatro pasos en línea y un arco que vuelve al inicio
+   ═══════════════════════════════════════ */
+.loop { width: 100%; }
+.loop-return {
+  position: relative; height: 26px; margin: 0 calc(12.5% - 10px) -1px;
+  border: 1px solid rgba(255,255,255,0.22); border-bottom: none;
+  border-radius: 20px 20px 0 0;
+}
+.loop-return svg {
+  position: absolute; left: -8.5px; bottom: 3px;
+  width: 16px; height: 16px; color: #D1249D;
+  background: var(--bg-primary); border-radius: 50%;
+}
+.loop-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.loop-rail {
+  position: absolute; top: 26px; left: 12.5%; right: 12.5%; height: 1px;
+  background: linear-gradient(90deg, #8A63F2, #D1249D);
+}
+.loop-step { position: relative; z-index: 1; text-align: center; }
+.loop-node {
+  width: 52px; height: 52px; margin: 0 auto 18px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  animation: loop-glow 4.8s ease-in-out infinite;
+}
+.loop-step:nth-child(2) .loop-node { animation-delay: 1.2s; }
+.loop-step:nth-child(3) .loop-node { animation-delay: 2.4s; }
+.loop-step:nth-child(4) .loop-node { animation-delay: 3.6s; }
+.loop-node svg { width: 22px; height: 22px; }
+@keyframes loop-glow {
+  0%, 30%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 0 rgba(138, 94, 255, 0); }
+  12%           { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 42px rgba(138, 94, 255, 0.7); }
+}
+.loop-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 6px;
+}
+.loop-body h4 { font-size: 1.35rem; margin-bottom: 8px; }
+.loop-body p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+.plus-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.plus-row .club-chip { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--text-primary); font-size: 0.95rem; padding: 10px 18px; }
+.plus-row .club-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.plus-row > span.plus { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-secondary); line-height: 1; }
+
+/* Destello animado sobre las monedas */
+.coin-glint { position: relative; display: block; line-height: 0; }
+.coin-glint::before, .coin-glint::after {
+  content: ''; position: absolute;
+  left: var(--gx); top: var(--gy);
+  pointer-events: none; z-index: 2;
+  mix-blend-mode: screen;
+}
+.coin-glint::before {
+  width: var(--gs); aspect-ratio: 1 / 1; margin: calc(var(--gs) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,224,150,0.4) 32%, transparent 68%);
+  animation: glint-halo 3.6s ease-in-out infinite;
+}
+.coin-glint::after {
+  width: calc(var(--gs) * 1.9); aspect-ratio: 1 / 1;
+  margin: calc(var(--gs) * -0.95);
+  background:
+    linear-gradient(to right, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%),
+    linear-gradient(to bottom, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  animation: glint-star 3.6s ease-in-out infinite;
+}
+@keyframes glint-halo {
+  0%, 100% { opacity: 0.22; transform: scale(0.75); }
+  50%      { opacity: 0.95; transform: scale(1.15); }
+}
+@keyframes glint-star {
+  0%, 100% { opacity: 0.12; transform: rotate(0deg) scale(0.6); }
+  50%      { opacity: 1;    transform: rotate(45deg) scale(1.1); }
+}
+.coin-glint.coins-glint {
+  position: absolute; top: -16px; right: 0;
+  width: 250px; z-index: 1; pointer-events: none;
+}
+.coins-img { display: block; width: 100%; height: auto; }
+
+/* ═══════════════════════════════════════
+   CADENA (slide 7): participación, consumo, recompensa, nueva participación
+   ═══════════════════════════════════════ */
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.chain-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary);
+  white-space: nowrap;
+}
+.chain-item svg { width: 18px; height: 18px; color: var(--text-secondary); }
+.chain > svg.lucide { width: 18px; height: 18px; color: var(--text-muted); }
+.chain-item--loop {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 24px rgba(138, 94, 255, 0.25);
+}
+.chain-item--loop svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   MOBILE (slide 9): texto a la izquierda, teléfono a la derecha
+   ═══════════════════════════════════════ */
+.slide--phone .slide-content { max-width: 1180px; }
+.phone-text { max-width: 600px; }
+.phone-text .moments { margin: 24px 0; }
+.phone-img {
+  position: absolute; right: 0; top: 7vh;
+  height: 85vh; width: auto; z-index: 0; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   RECORRIDO EN EL ESTADIO (slide 10)
+   ═══════════════════════════════════════ */
+.journey {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+  padding-top: 4px;
+}
+.jr-rail {
+  position: absolute; top: 30px; left: 8.33%; right: 8.33%; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #8A63F2 50%, #D1249D 100%);
+}
+.jr-spark {
+  position: absolute; top: 30px; left: 8.33%;
+  width: 8px; height: 8px; margin: -4px; border-radius: 50%;
+  background: #ffffff; box-shadow: 0 0 16px 4px rgba(138, 94, 255, 0.55);
+  animation: jr-travel 5.5s linear infinite; z-index: 0;
+}
+@keyframes jr-travel {
+  0%   { left: 8.33%;  opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { left: 91.67%; opacity: 0; }
+}
+.jr-item {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+}
+.jr-node {
+  width: 52px; height: 52px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+}
+.jr-node svg { width: 22px; height: 22px; }
+.jr-label {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   ROADMAP (slide 11)
+   ═══════════════════════════════════════ */
+.roadmap {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+}
+.rm-rail {
+  position: absolute; top: 6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.rm-item { position: relative; z-index: 1; padding-top: 34px; }
+.rm-dot {
+  position: absolute; top: 0; left: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.rm-item:nth-child(3) .rm-dot { border-color: rgba(255,255,255,0.35); }
+.rm-item:nth-child(4) .rm-dot { border-color: rgba(255,255,255,0.55); }
+.rm-item:nth-child(5) .rm-dot { border-color: rgba(255,255,255,0.75); }
+.rm-item:nth-child(6) .rm-dot { border-color: #ffffff; }
+.rm-date {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary);
+  line-height: 1.35; min-height: 2.7em; margin-bottom: 6px;
+}
+.rm-month {
+  font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: -0.02em; line-height: 1;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.rm-desc { font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+/* ═══════════════════════════════════════
+   THANKS
+   ═══════════════════════════════════════ */
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item svg { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   DESKTOP ANGOSTO — 901 a 1300px: teléfono más chico
+   ═══════════════════════════════════════ */
+@media (max-width: 1300px) and (min-width: 901px) {
+  .phone-img { height: 72vh; top: 14vh; right: -2vw; }
+  .phone-text { max-width: 54%; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET — <=1100px
+   ═══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .slide { padding: 48px; }
+  .brand-bar { left: 48px; right: 96px; }
+  .loop-steps { gap: 20px; }
+  .coin-glint.coins-glint { width: 200px; }
+  .roadmap { gap: 18px; }
+  .rm-month { font-size: 1.45rem; }
+}
+
+/* ═══════════════════════════════════════
+   PANTALLAS BAJAS (laptops de 720px, tablets apaisadas): menos aire vertical.
+   Va después del bloque de 1100px para que su padding no lo pise.
+   ═══════════════════════════════════════ */
+@media (min-width: 901px) and (max-height: 800px) {
+  .grid-4 .card--sm .dot-list li { font-size: 0.88rem; padding: 5px 0 5px 16px; }
+  .grid-4 .card--sm .card-note { font-size: 0.82rem; margin-top: 10px; padding-top: 10px; }
+  .grid-4 .card--sm h4 { margin-bottom: 6px; }
+  .slide { padding-top: 36px; padding-bottom: 36px; }
+  .brand-bar { bottom: 12px; }
+  .phone-text .moments { margin: 18px 0; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET VERTICAL — <=900px (y celulares en horizontal)
+   Columnas apiladas, líneas de tiempo verticales
+   ═══════════════════════════════════════ */
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+
+  .milestones { grid-template-columns: 1fr; gap: 26px; }
+  .ms-rail { top: 0; bottom: 0; left: 21px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .ms-arrow { display: none; }
+  .ms-item { display: flex; gap: 18px; align-items: flex-start; }
+  .ms-node { width: 44px; height: 44px; min-width: 44px; margin: 0; }
+  .ms-node svg { width: 20px; height: 20px; }
+
+  .layer-bar, .layer-drops { display: none; }
+  .layer-link { height: 22px; margin-bottom: 14px; }
+
+  .loop-return, .loop-rail { display: none; }
+  .loop-steps { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .loop-step { text-align: left; display: flex; gap: 14px; align-items: flex-start; }
+  .loop-node { width: 44px; height: 44px; min-width: 44px; margin: 0; box-shadow: none; animation: none; }
+  .loop-node svg { width: 20px; height: 20px; }
+  .loop-body h4 { font-size: 1.15rem; margin-bottom: 6px; }
+  .loop-body p { font-size: 0.9rem; }
+  .coin-glint.coins-glint {
+    position: relative; top: auto; right: auto; width: 140px;
+    display: block; margin: 0 0 14px auto;
+  }
+
+  .phone-text { max-width: 100%; }
+  .phone-img {
+    position: static; height: auto;
+    width: 100%; max-width: 240px; display: block; margin: 24px auto 0;
+  }
+
+  .journey { grid-template-columns: repeat(3, 1fr); gap: 20px 12px; padding-top: 0; }
+  .jr-rail, .jr-spark { display: none; }
+  .jr-node { width: 46px; height: 46px; box-shadow: none; }
+  .jr-node svg { width: 20px; height: 20px; }
+  .jr-label { font-size: 0.85rem; }
+
+  .roadmap { grid-template-columns: 1fr; gap: 20px; padding-left: 24px; }
+  .rm-rail { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .rm-item { padding-top: 0; }
+  .rm-dot { top: 6px; left: -24px; }
+  .rm-date { min-height: 0; margin-bottom: 4px; }
+  .rm-month { font-size: 1.4rem; margin-bottom: 6px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px (y celulares en horizontal)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 56px 20px 40px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide--chat { padding-top: 76px; }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .grid-2x2, .grid-3, .grid-4 { gap: 12px; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 3.6rem; }
+  .cover-kicker { font-size: 1.05rem; margin-bottom: 22px; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .card-head h4 { font-size: 1.05rem; }
+  .card-head svg { width: 18px; height: 18px; }
+  .card-note { font-size: 0.82rem; }
+  .card p.card-body { font-size: 0.88rem; }
+
+  .dot-list li { font-size: 0.85rem; padding: 5px 0 5px 16px; }
+  .checklist li { font-size: 0.9rem; padding: 9px 0; }
+  .foot-note { font-size: 0.88rem; }
+  .lead { font-size: 1rem; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .moments { gap: 6px; }
+  .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+  .club-chip--accent { font-size: 0.85rem; padding: 9px 16px; text-align: center; }
+  .plus-row .club-chip { font-size: 0.85rem; padding: 8px 14px; }
+  .aside-note { font-size: 0.78rem; padding: 10px 14px; margin-top: 18px; }
+
+  .milestones { gap: 22px; }
+  .ms-rail { left: 19px; }
+  .ms-item { gap: 14px; }
+  .ms-node { width: 40px; height: 40px; min-width: 40px; box-shadow: 0 0 0 4px var(--bg-primary); }
+  .ms-node svg { width: 18px; height: 18px; }
+  .ms-num { font-size: 0.65rem; margin-bottom: 4px; }
+  .ms-body h4 { font-size: 1.05rem; margin-bottom: 6px; }
+  .ms-body p { font-size: 0.88rem; }
+
+  .layer-chip { font-size: 0.82rem; padding: 8px 14px; }
+  .found-node { width: 38px; height: 38px; margin-bottom: 12px; }
+  .found-node svg { width: 17px; height: 17px; }
+  .found h4 { font-size: 1.05rem; }
+  .found p { font-size: 0.88rem; }
+
+  .loop-steps { grid-template-columns: 1fr; gap: 12px; }
+  .loop-node { width: 40px; height: 40px; min-width: 40px; }
+  .loop-node svg { width: 18px; height: 18px; }
+  .loop-body h4 { font-size: 1.05rem; }
+  .loop-body p { font-size: 0.85rem; }
+  .coin-glint.coins-glint { width: 110px; margin-bottom: 8px; }
+
+  .chain { gap: 8px; }
+  .chain-item { font-size: 0.82rem; padding: 9px 14px; gap: 8px; white-space: normal; }
+  .chain-item svg { width: 15px; height: 15px; }
+  .chain > svg.lucide { width: 15px; height: 15px; }
+
+  .jr-node { width: 40px; height: 40px; }
+  .jr-node svg { width: 18px; height: 18px; }
+  .jr-label { font-size: 0.78rem; white-space: normal; }
+
+  .roadmap { gap: 18px; padding-left: 22px; }
+  .rm-dot { top: 4px; left: -22px; width: 11px; height: 11px; }
+  .rm-date { font-size: 0.66rem; }
+  .rm-month { font-size: 1.2rem; }
+  .rm-desc { font-size: 0.85rem; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, show content immediately (no entry animation) */
+  .anim, .anim.anim--visible {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Tablet chica vertical: más aire a los costados */
+@media (min-width: 601px) and (max-width: 768px) {
+  .slide { padding: 48px 40px; }
+  .slide--chat { padding-top: 76px; }
+}
+
+/* Celular: grillas a una columna */
+@media (max-width: 600px) {
+  .grid-2x2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .journey { grid-template-columns: repeat(2, 1fr); }
+  .plus-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .plus-row > span.plus { padding-left: 18px; font-size: 1.2rem; }
+}
+
+/* ═══════════════════════════════════════
+   EXTRAS DE ESTE DECK: stats, tablas, teléfonos, flujo, ecosistema
+   ═══════════════════════════════════════ */
+.stat-number {
+  font-family: var(--font-display); font-size: 2.6rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.03em; color: var(--text-secondary); margin-bottom: 10px;
+}
+.tbl-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: 16px; background: rgba(255,255,255,0.02); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; line-height: 1.4; }
+.tbl th, .tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; color: var(--text-secondary); }
+.tbl th { font-family: var(--font-display); font-size: 0.92rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary); background: rgba(255,255,255,0.03); }
+.tbl td:first-child { color: var(--text-primary); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl--compact th, .tbl--compact td { padding: 8px 12px; font-size: 0.84rem; }
+.tbl td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.phone { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.phone img { display: block; width: auto; max-width: 100%; max-height: 60vh; border-radius: 26px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.phone figcaption, .shot figcaption { font-size: 0.86rem; line-height: 1.45; color: var(--text-secondary); text-align: center; max-width: 320px; }
+.phone figcaption strong, .shot figcaption strong { color: var(--text-primary); font-weight: 600; }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.shot img { display: block; width: auto; max-width: 100%; height: 42vh; object-fit: contain; border-radius: 14px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.shot figcaption { max-width: 520px; }
+.flow3 { display: grid; grid-template-columns: 1fr 44px 1.15fr 44px 1fr; gap: 14px; align-items: center; width: 100%; }
+.flow3-col { display: flex; flex-direction: column; gap: 12px; }
+.flow3-col .card--sm { padding: 16px 18px; }
+.flow3-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.flow3-arrow svg { width: 26px; height: 26px; }
+.eco { width: 100%; color: #d6dbd9; }
+.eco svg { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 300px); display: block; margin: 0 auto; font-family: var(--font-body); }
+/* En pantallas bajas no se achica más: la slide queda larga y se recorre con scroll */
+@media (max-height: 820px) { .eco svg { max-height: none; width: 100%; } }
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .phones { grid-template-columns: 1fr; gap: 20px; }
+  .phone img { max-height: none; width: 220px; }
+  .shots { grid-template-columns: 1fr; }
+  .flow3 { grid-template-columns: 1fr; }
+  .flow3-arrow { transform: rotate(90deg); }
+  .stat-number { font-size: 2rem; }
+}
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  .tbl { font-size: 0.78rem; }
+  .tbl th, .tbl td { padding: 8px 10px; }
+  .phone figcaption, .shot figcaption { font-size: 0.8rem; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint svg { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .ms-node--on, .loop-node, .coin-glint::before, .coin-glint::after { animation: none !important; }
+  .jr-spark { display: none !important; }
+  .phone-img { position: static; height: auto; width: 100%; max-width: 260px; display: block; margin: 24px auto 0; }
+  #chat-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 20</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<section class="slide slide--cover" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <div class="anim" style="margin-bottom:32px;"><span class="club-chip">Port St. Lucie SC</span></div>
+    <h1 class="shimmer-text anim">PSLSC ID</h1>
+    <div class="cover-kicker anim">Las bases del producto</div>
+    <div class="anim" style="margin-bottom:28px;"><span class="club-chip club-chip--accent">Qué es, cómo funciona, qué pantallas tiene y qué entra en cada etapa.</span></div>
+    <p class="meta anim" style="margin-top:8px;">Port St. Lucie SC · Yacaré · Noviembre 2026</p>
+  </div>
+</section>
+
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="label anim">01 · Qué es PSLSC ID</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis conceptos y ninguno más.</h2>
+    <div class="grid-3">
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="user-round"></i><h4>Cuenta</h4></div><p class="card-body">El padre o la madre, con login por magic link. Es su PSLSC ID. Debajo, sus hijos: nombre, fecha de nacimiento, contacto de emergencia, notas médicas, consentimiento.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="coins"></i><h4>Token</h4></div><p class="card-body">La moneda del club. Un token vale un dólar, no vence y solo sirve en el club. Entra por Stripe o por hitos, sale por lo que el club vende.</p></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-head"><i data-lucide="credit-card"></i><h4>Carga</h4></div><p class="card-body">La mensualidad de cada hijo, cobrada a la tarjeta como cualquier suscripción. Y packs de tokens para lo suelto, con bono en los grandes. Todo por Stripe, a nombre del club.</p></div>
+      <div class="card card--sm card--accent-4 anim"><div class="card-head"><i data-lucide="calendar-days"></i><h4>Actividad y SKU</h4></div><p class="card-body">La actividad es cuándo y dónde pasa: grupo por edad, día y hora, sede, coach, cupo por fecha. El SKU es lo que se vende para ella. Los crea el club desde su panel.</p></div>
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="ticket"></i><h4>Compra y plaza</h4></div><p class="card-body">Un SKU para un hijo. Queda en el ledger y le da una plaza: el mes entero si es la mensualidad, una fecha si es una clínica o un día de daycare.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="award"></i><h4>Hito</h4></div><p class="card-body">Algo que el hijo o la familia logra: asistió a todas las clases del mes, completó sus datos, trajo a otra familia. Da una insignia al hijo y tokens de regalo a la cuenta.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">01 · Principios de producto</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Seis reglas que deciden cada pantalla.</h2>
+    <div class="grid-3">
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="hand-coins"></i><h4>Nadie necesita entender los tokens para comprar</h4></div><p class="card-body">La mensualidad va a la tarjeta. Lo suelto se paga con tokens o con tarjeta que se convierte al instante.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="users"></i><h4>La cuenta es del adulto, el progreso es del chico</h4></div><p class="card-body">Un perfil por hijo, compras y asistencia por hijo. El chico ve su progreso desde la cuenta de su madre o su padre.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="repeat"></i><h4>Todo lo que el club vende se compra con lo mismo</h4></div><p class="card-body">Una moneda, un saldo, un carnet. Hoy la School, mañana la tienda, después el estadio. Nada se rehace.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="gift"></i><h4>Lo que se regala cuesta poco y trae gente</h4></div><p class="card-body">Los tokens de regalo compran plazas con cupo libre. Lo que más paga es lo que trae plata o retención: el referido y la asistencia.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="layers"></i><h4>Cada etapa funciona sola</h4></div><p class="card-body">La School sin tienda ya sirve. La tienda sin estadio ya sirve. Ninguna etapa depende de la siguiente para dar valor.</p></div>
+      <div class="card card--sm anim"><div class="card-head"><i data-lucide="landmark"></i><h4>El club es dueño de la relación y de la plata</h4></div><p class="card-body">Stripe cobra a nombre del club. Los datos son del club. Yacaré construye y opera, nunca retiene fondos.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">02 · Cómo funciona el dinero</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:22px;">La mensualidad va a la tarjeta. Los tokens pagan lo suelto. Los hitos regalan.</h2>
+    <div class="flow3 anim">
+      <div class="flow3-col">
+        <div class="card-sub">Entran</div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Mensualidad de la School</h4><p class="card-body">Una suscripción por hijo, a la tarjeta, hasta que la das de baja. Anual con bono en tokens.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Packs de tokens</h4><p class="card-body">Compra única, sin compromiso. Los packs grandes bonifican más.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Tokens de regalo</h4><p class="card-body">Por hitos y bonos. El club elige cuáles pagan y cuánto.</p></div>
+      </div>
+      <div class="flow3-arrow"><i data-lucide="arrow-right"></i></div>
+      <div class="flow3-col">
+        <div class="card-sub">El wallet</div>
+        <div class="card card--highlight card--accent-1" style="padding:26px;">
+          <h4 style="font-size:1.4rem; margin-bottom:12px;">Un saldo por familia</h4>
+          <ul class="dot-list">
+            <li>1 token = 1 USD, siempre</li>
+            <li>Nada vence</li>
+            <li>Dos registros internos: cargados y de regalo. Se gastan primero los de regalo</li>
+            <li>Cada movimiento queda en el ledger</li>
+            <li>Sin cash-out, sin transferencias</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flow3-arrow"><i data-lucide="arrow-right"></i></div>
+      <div class="flow3-col">
+        <div class="card-sub">Salen</div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">Hoy: lo de la School</h4><p class="card-body">Clínicas, sesiones sueltas, eventos exclusivos, un día o una tarde de daycare.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">2027: la tienda y los partidos</h4><p class="card-body">La camiseta en Shopify, entradas a eventos propios, después vivenu.</p></div>
+        <div class="card card--sm"><h4 style="font-size:1.1rem; margin-bottom:6px;">2028: el estadio</h4><p class="card-body">Locales, comercios amigos, acceso con el carnet.</p></div>
+      </div>
+    </div>
+    <div class="aside-note anim" style="margin-top:22px; max-width:980px;"><i data-lucide="info"></i><span>Supuesto de trabajo: mensualidad más consumos eventuales. Depende de que el club cierre la información de la School. Hoy no tenemos su análisis financiero ni su propuesta de producto; cuando lleguen, este esquema se ajusta.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="5">
+  <div class="slide-content">
+    <div class="label anim">02 · Cómo lo vive una familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">De preinscripta a primer canje, en ocho pasos.</h2>
+    <div class="grid-4">
+      <div class="card card--sm anim"><div class="card-sub">1</div><h4 style="font-size:1.1rem;">Entra desde la School</h4><p class="card-body">Email, link mágico, listo. Carga a sus hijos con sus datos y consentimientos.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">2</div><h4 style="font-size:1.1rem;">Elige el pack de cada hijo</h4><p class="card-body">Ve los packs de la categoría de cada uno: días, horario, sede, coach, cupos, precio mensual.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">3</div><h4 style="font-size:1.1rem;">Paga el mes con la tarjeta</h4><p class="card-body">Un solo paso. Se cobra cada mes; puede cancelar cuando quiera para el ciclo siguiente.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">4</div><h4 style="font-size:1.1rem;">Recibe confirmación</h4><p class="card-body">Email con el recibo y las próximas fechas. El hijo ya tiene plaza y aparece en la lista del coach.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">5</div><h4 style="font-size:1.1rem;">Carga tokens para lo suelto</h4><p class="card-body">Un pack de tokens con bono. Elige una clínica o un día de daycare en el calendario, para un hijo.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">6</div><h4 style="font-size:1.1rem;">El coach marca presente</h4><p class="card-body">Cada clase suma a la racha y al progreso del hijo. Luca lo celebra en la cuenta de la familia.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">7</div><h4 style="font-size:1.1rem;">Gana tokens por hitos</h4><p class="card-body">Mes de asistencia perfecta, perfil completo, una familia referida que paga. Los tokens caen en el saldo.</p></div>
+      <div class="card card--sm anim"><div class="card-sub">8</div><h4 style="font-size:1.1rem;">Vuelve a canjear</h4><p class="card-body">Una clínica, un evento solo para socios, pronto la camiseta. Y muestra su carnet con QR donde haga falta.</p></div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="6">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">02 · Cómo lo vive el club</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Cinco pantallas y cero planillas.</h2>
+        <p class="anim">La coordinadora crea las actividades una vez. Los cobros entran solos. El coach abre una lista en el teléfono y marca presentes en 30 segundos.</p>
+        <p class="anim lead" style="margin-top:20px;">Todo lo que hoy se resuelve por WhatsApp y Excel queda en un lugar, con contacto de emergencia y notas médicas a mano.</p>
+      </div>
+      <div class="anim">
+        <div class="moments">
+          <div class="moment"><i data-lucide="calendar-plus"></i><span><strong>Actividades.</strong> Grupo por edad, días, horario, sede, coach, cupo por fecha, y lo que se vende para cada una.</span></div>
+          <div class="moment"><i data-lucide="users"></i><span><strong>Socios.</strong> Las familias: quién es, qué hijos tiene, qué tiene activo, qué compró.</span></div>
+          <div class="moment"><i data-lucide="list-checks"></i><span><strong>Quiénes asisten y check-in.</strong> Por actividad y fecha, con contacto y notas médicas. El coach marca presentes.</span></div>
+          <div class="moment"><i data-lucide="gift"></i><span><strong>Hitos.</strong> Qué acciones regalan tokens, cuánto, con qué tope. La tasa de regalo del mes.</span></div>
+          <div class="moment"><i data-lucide="receipt"></i><span><strong>Movimientos.</strong> Cargas, compras, reversas, y el total que cierra cada noche contra Stripe.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">02 · Tokens e hitos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">El chico progresa. La familia gana tokens. El club decide cuánto.</h2>
+    <div class="grid-3">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Lo que ve el chico</div>
+        <ul class="dot-list">
+          <li><strong>Racha.</strong> Clases seguidas sin faltar. Se ve en riesgo antes de romperse.</li>
+          <li><strong>Insignias.</strong> Primera clase, diez clases, mes perfecto, pase de categoría. Con Luca.</li>
+          <li><strong>Progreso.</strong> Lo que el coach marca: asistencia, hitos, el pase de categoría a fin de período.</li>
+          <li><strong>Sin leaderboards en la Etapa 1.</strong> La progresión es personal. Comparar llega después.</li>
+        </ul>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Cuatro reglas de los tokens</div>
+        <ul class="dot-list">
+          <li>Un token vale un dólar, siempre.</li>
+          <li>No vencen, ni los cargados ni los de regalo.</li>
+          <li>Se compran con tarjeta, en la web, por Stripe.</li>
+          <li>Sirven para todo lo del club y para nada más.</li>
+        </ul>
+        <div class="card-note"><i data-lucide="gift"></i><span>Los de regalo compran lo suelto, nunca la mensualidad. Se gastan primero.</span></div>
+      </div>
+      <div class="card card--sm card--accent-3 anim">
+        <div class="card-sub">Lo que nunca</div>
+        <ul class="dot-list">
+          <li>No se cambian por dinero.</li>
+          <li>No se pasan de una cuenta a otra. Regalar es cargar a nombre de otra familia.</li>
+          <li>No compran nada digital. Insignias, progreso y Luca son gratis.</li>
+          <li>No son cripto. Son un saldo del club.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:24px;"><i data-lucide="award"></i><span>Hitos que regalan tokens: completar el perfil, el primer mes pagado, la asistencia perfecta del mes, referir a una familia, la encuesta de fin de período y el prepago. Cuánto paga cada uno y con qué tope lo define el club desde su panel.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="8">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Entrar, ver a los hijos, ver cómo progresan.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/01-signin.png" alt="Sign in"><figcaption><strong>Sign in.</strong> Email y link mágico. Sin contraseñas que olvidar.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/02-home.png" alt="Home"><figcaption><strong>Home.</strong> Los hijos, la próxima sesión de cada uno, el saldo, lo que falta hacer para ganar tokens.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/03-kid-progress.png" alt="Progreso"><figcaption><strong>Progreso.</strong> Clases asistidas, racha, insignias ganadas y la próxima. Luca celebra.</figcaption></figure>
+    </div>
+    <p class="anim" style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">Pantallas ilustrativas en inglés, el idioma del producto. Los rangos de edad son de ejemplo hasta que el club los defina.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="9">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Elegir un pack, pagar el mes, cargar tokens.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/04-packs.png" alt="Packs"><figcaption><strong>Packs.</strong> Los de la categoría del hijo: días, horario, sede, coach, cupos, precio por mes. Y los extras.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/05-pay-month.png" alt="Inscribir y pagar"><figcaption><strong>Pagar el mes.</strong> Un solo paso con tarjeta o Apple Pay. Se cobra cada mes; se cancela cuando quieras.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/06-buy-tokens.png" alt="Cargar tokens"><figcaption><strong>Cargar tokens.</strong> Packs de 50, 100 y 250 con bono. Un token es un dólar y nunca vence.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="10">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · La familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Gastar tokens, ver el saldo, mostrar el carnet.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/07-spend-tokens.png" alt="Comprar con tokens"><figcaption><strong>Comprar con tokens.</strong> Una clínica o un día de daycare: fecha con cupo, hijo, confirmar.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/08-wallet.png" alt="Wallet"><figcaption><strong>Wallet.</strong> El saldo con su detalle, cargados y de regalo, y cada movimiento.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/09-my-id.png" alt="Mi PSLSC ID"><figcaption><strong>Mi PSLSC ID.</strong> El carnet: escudo, nombre, estado y un QR que rota. Mañana lo escanea un comercio o el estadio.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="11">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · El club</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Crear actividades y saber quién viene.</h2>
+    <div class="shots anim">
+      <figure class="shot"><img src="pslsc-id/screens/10-admin-activities.png" alt="Actividades"><figcaption><strong>Actividades.</strong> Grupo, días, horario, sede, coach, cupo por fecha, y lo que se vende para cada una.</figcaption></figure>
+      <figure class="shot"><img src="pslsc-id/screens/11-admin-attendance-checkin.png" alt="Quiénes asisten"><figcaption><strong>Quiénes asisten y check-in.</strong> La lista con contacto y notas médicas, y el coach marcando presentes desde el teléfono.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="12">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Interfaces · El club</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Decidir qué se regala y que la caja cierre.</h2>
+    <div class="shots anim">
+      <figure class="shot"><img src="pslsc-id/screens/12-admin-milestones.png" alt="Hitos"><figcaption><strong>Hitos.</strong> Qué acciones regalan tokens, cuánto, el tope por familia y el global. La tasa de regalo del mes a la vista.</figcaption></figure>
+      <figure class="shot"><img src="pslsc-id/screens/13-admin-transactions.png" alt="Movimientos"><figcaption><strong>Movimientos.</strong> Cargas, compras, reversas, y el total que cierra cada noche contra Stripe.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="13">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Después de la School</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">La misma cuenta sirve para el hincha.</h2>
+    <div class="phones anim">
+      <figure class="phone"><img src="pslsc-id/screens/14-fan-home.png" alt="Home de hincha"><figcaption><strong>Home de hincha.</strong> Próximo partido, noticias del sitio, tokens y carnet. Si tenés hijos en la School, ellos van arriba.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/15-store.png" alt="Tienda"><figcaption><strong>Tienda.</strong> Los productos de Shopify dentro de PSLSC ID. Pagás con tokens o con tarjeta. El club despacha desde Shopify.</figcaption></figure>
+      <figure class="phone"><img src="pslsc-id/screens/16-tickets.png" alt="Entradas"><figcaption><strong>Entradas.</strong> Un evento propio con QR validado por nosotros. Un partido con vivenu, el ticketing de la USL.</figcaption></figure>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="14">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">03 · Noticias</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">El sitio es para descubrir el club. Las noticias en PSLSC ID son para quien ya está adentro.</h2>
+        <p class="anim">Una zona de noticias dentro de la cuenta: lo que pasa en la School, en el club y en el primer equipo, para la familia que ya se inscribió y para el hincha que ya tiene su carnet.</p>
+        <p class="anim lead" style="margin-top:20px;">Es el vínculo diario con el club. No una vidriera para convencer: la razón para abrir la app aunque no haya nada que pagar.</p>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Cómo funciona</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="rss"></i><span><strong>Las mismas noticias del sitio, por API.</strong> Se cargan una vez en el sitio del club y aparecen en PSLSC ID.</span></div>
+          <div class="moment"><i data-lucide="sliders-horizontal"></i><span><strong>Ordenadas según quién sos.</strong> La School arriba si tenés hijos inscriptos; el primer equipo si sos hincha.</span></div>
+          <div class="moment"><i data-lucide="megaphone"></i><span><strong>Los avisos de la School en el mismo lugar.</strong> Cambios de horario, de sede, make-up, cierre de período.</span></div>
+          <div class="moment"><i data-lucide="trophy"></i><span><strong>Resultados y próximo partido del primer equipo.</strong> El marcador final y el fixture; el minuto a minuto lo da la USL.</span></div>
+          <div class="moment"><i data-lucide="mouse-pointer-click"></i><span><strong>Cada noticia lleva a algo.</strong> Inscribirse a una clínica, canjear, comprar la camiseta, ver el partido.</span></div>
+        </div>
+        <div class="aside-note" style="margin-top:14px;"><i data-lucide="calendar-range"></i><span>Entra en la Etapa 2, con la cara de hincha. Sin comentarios ni chat: es un canal del club, no una red social.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="15">
+  <div class="slide-content">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">03 · Notificaciones push</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">La razón más concreta para ir a una app: avisarte en el momento justo.</h2>
+        <p class="anim">Una web instalable sirve para entrar, pagar y canjear. Lo que no hace bien es avisarte. El push nativo llega con la app cerrada, en la pantalla bloqueada, en el momento en que importa.</p>
+        <p class="anim lead" style="margin-top:20px;">Pocas, útiles y elegidas por la familia: cada tipo de aviso se prende y se apaga por separado.</p>
+        <div class="aside-note anim" style="margin-top:20px;"><i data-lucide="calendar-range"></i><span>Avisos por email desde la Etapa 1. Web push en la Etapa 2. Push nativo con la app en la Etapa 3.</span></div>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Lo que avisa PSLSC ID</div>
+        <div class="moments">
+          <div class="moment"><i data-lucide="calendar-clock"></i><span><strong>Hoy entrena Mía a las 17:00.</strong> La próxima sesión de cada hijo, una hora antes.</span></div>
+          <div class="moment"><i data-lucide="megaphone"></i><span><strong>Cambio de sede para el grupo de Tomás.</strong> Lo que la coordinadora comunica, antes de salir de casa.</span></div>
+          <div class="moment"><i data-lucide="award"></i><span><strong>Tomás completó el mes sin faltar.</strong> Un hito, una insignia y los tokens que caen en el saldo.</span></div>
+          <div class="moment"><i data-lucide="ticket"></i><span><strong>Se abrió un cupo en la clínica del sábado.</strong> Lista de espera, eventos exclusivos, entradas.</span></div>
+          <div class="moment"><i data-lucide="newspaper"></i><span><strong>Mañana juega el primer equipo.</strong> Noticias y partidos, para el hincha.</span></div>
+          <div class="moment"><i data-lucide="credit-card"></i><span><strong>Se cobró el mes de la School.</strong> Pagos, recibos y cualquier tarjeta que falle.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="16">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">04 · El ecosistema</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:18px;">Tres frentes sobre un solo núcleo. Línea llena hoy, punteado después.</h2>
+    <div class="eco anim"><svg viewBox="0 0 1180 816" role="img" aria-label="Mapa del ecosistema de PSLSC ID" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" fill-opacity="0.8"/></marker><marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"><circle cx="5" cy="5" r="3.5" fill="currentColor" fill-opacity="0.8"/></marker></defs>
+<rect x="16" y="12" width="1148" height="108" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="30" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">PERSONAS</text>
+<rect x="16" y="132" width="1148" height="206" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="150" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">FRENTES</text>
+<rect x="16" y="350" width="1148" height="270" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="368" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">NÚCLEO · BACKEND EN SUPABASE</text>
+<rect x="16" y="632" width="1148" height="176" rx="10" fill="currentColor" fill-opacity="0.04"/>
+<text x="40" y="650" font-size="11" font-weight="600" letter-spacing="1" fill="currentColor" fill-opacity="0.65">SERVICIOS EXTERNOS</text>
+<rect x="60" y="46" width="220" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="72" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Familia</text>
+<text x="72" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Tutor en el teléfono, un perfil por hijo</text>
+<rect x="520" y="46" width="220" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="532" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Staff del club</text>
+<text x="532" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Coach y coordinadora</text>
+<rect x="800" y="46" width="200" height="60" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="812" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Comercio amigo</text>
+<text x="812" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">Cámara de cualquier teléfono</text>
+<rect x="1020" y="46" width="130" height="60" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="1032" y="66" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">Hincha</text>
+<text x="1032" y="84" font-size="12" fill="currentColor" fill-opacity="0.75">con Matchday</text>
+<rect x="40" y="160" width="170" height="66" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Sitio del club</text>
+<text x="52" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">WordPress de la USL</text>
+<text x="52" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Solo enlaza</text>
+<rect x="40" y="246" width="170" height="66" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="266" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Landing de la School</text>
+<text x="52" y="284" font-size="12" fill="currentColor" fill-opacity="0.75">Vercel · /school</text>
+<text x="52" y="299" font-size="12" fill="currentColor" fill-opacity="0.75">Preinscripción</text>
+<rect x="240" y="160" width="290" height="152" rx="8" style="fill:#0d0d0d;stroke:#8A63F2" stroke-width="2.2"/>
+<text x="252" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">PSLSC ID · web y PWA</text>
+<text x="252" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Vercel, dominio del club</text>
+<text x="252" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Mi cuenta y mis hijos</text>
+<text x="252" y="228" font-size="12" fill="currentColor" fill-opacity="0.75">Packs y pago del mes</text>
+<text x="252" y="243" font-size="12" fill="currentColor" fill-opacity="0.75">Wallet y canje</text>
+<text x="252" y="258" font-size="12" fill="currentColor" fill-opacity="0.75">Mi PSLSC ID: QR que rota cada minuto</text>
+<text x="252" y="273" font-size="12" fill="currentColor" fill-opacity="0.75">Luca en todas las pantallas</text>
+<rect x="560" y="160" width="210" height="152" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="572" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Panel del club</text>
+<text x="572" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Mismo web, rol staff</text>
+<text x="572" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">ABM: packs, clínicas, eventos</text>
+<text x="572" y="228" font-size="12" fill="currentColor" fill-opacity="0.75">Acciones que pagan tokens</text>
+<text x="572" y="243" font-size="12" fill="currentColor" fill-opacity="0.75">Beneficios de comercios</text>
+<text x="572" y="258" font-size="12" fill="currentColor" fill-opacity="0.75">Cupos, inscriptos, reportes</text>
+<text x="572" y="273" font-size="12" fill="currentColor" fill-opacity="0.75">Check-in del coach</text>
+<rect x="800" y="160" width="200" height="80" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="812" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Página de validación</text>
+<text x="812" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">Escanea el QR, ve "válido"</text>
+<text x="812" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">Botón aplicar. Sin app.</text>
+<rect x="1020" y="160" width="130" height="80" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="1032" y="180" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">App nativa</text>
+<text x="1032" y="198" font-size="12" fill="currentColor" fill-opacity="0.75">después</text>
+<text x="1032" y="213" font-size="12" fill="currentColor" fill-opacity="0.75">sin compra de tokens</text>
+<rect x="40" y="372" width="1100" height="40" rx="8" style="fill:#0d0d0d;stroke:#8A63F2" stroke-width="2.2"/>
+<text x="52" y="392" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">API y reglas de negocio</text>
+<text x="1128" y="397" font-size="12" fill="currentColor" fill-opacity="0.7" text-anchor="end">todo pasa por acá; nada toca la base directo</text>
+<rect x="40" y="430" width="200" height="84" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="450" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Identidad</text>
+<text x="52" y="468" font-size="12" fill="currentColor" fill-opacity="0.75">Supabase Auth: passkeys, magic link</text>
+<text x="52" y="483" font-size="12" fill="currentColor" fill-opacity="0.75">Proveedor OpenID Connect</text>
+<text x="52" y="498" font-size="12" fill="currentColor" fill-opacity="0.75">para tienda, ticketing, estadio</text>
+<rect x="40" y="524" width="200" height="74" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="52" y="544" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Jobs y auditoría</text>
+<text x="52" y="562" font-size="12" fill="currentColor" fill-opacity="0.75">Conciliación nocturna vs Stripe</text>
+<text x="52" y="577" font-size="12" fill="currentColor" fill-opacity="0.75">Holds, log de auditoría, backups</text>
+<rect x="262" y="430" width="600" height="168" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.3"/>
+<text x="276" y="448" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75">Postgres con RLS por club</text>
+<rect x="276" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="288" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Catálogo</text>
+<text x="288" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">packs, clínicas, eventos, cupos</text>
+<rect x="468" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="480" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Reglas de earn</text>
+<text x="480" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">catálogo de acciones por club</text>
+<rect x="660" y="456" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="672" y="476" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Beneficios y usos</text>
+<text x="672" y="494" font-size="12" fill="currentColor" fill-opacity="0.75">comercios, QR validados</text>
+<rect x="276" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="288" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Hogares y perfiles</text>
+<text x="288" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">tutores, hijos, consentimientos</text>
+<rect x="468" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="480" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Ledger de tokens</text>
+<text x="480" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">doble entrada, dos registros</text>
+<rect x="660" y="526" width="180" height="58" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="672" y="546" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Inscripciones</text>
+<text x="672" y="564" font-size="12" fill="currentColor" fill-opacity="0.75">asistencia, check-in, make-up</text>
+<rect x="880" y="430" width="260" height="84" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="892" y="450" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Roles y permisos</text>
+<text x="892" y="468" font-size="12" fill="currentColor" fill-opacity="0.75">coach, coordinador, admin, soporte</text>
+<text x="892" y="483" font-size="12" fill="currentColor" fill-opacity="0.75">asignaciones manuales con aprobación</text>
+<rect x="880" y="524" width="260" height="74" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="6 4"/>
+<text x="892" y="544" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="0.7">API de wallet</text>
+<text x="892" y="562" font-size="12" fill="currentColor" fill-opacity="0.75">saldo, débito, crédito, idempotente</text>
+<text x="892" y="577" font-size="12" fill="currentColor" fill-opacity="0.75">para tienda y POS. Se diseña ahora</text>
+<rect x="271" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="283" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">ActiveCampaign</text>
+<text x="283" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">CRM de marketing</text>
+<text x="283" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Preinscriptos entran</text>
+<text x="283" y="720" font-size="12" fill="currentColor" fill-opacity="0.75">Contactos y eventos salen</text>
+<rect x="463" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="475" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Stripe Connect</text>
+<text x="475" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">El club es el vendedor</text>
+<text x="475" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Suscripciones y cargas</text>
+<text x="475" y="720" font-size="12" fill="currentColor" fill-opacity="0.75">Webhooks, disputas, Radar</text>
+<rect x="655" y="652" width="190" height="116" rx="8" style="fill:#0d0d0d" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="667" y="672" font-size="13.5" font-weight="700" fill="currentColor" fill-opacity="1">Email transaccional</text>
+<text x="667" y="690" font-size="12" fill="currentColor" fill-opacity="0.75">Confirmaciones, recibos</text>
+<text x="667" y="705" font-size="12" fill="currentColor" fill-opacity="0.75">Avisos, encuesta</text>
+<rect x="870" y="644" width="270" height="156" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.4" stroke-dasharray="6 4"/>
+<text x="884" y="662" font-size="12" font-weight="600" fill="currentColor" fill-opacity="0.75">Después: pensado y validado en 2027</text>
+<rect x="884" y="672" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="688" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">vivenu · ticketing de la USL</text>
+<text x="896" y="703" font-size="11.5" fill="currentColor" fill-opacity="0.7">cupones primero, API después</text>
+<rect x="884" y="716" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="732" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">Tienda · Shopify</text>
+<text x="896" y="747" font-size="11.5" fill="currentColor" fill-opacity="0.7">códigos primero, API después</text>
+<rect x="884" y="760" width="242" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="5 4"/>
+<text x="896" y="776" font-size="12" font-weight="700" fill="currentColor" fill-opacity="0.8">POS del estadio</text>
+<text x="896" y="791" font-size="11.5" fill="currentColor" fill-opacity="0.7">identidad y wallet por API</text>
+<path d="M170,106 L385,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="284" y="128" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle">usa</text>
+<path d="M100,106 L100,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="106" y="126" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">visita</text>
+<path d="M210,193 L240,193" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="225" y="186" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle">enlace</text>
+<path d="M125,226 L125,246" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M630,106 L665,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="656" y="128" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">opera</text>
+<path d="M900,106 L900,160" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="906" y="138" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">escanea</text>
+<path d="M1085,106 L1085,160" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<path d="M125,312 L125,328 L24,328 L24,640 L300,640 L300,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="17" y="490" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="middle" transform="rotate(-90 17 490)">preinscripción</text>
+<path d="M385,312 L385,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="391" y="346" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">HTTPS</text>
+<path d="M665,312 L665,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M900,240 L900,372" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="906" y="310" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">valida el QR</text>
+<path d="M1085,240 L1085,372" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<path d="M140,412 L140,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M562,412 L562,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M1010,412 L1010,430" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M366,584 L366,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#dot)"/>
+<text x="372" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">contactos y eventos</text>
+<path d="M558,584 L558,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#dot)"/>
+<text x="564" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">cobros y webhooks</text>
+<path d="M750,584 L750,652" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="756" y="622" font-size="11" fill="currentColor" fill-opacity="0.7" text-anchor="start">confirmaciones</text>
+<path d="M1010,598 L1010,644" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+</svg></div>
+    <p class="anim" style="font-size:0.85rem; margin-top:14px; max-width:980px;">La familia entra por la web de PSLSC ID, el staff por el panel, el comercio por una página de validación. Todo pasa por una API sobre Supabase; Stripe cobra a nombre del club; el sitio de la USL solo enlaza. vivenu, la tienda y el estadio se conectan después, sobre lo mismo.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="17">
+  <div class="slide-content">
+    <div class="label anim">04 · Las etapas</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">De la School al estadio en cuatro etapas.</h2>
+    <div class="roadmap anim" style="margin-bottom:28px;">
+      <div class="rm-rail"></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Noviembre y diciembre 2026</div><div class="rm-month">Decisiones</div><p class="rm-desc">El club cierra la información de la School: rangos de edad, packs, fecha de apertura. Arranca la base técnica.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Diciembre 2026 a marzo 2027</div><div class="rm-month">Etapa 1</div><p class="rm-desc">La School funciona: cuenta, hijos, mensualidad, tokens, clínicas y daycare, check-in, progreso, carnet. Piloto en marzo y apertura.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Abril a julio 2027</div><div class="rm-month">Etapa 2</div><p class="rm-desc">La School a fondo y la cara de hincha: noticias, partidos, tienda con tokens, entradas propias, bilingüe, push.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Agosto a diciembre 2027</div><div class="rm-month">Etapa 3</div><p class="rm-desc">La app en las tiendas, pase de Wallet, comercios amigos en piloto, vivenu conectado, reglas legales cerradas.</p></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">2028</div><div class="rm-month">Etapa 4</div><p class="rm-desc">El estadio: entradas y abonos, acceso con el carnet, locales que cobran en tokens, comercios operativos.</p></div>
+    </div>
+    <div class="aside-note anim" style="margin-top:0; max-width:900px;"><i data-lucide="link"></i><span>Las fechas ordenan el trabajo y dependen de que el club cierre la información de la School y de la coordinación con IT. Si la School abre antes de marzo, se arma un puente de pago y la plataforma lo absorbe al abrir.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="18">
+  <div class="slide-content">
+    <div class="label anim">04 · Qué entra en cada etapa</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">Qué entra en cada etapa y qué queda afuera a propósito.</h2>
+    <div class="grid-4">
+      <div class="card card--sm card--accent-1 anim">
+        <div class="card-sub">Etapa 1</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">La School funciona</h4>
+        <ul class="dot-list">
+          <li>Cuenta del adulto, un perfil por hijo</li>
+          <li>Mensualidad a la tarjeta, por hijo</li>
+          <li>Tokens, packs con bono, clínicas y daycare</li>
+          <li>Actividades, cupos, quiénes asisten</li>
+          <li>Check-in, hitos, insignias, racha, Luca</li>
+          <li>Carnet con QR, panel del club, conciliación</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin tienda, sin partidos, sin app nativa.</span></div>
+      </div>
+      <div class="card card--sm card--accent-2 anim">
+        <div class="card-sub">Etapa 2</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">A fondo y la cara de hincha</h4>
+        <ul class="dot-list">
+          <li>Eventos exclusivos, make-up, lista de espera</li>
+          <li>Comunicación al grupo, reportes, bilingüe</li>
+          <li>Noticias, resultados, avisos y web push</li>
+          <li>Home que se ordena según quién sos</li>
+          <li>Tienda Shopify: códigos, después vidriera con tokens</li>
+          <li>Entradas a eventos propios con QR</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin app nativa, sin comercios, sin vivenu.</span></div>
+      </div>
+      <div class="card card--sm card--accent-3 anim">
+        <div class="card-sub">Etapa 3</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">La app y el club conectado</h4>
+        <ul class="dot-list">
+          <li>App en App Store y Google Play sobre la misma web</li>
+          <li>Push nativo, cámara, pase de Wallet</li>
+          <li>Comercios amigos en piloto con dos comercios</li>
+          <li>vivenu por cupones y, con acceso, por API</li>
+          <li>Leaderboards con nombre e inicial</li>
+        </ul>
+        <div class="card-note"><i data-lucide="x"></i><span>Sin estadio, sin cobrar tokens en cajas ajenas.</span></div>
+      </div>
+      <div class="card card--sm card--accent-4 anim">
+        <div class="card-sub">Etapa 4</div>
+        <h4 style="font-size:1.2rem; margin-bottom:10px;">El estadio</h4>
+        <ul class="dot-list">
+          <li>vivenu a fondo: abonos, asientos, entradas en el wallet</li>
+          <li>Acceso con el carnet</li>
+          <li>Punto de venta con identidad y wallet por API</li>
+          <li>Locales y comercios con liquidación</li>
+          <li>Matchday: estacionamiento, mapa, menús</li>
+        </ul>
+        <div class="card-note"><i data-lucide="key"></i><span>Criterio para elegir proveedores: que acepten PSLSC ID por API.</span></div>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:16px; font-size:0.95rem;"><i data-lucide="ban"></i><span>Lo que no construimos nunca: streaming y resultados en vivo (los da la USL), red social o chat, cobrar tokens en la caja de un comercio, cuentas para menores de 13, cripto, transferencias y cash-out.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide slide--thanks" data-slide="19">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Let's build PSLSC ID.</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:640px; margin-left:auto; margin-right:auto;">La cuenta del club. Para la School hoy, para todo el club mañana.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide--chat" data-slide="20">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre PSLSC ID?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime el producto</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funcionan los tokens?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es PSLSC ID?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué entra en la Etapa 1?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué una app con push?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué depende del club?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..." style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;" onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="send" style="width:18px; height:18px;"></i></button>
+      </div>
+    </div>
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.</p>
+  </div>
+</section>
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+// Same breakpoint as the MOBILE block in the CSS
+const isMobile = window.matchMedia('(max-width: 768px), (max-height: 500px) and (orientation: landscape)').matches;
+
+// Current slide: the last one whose top has passed the upper 35% of the screen.
+// Uses real slide positions, so it still works if a slide is taller than the screen.
+function currentIndex() {
+  const pos = deck.scrollTop + deck.clientHeight * 0.35;
+  let idx = 0;
+  slides.forEach(function(s, i) { if (s.offsetTop <= pos) idx = i; });
+  return idx;
+}
+
+function goToSlide(i) {
+  deck.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (hidden on mobile via CSS)
+// ═══════════════════════════════════════
+function updateCounter() {
+  counterEl.textContent = (currentIndex() + 1) + ' / ' + totalSlides;
+}
+
+deck.addEventListener('scroll', updateCounter, { passive: true });
+updateCounter();
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+document.addEventListener('keydown', function(e) {
+  // Don't intercept if user is typing in the chat input
+  if (e.target.id === 'chat-input') return;
+
+  const vh = deck.clientHeight;
+  const i = currentIndex();
+  const s = slides[i];
+
+  switch (e.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+    case ' ':
+    case 'PageDown': {
+      e.preventDefault();
+      const slideBottom = s.offsetTop + s.offsetHeight;
+      if (slideBottom - (deck.scrollTop + vh) > 4) {
+        // Slide taller than the screen: show the rest of it first
+        deck.scrollTo({ top: Math.min(deck.scrollTop + vh * 0.85, slideBottom - vh), behavior: 'smooth' });
+      } else if (i < totalSlides - 1) {
+        goToSlide(i + 1);
+      }
+      break;
+    }
+    case 'ArrowUp':
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      if (deck.scrollTop - s.offsetTop > 4) {
+        deck.scrollTo({ top: Math.max(s.offsetTop, deck.scrollTop - vh * 0.85), behavior: 'smooth' });
+      } else if (i > 0) {
+        goToSlide(i - 1);
+      }
+      break;
+    case 'Home':
+      e.preventDefault();
+      goToSlide(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      goToSlide(totalSlides - 1);
+      break;
+  }
+});
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// (on mobile the CSS keeps content visible with no animation)
+// ═══════════════════════════════════════
+const animObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    const anims = entry.target.querySelectorAll('.anim');
+    anims.forEach(function(el) {
+      el.classList.toggle('anim--visible', entry.isIntersecting);
+    });
+  });
+}, { threshold: 0.3 });
+
+slides.forEach(function(slide) {
+  animObserver.observe(slide);
+});
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    goToSlide(totalSlides - 1);
+  }
+  setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+}
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme qué es PSLSC ID, cómo funciona el dinero y los tokens, cómo lo vive una familia o el club, qué pantallas tiene, qué son las noticias y el push, qué entra en cada etapa o qué depende hoy del club.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge alguna otra duda sobre PSLSC ID, estoy acá. También podés escribir a contact@yacare.io para coordinar directamente con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras', 'el producto'],
+    answer: 'PSLSC ID es la cuenta del club: el padre o la madre entra con un link mágico, carga a sus hijos, paga la mensualidad de la School con la tarjeta y usa tokens para lo suelto (clínicas, daycare, eventos). Los hitos regalan tokens, el coach marca presentes y el chico ve su progreso. El club crea actividades, ve quién viene, decide qué se regala y cierra la caja contra Stripe. Primero la School (Etapa 1, marzo 2027), después la cara de hincha con tienda y entradas, luego la app y, en 2028, el estadio. Todo sobre la misma cuenta y el mismo saldo.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: los seis conceptos (cuenta, token, carga, actividad y SKU, compra y plaza, hito), los principios de producto, cómo funciona el dinero, el recorrido de una familia y el del club, los tokens y los hitos, las dieciséis pantallas, el ecosistema, las noticias, las notificaciones push, las cuatro etapas, lo que no construimos y qué depende hoy del club.'
+  },
+  // Content
+  {
+    keywords: ['qué es pslsc id', 'que es pslsc id', 'conceptos', 'seis conceptos', 'cuenta', 'sku', 'plaza', 'actividad', 'carga', 'definición', 'definicion'],
+    answer: 'PSLSC ID se explica con seis conceptos y ninguno más. Cuenta: el padre o la madre, con login por magic link, y debajo sus hijos con datos, contacto de emergencia, notas médicas y consentimiento. Token: la moneda del club, vale un dólar, no vence y solo sirve en el club. Carga: la mensualidad de cada hijo a la tarjeta, y packs de tokens para lo suelto, todo por Stripe a nombre del club. Actividad y SKU: la actividad es cuándo y dónde pasa; el SKU es lo que se vende para ella; los crea el club desde su panel. Compra y plaza: un SKU para un hijo, que queda en el ledger y le da una plaza. Hito: algo que el hijo o la familia logra y que da una insignia y tokens de regalo.'
+  },
+  {
+    keywords: ['principio', 'principios', 'reglas de producto', 'seis reglas', 'criterio', 'criterios', 'dueño de la relación', 'dueno de la relacion'],
+    answer: 'Seis principios deciden cada pantalla. Nadie necesita entender los tokens para comprar. La cuenta es del adulto, el progreso es del chico. Todo lo que el club vende se compra con lo mismo. Lo que se regala cuesta poco y trae gente. Cada etapa funciona sola. El club es dueño de la relación y de la plata: Stripe cobra a nombre del club, los datos son del club, Yacaré construye y nunca retiene fondos.'
+  },
+  {
+    keywords: ['dinero', 'economía', 'economia', 'mensualidad', 'suscripción', 'suscripcion', 'tarjeta', 'cómo se paga', 'como se paga', 'pago', 'pagos', 'stripe', 'wallet', 'saldo'],
+    answer: 'En una línea: la mensualidad va a la tarjeta, los tokens pagan lo suelto, los hitos regalan. Entran la mensualidad de la School (una suscripción por hijo, a la tarjeta), los packs de tokens (compra única, con bono en los grandes) y los tokens de regalo por hitos. El wallet es un saldo por familia: 1 token = 1 USD, nada vence, dos registros internos (cargados y de regalo, se gastan primero los de regalo), cada movimiento queda en el ledger, sin cash-out ni transferencias. Salen hoy lo de la School, en 2027 la tienda y los partidos, en 2028 el estadio.'
+  },
+  {
+    keywords: ['familia', 'familias', 'padre', 'madre', 'tutor', 'cómo lo vive', 'como lo vive', 'ocho pasos', 'journey', 'recorrido', 'inscribir', 'inscripción', 'inscripcion', 'magic link', 'link mágico', 'link magico'],
+    answer: 'Una familia lo vive en ocho pasos. Entra desde la School con email y link mágico y carga a sus hijos. Elige el pack de cada hijo: días, horario, sede, coach, cupos, precio mensual. Paga el mes con la tarjeta en un solo paso. Recibe confirmación con recibo y próximas fechas. Carga tokens para lo suelto y elige una clínica o un día de daycare. El coach marca presente y Luca lo celebra. Gana tokens por hitos. Vuelve a canjear y muestra su carnet con QR donde haga falta.'
+  },
+  {
+    keywords: ['club', 'coordinadora', 'coach', 'panel', 'admin', 'planillas', 'whatsapp', 'excel', 'check-in', 'checkin', 'asistencia', 'presentes', 'socios', 'movimientos'],
+    answer: 'Para el club son cinco pantallas y cero planillas. Actividades: grupo por edad, días, horario, sede, coach, cupo por fecha y lo que se vende para cada una. Socios: las familias, sus hijos, qué tienen activo, qué compraron. Quiénes asisten y check-in: por actividad y fecha, con contacto y notas médicas; el coach marca presentes en 30 segundos desde el teléfono. Hitos: qué acciones regalan tokens, cuánto y con qué tope. Movimientos: cargas, compras, reversas y el total que cierra cada noche contra Stripe.'
+  },
+  {
+    keywords: ['token', 'tokens', 'crédito', 'credito', 'créditos', 'creditos', 'luca coins', 'coins', 'moneda', 'vencen', 'vence', 'cripto', 'cash-out', 'cashout', 'transferir', 'transferencia', 'regalar'],
+    answer: 'Cuatro reglas: un token vale un dólar, siempre; no vencen; se compran con tarjeta, en la web, por Stripe; sirven para todo lo del club y para nada más. Los de regalo compran lo suelto, nunca la mensualidad, y se gastan primero. Lo que nunca: no se cambian por dinero, no se pasan de una cuenta a otra (regalar es cargar a nombre de otra familia), no compran nada digital y no son cripto, son un saldo del club.'
+  },
+  {
+    keywords: ['hito', 'hitos', 'gamificación', 'gamificacion', 'racha', 'insignia', 'insignias', 'progreso', 'leaderboard', 'ranking', 'chico', 'chicos', 'hijo', 'hijos', 'luca', 'referir', 'referido'],
+    answer: 'El chico ve, desde la cuenta de su familia, su racha de clases seguidas, sus insignias (primera clase, diez clases, mes perfecto, pase de categoría, con Luca) y su progreso marcado por el coach. Sin leaderboards en la Etapa 1: la progresión es personal. Los hitos que regalan tokens a la familia son completar el perfil, el primer mes pagado, la asistencia perfecta del mes, referir a una familia, la encuesta de fin de período y el prepago. Cuánto paga cada uno y con qué tope lo define el club desde su panel.'
+  },
+  {
+    keywords: ['pantalla', 'pantallas', 'interfaz', 'interfaces', 'mockup', 'mockups', 'diseño', 'diseno', 'home', 'sign in', 'carnet', 'qr', 'packs', 'cómo se ve', 'como se ve', 'dieciséis', 'dieciseis', '16'],
+    answer: 'Son dieciséis pantallas ilustrativas, en inglés. Nueve de la familia: sign in, home, progreso del hijo, packs, pagar el mes, cargar tokens, comprar con tokens, wallet y Mi PSLSC ID (el carnet con QR que rota). Cuatro del club: actividades, quiénes asisten y check-in, hitos y movimientos. Tres del hincha, para después de la School: home de hincha, tienda y entradas. Los rangos de edad que aparecen son de ejemplo hasta que el club los defina.'
+  },
+  {
+    keywords: ['hincha', 'hinchas', 'fan', 'tienda', 'shopify', 'store', 'entradas', 'tickets', 'partido', 'partidos', 'vivenu', 'matchday', 'después de la school', 'despues de la school', 'camiseta'],
+    answer: 'Después de la School, la misma cuenta sirve para el hincha. Home de hincha: próximo partido, noticias del sitio, tokens y carnet; si tenés hijos en la School, ellos van arriba. Tienda: los productos de Shopify dentro de PSLSC ID, se paga con tokens o con tarjeta y el club despacha desde Shopify. Entradas: un evento propio con QR validado por nosotros, y un partido con vivenu, el ticketing de la USL. Esto llega en la Etapa 2 y la Etapa 3.'
+  },
+  {
+    keywords: ['ecosistema', 'arquitectura', 'núcleo', 'nucleo', 'supabase', 'backend', 'api', 'base de datos', 'integración', 'integraciones', 'activecampaign', 'sitio del club', 'wordpress', 'ledger', 'comercio', 'comercios'],
+    answer: 'Tres frentes sobre un solo núcleo. La familia entra por la web de PSLSC ID (web y PWA), el staff por el panel del club y el comercio amigo por una página de validación que escanea el QR. Todo pasa por una API con las reglas de negocio sobre Supabase: identidad, catálogo, hogares y perfiles, ledger de tokens, inscripciones, roles y permisos. Stripe cobra a nombre del club, ActiveCampaign sigue como CRM de marketing, el sitio de la USL solo enlaza. vivenu, la tienda y el POS del estadio se conectan después, sobre lo mismo. Línea llena hoy, punteado después.'
+  },
+  {
+    keywords: ['etapa', 'etapas', 'roadmap', 'cronograma', 'calendario', 'fechas', 'cuándo', 'cuando', 'marzo', '2027', '2028', 'plazos', 'alcance', 'qué entra', 'que entra', 'etapa 1', 'etapa 2', 'etapa 3', 'etapa 4', 'school abre', 'abre la school'],
+    answer: 'Cuatro etapas. Noviembre y diciembre 2026, decisiones: rangos de edad, packs, fecha de apertura, cuenta de Stripe del club; arranca la base técnica. Etapa 1, diciembre a marzo 2027, la School funciona: cuenta y perfiles por hijo, mensualidad a la tarjeta, tokens, clínicas y daycare, actividades y cupos, check-in, hitos e insignias, carnet con QR, panel del club; piloto en marzo y apertura. Etapa 2, abril a julio 2027, la School a fondo y la cara de hincha: noticias, partidos, tienda con tokens, entradas propias, bilingüe. Etapa 3, agosto a diciembre 2027, la app en las tiendas, pase de Wallet, comercios amigos en piloto, vivenu. Etapa 4, 2028, el estadio. Las fechas ordenan el trabajo y dependen de las decisiones del club y de la coordinación con IT.'
+  },
+  {
+    keywords: ['app', 'aplicación', 'aplicacion', 'nativa', 'app store', 'google play', 'ios', 'android', 'apple', 'push', 'pwa', 'teléfono', 'telefono', 'celular'],
+    answer: 'PSLSC ID arranca como web instalable (PWA) en el teléfono: sirve para entrar, pagar y canjear. La razón más concreta para ir a una app es el push nativo: avisarte en el momento justo, con la app cerrada y en la pantalla bloqueada. La app en App Store y Google Play llega en la Etapa 3, de agosto a diciembre de 2027, sobre la misma web, con push nativo, cámara y pase de Wallet. La compra de tokens queda en la web, no dentro de la app.'
+  },
+  {
+    keywords: ['no construimos', 'qué no', 'que no', 'nunca', 'queda afuera', 'fuera de alcance', 'streaming', 'chat', 'red social', 'menores', 'menores de 13', 'blockchain'],
+    answer: 'Lo que no construimos nunca: streaming y resultados en vivo (los da la USL, nosotros enlazamos), red social o chat, cobrar tokens en la caja de un comercio, cuentas para menores de 13 (la cuenta es del adulto y el chico es un perfil), cripto, transferencias y cash-out. Además, cada etapa deja algo afuera a propósito: la Etapa 1 va sin tienda, sin partidos y sin app nativa.'
+  },
+  {
+    keywords: ['decisión', 'decision', 'decisiones', 'depende', 'dependemos', 'necesitan del club', 'necesitamos', 'qué falta', 'que falta', 'pendiente', 'pendientes', 'rangos de edad', 'categoría', 'categoria', 'categorías', 'categorias', 'información de la school', 'informacion de la school', 'supuesto', 'supuestos', 'cerrar', 'próximo paso', 'proximo paso', 'arrancar', 'consumos eventuales'],
+    answer: 'Hoy dependemos de que el club cierre la información de la School: rangos de edad por categoría, los packs (días por semana, horario, sede, coach y cupos), la fecha de apertura y dónde se entrena. Nuestro supuesto de trabajo es mensualidad más consumos eventuales. El análisis financiero y la propuesta de producto de parte del club todavía no los tenemos; cuando lleguen, el esquema se ajusta.'
+  },
+  {
+    keywords: ['noticia', 'noticias', 'news', 'novedades', 'resultado', 'resultados', 'marcador', 'fixture', 'próximo partido', 'proximo partido', 'contenido', 'contenidos', 'vínculo', 'vinculo', 'comunicación', 'comunicacion', 'avisos de la school', 'zona de noticias', 'canal'],
+    answer: 'El sitio es para descubrir el club; las noticias en PSLSC ID son para quien ya está adentro. Es una zona dentro de la cuenta con lo que pasa en la School, en el club y en el primer equipo, para la familia que ya se inscribió y para el hincha que ya tiene su carnet. Son las mismas noticias del sitio, por API, ordenadas según quién sos; los avisos de la School van en el mismo lugar; están los resultados y el próximo partido del primer equipo (el marcador final y el fixture, el minuto a minuto lo da la USL), y cada noticia lleva a algo: inscribirse, canjear, comprar, ver el partido. Es el vínculo diario con el club. Entra en la Etapa 2, con la cara de hincha. Sin comentarios ni chat.'
+  },
+  {
+    keywords: ['push', 'notificación', 'notificacion', 'notificaciones', 'avisar', 'aviso', 'avisos', 'alerta', 'alertas', 'recordatorio', 'recordatorios', 'pantalla bloqueada'],
+    answer: 'El push nativo es la razón más concreta para ir a una app: avisarte en el momento justo, con la app cerrada y en la pantalla bloqueada. PSLSC ID avisa la próxima sesión de cada hijo, los cambios de sede u horario que comunica la coordinadora, los hitos y los tokens que caen en el saldo, los cupos que se abren en clínicas y eventos, las noticias y partidos para el hincha, y los pagos y recibos. Pocas, útiles y elegidas por la familia: cada tipo se prende y se apaga por separado. Avisos por email desde la Etapa 1, web push en la Etapa 2, push nativo con la app en la Etapa 3.'
+  },
+  {
+    keywords: ['negocio', 'precio', 'precios', 'cuánto cuesta', 'cuanto cuesta', 'cuánto sale', 'cuanto sale', 'costo', 'costos', 'inversión', 'inversion', 'presupuesto', 'honorarios', 'horas', 'proyección', 'proyeccion', 'mercado', 'ingresos', 'rentable', 'legal', 'abogado'],
+    answer: 'Este deck deja afuera a propósito el mercado, el negocio, la proyección y lo legal. Eso está en el análisis completo de noviembre y en la conversación comercial. Para cualquier detalle de ese lado, escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['quién construye', 'quien construye', 'quién desarrolla', 'quien desarrolla', 'implementación', 'implementacion', 'equipo de it', 'el it', 'yacaré', 'yacare', 'estudio', 'quiénes', 'quienes', 'contacto'],
+    answer: 'Yacaré (yacare.io) analiza, recomienda y diseña PSLSC ID, y propone construirlo sobre Supabase, Vercel y Stripe con el IT del club como revisor y dueño de los accesos. Las decisiones son del club. Para consultas podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme qué es PSLSC ID, cómo funcionan los tokens, qué entra en la Etapa 1, por qué una app con push o qué depende del club.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
