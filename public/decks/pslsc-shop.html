@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · El shop de PSLSC</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   Base Yacaré. Acentos decorativos con la marca PSLSC:
+   aquamarine, negro cálido, crema. Red Marine solo como detalle. Sin naranja.
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #0C0C0A;
+  --bg-secondary: #10100E;
+  --bg-elevated: #121210;
+  --bg-surface: #161613;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --aqua: #AAF6E6;
+  --aqua-deep: #3FB8A3;
+  --cream: #F3F0EA;
+  --red-marine: #FF0033;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS (cover + cierre)
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--aqua {
+  background: radial-gradient(circle, rgba(170, 246, 230, 0.34) 0%, transparent 70%);
+  width: 520px; height: 520px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--deep {
+  background: radial-gradient(circle, rgba(63, 184, 163, 0.32) 0%, transparent 70%);
+  width: 420px; height: 420px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim { opacity: 0; transform: translateY(40px); }
+.anim.anim--visible { animation: slide-in 0.8s var(--ease-out) both; }
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES
+   ═══════════════════════════════════════ */
+.deck {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 80px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.slide-content { width: 100%; max-width: 1120px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+.card h4 { font-size: 1.15rem; margin-bottom: 10px; }
+.card p { font-size: 0.95rem; }
+.card p:last-child { margin-bottom: 0; }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--aqua), var(--cream)); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--aqua-deep), var(--aqua)); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--cream), var(--aqua-deep)); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--aqua) 0%, var(--aqua) 82%, var(--red-marine) 82%); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--text-secondary);
+}
+.stat-label {
+  font-size: 0.85rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;
+}
+
+.steps { display: flex; gap: 24px; width: 100%; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 28px; right: 28px;
+  height: 1px; background: var(--border-medium); z-index: 0;
+}
+.step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-primary);
+}
+.step h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.step p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.icon-list { display: flex; flex-direction: column; gap: 18px; }
+.icon-list li {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: 1.05rem; color: var(--text-secondary); margin: 0;
+}
+.icon-list li i, .icon-list li svg { color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+.checklist li {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 1.05rem; color: var(--text-secondary);
+  padding: 14px 0; border-bottom: 1px solid var(--border-subtle); margin: 0;
+}
+.checklist li i, .checklist li svg { color: var(--text-muted); flex-shrink: 0; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE VARIANTS
+   ═══════════════════════════════════════ */
+.slide--cover { text-align: center; }
+.slide--cover h1 { font-size: clamp(3.4rem, 8vw, 6.5rem); margin-bottom: 20px; }
+.slide--cover .subtitle {
+  font-size: 1.25rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 32px; font-weight: 300;
+}
+.slide--cover .meta, .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; filter: invert(1); opacity: 0.7; margin-bottom: 40px; }
+
+.slide--divider { text-align: center; }
+.slide--divider h2 { font-size: clamp(2.8rem, 6vw, 4.8rem); position: relative; z-index: 1; }
+.slide--divider .label { justify-content: center; position: relative; z-index: 1; }
+.slide--divider p { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; font-size: 1.15rem; font-weight: 300; }
+
+.slide--thanks { text-align: center; }
+.slide--thanks h2 { font-size: clamp(2.6rem, 5.2vw, 4.4rem); margin: 0 auto 16px; max-width: 980px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text-secondary); }
+.contact-item i, .contact-item svg { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   DECK SPECIFIC · SHOP PSLSC
+   ═══════════════════════════════════════ */
+.h2-md { font-size: 2.4rem; margin-bottom: 16px; }
+.lead { font-size: 1.1rem; font-weight: 300; max-width: 760px; }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 300; line-height: 1.3;
+  color: var(--text-primary);
+  max-width: 940px; margin: 0;
+  letter-spacing: -0.01em;
+}
+.quote-mark {
+  font-family: var(--font-display); font-size: 6rem; line-height: 0.6;
+  color: var(--text-muted); opacity: 0.4; display: block; margin-bottom: 24px;
+}
+
+/* Status chip: texto gris, solo el punto lleva color */
+.status {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 5px 14px 5px 12px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-secondary); white-space: nowrap;
+}
+.status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
+.status--on::before { background: var(--aqua); box-shadow: 0 0 10px rgba(170,246,230,0.6); }
+.status--off::before { background: var(--red-marine); }
+.case-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.case-head h2 { margin: 0; }
+
+/* Bloques Qué es / Cómo funcionó / Qué nos llevamos */
+.cb { padding: 14px 0; border-top: 1px solid var(--border-subtle); }
+.cb:last-child { padding-bottom: 0; }
+.cb-label {
+  font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-muted); margin-bottom: 6px;
+}
+.cb p, .cb li { font-size: 0.98rem; margin: 0 0 6px; }
+.cb p:last-child, .cb li:last-child { margin-bottom: 0; }
+.cb ul li { position: relative; padding-left: 18px; }
+.cb ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 8px; height: 1px; background: var(--text-muted); }
+
+/* Figuras */
+.figure {
+  display: block; width: 100%; margin: 0;
+  border-radius: 16px; border: 1px solid var(--border-subtle);
+  overflow: hidden; cursor: zoom-in; position: relative;
+  background: var(--bg-surface);
+  aspect-ratio: 8 / 5;
+}
+.figure img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.figure-cap {
+  font-size: 0.72rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin: 10px 0 0;
+}
+.fig-stack { display: flex; flex-direction: column; gap: 14px; }
+.fig-stack .figure-cap { margin-top: 6px; }
+.fig-stack .figure { aspect-ratio: auto; height: 32vh; }
+.zoom-hint {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(0,0,0,0.6); border: 1px solid var(--border-medium);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); opacity: 0; transition: opacity .2s;
+}
+.figure:hover .zoom-hint { opacity: 1; }
+.zoom-hint i, .zoom-hint svg { width: 14px; height: 14px; }
+
+.insight { margin-top: 24px; padding: 6px 0 6px 28px; border-left: 1px solid var(--border-medium); }
+.insight p { font-size: 1.2rem; color: var(--text-primary); margin: 0; font-weight: 300; line-height: 1.5; }
+.insight p + p { margin-top: 10px; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 6px 14px; font-size: 0.85rem; color: var(--text-secondary);
+}
+
+.big-num {
+  font-family: var(--font-display); font-weight: 700; font-size: 3rem;
+  line-height: 1; letter-spacing: -0.04em; color: var(--text-muted); margin-bottom: 18px;
+}
+.finding h4 { font-size: 1.35rem; margin-bottom: 14px; }
+.finding ul li { font-size: 0.95rem; position: relative; padding-left: 18px; margin-bottom: 8px; }
+.finding ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 8px; height: 1px; background: var(--text-muted); }
+
+.question {
+  font-family: var(--font-display); text-transform: uppercase; font-weight: 700;
+  font-size: 2rem; letter-spacing: -0.03em; line-height: 1.05; color: var(--text-primary);
+  padding: 18px 0; border-top: 1px solid var(--border-subtle);
+}
+
+.group-card { display: flex; flex-direction: column; gap: 14px; }
+.group-card i, .group-card svg { color: var(--text-muted); width: 22px; height: 22px; }
+.group-card h4 { margin: 0; font-size: 1.15rem; }
+
+.rule-num { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; }
+.rule-card p { font-size: 0.95rem; color: var(--text-primary); font-weight: 400; line-height: 1.5; }
+
+.layers { display: flex; flex-direction: column; gap: 12px; }
+.layer {
+  display: grid; grid-template-columns: 72px 1fr auto; gap: 24px; align-items: center;
+  padding: 22px 28px;
+}
+.layer .big-num { margin: 0; font-size: 2.6rem; }
+.layer h4 { margin: 0 0 4px; font-size: 1.5rem; }
+.layer p { margin: 0; font-size: 0.98rem; }
+.layer .meta { text-align: right; }
+.layer--1 { min-height: 132px; }
+
+.stat-mini .stat-number { font-size: 3.4rem; }
+.stat-mini .stat-label { font-size: 0.75rem; }
+
+.footnote { font-size: 0.85rem; color: var(--text-secondary); margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--border-subtle); }
+
+
+/* Relevamiento, casos y tarjetas con imagen */
+.path { display: flex; flex-direction: column; gap: 14px; }
+.path-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.path-head h4 { margin: 0; }
+.path-num { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--text-muted); }
+.case-rows { display: flex; flex-direction: column; }
+.case-row { display: grid; grid-template-columns: 130px 1fr 210px; gap: 20px; align-items: center; padding: 14px 0; border-top: 1px solid var(--border-subtle); }
+.case-row h4 { font-size: 1.2rem; margin: 0 0 2px; }
+.case-row p { margin: 0; font-size: 0.95rem; }
+.case-row .meta { font-size: 0.68rem; }
+.case-row .status { justify-self: start; }
+.case-row--head { padding: 0 0 10px; border-top: 0; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+.fig-stack--sm .figure { height: 24vh; }
+.thumb-card .figure { border-radius: 10px; margin-bottom: 16px; }
+.thumb-card h4 { margin-bottom: 6px; }
+.thumb-card .take { color: var(--text-primary); font-weight: 600; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+.layers-note { margin-top: 72px; }
+@media (max-width: 1100px) and (min-width: 769px) {
+  .layer-learn { grid-template-columns: 1fr !important; gap: 10px !important; padding: 14px 20px !important; }
+  .layer-learn .ll-head { align-items: baseline; }
+  .layer-learn .ll-head > div { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .wf-split { grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr) !important; gap: 28px !important; }
+  .wf-nav nav { display: none !important; }
+  .wf-nav i { margin-left: auto !important; }
+  .wf-col small { display: none !important; }
+  .case-split { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .case-split .fig-stack--sm { flex-direction: row; }
+  .case-split .fig-stack--sm > div { flex: 1; }
+  .case-split .fig-stack--sm .figure { height: 18vh; }
+  .case-row { grid-template-columns: 120px 1fr 200px; padding: 10px 0; }
+}
+
+/* Aprendizajes por capa */
+.learn h4 { margin-bottom: 14px; }
+.learn ul li { font-size: 0.95rem; position: relative; padding-left: 18px; margin-bottom: 12px; }
+.learn ul li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 8px; height: 1px; background: var(--text-muted); }
+.src { display: block; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-top: 2px; }
+
+/* Wireframes de la home */
+.wf { min-width: 0; border: 1px solid var(--border-medium); border-radius: 14px; overflow: hidden; background: #141412; }
+.wf-bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid var(--border-subtle); background: #0f0f0d; }
+.wf-bar span { width: 8px; height: 8px; border-radius: 50%; background: #2a2a27; }
+.wf-bar em { margin-left: 10px; font-style: normal; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--border-subtle); border-radius: 999px; padding: 2px 12px; }
+.wf-nav { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border-subtle); }
+.wf-nav img { width: 20px; height: auto; }
+.wf-nav b { font-family: var(--font-display); text-transform: uppercase; font-size: 0.85rem; color: var(--text-primary); white-space: nowrap; }
+.wf-nav nav { display: flex; gap: 14px; margin-left: auto; overflow: hidden; }
+.wf-nav nav span, .wf-nav i { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-style: normal; white-space: nowrap; }
+.wf-nav i { border: 1px solid var(--border-medium); border-radius: 999px; padding: 3px 10px; margin-left: 6px; }
+.wf-hero {
+  position: relative; height: clamp(190px, 31vh, 290px);
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 14px), #1b1b18;
+  display: flex; align-items: flex-end; padding: 22px;
+}
+.wf-ph { position: absolute; top: 12px; right: 12px; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); border: 1px dashed var(--border-medium); border-radius: 6px; padding: 3px 8px; }
+.wf-hero-copy small { display: block; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-secondary); margin-bottom: 6px; }
+.wf-hero-copy strong { display: block; font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.6rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 14px; font-weight: 700; }
+.wf-ctas { display: flex; gap: 8px; }
+.wf-btn { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; background: var(--aqua); color: #0C0C0A; border-radius: 999px; padding: 7px 14px; }
+.wf-btn--ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-medium); }
+.wf-next { padding: 12px 16px 14px; border-top: 1px solid var(--border-subtle); opacity: 0.5; }
+.wf-next--top { border-top: 0; border-bottom: 1px solid var(--border-subtle); }
+.wf-next small { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); }
+.wf-hangers { display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid #3a3a36; padding-top: 6px; }
+.wf-hangers i { flex: 1; height: 30px; border-radius: 4px 4px 2px 2px; background: #2a2a26; }
+.wf-cols-head { padding: 16px 16px 12px; }
+.wf-cols-head strong { display: block; font-family: var(--font-display); text-transform: uppercase; font-size: 1.4rem; line-height: 1; color: var(--text-primary); }
+.wf-cols-head small { display: block; font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px; }
+.wf-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 16px 18px; }
+.wf-ph-box {
+  position: relative; aspect-ratio: 1 / 1.05; border-radius: 8px; margin-bottom: 10px;
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 12px), #1b1b18;
+}
+.wf-ph-box .wf-ph { top: 8px; left: 8px; right: auto; }
+.wf-col strong { display: block; font-family: var(--font-display); text-transform: uppercase; font-size: 1.05rem; line-height: 1.05; color: var(--text-primary); }
+.wf-col small { display: block; font-size: 0.7rem; color: var(--text-secondary); margin: 3px 0 8px; line-height: 1.35; }
+.wf-col em { font-style: normal; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-primary); border-bottom: 1px solid var(--aqua); padding-bottom: 2px; }
+.wf-switch { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.wf-chip {
+  background: transparent; border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 6px 14px; color: var(--text-secondary); font-family: var(--font-body); font-size: 0.75rem;
+  cursor: pointer; transition: all 0.2s var(--ease-out);
+}
+.wf-chip:hover { color: var(--text-primary); }
+.wf-chip.is-on { color: var(--text-primary); border-color: var(--aqua); }
+
+/* Aprendizajes + capas */
+.layer-learn { display: grid; grid-template-columns: 230px 1fr; gap: 28px; padding: 18px 24px; align-items: start; }
+.ll-head { display: flex; gap: 14px; align-items: flex-start; }
+.layer-learn .big-num { font-size: 2.2rem; margin: 0; }
+.layer-learn h4 { font-size: 1.4rem; margin: 0 0 4px; }
+.ll-role { margin: 0; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); line-height: 1.4; }
+.layer-learn ul { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
+.layer-learn li { font-size: 0.92rem; margin: 0; position: relative; padding-left: 16px; line-height: 1.45; }
+.layer-learn li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--text-muted); }
+.layer-learn .src { display: inline; margin-left: 4px; font-size: 0.6rem; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; padding: 32px;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; border-radius: 12px; }
+.lightbox-close {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(0,0,0,0.6); border: 1px solid var(--border-medium);
+  color: var(--text-secondary); border-radius: 999px; padding: 8px 16px;
+  font-family: var(--font-body); font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer;
+}
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed; top: 16px; right: 16px; z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(0, 0, 0, 0.8); }
+.toolbar-btn i, .toolbar-btn svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed; bottom: 28px; right: 32px; z-index: 9998;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 500;
+  color: var(--text-muted); letter-spacing: 0.08em;
+  pointer-events: none; opacity: 0.6; transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg { max-width: 85%; padding: 12px 18px; border-radius: 16px; font-size: 0.88rem; line-height: 1.55; }
+.chat-msg p { color: var(--text-secondary); margin: 0; font-size: 0.88rem; }
+.chat-msg--user { align-self: flex-end; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-medium); }
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant { align-self: flex-start; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); }
+.chat-chip {
+  background: transparent; border: 1px solid var(--border-medium); border-radius: 999px;
+  padding: 8px 16px; color: var(--text-secondary);
+  font-family: var(--font-body); font-size: 0.78rem;
+  cursor: pointer; transition: all 0.2s var(--ease-out); white-space: nowrap;
+}
+.chat-chip:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(255,255,255,0.05); }
+.chat-typing { align-self: flex-start; padding: 12px 18px; font-size: 0.85rem; color: var(--text-muted); }
+.chat-typing::after { content: '...'; animation: typing-dots 1.2s steps(3) infinite; }
+@keyframes typing-dots { 0% { content: '.'; } 33% { content: '..'; } 66% { content: '...'; } }
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text-muted); font-family: var(--font-body);
+  font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite; transition: opacity 0.6s ease; pointer-events: none;
+}
+.scroll-hint i, .scroll-hint svg { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; visibility: hidden; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE · <=768px
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .deck { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+  .slide {
+    min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+    padding: 64px 20px 40px; justify-content: center; overflow-y: auto;
+  }
+  .slide-content { max-width: 100%; width: 100%; }
+
+  h1 { font-size: 1.8rem; }
+  h2, .h2-md { font-size: 1.6rem !important; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split, .grid-2x2, .grid-3 { grid-template-columns: 1fr !important; gap: 18px !important; }
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 16px; align-items: flex-start; }
+  .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 1rem; margin: 0; }
+  .step h4 { font-size: 1rem; margin-bottom: 4px; }
+  .step > div { display: flex; flex-direction: column; }
+
+  .stat-number, .stat-mini .stat-number { font-size: 2.4rem; }
+  .section-num, .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 2.6rem; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--cover .subtitle { font-size: 1rem; }
+  .slide--divider h2 { font-size: 2rem !important; }
+  .slide--thanks h2 { font-size: 1.8rem !important; }
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .icon-list { gap: 12px; }
+  .icon-list li { font-size: 0.9rem; gap: 12px; }
+  .checklist li { font-size: 0.92rem; padding: 10px 0; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+
+  .quote-text { font-size: 1.45rem; }
+  .quote-mark { font-size: 4rem; }
+  .question { font-size: 1.3rem; padding: 10px 0; }
+  .insight { padding-left: 18px; margin-top: 16px; }
+  .insight p { font-size: 1rem; }
+  .big-num { font-size: 2rem; margin-bottom: 10px; }
+  .cb { padding: 10px 0; }
+  .cb p, .cb li { font-size: 0.9rem; }
+  .layer { grid-template-columns: 44px 1fr; padding: 16px; gap: 14px; }
+  .layer .meta { display: none; }
+  .layer .big-num { font-size: 1.8rem; }
+  .layer h4 { font-size: 1.15rem; }
+  .layer--1 { min-height: 0; }
+
+  .blob { width: 220px !important; height: 220px !important; }
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+  .slide-counter { display: none; }
+  #chat-container { border-radius: 16px; }
+  .lightbox { padding: 12px; }
+  .wf-nav nav { display: none; }
+  .wf-nav i { margin-left: auto; }
+  .wf-cols { gap: 6px; padding: 0 10px 14px; }
+  .wf-col small { display: none; }
+  .wf-col strong { font-size: 0.85rem; }
+  .wf-hero { padding: 16px; }
+  .layer-learn { grid-template-columns: 1fr; gap: 12px; padding: 16px; }
+  .layer-learn ul { grid-template-columns: 1fr; }
+  .case-row { grid-template-columns: 1fr; gap: 6px; }
+  .case-row--head { display: none; }
+  .fig-stack--sm .figure { height: auto; }
+  .layers-note { margin-top: 0; }
+  .fig-stack .figure { aspect-ratio: 8 / 5; height: auto; }
+
+  .anim { opacity: 1; transform: none; animation: none; }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint, .lightbox, .zoom-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .slide[data-slide="chat"] { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()"><i data-lucide="download"></i> PDF</button>
+  <button class="toolbar-btn" onclick="goToChat()"><i data-lucide="message-circle-question"></i> Dudas</button>
+</div>
+
+<div class="slide-counter" id="slide-counter">1 / 15</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════ 1. PORTADA ══════════════ -->
+<section class="slide slide--cover">
+  <div class="blob blob--aqua" style="top:-220px; left:-120px;"></div>
+  <div class="blob blob--deep" style="bottom:-200px; right:-60px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <p class="meta anim" style="margin-bottom:24px;">Port St. Lucie SC · Frente Shop</p>
+    <h1 class="shimmer-text anim">El shop de PSLSC</h1>
+    <p class="subtitle anim">Una tienda que se compra fácil y se recuerda.</p>
+    <p class="meta anim" style="margin-top:24px;">Noviembre 2026</p>
+  </div>
+</section>
+
+
+<!-- ══════════════ 2. THE KIT ROOM ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="split" style="grid-template-columns: 0.8fr 1.2fr; gap:56px;">
+      <div>
+        <div class="label anim">01 · La idea</div>
+        <h2 class="shimmer-text anim h2-md">The Kit Room</h2>
+        <p class="anim lead" style="margin-bottom:28px;">El vestuario del club, colgado en un riel de camisetas.</p>
+        <ul class="icon-list anim">
+          <li><i data-lucide="move-horizontal" style="width:22px; height:22px;"></i><div><strong>Se arrastra</strong> como un perchero de verdad.</div></li>
+          <li><i data-lucide="sliders-horizontal" style="width:22px; height:22px;"></i><div><strong>Se filtra</strong> por arquero, titular y suplente.</div></li>
+          <li><i data-lucide="shirt" style="width:22px; height:22px;"></i><div><strong>Cada camiseta viene al frente</strong> con su ficha.</div></li>
+        </ul>
+        <p class="meta anim" style="margin-top:28px;">Prototipo en yacare.io/shoppslsc</p>
+      </div>
+      <div class="fig-stack anim">
+        <div>
+          <figure class="figure" data-zoom="pslsc-shop/pslsc-riel.jpg">
+            <img src="pslsc-shop/pslsc-riel.jpg" alt="Riel con camisetas colgadas en un vestuario oscuro, con filtros arriba">
+            <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+          </figure>
+          <p class="figure-cap">El riel</p>
+        </div>
+        <div>
+          <figure class="figure" data-zoom="pslsc-shop/pslsc-detalle.jpg">
+            <img src="pslsc-shop/pslsc-detalle.jpg" alt="Una camiseta negra en primer plano con su ficha a la derecha">
+            <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+          </figure>
+          <p class="figure-cap">El detalle de una camiseta</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Shop</span></div>
+</section>
+
+
+<!-- ══════════════ 3. EL RELEVAMIENTO ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">02 · El relevamiento</div>
+    <h2 class="shimmer-text anim h2-md">Fuimos a ver qué hay afuera</h2>
+    <p class="anim lead" style="margin-bottom:32px;">Relevamos unas 20 referencias entre clubes y marcas.</p>
+    <div class="split anim" style="grid-template-columns: 0.9fr 1.1fr; align-items:start; gap:56px;">
+      <div>
+        <p class="cb-label">Qué fuimos a buscar</p>
+        <div class="question">¿Se compra fácil?</div>
+        <div class="question">¿Se recuerda?</div>
+        <div class="question" style="border-bottom:1px solid var(--border-subtle);">¿Se puede renovar?</div>
+      </div>
+      <div>
+        <p class="cb-label">Por dónde entramos</p>
+        <div class="path">
+          <div class="card card--sm">
+            <div class="path-head"><span class="path-num">01</span><h4>Clubes grandes</h4></div>
+            <p>Barcelona, Real Madrid, Spurs, Man City, Knicks, Patriots.</p>
+            <p><strong>Tienen tiendas convencionales.</strong></p>
+          </div>
+          <div class="card card--sm card--accent-1">
+            <div class="path-head"><span class="path-num">02</span><h4>Clubes chicos y marcas</h4></div>
+            <p><strong>Ahí estaba lo distinto.</strong> Lo ordenamos en tres grupos:</p>
+            <div class="tag-row" style="margin-top:10px;">
+              <span class="tag">Tiendas inmersivas</span><span class="tag">Ediciones especiales</span><span class="tag">Tiendas con identidad</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Relevado el 18/11/2026</span></div>
+</section>
+
+
+<!-- ══════════════ 4. TIENDAS INMERSIVAS ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">02 · El relevamiento · Tiendas inmersivas</div>
+    <h2 class="anim h2-md" style="margin-bottom:22px;">Tiendas que se recorren en 3D</h2>
+    <div class="split case-split" style="grid-template-columns: 1.3fr 0.7fr; gap:44px; align-items:start;">
+      <div class="anim">
+        <div class="case-rows">
+          <div class="case-row case-row--head"><span>Caso</span><span>Qué buscaron</span><span>¿Funcionó?</span></div>
+          <div class="case-row">
+            <div><h4>Benfica</h4><span class="meta">2025</span></div>
+            <p>El vestuario del club en 3D, con asistente IA, atado al Mundial de Clubes.</p>
+            <span class="status status--off">Da error 404</span>
+          </div>
+          <div class="case-row">
+            <div><h4>Fenerbahçe</h4><span class="meta">2025</span></div>
+            <p>Otro vestuario 3D del mismo proveedor, con camisetas personalizables.</p>
+            <span class="status status--off">No se encuentra</span>
+          </div>
+          <div class="case-row">
+            <div><h4>Hornets</h4><span class="meta">2023</span></div>
+            <p>Una copia de la tienda del estadio, con avatar, caminata y otros fans.</p>
+            <span class="status status--off">Redirige a la tienda común</span>
+          </div>
+          <div class="case-row">
+            <div><h4>KidSuper</h4><span class="meta">Marca, Brooklyn</span></div>
+            <p>Un mundo pintado de la marca, sobre el catálogo y el carrito de Shopify.</p>
+            <span class="status status--on">Sigue viva</span>
+          </div>
+        </div>
+        <div class="insight" style="margin-top:20px;">
+          <p>Las de los clubes vivían aparte de la tienda y nadie las sostuvo. <strong>La que sigue viva es la tienda misma.</strong></p>
+        </div>
+      </div>
+      <div class="fig-stack fig-stack--sm anim">
+        <div>
+          <figure class="figure" data-zoom="pslsc-shop/hornets.jpg">
+            <img src="pslsc-shop/hornets.jpg" alt="Tienda online convencional de Charlotte Hornets">
+            <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+          </figure>
+          <p class="figure-cap">Hornets hoy: el dominio lleva a la tienda común</p>
+        </div>
+        <div>
+          <figure class="figure" data-zoom="pslsc-shop/kidsuper.jpg">
+            <img src="pslsc-shop/kidsuper.jpg" alt="Fachada de la tienda KidSuper pintada a mano sobre un dibujo en lápiz">
+            <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+          </figure>
+          <p class="figure-cap">KidSuper World: sigue viva</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>02 · El relevamiento</span></div>
+</section>
+
+
+<!-- ══════════════ 5. EDICIONES ESPECIALES ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">02 · El relevamiento · Ediciones especiales</div>
+    <h2 class="anim h2-md" style="margin-bottom:28px;">Camisetas numeradas por el año de fundación</h2>
+    <div class="split" style="grid-template-columns: 1fr 1fr; gap:48px; align-items:start;">
+      <div class="anim">
+        <div class="grid-3 stat-mini" style="gap:16px; margin-bottom:22px;">
+          <div><div class="stat-number">1.905</div><div class="stat-label">Chelsea · 120 años · 2025</div></div>
+          <div><div class="stat-number">1.901</div><div class="stat-label">Tottenham · 2026</div></div>
+          <div><div class="stat-number">1.894</div><div class="stat-label">Man City · 125 años</div></div>
+        </div>
+        <figure class="figure" data-zoom="pslsc-shop/chelsea.jpg" style="aspect-ratio: 16 / 8;">
+          <img src="pslsc-shop/chelsea.jpg" alt="Escudo bordado de Chelsea con las fechas 1905 y 2025" style="object-position: center bottom;">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <p class="figure-cap">La nota de Chelsea sobre la edición de 120 años</p>
+      </div>
+      <div class="anim">
+        <div class="cb">
+          <p class="cb-label">Qué buscaron</p>
+          <p>Que la escasez se pueda tocar. La cantidad es el año de fundación, cada camiseta lleva un parche con su número dentro de la serie y viene en una caja de presentación.</p>
+        </div>
+        <div class="cb">
+          <p class="cb-label">Cómo se venden</p>
+          <p>En la tienda oficial, sin 3D.</p>
+        </div>
+        <div class="cb">
+          <p class="cb-label">¿Funcionó?</p>
+          <p>No tenemos cifras de ventas. Lo que sí vimos: en la web es una nota y un botón, y la emoción de la edición no llega a la compra.</p>
+        </div>
+        <div class="insight" style="margin-top:14px;">
+          <p><strong>Ahí puede estar nuestra diferencia.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>02 · El relevamiento</span></div>
+</section>
+
+
+<!-- ══════════════ 6. TIENDAS CON IDENTIDAD ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">02 · El relevamiento · Tiendas con identidad</div>
+    <h2 class="anim h2-md">Fáciles de comprar y con identidad propia</h2>
+    <p class="anim lead" style="margin-bottom:24px;">Las tres siguen vivas, corren sobre Shopify y no usan 3D.</p>
+    <div class="grid-3 anim">
+      <div class="card card--sm thumb-card">
+        <figure class="figure" data-zoom="pslsc-shop/como.jpg">
+          <img src="pslsc-shop/como.jpg" alt="Página de colecciones de Como 1907 con una foto de campaña frente al lago">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <h4>Como 1907</h4>
+        <p>Se navega por colecciones con nombre propio, cada una con su foto y su frase.</p>
+        <p class="take">La base de nuestras colecciones.</p>
+      </div>
+      <div class="card card--sm thumb-card">
+        <figure class="figure" data-zoom="pslsc-shop/venezia.jpg">
+          <img src="pslsc-shop/venezia.jpg" alt="Portada de la tienda de Venezia FC ocupada por una campaña de Black Friday">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <h4>Venezia FC</h4>
+        <p>La primera pantalla se entrega entera a la campaña del momento.</p>
+        <p class="take">La base de nuestro hero.</p>
+      </div>
+      <div class="card card--sm thumb-card">
+        <figure class="figure" data-zoom="pslsc-shop/palace.jpg">
+          <img src="pslsc-shop/palace.jpg" alt="Tienda de Palace: grilla de camperas con un menú corto arriba">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <h4>Palace</h4>
+        <p>Abre directo en la grilla, con un menú de cuatro opciones.</p>
+        <p class="take">La vara de comprar fácil.</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>02 · El relevamiento</span></div>
+</section>
+
+
+<!-- ══════════════ 7. LO QUE APRENDIMOS + LA HOME EN TRES CAPAS ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">03 · Lo que aprendimos y la decisión</div>
+    <h2 class="shimmer-text anim h2-md">La home en tres capas</h2>
+    <p class="anim lead" style="margin-bottom:24px;">Cada aprendizaje del relevamiento lleva a una capa. Arriba se compra, abajo se recorre: <strong>la experiencia nunca se pone entre la persona y la compra.</strong></p>
+    <div class="layers anim">
+      <div class="card layer-learn card--accent-1">
+        <div class="ll-head">
+          <div class="big-num">01</div>
+          <div><h4>Hero</h4><p class="ll-role">Vende · Arriba</p></div>
+        </div>
+        <ul>
+          <li>La primera pantalla se entrega a la venta del momento. <span class="src">Venezia</span></li>
+          <li>Es lo más rápido que se cambia: mismo catálogo, otra portada.</li>
+          <li>La compra tiene que ser directa, sin vueltas. <span class="src">Palace</span></li>
+        </ul>
+      </div>
+      <div class="card layer-learn card--accent-2">
+        <div class="ll-head">
+          <div class="big-num">02</div>
+          <div><h4>Artefacto</h4><p class="ll-role">The Kit Room · Se recuerda · Al medio</p></div>
+        </div>
+        <ul>
+          <li>Es la puerta de la tienda, no otra tienda: catálogo y carrito reales. <span class="src">Benfica, Hornets</span></li>
+          <li>Siempre hay una salida a la vista clásica, a un toque.</li>
+          <li>Cuenta algo que solo el club puede contar. <span class="src">KidSuper</span></li>
+          <li>Primero una imagen, después el 3D. Precio y botones, fuera de la escena.</li>
+        </ul>
+      </div>
+      <div class="card layer-learn card--accent-3">
+        <div class="ll-head">
+          <div class="big-num">03</div>
+          <div><h4>Colecciones</h4><p class="ll-role">Organizan y cuentan · Abajo</p></div>
+        </div>
+        <ul>
+          <li>Fotografía, nombres y edición alcanzan para que una tienda se sienta propia. <span class="src">Como 1907</span></li>
+          <li>Una edición especial se puede tocar: parche, número y caja. <span class="src">Chelsea, Man City</span></li>
+          <li>Cada lanzamiento cambia la escena sin rehacer la tienda.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>03 · La decisión</span></div>
+</section>
+
+
+<!-- ══════════════ 8. HERO ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="split wf-split" style="grid-template-columns: minmax(0,0.78fr) minmax(0,1.22fr); gap:48px;">
+      <div>
+        <div class="label anim">03 · La decisión · Capa 1</div>
+        <h2 class="anim h2-md">Hero</h2>
+        <p class="anim lead" style="margin-bottom:20px;">La primera pantalla está al servicio de la venta del momento.</p>
+        <div class="anim">
+          <div class="cb">
+            <p class="cb-label">Ejemplos de uso</p>
+            <ul>
+              <li>Banner de un jugador importante cuando llega o se destaca.</li>
+              <li>Un producto destacado.</li>
+              <li>El lanzamiento de una camiseta.</li>
+              <li>Una campaña de fecha.</li>
+            </ul>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Por qué</p>
+            <p>Es lo más rápido que se cambia y lo que más directo lleva a comprar.</p>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Referencia</p>
+            <p>Venezia FC.</p>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="wf" aria-label="Wireframe del hero de la home del shop">
+          <div class="wf-bar"><span></span><span></span><span></span><em>Port St. Lucie SC · Official Store</em></div>
+          <div class="wf-nav">
+            <img src="pslsc-shop/crest.webp" alt="">
+            <b>Port St. Lucie SC</b>
+            <nav><span>Shop</span><span>Fan Gear</span><span>Team Gear</span><span>Collections</span></nav>
+            <i>Cart (0)</i>
+          </div>
+          <div class="wf-hero" id="wf-hero">
+            <span class="wf-ph" id="wf-hero-ph">Foto del jugador</span>
+            <div class="wf-hero-copy">
+              <small id="wf-hero-kicker">Just signed</small>
+              <strong id="wf-hero-title">Welcome, No. 9</strong>
+              <div class="wf-ctas"><span class="wf-btn" id="wf-hero-cta">Shop his jersey</span><span class="wf-btn wf-btn--ghost">See all</span></div>
+            </div>
+          </div>
+          <div class="wf-next">
+            <small>The Kit Room</small>
+            <div class="wf-hangers"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="wf-switch" role="group" aria-label="Ejemplos de hero">
+          <button class="wf-chip is-on" data-hero="0">Jugador</button>
+          <button class="wf-chip" data-hero="1">Producto</button>
+          <button class="wf-chip" data-hero="2">Lanzamiento</button>
+          <button class="wf-chip" data-hero="3">Campaña</button>
+        </div>
+        <p class="figure-cap">Wireframe de la home · tocá un ejemplo para cambiar el hero</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>03 · La decisión</span></div>
+</section>
+
+
+<!-- ══════════════ 9. ARTEFACTO ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="split" style="grid-template-columns: 1.05fr 0.95fr; gap:52px;">
+      <div class="anim">
+        <figure class="figure" data-zoom="pslsc-shop/pslsc-riel.jpg">
+          <img src="pslsc-shop/pslsc-riel.jpg" alt="The Kit Room: el riel de camisetas del prototipo">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <p class="figure-cap">The Kit Room, con el estilo que ya veníamos trabajando</p>
+        <div class="cb" style="margin-top:18px;">
+          <p class="cb-label">Cómo cambia: la escena se viste según el momento</p>
+          <div class="tag-row" style="margin-top:8px;">
+            <span class="tag">Colección nueva</span><span class="tag">Día de partido</span><span class="tag">Edición especial</span><span class="tag">Hito del club</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="label anim">03 · La decisión · Capa 2</div>
+        <h2 class="anim h2-md">Artefacto: The Kit Room</h2>
+        <p class="anim lead" style="margin-bottom:20px;">El vestuario con camisetas colgadas, debajo del hero.</p>
+        <div class="anim">
+          <div class="cb">
+            <p class="cb-label">Por qué va debajo</p>
+            <ul>
+              <li>Benfica y Hornets pusieron la experiencia como entrada obligatoria y no duró.</li>
+              <li>Debajo del hero, el artefacto suma sin frenar a quien viene a comprar.</li>
+            </ul>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Siempre</p>
+            <p><strong>Tiene una vista en grilla a un toque y cada camiseta abre su ficha real.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>03 · La decisión</span></div>
+</section>
+
+
+<!-- ══════════════ 10. COLECCIONES ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="split wf-split" style="grid-template-columns: minmax(0,0.78fr) minmax(0,1.22fr); gap:48px;">
+      <div>
+        <div class="label anim">03 · La decisión · Capa 3</div>
+        <h2 class="anim h2-md">Colecciones</h2>
+        <p class="anim lead" style="margin-bottom:20px;">La tienda se ordena por colecciones con nombre propio, cada una con foto de campaña y una frase.</p>
+        <div class="anim">
+          <div class="cb">
+            <p class="cb-label">Por qué</p>
+            <ul>
+              <li>Para un club nuevo, una colección es una forma de contar quién es.</li>
+              <li>Le da al equipo un ritmo de lanzamientos.</li>
+            </ul>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Ejemplos de nombres (a definir)</p>
+            <ul>
+              <li><strong>Founders:</strong> las primeras piezas de la historia del club.</li>
+              <li><strong>Matchday:</strong> lo que se usa en la tribuna.</li>
+              <li><strong>Treasure Coast:</strong> lifestyle de la ciudad.</li>
+            </ul>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Referencia</p>
+            <p>Como 1907.</p>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <div class="wf" aria-label="Wireframe de las colecciones en la home del shop">
+          <div class="wf-bar"><span></span><span></span><span></span><em>Port St. Lucie SC · Official Store</em></div>
+          <div class="wf-next wf-next--top">
+            <small>The Kit Room</small>
+            <div class="wf-hangers"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="wf-cols-head">
+            <strong>Collections</strong>
+            <small>Every drop tells a part of the club.</small>
+          </div>
+          <div class="wf-cols">
+            <div class="wf-col">
+              <div class="wf-ph-box"><span class="wf-ph">Foto de campaña</span></div>
+              <strong>Founders</strong>
+              <small>The first pieces in club history.</small>
+              <em>Explore</em>
+            </div>
+            <div class="wf-col">
+              <div class="wf-ph-box"><span class="wf-ph">Foto de campaña</span></div>
+              <strong>Matchday</strong>
+              <small>Made for the stands.</small>
+              <em>Explore</em>
+            </div>
+            <div class="wf-col">
+              <div class="wf-ph-box"><span class="wf-ph">Foto de campaña</span></div>
+              <strong>Treasure Coast</strong>
+              <small>Life on the Coast.</small>
+              <em>Explore</em>
+            </div>
+          </div>
+        </div>
+        <p class="figure-cap">Wireframe de la home · las colecciones al final</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>03 · La decisión</span></div>
+</section>
+
+
+<!-- ══════════════ 11. POR QUÉ ESTE ORDEN ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">03 · La decisión</div>
+    <h2 class="anim h2-md" style="margin-bottom:32px;">Por qué este orden</h2>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <p class="cb-label">01 · Hero</p>
+        <h4>Trae ventas</h4>
+        <p>Y se renueva sin esfuerzo.</p>
+        <div class="cb" style="margin-top:18px;"><p class="cb-label">Se actualiza</p><p>Cada semana.</p></div>
+      </div>
+      <div class="card card--sm card--accent-2">
+        <p class="cb-label">02 · Artefacto</p>
+        <h4>Trae memoria</h4>
+        <p>Y diferencia del resto de las tiendas de clubes.</p>
+        <div class="cb" style="margin-top:18px;"><p class="cb-label">Se actualiza</p><p>Por momento de la temporada.</p></div>
+      </div>
+      <div class="card card--sm card--accent-3">
+        <p class="cb-label">03 · Colecciones</p>
+        <h4>Traen relato y ritmo</h4>
+        <p>Cada una cuenta una parte del club.</p>
+        <div class="cb" style="margin-top:18px;"><p class="cb-label">Se actualiza</p><p>Por lanzamiento.</p></div>
+      </div>
+    </div>
+    <p class="anim lead" style="margin-top:28px;"><strong>Cada capa se actualiza por separado.</strong></p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>03 · La decisión</span></div>
+</section>
+
+
+<!-- ══════════════ 12. SOUTHAMPTON ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="split" style="grid-template-columns: 1fr 1fr; gap:52px;">
+      <div>
+        <div class="label anim">04 · Idea aparte · Realidad aumentada</div>
+        <div class="case-head anim">
+          <h2 class="h2-md">Southampton · la camiseta con contenido</h2>
+        </div>
+        <p class="meta anim" style="margin-bottom:14px;">Temporada 2021/22 · Unit9 y Formidable</p>
+        <div class="anim">
+          <div class="cb">
+            <p class="cb-label">Qué fue</p>
+            <p>La camiseta tenía marcas que la cámara del teléfono reconocía. Al apuntarle desde el navegador, sin app, aparecía contenido del club sobre la prenda. Se presentó como la primera camiseta de fútbol con AR.</p>
+          </div>
+          <div class="cb">
+            <p class="cb-label">Por qué nos interesa</p>
+            <p><strong>La tecnología llega después de la compra y le da una segunda vida a la camiseta.</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="anim">
+        <figure class="figure" data-zoom="pslsc-shop/southampton.jpg">
+          <img src="pslsc-shop/southampton.jpg" alt="Camiseta de Southampton y un teléfono con la experiencia de realidad aumentada">
+          <span class="zoom-hint"><i data-lucide="maximize-2"></i></span>
+        </figure>
+        <p class="figure-cap">El caso en el archivo de Unit9</p>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>04 · Idea aparte</span></div>
+</section>
+
+
+<!-- ══════════════ 13. AR EN PSLSC ══════════════ -->
+<section class="slide">
+  <div class="slide-content">
+    <div class="label anim">04 · Idea aparte</div>
+    <h2 class="anim h2-md" style="margin-bottom:28px;">Cómo podría ser en PSLSC</h2>
+    <div class="grid-3 anim">
+      <div class="card card--sm card--accent-1">
+        <p class="cb-label">La idea</p>
+        <h4>Algo que el resto no ve</h4>
+        <p>Quien compra una edición especial, por ejemplo Founders, desbloquea:</p>
+        <div class="cb" style="margin-top:4px;">
+          <ul>
+            <li>Un mensaje del plantel.</li>
+            <li>El detrás de escena del lanzamiento.</li>
+            <li>Contenido del día de partido.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card card--sm">
+        <p class="cb-label">El límite</p>
+        <h4>La prenda es de adidas</h4>
+        <p>Si las marcas van impresas en la camiseta, hay que hacerlo con adidas, que fabrica las camisetas.</p>
+      </div>
+      <div class="card card--sm">
+        <p class="cb-label">Un camino sin adidas</p>
+        <h4>Lo dispara el club</h4>
+        <p>Algo que controla el club, como la etiqueta colgante o una tarjeta en la caja de la edición. No lo probamos.</p>
+      </div>
+    </div>
+    <div class="insight anim">
+      <p>Queda como idea de costado, para charlar con adidas o para una edición especial.</p>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>04 · Idea aparte</span></div>
+</section>
+
+
+<!-- ══════════════ 14. CIERRE ══════════════ -->
+<section class="slide slide--thanks">
+  <div class="blob blob--aqua" style="top:-160px; right:-100px;"></div>
+  <div class="blob blob--deep" style="bottom:-160px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../logo_yacare.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Una tienda que se compra en segundos y se recuerda por temporadas.</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px;">Gracias.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ 15. CHAT ══════════════ -->
+<section class="slide" data-slide="chat">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre el shop?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Conoce el contenido completo de esta presentación.</p>
+    </div>
+
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden; min-height:360px;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la presentación</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo hicieron el relevamiento?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo queda la home?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Por qué el artefacto va debajo?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué pasó con las tiendas 3D?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es lo de la camiseta con AR?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..."
+          style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;"
+          onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" aria-label="Enviar" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <i data-lucide="send" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">
+      Este asistente responde solo sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.
+    </p>
+  </div>
+</section>
+
+
+</div><!-- end .deck -->
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">Cerrar</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+const isMobile = window.innerWidth <= 768;
+
+document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+
+// Slide actual: el que tiene su borde superior más cerca del scroll
+function currentIndex() {
+  const top = deck.scrollTop;
+  let best = 0, bestDist = Infinity;
+  slides.forEach(function(s, i) {
+    const d = Math.abs(s.offsetTop - top);
+    if (d < bestDist) { bestDist = d; best = i; }
+  });
+  return best;
+}
+function goTo(i) {
+  i = Math.max(0, Math.min(totalSlides - 1, i));
+  deck.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════
+// SCROLL HINT
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) { hintHidden = true; hint.classList.add('hidden'); }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (desktop)
+// ═══════════════════════════════════════
+function updateCounter() {
+  if (isMobile) return;
+  counterEl.textContent = (currentIndex() + 1) + ' / ' + totalSlides;
+}
+if (!isMobile) {
+  deck.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION (desktop)
+// ═══════════════════════════════════════
+if (!isMobile) {
+  document.addEventListener('keydown', function(e) {
+    if (e.target.id === 'chat-input') return;
+    if (lightbox.classList.contains('open')) return;
+    const i = currentIndex();
+    switch (e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault(); goTo(i + 1); break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); goTo(i - 1); break;
+      case 'Home': e.preventDefault(); goTo(0); break;
+      case 'End': e.preventDefault(); goTo(totalSlides - 1); break;
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER · animaciones
+// ═══════════════════════════════════════
+if (!isMobile) {
+  const animObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      const anims = entry.target.querySelectorAll('.anim');
+      anims.forEach(function(el) { el.classList.toggle('anim--visible', entry.isIntersecting); });
+    });
+  }, { threshold: 0.3 });
+  slides.forEach(function(slide) { animObserver.observe(slide); });
+}
+
+// ═══════════════════════════════════════
+// TOOLBAR
+// ═══════════════════════════════════════
+function printPDF() { window.print(); }
+function goToChat() {
+  goTo(totalSlides - 1);
+  setTimeout(function() { document.getElementById('chat-input')?.focus({ preventScroll: true }); }, 500);
+}
+
+// ═══════════════════════════════════════
+// LIGHTBOX
+// ═══════════════════════════════════════
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+document.querySelectorAll('[data-zoom]').forEach(function(fig) {
+  fig.addEventListener('click', function() {
+    lightboxImg.src = fig.dataset.zoom;
+    lightboxImg.alt = fig.querySelector('img').alt;
+    lightbox.classList.add('open');
+  });
+});
+function closeLightbox() { lightbox.classList.remove('open'); }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); }, true);
+
+// ═══════════════════════════════════════
+// WIREFRAME DEL HERO · ejemplos
+// ═══════════════════════════════════════
+const HERO_EXAMPLES = [
+  { ph: 'Foto del jugador', kicker: 'Just signed', title: 'Welcome, No. 9', cta: 'Shop his jersey' },
+  { ph: 'Foto del producto', kicker: 'Featured', title: 'The Matchday Scarf', cta: 'Add to cart' },
+  { ph: 'Foto de la camiseta', kicker: 'New · 2027 Home Kit', title: 'Wear the Beginning', cta: 'Shop the kit' },
+  { ph: 'Foto de campaña', kicker: 'Opening Day', title: 'First whistle. First kit.', cta: 'Shop matchday' }
+];
+document.querySelectorAll('.wf-chip').forEach(function(chip) {
+  chip.addEventListener('click', function() {
+    const ex = HERO_EXAMPLES[+chip.dataset.hero];
+    document.getElementById('wf-hero-ph').textContent = ex.ph;
+    document.getElementById('wf-hero-kicker').textContent = ex.kicker;
+    document.getElementById('wf-hero-title').textContent = ex.title;
+    document.getElementById('wf-hero-cta').textContent = ex.cta;
+    document.querySelectorAll('.wf-chip').forEach(function(c) { c.classList.toggle('is-on', c === chip); });
+  });
+});
+
+// ═══════════════════════════════════════
+// CHAT · Q&A local
+// ═══════════════════════════════════════
+const QA_ENTRIES = [
+  // Conversacional
+  {
+    keywords: ['hola', 'hello', ' hi ', 'buenas', 'buen dia', 'buenos dias', 'hey', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación sobre el shop de PSLSC. Podés preguntarme por The Kit Room, el relevamiento, los casos, la decisión de la home o la idea de realidad aumentada.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'genial', 'perfecto', 'excelente', 'buenisimo', 'copado'],
+    answer: '¡De nada! Si te surge otra duda, estoy acá. También podés escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['chau', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que aparezca después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resumime', 'resumi', 'de que se trata', 'que es esto', 'explicame', 'en pocas palabras'],
+    answer: 'Partimos de The Kit Room: el vestuario del club colgado en un riel de camisetas. Después relevamos unas 20 referencias: las tiendas 3D de clubes ya se apagaron, las ediciones numeradas hacen tocable la escasez y las tiendas fáciles con identidad (Como 1907, Venezia, Palace) siguen vivas. La decisión: una home en tres capas. Arriba el hero, que vende; debajo el artefacto, The Kit Room, que es la firma del shop; y abajo las colecciones con nombre propio.'
+  },
+  {
+    keywords: ['que puedo preguntar', 'ayuda', 'help', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme por: The Kit Room, cómo hicimos el relevamiento, las tiendas inmersivas (Benfica, Fenerbahçe, Hornets, KidSuper), las ediciones numeradas (Chelsea, Tottenham, Man City), las tiendas con identidad (Como 1907, Venezia, Palace), lo que aprendimos, el hero, el artefacto, las colecciones o la idea de realidad aumentada con Southampton.'
+  },
+  // Contenido
+  {
+    keywords: ['objetivo', 'para que', 'que buscan', 'proposito'],
+    answer: 'Buscamos una tienda que se compre fácil y se recuerde, con una experiencia que se renueve con cada colección y con la temporada.'
+  },
+  {
+    keywords: ['prototipo', 'locker room', 'la idea', 'punto de partida', 'shoppslsc', 'vestuario'],
+    answer: 'La idea de partida es The Kit Room: el vestuario del club colgado en un riel de camisetas. Se arrastra, se filtra por arquero, titular y suplente, y cada camiseta viene al frente con su ficha. El prototipo está en yacare.io/shoppslsc.'
+  },
+  {
+    keywords: ['relevamiento', 'bench', 'benchmark', 'referencias', 'que hicieron', 'cuantas', 'investigacion', 'que fueron a buscar', 'por donde', 'empezaron'],
+    answer: 'Relevamos unas 20 referencias con tres preguntas: ¿se compra fácil?, ¿se recuerda?, ¿se puede renovar? Entramos por los clubes grandes (Barcelona, Real Madrid, Spurs, Man City, Knicks, Patriots), que tienen tiendas convencionales. Lo distinto estaba en clubes chicos y marcas, y lo ordenamos en tres grupos: tiendas inmersivas, ediciones especiales y tiendas con identidad. Se relevó el 18/11/2026.'
+  },
+  {
+    keywords: ['clubes grandes', 'barcelona', 'real madrid', 'spurs', 'knicks', 'patriots', 'convencional'],
+    answer: 'Los clubes grandes que revisamos primero (Barcelona, Real Madrid, Spurs, Man City, Knicks, Patriots) tienen tiendas convencionales. Lo distinto había que buscarlo en clubes chicos y en marcas.'
+  },
+  {
+    keywords: ['tiendas 3d', 'tienda 3d', 'apagaron', 'que paso con', 'inmersiva', 'inmersivas', 'metaverso', 'funciono'],
+    answer: 'De las tiendas que se recorren en 3D, las de clubes no duraron: Benfica (2025) da error 404, Fenerbahçe (2025) no se encuentra y Hornets (2023) redirige a la tienda común. Vivían aparte de la tienda y nadie las sostuvo. La que sigue viva es KidSuper, porque es la tienda misma: un mundo pintado sobre el catálogo y el carrito de Shopify.'
+  },
+  {
+    keywords: ['benfica', 'immersive store', 'mundial de clubes', '404'],
+    answer: 'Benfica lanzó en 2025 el vestuario del club en 3D, con asistente IA, atado al Mundial de Clubes y en una dirección aparte de la tienda real. Hoy esa dirección da error 404.'
+  },
+  {
+    keywords: ['fenerbahce', 'fenerium', 'turquia'],
+    answer: 'Fenerbahçe (2025) tuvo otro vestuario 3D del mismo proveedor que el de Benfica, con camisetas personalizables. En el relevamiento no encontramos cómo entrar desde su tienda.'
+  },
+  {
+    keywords: ['hornets', 'charlotte', 'nba', 'avatar'],
+    answer: 'Charlotte Hornets (2023) hizo una copia digital de la tienda del estadio, con avatar, caminata y otros fans. Hoy el dominio lleva a la tienda común.'
+  },
+  {
+    keywords: ['kidsuper', 'kid super', 'basement', 'brooklyn'],
+    answer: 'KidSuper World es la tienda de una marca de ropa de Brooklyn convertida en un mundo pintado, sobre el catálogo y el carrito de Shopify. Es la única de las tiendas que se recorren en 3D que sigue viva: cuenta algo que solo esa marca puede contar.'
+  },
+  {
+    keywords: ['chelsea', 'tottenham', 'man city', 'manchester', 'aniversario', 'numerada', 'numeradas', 'edicion especial', 'ediciones especiales', '1905', '1.905', '1901', '1894', 'edicion limitada', 'parche', 'escasez'],
+    answer: 'Chelsea (120 años, 2025) sacó 1.905 camisetas, Tottenham (2026) 1.901 y Manchester City (125 años) 1.894: la cantidad es el año de fundación. Buscaban que la escasez se pueda tocar, con un parche numerado y una caja de presentación, y las venden en la tienda oficial, sin 3D. No tenemos cifras de ventas. Lo que vimos es que en la web es una nota y un botón, y ahí puede estar nuestra diferencia.'
+  },
+  {
+    keywords: ['ventas', 'cifras', 'vendio', 'agoto', 'numeros de venta'],
+    answer: 'No tenemos cifras de ventas de ninguno de los casos del relevamiento. Lo que mostramos es cómo funcionan y en qué estado estaban el 18/11/2026.'
+  },
+  {
+    keywords: ['identidad', 'tiendas faciles', 'como 1907', '1907', 'club como', 'como football'],
+    answer: 'Como 1907, Venezia FC y Palace son tiendas fáciles de comprar y con identidad propia: siguen vivas, corren sobre Shopify y no usan 3D. Como se navega por colecciones con nombre (la base de nuestras colecciones), Venezia entrega la portada a la campaña del momento (la base del hero) y Palace abre directo en la grilla (la vara de comprar fácil).'
+  },
+  {
+    keywords: ['venezia', 'black friday', 'cartel', 'portada'],
+    answer: 'Venezia FC entrega la primera pantalla entera a la campaña del momento: mismo catálogo, otra portada. Es la referencia de nuestro hero.'
+  },
+  {
+    keywords: ['palace', 'sin vueltas', 'grilla', 'menu corto'],
+    answer: 'Palace abre directo en la grilla, con un menú de cuatro opciones. Es la vara de comprar fácil.'
+  },
+  {
+    keywords: ['no se rompa', 'reglas', 'principios', 'aprendimos', 'lo que aprendimos', 'aprendieron', 'conclusion'],
+    answer: 'Lo que aprendimos, capa por capa. Hero: la primera pantalla se entrega a la venta del momento, es lo más rápido que se cambia y la compra tiene que ser directa. Artefacto: es la puerta de la tienda, no otra tienda; siempre hay una salida a la vista clásica; cuenta algo que solo el club puede contar; y primero va una imagen, después el 3D. Colecciones: fotografía, nombres y edición alcanzan para que una tienda se sienta propia; una edición especial se puede tocar; y cada lanzamiento cambia la escena sin rehacer la tienda.'
+  },
+  {
+    keywords: ['decision', 'home', 'tres capas', 'estructura', 'como queda', 'propuesta'],
+    answer: 'La home va en tres capas. (1) Hero: vende. (2) Artefacto, The Kit Room: se recuerda y es la firma del shop. (3) Colecciones: organizan y cuentan. Arriba se compra, abajo se recorre; la experiencia nunca se pone entre la persona y la compra.'
+  },
+  {
+    keywords: ['hero', 'banner', 'primera pantalla', 'campana'],
+    answer: 'El hero está al servicio de la venta del momento. Puede ser el banner de un jugador importante cuando llega o se destaca, un producto destacado, el lanzamiento de una camiseta o una campaña de fecha. Es lo más rápido que se cambia y lo que más directo lleva a comprar. Referencia: Venezia FC.'
+  },
+  {
+    keywords: ['artefacto', 'kit room', 'riel', 'rail', 'perchero', 'camisetas colgadas', 'va abajo', 'debajo'],
+    answer: 'El artefacto es The Kit Room: el vestuario con camisetas colgadas. Va debajo del hero porque Benfica y Hornets pusieron la experiencia como entrada obligatoria y no duró; debajo del hero, suma sin frenar a quien viene a comprar. La escena se viste según el momento (colección nueva, día de partido, edición especial, hito del club) y siempre tiene una vista en grilla a un toque, con cada camiseta abriendo su ficha real.'
+  },
+  {
+    keywords: ['coleccion', 'colecciones', 'founders', 'matchday', 'treasure coast', 'nombres'],
+    answer: 'La tienda se ordena por colecciones con nombre propio, cada una con foto de campaña y una frase (referencia: Como 1907). Para un club nuevo, una colección es una forma de contar quién es, y le da al equipo un ritmo de lanzamientos. Ejemplos de nombres, a definir: Founders, Matchday y Treasure Coast.'
+  },
+  {
+    keywords: ['wireframe', 'boceto', 'como se ve', 'diseno'],
+    answer: 'En la presentación hay dos wireframes de la home: uno del hero, con cuatro ejemplos (jugador, producto, lanzamiento y campaña), y otro de las colecciones al final de la página. Son bocetos de estructura, no el diseño final.'
+  },
+  {
+    keywords: ['orden', 'por que este orden', 'cada cuanto', 'frecuencia', 'actualiza', 'renueva'],
+    answer: 'El hero trae ventas y se renueva sin esfuerzo; el artefacto trae memoria y diferencia; las colecciones traen relato y ritmo. Cada capa se actualiza por separado: el hero cada semana, el artefacto por momento de la temporada y las colecciones por lanzamiento.'
+  },
+  {
+    keywords: ['shopify', 'plataforma'],
+    answer: 'El shop va sobre Shopify. Como 1907, Venezia, Palace y KidSuper, que siguen vivas, también corren sobre Shopify.'
+  },
+  {
+    keywords: ['realidad aumentada', ' ar ', 'southampton', 'unit9', 'formidable', 'camara'],
+    answer: 'Southampton (2021/22) tuvo una camiseta con marcas que la cámara del teléfono reconocía: desde el navegador, sin app, aparecía contenido del club sobre la prenda. En PSLSC podría servir para que quien compra una edición especial, por ejemplo Founders, desbloquee algo que el resto no ve: un mensaje del plantel, el detrás de escena o contenido del día de partido. Queda como idea de costado.'
+  },
+  {
+    keywords: ['adidas', 'etiqueta', 'tarjeta', 'fabrica'],
+    answer: 'Si las marcas de realidad aumentada van impresas en la prenda, hay que hacerlo con adidas, que fabrica las camisetas. Un camino sin adidas sería que lo dispare algo que controla el club, como la etiqueta colgante o una tarjeta en la caja de la edición. No lo probamos.'
+  },
+  {
+    keywords: ['3d', 'tres d', 'webgl'],
+    answer: 'El 3D solo no sostiene una tienda: lo que la sostiene es que se compre fácil y que cambie seguido. Por eso el artefacto va debajo del hero, siempre con vista en grilla a un toque, y se carga primero una imagen y después el 3D.'
+  },
+  {
+    keywords: ['fecha', 'cuando se hizo', 'relevado', 'actualizado'],
+    answer: 'El relevamiento se hizo el 18/11/2026. Las capturas son de ese día.'
+  },
+  {
+    keywords: ['yacare', 'estudio', 'studio', 'quienes', 'contacto', 'mail'],
+    answer: 'Yacaré (yacare.io) es el estudio que arma esta presentación. Para cualquier consulta podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en esta presentación. Podés reformular la pregunta o escribir a contact@yacare.io. También podés preguntarme por el relevamiento, la home en tres capas, el hero, el artefacto o las colecciones.';
+
+function normalize(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,;:"]/g, '');
+}
+
+function findBestAnswer(question) {
+  const q = ' ' + normalize(question) + ' ';
+  let bestMatch = null, bestScore = 0;
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const k = normalize(kw);
+      if (q.includes(k)) score += k.trim().length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(findBestAnswer(text)) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
