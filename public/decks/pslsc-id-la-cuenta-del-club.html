@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yacaré · PSLSC ID, la cuenta del club</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --bg-elevated: #0A0A0A;
+  --bg-surface: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent-primary: #8A5EFF;
+  --accent-glow: rgba(138, 94, 255, 0.15);
+  --color-magenta: #D1249D;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --font-display: 'Antonio', sans-serif;
+  --font-body: 'Figtree', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+p, li {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+ul, ol { list-style: none; padding: 0; margin: 0; }
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.grain-overlay {
+  position: fixed; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9999; pointer-events: none;
+  opacity: 0.04;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  20% { transform: translate(-15%, 5%) }
+  30% { transform: translate(7%, -25%) }
+  40% { transform: translate(-5%, 25%) }
+  50% { transform: translate(-15%, 10%) }
+  60% { transform: translate(15%, 0%) }
+  70% { transform: translate(0%, 15%) }
+  80% { transform: translate(3%, 35%) }
+  90% { transform: translate(-10%, 10%) }
+}
+
+/* ═══════════════════════════════════════
+   SHIMMER TEXT
+   ═══════════════════════════════════════ */
+.shimmer-text {
+  background: linear-gradient(to right, #999999 0%, #ffffff 50%, #999999 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+  padding-block: 0.05em;
+}
+@keyframes shine {
+  from { background-position: 0% center; }
+  to { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════
+   BLOBS
+   ═══════════════════════════════════════ */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.blob--purple {
+  background: radial-gradient(circle, rgba(138, 94, 255, 0.5) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  animation: blob-float-1 18s ease-in-out infinite alternate;
+}
+.blob--magenta {
+  background: radial-gradient(circle, rgba(209, 36, 157, 0.3) 0%, transparent 70%);
+  width: 400px; height: 400px;
+  animation: blob-float-2 22s ease-in-out infinite alternate;
+}
+@keyframes blob-float-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -50px) scale(1.1); }
+  66%  { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(10px, -30px) scale(1.05); }
+}
+@keyframes blob-float-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+/* ═══════════════════════════════════════
+   ANIMATION (IntersectionObserver driven)
+   ═══════════════════════════════════════ */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.anim.anim--visible {
+  animation: slide-in 0.8s var(--ease-out) both;
+}
+.anim.anim--visible:nth-child(1) { animation-delay: 0.05s; }
+.anim.anim--visible:nth-child(2) { animation-delay: 0.12s; }
+.anim.anim--visible:nth-child(3) { animation-delay: 0.19s; }
+.anim.anim--visible:nth-child(4) { animation-delay: 0.26s; }
+.anim.anim--visible:nth-child(5) { animation-delay: 0.33s; }
+.anim.anim--visible:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════════════
+   DECK & SLIDES — Desktop (scroll-snap)
+   ═══════════════════════════════════════ */
+.deck {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE CONTENT WRAPPER
+   ═══════════════════════════════════════ */
+.slide-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px; padding: 40px;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+.card--sm { padding: 24px; border-radius: 16px; }
+.card--highlight { border-color: var(--border-medium); }
+
+.card--accent-1::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #8A63F2, #D1249D); }
+.card--accent-2::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #D1249D, #FF6B6B); }
+.card--accent-3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FF6B6B, #FFB347); }
+.card--accent-4::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, #FFB347, #8A63F2); }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+.grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
+
+.quote-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.lead { font-size: 1.15rem; color: var(--text-primary); }
+
+.brand-bar {
+  position: absolute; bottom: 28px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-weight: 500; z-index: 10;
+}
+
+.club-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.club-chip--accent {
+  background: transparent;
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1rem; padding: 11px 24px;
+}
+
+/* Lucide reemplaza cada <i> por un <svg>: que nunca se achique dentro de un flex */
+svg.lucide { flex-shrink: 0; }
+
+/* Card header: icon + title */
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.card-head svg { width: 22px; height: 22px; color: var(--text-muted); flex-shrink: 0; }
+.card-head h4 { font-size: 1.25rem; margin: 0; }
+.card-sub {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary); margin-bottom: 14px;
+}
+.card-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+  font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;
+}
+.card-note svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+.card p.card-body { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* Compact list inside cards */
+.dot-list li {
+  position: relative; padding: 7px 0 7px 18px; margin: 0;
+  font-size: 0.95rem; line-height: 1.4; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dot-list li:last-child { border-bottom: none; }
+.dot-list li::before {
+  content: ''; position: absolute; left: 2px; top: calc(7px + 0.7em);
+  width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* Checklist with icons (slide 12) */
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 0; margin: 0; border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.98rem; line-height: 1.45; color: var(--text-primary);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Footnote with icon */
+.foot-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 1rem; color: var(--text-primary); line-height: 1.5; max-width: 900px;
+}
+.foot-note svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; margin-top: 3px; }
+
+/* Aclaración chica */
+.aside-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 24px; padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
+}
+.aside-note svg { width: 15px; height: 15px; color: var(--text-muted); flex-shrink: 0; margin-top: 2px; }
+
+/* Rows with icon */
+.moments { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.moment {
+  display: flex; flex-direction: row; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+  font-size: 1rem; color: var(--text-primary); line-height: 1.4;
+}
+.moment svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+
+/* Nodo con borde degradado (reutilizado en varias slides) */
+.gnode {
+  border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+}
+.gnode svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   COVER
+   ═══════════════════════════════════════ */
+.slide--cover { text-align: center; position: relative; overflow: hidden; }
+.slide--cover h1 { font-size: clamp(4rem, 9vw, 7.5rem); margin-bottom: 10px; letter-spacing: -0.03em; line-height: 1; }
+.cover-kicker {
+  font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary);
+  margin: 0 0 30px;
+}
+.slide--cover .meta {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
+.cover-logo { height: 32px; opacity: 0.7; margin-bottom: 40px; }
+
+/* ═══════════════════════════════════════
+   HITOS / MOMENTOS (slide 3)
+   ═══════════════════════════════════════ */
+.milestones {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.ms-rail {
+  position: absolute; top: 26px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.ms-arrow {
+  position: absolute; top: 26px; right: -6px; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #D1249D;
+}
+.ms-item { position: relative; z-index: 1; }
+.ms-node {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  margin-bottom: 22px;
+}
+.ms-node svg { width: 22px; height: 22px; color: var(--text-secondary); }
+.ms-item:nth-child(2) .ms-node { border-color: rgba(255,255,255,0.45); }
+.ms-item:nth-child(3) .ms-node { border-color: rgba(255,255,255,0.7); }
+.ms-node--on {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  animation: ms-pulse 3.2s ease-in-out infinite;
+}
+.ms-node--on svg { color: var(--text-primary); }
+@keyframes ms-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 18px rgba(138, 94, 255, 0.2); }
+  50%      { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 52px rgba(138, 94, 255, 0.6); }
+}
+.ms-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 8px;
+}
+.ms-body h4 { font-size: 1.35rem; margin-bottom: 10px; }
+.ms-body p { font-size: 0.98rem; margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   CAPAS (slide 5): la web de la School arriba,
+   debajo las cuatro bases de PSLSC ID
+   ═══════════════════════════════════════ */
+.layers { width: 100%; }
+.layer-top { display: flex; justify-content: center; }
+.layer-chip {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-size: 0.92rem; font-weight: 500; line-height: 1.3; color: var(--text-primary);
+}
+.layer-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.layer-link { width: 1px; height: 30px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.3), #8A63F2); }
+.layer-bar { height: 1px; margin: 0 calc(12.5% - 8px); background: linear-gradient(90deg, #8A63F2, #D1249D); opacity: 0.8; }
+.layer-drops { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; height: 20px; }
+.layer-drops span { display: block; width: 1px; height: 100%; margin: 0 auto; background: rgba(255,255,255,0.25); }
+.found-node { width: 44px; height: 44px; margin-bottom: 16px; }
+.found-node svg { width: 20px; height: 20px; }
+.found h4 { font-size: 1.3rem; margin-bottom: 8px; }
+.found p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+/* ═══════════════════════════════════════
+   MOTOR (slide 6): cuatro pasos en línea y un arco que vuelve al inicio
+   ═══════════════════════════════════════ */
+.loop { width: 100%; }
+.loop-return {
+  position: relative; height: 26px; margin: 0 calc(12.5% - 10px) -1px;
+  border: 1px solid rgba(255,255,255,0.22); border-bottom: none;
+  border-radius: 20px 20px 0 0;
+}
+.loop-return svg {
+  position: absolute; left: -8.5px; bottom: 3px;
+  width: 16px; height: 16px; color: #D1249D;
+  background: var(--bg-primary); border-radius: 50%;
+}
+.loop-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.loop-rail {
+  position: absolute; top: 26px; left: 12.5%; right: 12.5%; height: 1px;
+  background: linear-gradient(90deg, #8A63F2, #D1249D);
+}
+.loop-step { position: relative; z-index: 1; text-align: center; }
+.loop-node {
+  width: 52px; height: 52px; margin: 0 auto 18px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+  animation: loop-glow 4.8s ease-in-out infinite;
+}
+.loop-step:nth-child(2) .loop-node { animation-delay: 1.2s; }
+.loop-step:nth-child(3) .loop-node { animation-delay: 2.4s; }
+.loop-step:nth-child(4) .loop-node { animation-delay: 3.6s; }
+.loop-node svg { width: 22px; height: 22px; }
+@keyframes loop-glow {
+  0%, 30%, 100% { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 0 rgba(138, 94, 255, 0); }
+  12%           { box-shadow: 0 0 0 6px var(--bg-primary), 0 0 42px rgba(138, 94, 255, 0.7); }
+}
+.loop-num {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 6px;
+}
+.loop-body h4 { font-size: 1.35rem; margin-bottom: 8px; }
+.loop-body p { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+.plus-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.plus-row .club-chip { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--text-primary); font-size: 0.95rem; padding: 10px 18px; }
+.plus-row .club-chip svg { width: 17px; height: 17px; color: var(--text-secondary); }
+.plus-row > span.plus { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-secondary); line-height: 1; }
+
+/* Destello animado sobre las monedas */
+.coin-glint { position: relative; display: block; line-height: 0; }
+.coin-glint::before, .coin-glint::after {
+  content: ''; position: absolute;
+  left: var(--gx); top: var(--gy);
+  pointer-events: none; z-index: 2;
+  mix-blend-mode: screen;
+}
+.coin-glint::before {
+  width: var(--gs); aspect-ratio: 1 / 1; margin: calc(var(--gs) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,224,150,0.4) 32%, transparent 68%);
+  animation: glint-halo 3.6s ease-in-out infinite;
+}
+.coin-glint::after {
+  width: calc(var(--gs) * 1.9); aspect-ratio: 1 / 1;
+  margin: calc(var(--gs) * -0.95);
+  background:
+    linear-gradient(to right, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%),
+    linear-gradient(to bottom, transparent 47%, rgba(255,255,255,0.95) 50%, transparent 53%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.35) 30%, transparent 60%);
+  animation: glint-star 3.6s ease-in-out infinite;
+}
+@keyframes glint-halo {
+  0%, 100% { opacity: 0.22; transform: scale(0.75); }
+  50%      { opacity: 0.95; transform: scale(1.15); }
+}
+@keyframes glint-star {
+  0%, 100% { opacity: 0.12; transform: rotate(0deg) scale(0.6); }
+  50%      { opacity: 1;    transform: rotate(45deg) scale(1.1); }
+}
+.coin-glint.coins-glint {
+  position: absolute; top: -16px; right: 0;
+  width: 250px; z-index: 1; pointer-events: none;
+}
+.coins-img { display: block; width: 100%; height: auto; }
+
+/* ═══════════════════════════════════════
+   CADENA (slide 7): participación, consumo, recompensa, nueva participación
+   ═══════════════════════════════════════ */
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.chain-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 20px; border-radius: 999px;
+  border: 1px solid var(--border-medium); background: var(--bg-primary);
+  font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary);
+  white-space: nowrap;
+}
+.chain-item svg { width: 18px; height: 18px; color: var(--text-secondary); }
+.chain > svg.lucide { width: 18px; height: 18px; color: var(--text-muted); }
+.chain-item--loop {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
+              linear-gradient(135deg, #8A63F2, #D1249D) border-box;
+  box-shadow: 0 0 24px rgba(138, 94, 255, 0.25);
+}
+.chain-item--loop svg { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════
+   MOBILE (slide 9): texto a la izquierda, teléfono a la derecha
+   ═══════════════════════════════════════ */
+.slide--phone .slide-content { max-width: 1180px; }
+.phone-text { max-width: 600px; }
+.phone-text .moments { margin: 24px 0; }
+.phone-img {
+  position: absolute; right: 0; top: 7vh;
+  height: 85vh; width: auto; z-index: 0; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   RECORRIDO EN EL ESTADIO (slide 10)
+   ═══════════════════════════════════════ */
+.journey {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+  padding-top: 4px;
+}
+.jr-rail {
+  position: absolute; top: 30px; left: 8.33%; right: 8.33%; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #8A63F2 50%, #D1249D 100%);
+}
+.jr-spark {
+  position: absolute; top: 30px; left: 8.33%;
+  width: 8px; height: 8px; margin: -4px; border-radius: 50%;
+  background: #ffffff; box-shadow: 0 0 16px 4px rgba(138, 94, 255, 0.55);
+  animation: jr-travel 5.5s linear infinite; z-index: 0;
+}
+@keyframes jr-travel {
+  0%   { left: 8.33%;  opacity: 0; }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { left: 91.67%; opacity: 0; }
+}
+.jr-item {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+}
+.jr-node {
+  width: 52px; height: 52px;
+  box-shadow: 0 0 0 6px var(--bg-primary);
+}
+.jr-node svg { width: 22px; height: 22px; }
+.jr-label {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   ROADMAP (slide 11)
+   ═══════════════════════════════════════ */
+.roadmap {
+  position: relative; width: 100%;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+}
+.rm-rail {
+  position: absolute; top: 6px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%);
+}
+.rm-item { position: relative; z-index: 1; padding-top: 34px; }
+.rm-dot {
+  position: absolute; top: 0; left: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg-primary); border: 1px solid var(--border-medium);
+  box-shadow: 0 0 0 4px var(--bg-primary);
+}
+.rm-item:nth-child(3) .rm-dot { border-color: rgba(255,255,255,0.35); }
+.rm-item:nth-child(4) .rm-dot { border-color: rgba(255,255,255,0.55); }
+.rm-item:nth-child(5) .rm-dot { border-color: rgba(255,255,255,0.75); }
+.rm-item:nth-child(6) .rm-dot { border-color: #ffffff; }
+.rm-date {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-secondary);
+  line-height: 1.35; min-height: 2.7em; margin-bottom: 6px;
+}
+.rm-month {
+  font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: -0.02em; line-height: 1;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+.rm-desc { font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 10rem; font-weight: 700;
+  line-height: 0.85; letter-spacing: -0.06em;
+  color: var(--text-muted); opacity: 0.08;
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+}
+
+/* ═══════════════════════════════════════
+   THANKS
+   ═══════════════════════════════════════ */
+.slide--thanks { text-align: center; position: relative; }
+.slide--thanks h2 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 16px; }
+.contact-row { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
+.contact-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.contact-item svg { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════
+   TOOLBAR
+   ═══════════════════════════════════════ */
+.deck-toolbar {
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 9998;
+  display: flex; align-items: center; gap: 8px;
+}
+.toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+  text-decoration: none; white-space: nowrap;
+}
+.toolbar-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.8);
+}
+.toolbar-btn svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   SLIDE COUNTER
+   ═══════════════════════════════════════ */
+.slide-counter {
+  position: fixed;
+  bottom: 28px; right: 32px;
+  z-index: 9998;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   CHAT WIDGET
+   ═══════════════════════════════════════ */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.chat-msg p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.88rem;
+}
+.chat-msg--user {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-medium);
+}
+.chat-msg--user p { color: var(--text-primary); }
+.chat-msg--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.chat-chip {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  white-space: nowrap;
+}
+.chat-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+}
+.chat-typing {
+  align-self: flex-start;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.chat-typing::after {
+  content: '...';
+  animation: typing-dots 1.2s steps(3) infinite;
+}
+@keyframes typing-dots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   DESKTOP ANGOSTO — 901 a 1300px: teléfono más chico
+   ═══════════════════════════════════════ */
+@media (max-width: 1300px) and (min-width: 901px) {
+  .phone-img { height: 72vh; top: 14vh; right: -2vw; }
+  .phone-text { max-width: 54%; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET — <=1100px
+   ═══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .slide { padding: 48px; }
+  .brand-bar { left: 48px; right: 96px; }
+  .loop-steps { gap: 20px; }
+  .coin-glint.coins-glint { width: 200px; }
+  .roadmap { gap: 18px; }
+  .rm-month { font-size: 1.45rem; }
+}
+
+/* ═══════════════════════════════════════
+   PANTALLAS BAJAS (laptops de 720px, tablets apaisadas): menos aire vertical.
+   Va después del bloque de 1100px para que su padding no lo pise.
+   ═══════════════════════════════════════ */
+@media (min-width: 901px) and (max-height: 800px) {
+  .grid-4 .card--sm .dot-list li { font-size: 0.88rem; padding: 5px 0 5px 16px; }
+  .grid-4 .card--sm .card-note { font-size: 0.82rem; margin-top: 10px; padding-top: 10px; }
+  .grid-4 .card--sm h4 { margin-bottom: 6px; }
+  .slide { padding-top: 36px; padding-bottom: 36px; }
+  .brand-bar { bottom: 12px; }
+  .phone-text .moments { margin: 18px 0; }
+}
+
+/* ═══════════════════════════════════════
+   TABLET VERTICAL — <=900px (y celulares en horizontal)
+   Columnas apiladas, líneas de tiempo verticales
+   ═══════════════════════════════════════ */
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+
+  .milestones { grid-template-columns: 1fr; gap: 26px; }
+  .ms-rail { top: 0; bottom: 0; left: 21px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .ms-arrow { display: none; }
+  .ms-item { display: flex; gap: 18px; align-items: flex-start; }
+  .ms-node { width: 44px; height: 44px; min-width: 44px; margin: 0; }
+  .ms-node svg { width: 20px; height: 20px; }
+
+  .layer-bar, .layer-drops { display: none; }
+  .layer-link { height: 22px; margin-bottom: 14px; }
+
+  .loop-return, .loop-rail { display: none; }
+  .loop-steps { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .loop-step { text-align: left; display: flex; gap: 14px; align-items: flex-start; }
+  .loop-node { width: 44px; height: 44px; min-width: 44px; margin: 0; box-shadow: none; animation: none; }
+  .loop-node svg { width: 20px; height: 20px; }
+  .loop-body h4 { font-size: 1.15rem; margin-bottom: 6px; }
+  .loop-body p { font-size: 0.9rem; }
+  .coin-glint.coins-glint {
+    position: relative; top: auto; right: auto; width: 140px;
+    display: block; margin: 0 0 14px auto;
+  }
+
+  .phone-text { max-width: 100%; }
+  .phone-img {
+    position: static; height: auto;
+    width: 100%; max-width: 240px; display: block; margin: 24px auto 0;
+  }
+
+  .journey { grid-template-columns: repeat(3, 1fr); gap: 20px 12px; padding-top: 0; }
+  .jr-rail, .jr-spark { display: none; }
+  .jr-node { width: 46px; height: 46px; box-shadow: none; }
+  .jr-node svg { width: 20px; height: 20px; }
+  .jr-label { font-size: 0.85rem; }
+
+  .roadmap { grid-template-columns: 1fr; gap: 20px; padding-left: 24px; }
+  .rm-rail { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(138,99,242,0.9) 60%, #D1249D 100%); }
+  .rm-item { padding-top: 0; }
+  .rm-dot { top: 6px; left: -24px; }
+  .rm-date { min-height: 0; margin-bottom: 4px; }
+  .rm-month { font-size: 1.4rem; margin-bottom: 6px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE — <=768px (y celulares en horizontal)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  body { font-size: 16px; }
+
+  .deck {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide {
+    min-height: 100vh;
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 56px 20px 40px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide--chat { padding-top: 76px; }
+
+  .slide-content {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h4 { font-size: 1rem; }
+  p, li { font-size: 0.9rem; }
+
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .grid-2x2, .grid-3, .grid-4 { gap: 12px; }
+
+  .section-num { display: none; }
+  .brand-bar { display: none; }
+
+  .slide--cover h1 { font-size: 3.6rem; }
+  .cover-kicker { font-size: 1.05rem; margin-bottom: 22px; }
+  .cover-logo { height: 22px; margin-bottom: 20px; }
+  .slide--thanks h2 { font-size: 2rem; }
+
+  .contact-row { flex-direction: column; gap: 12px; align-items: center; }
+
+  .card { padding: 20px; border-radius: 16px; }
+  .card--sm { padding: 16px; border-radius: 12px; }
+  .card-head h4 { font-size: 1.05rem; }
+  .card-head svg { width: 18px; height: 18px; }
+  .card-note { font-size: 0.82rem; }
+  .card p.card-body { font-size: 0.88rem; }
+
+  .dot-list li { font-size: 0.85rem; padding: 5px 0 5px 16px; }
+  .checklist li { font-size: 0.9rem; padding: 9px 0; }
+  .foot-note { font-size: 0.88rem; }
+  .lead { font-size: 1rem; }
+
+  .quote-text { font-size: 1.05rem; }
+
+  .moments { gap: 6px; }
+  .moment { padding: 10px 14px; font-size: 0.88rem; gap: 10px; }
+
+  .club-chip { font-size: 0.78rem; padding: 8px 16px; }
+  .club-chip--accent { font-size: 0.85rem; padding: 9px 16px; text-align: center; }
+  .plus-row .club-chip { font-size: 0.85rem; padding: 8px 14px; }
+  .aside-note { font-size: 0.78rem; padding: 10px 14px; margin-top: 18px; }
+
+  .milestones { gap: 22px; }
+  .ms-rail { left: 19px; }
+  .ms-item { gap: 14px; }
+  .ms-node { width: 40px; height: 40px; min-width: 40px; box-shadow: 0 0 0 4px var(--bg-primary); }
+  .ms-node svg { width: 18px; height: 18px; }
+  .ms-num { font-size: 0.65rem; margin-bottom: 4px; }
+  .ms-body h4 { font-size: 1.05rem; margin-bottom: 6px; }
+  .ms-body p { font-size: 0.88rem; }
+
+  .layer-chip { font-size: 0.82rem; padding: 8px 14px; }
+  .found-node { width: 38px; height: 38px; margin-bottom: 12px; }
+  .found-node svg { width: 17px; height: 17px; }
+  .found h4 { font-size: 1.05rem; }
+  .found p { font-size: 0.88rem; }
+
+  .loop-steps { grid-template-columns: 1fr; gap: 12px; }
+  .loop-node { width: 40px; height: 40px; min-width: 40px; }
+  .loop-node svg { width: 18px; height: 18px; }
+  .loop-body h4 { font-size: 1.05rem; }
+  .loop-body p { font-size: 0.85rem; }
+  .coin-glint.coins-glint { width: 110px; margin-bottom: 8px; }
+
+  .chain { gap: 8px; }
+  .chain-item { font-size: 0.82rem; padding: 9px 14px; gap: 8px; white-space: normal; }
+  .chain-item svg { width: 15px; height: 15px; }
+  .chain > svg.lucide { width: 15px; height: 15px; }
+
+  .jr-node { width: 40px; height: 40px; }
+  .jr-node svg { width: 18px; height: 18px; }
+  .jr-label { font-size: 0.78rem; white-space: normal; }
+
+  .roadmap { gap: 18px; padding-left: 22px; }
+  .rm-dot { top: 4px; left: -22px; width: 11px; height: 11px; }
+  .rm-date { font-size: 0.66rem; }
+  .rm-month { font-size: 1.2rem; }
+  .rm-desc { font-size: 0.85rem; }
+
+  .blob { width: 200px !important; height: 200px !important; }
+
+  .deck-toolbar { top: 10px; right: 10px; gap: 6px; }
+  .toolbar-btn { padding: 6px 10px; font-size: 0.58rem; }
+
+  .slide-counter { display: none; }
+
+  #chat-container { border-radius: 16px; }
+
+  /* On mobile, show content immediately (no entry animation) */
+  .anim, .anim.anim--visible {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Tablet chica vertical: más aire a los costados */
+@media (min-width: 601px) and (max-width: 768px) {
+  .slide { padding: 48px 40px; }
+  .slide--chat { padding-top: 76px; }
+}
+
+/* Celular: grillas a una columna */
+@media (max-width: 600px) {
+  .grid-2x2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .journey { grid-template-columns: repeat(2, 1fr); }
+  .plus-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .plus-row > span.plus { padding-left: 18px; font-size: 1.2rem; }
+}
+
+/* ═══════════════════════════════════════
+   EXTRAS DE ESTE DECK: stats, tablas, teléfonos, flujo, ecosistema
+   ═══════════════════════════════════════ */
+.stat-number {
+  font-family: var(--font-display); font-size: 2.6rem; font-weight: 700;
+  line-height: 1; letter-spacing: -0.03em; color: var(--text-secondary); margin-bottom: 10px;
+}
+.tbl-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: 16px; background: rgba(255,255,255,0.02); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; line-height: 1.4; }
+.tbl th, .tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; color: var(--text-secondary); }
+.tbl th { font-family: var(--font-display); font-size: 0.92rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary); background: rgba(255,255,255,0.03); }
+.tbl td:first-child { color: var(--text-primary); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl--compact th, .tbl--compact td { padding: 8px 12px; font-size: 0.84rem; }
+.tbl td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+.phone { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.phone img { display: block; width: auto; max-width: 100%; max-height: 60vh; border-radius: 26px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.phone figcaption, .shot figcaption { font-size: 0.86rem; line-height: 1.45; color: var(--text-secondary); text-align: center; max-width: 320px; }
+.phone figcaption strong, .shot figcaption strong { color: var(--text-primary); font-weight: 600; }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.shot img { display: block; width: auto; max-width: 100%; height: 42vh; object-fit: contain; border-radius: 14px; border: 1px solid var(--border-medium); background: #0a0a0a; }
+.shot figcaption { max-width: 520px; }
+.flow3 { display: grid; grid-template-columns: 1fr 44px 1.15fr 44px 1fr; gap: 14px; align-items: center; width: 100%; }
+.flow3-col { display: flex; flex-direction: column; gap: 12px; }
+.flow3-col .card--sm { padding: 16px 18px; }
+.flow3-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.flow3-arrow svg { width: 26px; height: 26px; }
+.eco { width: 100%; color: #d6dbd9; }
+.eco svg { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 300px); display: block; margin: 0 auto; font-family: var(--font-body); }
+/* En pantallas bajas no se achica más: la slide queda larga y se recorre con scroll */
+@media (max-height: 820px) { .eco svg { max-height: none; width: 100%; } }
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .phones { grid-template-columns: 1fr; gap: 20px; }
+  .phone img { max-height: none; width: 220px; }
+  .shots { grid-template-columns: 1fr; }
+  .flow3 { grid-template-columns: 1fr; }
+  .flow3-arrow { transform: rotate(90deg); }
+  .stat-number { font-size: 2rem; }
+}
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  .tbl { font-size: 0.78rem; }
+  .tbl th, .tbl td { padding: 8px 10px; }
+  .phone figcaption, .shot figcaption { font-size: 0.8rem; }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  animation: hint-pulse 2s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.scroll-hint svg { width: 20px; height: 20px; }
+.scroll-hint.hidden { opacity: 0; animation: none; }
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+   ═══════════════════════════════════════ */
+@media print {
+  .grain-overlay, .blob, .deck-toolbar, .slide-counter, .scroll-hint { display: none !important; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; break-inside: avoid; page-break-inside: avoid; scroll-snap-align: none; }
+  .anim { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .ms-node--on, .loop-node, .coin-glint::before, .coin-glint::after { animation: none !important; }
+  .jr-spark { display: none !important; }
+  .phone-img { position: static; height: auto; width: 100%; max-width: 260px; display: block; margin: 24px auto 0; }
+  #chat-container { display: none !important; }
+}
+
+/* ═══════════════════════════════════════
+   LA CUENTA DEL CLUB · componentes propios de este deck
+   ═══════════════════════════════════════ */
+.one-many .card--sm { padding: 16px 18px; }
+.one-many .card-head { margin-bottom: 6px; }
+.one-many .card-head h4 { font-size: 1.1rem; }
+.one-arrow { display: flex; justify-content: center; padding: 10px 0; color: var(--text-muted); }
+.one-arrow svg { width: 22px; height: 22px; }
+
+.rules { gap: 12px; }
+.rule {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 14px 16px; border-radius: 14px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle);
+}
+.rule strong { color: var(--text-primary); font-weight: 600; font-size: 0.98rem; line-height: 1.3; }
+.rule span { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.4; }
+
+.rm-desc strong { color: var(--text-primary); font-weight: 600; }
+.rm-tag {
+  display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.shot--side img { height: auto; max-height: 38vh; width: 100%; }
+
+.def-table {
+  width: 100%; border: 1px solid var(--border-subtle); border-radius: 16px;
+  background: rgba(255,255,255,0.02); overflow: hidden;
+}
+.def-row {
+  display: grid; grid-template-columns: 0.5fr 1.25fr 1.25fr; gap: 28px;
+  padding: 14px 24px; border-bottom: 1px solid var(--border-subtle); align-items: start;
+}
+.def-row:last-child { border-bottom: none; }
+.def-row--head > div {
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-muted);
+}
+.def-row h4 { font-size: 1.2rem; margin: 0; }
+.def-row p { font-size: 0.95rem; line-height: 1.45; margin: 0; }
+.def-row p.def-ours { color: var(--text-primary); }
+
+a.annex-link { text-decoration: none; transition: border-color 0.3s, color 0.3s; }
+a.annex-link:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+a.annex-link svg { width: 16px; height: 16px; }
+
+@media (min-width: 901px) {
+  .roadmap--4 { grid-template-columns: repeat(4, 1fr); }
+  .phones--4 { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .phones--4 .phone img { max-height: 52vh; }
+  .split--wide { grid-template-columns: 1.15fr 1fr; }
+}
+@media (min-width: 901px) and (max-height: 800px) {
+  .phones--4 .phone img { max-height: 46vh; }
+  .rule { padding: 10px 14px; }
+  .def-row { padding: 10px 22px; }
+}
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .rules { grid-template-columns: 1fr 1fr; }
+  .def-row { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; }
+  .def-row--head { display: none; }
+  .def-row p::before {
+    content: attr(data-label); display: block; margin-bottom: 2px;
+    font-size: 0.64rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--text-muted);
+  }
+  .shot--side img { max-height: none; }
+  a.annex-link { font-size: 0.78rem; text-align: center; }
+}
+@media (max-width: 600px) {
+  .rules { grid-template-columns: 1fr; }
+  .one-many { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   PANTALLAS ANIMADAS (.ui)
+   El PNG de base más capas recortadas del mismo PNG, en coordenadas de 820x1740.
+   Sin JS, con movimiento reducido o al imprimir, se ve el PNG tal cual.
+   ═══════════════════════════════════════ */
+.ui { position: relative; display: block; line-height: 0; }
+.ui > img { display: block; }
+.phone .ui > img { border: 0; box-shadow: 0 0 0 1px var(--border-medium); }
+.ui-l {
+  position: absolute; display: none; pointer-events: none;
+  left: calc(var(--x) * 100% / 820); top: calc(var(--y) * 100% / 1740);
+  width: calc(var(--w) * 100% / 820); height: calc(var(--h) * 100% / 1740);
+}
+.ui-js .ui-l { display: block; }
+.ui-fill { background: var(--c); }
+.ui-bg {
+  background-image: var(--src); background-repeat: no-repeat;
+  background-size: calc(82000% / var(--w)) calc(174000% / var(--h));
+  background-position: calc(var(--sx, var(--x)) * 100% / (820 - var(--w))) calc(var(--sy, var(--y)) * 100% / (1740 - var(--h)));
+}
+.ui-mask { overflow: hidden; }
+.ui-roll { position: absolute; inset: 0; display: block; }
+.ui-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 22%; display: block;
+  background: linear-gradient(to bottom, rgba(14,140,121,0) 0%, rgba(14,140,121,0.10) 55%, rgba(14,140,121,0.38) 92%, #0E8C79 100%);
+}
+
+.ui-js .ui [data-fx] { opacity: 0; }
+.ui-js .ui.is-on [data-fx] { animation-delay: calc(var(--base, 0s) + var(--d, 0s)); animation-fill-mode: both; }
+.ui-js .ui.is-on [data-fx="in"]   { animation-name: ui-in;   animation-duration: 0.6s; animation-timing-function: var(--ease-out); }
+.ui-js .ui.is-on [data-fx="pop"]  { animation-name: ui-pop;  animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+.ui-js .ui.is-on [data-fx="roll"] { animation-name: ui-roll; animation-duration: 0.7s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.ui-js .ui.is-on [data-fx="wipe"] { animation-name: ui-wipe; animation-duration: var(--dur, 0.8s); animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+.ui-js .ui.is-on [data-fx="type"] { animation-name: ui-wipe; animation-duration: var(--dur, 0.5s); animation-timing-function: steps(var(--steps, 12), end); }
+.ui-js .ui.is-on [data-fx="scan"] { animation-name: ui-scan; animation-duration: 3.4s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+
+@keyframes ui-in   { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes ui-pop  { 0% { opacity: 0; transform: scale(0.82); } 55% { opacity: 1; transform: scale(1.05); } 100% { opacity: 1; transform: none; } }
+@keyframes ui-roll { from { opacity: 1; transform: translateY(105%); } to { opacity: 1; transform: none; } }
+@keyframes ui-wipe { from { opacity: 1; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+@keyframes ui-scan {
+  0%   { opacity: 0; transform: translateY(-100%); }
+  10%  { opacity: 1; }
+  62%  { opacity: 1; transform: translateY(455%); }
+  70%, 100% { opacity: 0; transform: translateY(455%); }
+}
+
+/* ═══════════════════════════════════════
+   PORTADA CON PANTALLAS
+   ═══════════════════════════════════════ */
+.slide--hero .slide-content { max-width: 1180px; }
+.hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 40px; align-items: center; text-align: left; }
+.hero-copy .cover-logo { margin-bottom: 36px; display: block; }
+.hero-copy h1 { margin-bottom: 14px; }
+.hero-copy .cover-kicker { text-align: left; }
+.hero-phones {
+  --ph: min(68vh, 600px); --pw: calc(var(--ph) * 820 / 1740);
+  position: relative; height: var(--ph); width: 100%;
+}
+.hero-phone { position: absolute; bottom: 0; width: var(--pw); }
+.hero-phone .ui > img { width: 100%; height: auto; }
+.hero-phone .ui { filter: drop-shadow(0 28px 44px rgba(0,0,0,0.6)); }
+.hero-phone--c { left: 50%; margin-left: calc(var(--pw) / -2); z-index: 3; }
+.hero-phone--l { width: calc(var(--pw) * 0.86); right: calc(50% + var(--pw) * 0.1); bottom: 3%; z-index: 1; transform: rotate(-7deg); transform-origin: 100% 100%; }
+.hero-phone--r { width: calc(var(--pw) * 0.86); left: calc(50% + var(--pw) * 0.1); bottom: 3%; z-index: 2; transform: rotate(7deg); transform-origin: 0 100%; }
+.hero-phone--l .ui, .hero-phone--r .ui { filter: drop-shadow(0 24px 36px rgba(0,0,0,0.6)) brightness(0.82); }
+.hero-float {
+  display: block;
+  animation: hero-rise 1.1s var(--ease-out) both, hero-float 7s ease-in-out infinite alternate;
+  animation-delay: var(--hd, 0s), calc(var(--hd, 0s) + 1.1s);
+}
+.hero-phone--l .hero-float { animation-duration: 1.1s, 8s; }
+.hero-phone--r .hero-float { animation-duration: 1.1s, 6.5s; }
+@keyframes hero-rise  { from { opacity: 0; transform: translateY(70px); } to { opacity: 1; transform: none; } }
+@keyframes hero-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+@media (max-width: 900px), (max-height: 500px) and (orientation: landscape) {
+  .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero-phones { --ph: 330px; }
+  .hero-copy .cover-logo { margin-bottom: 22px; }
+  .phones .ui { --base: 0s !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-js .ui-l { display: none; }
+  .hero-float { animation: none; }
+}
+@media print {
+  .ui-l { display: none !important; }
+  .hero-float { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+</style>
+<script>document.documentElement.classList.add('ui-js');</script>
+</head>
+<body>
+
+<!-- Grain overlay -->
+<svg class="grain-overlay">
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<!-- Toolbar -->
+<div class="deck-toolbar">
+  <button class="toolbar-btn" onclick="printPDF()">
+    <i data-lucide="download"></i> PDF
+  </button>
+  <button class="toolbar-btn" onclick="goToChat()">
+    <i data-lucide="message-circle-question"></i> Dudas
+  </button>
+</div>
+
+<!-- Slide counter (desktop only) -->
+<div class="slide-counter" id="slide-counter">1 / 14</div>
+
+<div class="scroll-hint" id="scroll-hint">
+  <span>Deslizá</span>
+  <i data-lucide="chevron-down"></i>
+</div>
+
+<div class="deck" id="deck">
+
+<section class="slide slide--cover slide--hero" data-slide="1">
+  <div class="blob blob--purple" style="top:-200px; left:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-200px; right:-50px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+        <div class="anim" style="margin-bottom:28px;"><span class="club-chip">Port St. Lucie SC</span></div>
+        <h1 class="shimmer-text anim">PSLSC ID</h1>
+        <div class="cover-kicker anim">La cuenta del club</div>
+        <div class="anim" style="margin-bottom:28px;"><span class="club-chip club-chip--accent">Para la School hoy, para todo el club mañana.</span></div>
+        <p class="meta anim" style="margin-top:8px;">Port St. Lucie SC · Yacaré · Noviembre 2026</p>
+      </div>
+      <div class="hero-phones">
+        <div class="hero-phone hero-phone--l"><div class="hero-float" style="--hd:0.2s;"><div class="ui" style="--src:url(pslsc-id/screens/09-my-id.png);--base:0.9s;"><img src="pslsc-id/screens/09-my-id.png" alt="Mi PSLSC ID: el carnet con QR"><i class="ui-l ui-fill" style="--x:40;--y:204;--w:740;--h:1346;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:204;--w:740;--h:754;--d:0.1s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:458;--y:656;--w:156;--h:60;--d:0.1s;--c:#1c1c1c;"></i>
+<i class="ui-l ui-mask" style="--x:458;--y:656;--w:156;--h:60;--d:0.55s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:48;--y:974;--w:724;--h:108;--d:0.6s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1107;--w:740;--h:26;--d:0.75s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1154;--w:740;--h:396;--d:0.85s;"></i>
+<i class="ui-l ui-mask" style="--x:94;--y:576;--w:336;--h:336;--d:1.3s;"><i class="ui-scan" data-fx="scan"></i></i></div></div></div>
+        <div class="hero-phone hero-phone--r"><div class="hero-float" style="--hd:0.3s;"><div class="ui" style="--src:url(pslsc-id/screens/03-kid-progress.png);--base:1.0s;"><img src="pslsc-id/screens/03-kid-progress.png" alt="Progreso del chico: clases, racha e insignias"><i class="ui-l ui-fill" style="--x:146;--y:379;--w:46;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-fill" style="--x:395;--y:379;--w:30;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-fill" style="--x:637;--y:379;--w:29;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-mask" style="--x:146;--y:379;--w:46;--h:52;--d:0.25s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-mask" style="--x:395;--y:379;--w:30;--h:52;--d:0.38s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-mask" style="--x:637;--y:379;--w:29;--h:52;--d:0.51s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-fill" style="--x:40;--y:530;--w:740;--h:966;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:530;--w:740;--h:192;--d:0.3s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:78;--y:558;--w:497;--h:112;--d:0.3s;--c:#aaf6e6;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:562;--w:146;--h:24;--d:0.65s;--dur:0.25s;--steps:9;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:598;--w:495;--h:28;--d:1.0s;--dur:0.87s;--steps:31;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:635;--w:329;--h:34;--d:1.4s;--dur:0.59s;--steps:21;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:747;--w:740;--h:26;--d:0.45s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:794;--w:740;--h:256;--d:0.55s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:80;--y:822;--w:660;--h:202;--d:0.55s;--c:#ffffff;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:86;--y:822;--w:144;--h:200;--d:0.85s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:254;--y:822;--w:144;--h:200;--d:0.97s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:421;--y:822;--w:146;--h:200;--d:1.09s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:590;--y:822;--w:144;--h:200;--d:1.21s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1075;--w:740;--h:26;--d:0.7s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1122;--w:740;--h:180;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:81;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:153;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:225;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:297;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:369;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:441;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:81;--y:1204;--w:62;--h:66;--d:1.15s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:153;--y:1204;--w:62;--h:66;--d:1.28s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:225;--y:1204;--w:62;--h:66;--d:1.41s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:297;--y:1204;--w:62;--h:66;--d:1.54s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:369;--y:1204;--w:62;--h:66;--d:1.67s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:441;--y:1204;--w:62;--h:66;--d:1.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1318;--w:740;--h:178;--d:1.0s;"></i></div></div></div>
+        <div class="hero-phone hero-phone--c"><div class="hero-float" style="--hd:0s;"><div class="ui" style="--src:url(pslsc-id/screens/02-home.png);--base:0.7s;"><img src="pslsc-id/screens/02-home.png" alt="Home de la familia: saldo, hijos y próximas sesiones"><i class="ui-l ui-fill" style="--x:40;--y:210;--w:740;--h:1292;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:212;--w:740;--h:224;--d:0.15s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:79;--y:270;--w:116;--h:96;--d:0.15s;--c:#1c1c1c;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:534;--y:279;--w:210;--h:90;--d:0.15s;--c:#1c1c1c;"></i>
+<i class="ui-l ui-mask" style="--x:79;--y:270;--w:116;--h:96;--d:0.5s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:534;--y:279;--w:210;--h:90;--d:0.85s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:452;--w:740;--h:72;--d:0.3s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:548;--w:740;--h:26;--d:0.42s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:596;--w:740;--h:272;--d:0.5s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:892;--w:740;--h:26;--d:0.62s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:940;--w:740;--h:352;--d:0.7s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:82;--y:1040;--w:270;--h:16;--d:0.7s;--c:#ff0048;border-radius:50%/843.8%;"></i>
+<i class="ui-l ui-bg" data-fx="wipe" style="--x:82;--y:1040;--w:270;--h:16;--d:1.15s;--dur:1.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1308;--w:740;--h:194;--d:0.85s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:78;--y:1338;--w:494;--h:112;--d:0.85s;--c:#aaf6e6;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:1341;--w:146;--h:22;--d:1.2s;--dur:0.25s;--steps:9;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:1376;--w:480;--h:33;--d:1.55s;--dur:0.84s;--steps:30;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:1415;--w:170;--h:32;--d:2.0s;--dur:0.31s;--steps:11;"></i></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-slide="2">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">01 · Por qué</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:20px;">El club va a vender muchas cosas. La familia debería tener una sola cuenta.</h2>
+        <p class="anim">La School, la tienda, las entradas y el estadio pueden nacer cada uno con su propio sistema. Para la familia son cuatro registros y cuatro formas de pagar. Para el club, los datos repartidos en cuatro lugares.</p>
+        <p class="anim lead" style="margin-top:20px;">PSLSC ID propone lo contrario: una sola cuenta que crece con el club.</p>
+      </div>
+      <div class="anim">
+        <div class="card-sub" style="margin-bottom:12px;">Cada cosa por su lado</div>
+        <div class="grid-2x2 one-many">
+          <div class="card card--sm"><div class="card-head"><i data-lucide="graduation-cap"></i><h4>School</h4></div><p class="card-body">Otro registro, otro pago.</p></div>
+          <div class="card card--sm"><div class="card-head"><i data-lucide="shirt"></i><h4>Tienda</h4></div><p class="card-body">Otro registro, otro pago.</p></div>
+          <div class="card card--sm"><div class="card-head"><i data-lucide="ticket"></i><h4>Entradas</h4></div><p class="card-body">Otro registro, otro pago.</p></div>
+          <div class="card card--sm"><div class="card-head"><i data-lucide="landmark"></i><h4>Estadio</h4></div><p class="card-body">Otro registro, otro pago.</p></div>
+        </div>
+        <div class="one-arrow"><i data-lucide="arrow-down"></i></div>
+        <div class="card card--sm card--highlight card--accent-1"><div class="card-head"><i data-lucide="id-card"></i><h4>PSLSC ID</h4></div><p class="card-body" style="color:var(--text-primary);">Una cuenta, un saldo y un carnet para todo lo que el club vende.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="3">
+  <div class="slide-content">
+    <div class="label anim">02 · Qué es</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:28px;">Tres piezas: cuenta, saldo y carnet.</h2>
+    <div class="grid-3">
+      <div class="card card--accent-1 anim" style="padding:30px;"><div class="card-head"><i data-lucide="user-round"></i><h4>Cuenta</h4></div><p class="card-body">Del padre o la madre, con ingreso por email y sin contraseñas. Debajo, un perfil por hijo con sus datos, su contacto de emergencia y sus consentimientos.</p></div>
+      <div class="card card--accent-2 anim" style="padding:30px;"><div class="card-head"><i data-lucide="coins"></i><h4>Saldo</h4></div><p class="card-body">Los tokens del club. Un token vale un dólar, no vence y solo sirve en el club. Paga lo suelto: clínicas hoy, tienda y entradas después.</p></div>
+      <div class="card card--accent-3 anim" style="padding:30px;"><div class="card-head"><i data-lucide="qr-code"></i><h4>Carnet</h4></div><p class="card-body">El PSLSC ID de la familia en el teléfono: escudo, nombre, estado y un QR. Hoy identifica en la School. Mañana abre la puerta del estadio.</p></div>
+    </div>
+    <div class="foot-note anim" style="margin-top:28px;"><i data-lucide="award"></i><span>Y un motor que hace volver: los hitos. Cuando el hijo no falta en todo el mes o la familia trae a otra, el chico gana una insignia y la cuenta gana tokens de regalo.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="4">
+  <div class="slide-content">
+    <div class="label anim">02 · El saldo</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:24px;">Un saldo del club: se carga, se usa y premia a quien vuelve.</h2>
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="card card--sm card--accent-1 anim"><div class="card-head"><i data-lucide="credit-card"></i><h4>Se carga</h4></div><p class="card-body">Con tarjeta, en packs de tokens. Los packs grandes suman un bono.</p></div>
+      <div class="card card--sm card--accent-2 anim"><div class="card-head"><i data-lucide="ticket"></i><h4>Se usa</h4></div><p class="card-body">En lo suelto del club: una clínica, una sesión, un evento. Después, la tienda y las entradas.</p></div>
+      <div class="card card--sm card--accent-3 anim"><div class="card-head"><i data-lucide="gift"></i><h4>Premia</h4></div><p class="card-body">Los hitos regalan tokens: asistencia perfecta, perfil completo, una familia referida. El club decide cuáles y cuánto.</p></div>
+    </div>
+    <div class="card-sub anim" style="margin-bottom:10px;">Cuatro reglas</div>
+    <div class="grid-4 rules anim">
+      <div class="rule"><strong>Un token es un dólar.</strong><span>Siempre, sin cotización.</span></div>
+      <div class="rule"><strong>No vence.</strong><span>Ni el cargado ni el de regalo.</span></div>
+      <div class="rule"><strong>Solo sirve en el club.</strong><span>Para todo lo que el club vende.</span></div>
+      <div class="rule"><strong>No se transfiere ni se cambia por plata.</strong><span>Es un saldo cerrado, definido así por lo legal.</span></div>
+    </div>
+    <div class="aside-note anim" style="margin-top:18px; max-width:900px;"><i data-lucide="info"></i><span>La mensualidad no pasa por el saldo: va directo a la tarjeta, como cualquier suscripción. Nadie necesita entender los tokens para inscribirse.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="5">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">03 · Cómo lo vive una familia</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Se inscribe, entrena, gana y vuelve.</h2>
+    <div class="phones phones--4 anim">
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/05-pay-month.png);--base:0.0s;"><img src="pslsc-id/screens/05-pay-month.png" alt="Pagar el mes"><i class="ui-l ui-fill" style="--x:40;--y:212;--w:740;--h:1230;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:212;--w:740;--h:274;--d:0.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:502;--w:740;--h:178;--d:0.2s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:705;--w:740;--h:24;--d:0.3s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:752;--w:740;--h:108;--d:0.38s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:877;--w:740;--h:26;--d:0.45s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:924;--w:740;--h:128;--d:0.52s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:674;--y:954;--w:68;--h:68;--d:0.52s;--c:#ffffff;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:674;--y:954;--w:68;--h:68;--d:0.85s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1068;--w:740;--h:108;--d:0.6s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1192;--w:740;--h:120;--d:0.68s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:690;--y:1228;--w:52;--h:42;--d:0.68s;--c:#f8faf9;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:690;--y:1228;--w:52;--h:42;--d:1.0s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:48;--y:1328;--w:724;--h:112;--d:1.15s;"></i></div><figcaption><strong>1. Se inscribe y paga el mes.</strong> Elige el pack de cada hijo y paga con tarjeta, en un solo paso.</figcaption></figure>
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/03-kid-progress.png);--base:0.35s;"><img src="pslsc-id/screens/03-kid-progress.png" alt="Progreso"><i class="ui-l ui-fill" style="--x:146;--y:379;--w:46;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-fill" style="--x:395;--y:379;--w:30;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-fill" style="--x:637;--y:379;--w:29;--h:52;--c:#ffffff;"></i>
+<i class="ui-l ui-mask" style="--x:146;--y:379;--w:46;--h:52;--d:0.25s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-mask" style="--x:395;--y:379;--w:30;--h:52;--d:0.38s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-mask" style="--x:637;--y:379;--w:29;--h:52;--d:0.51s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-fill" style="--x:40;--y:530;--w:740;--h:966;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:530;--w:740;--h:192;--d:0.3s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:78;--y:558;--w:497;--h:112;--d:0.3s;--c:#aaf6e6;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:562;--w:146;--h:24;--d:0.65s;--dur:0.25s;--steps:9;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:598;--w:495;--h:28;--d:1.0s;--dur:0.87s;--steps:31;"></i>
+<i class="ui-l ui-bg" data-fx="type" style="--x:80;--y:635;--w:329;--h:34;--d:1.4s;--dur:0.59s;--steps:21;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:747;--w:740;--h:26;--d:0.45s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:794;--w:740;--h:256;--d:0.55s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:80;--y:822;--w:660;--h:202;--d:0.55s;--c:#ffffff;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:86;--y:822;--w:144;--h:200;--d:0.85s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:254;--y:822;--w:144;--h:200;--d:0.97s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:421;--y:822;--w:146;--h:200;--d:1.09s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:590;--y:822;--w:144;--h:200;--d:1.21s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1075;--w:740;--h:26;--d:0.7s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1122;--w:740;--h:180;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:81;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:153;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:225;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:297;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:369;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:441;--y:1204;--w:62;--h:66;--sx:513;--sy:1204;--d:0.8s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:81;--y:1204;--w:62;--h:66;--d:1.15s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:153;--y:1204;--w:62;--h:66;--d:1.28s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:225;--y:1204;--w:62;--h:66;--d:1.41s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:297;--y:1204;--w:62;--h:66;--d:1.54s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:369;--y:1204;--w:62;--h:66;--d:1.67s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:441;--y:1204;--w:62;--h:66;--d:1.8s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1318;--w:740;--h:178;--d:1.0s;"></i></div><figcaption><strong>2. El hijo entrena y progresa.</strong> El coach marca presente. Suman la racha y las insignias.</figcaption></figure>
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/08-wallet.png);--base:0.7s;"><img src="pslsc-id/screens/08-wallet.png" alt="Saldo"><i class="ui-l ui-fill" style="--x:40;--y:204;--w:740;--h:1188;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:204;--w:740;--h:384;--d:0.1s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:79;--y:263;--w:146;--h:118;--d:0.1s;--c:#1c1c1c;"></i>
+<i class="ui-l ui-mask" style="--x:79;--y:263;--w:146;--h:118;--d:0.4s;"><i class="ui-bg ui-roll" data-fx="roll"></i></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:78;--y:470;--w:664;--h:88;--d:0.1s;--c:#1c1c1c;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:78;--y:470;--w:328;--h:88;--d:0.65s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:414;--y:470;--w:328;--h:88;--d:0.75s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:613;--w:740;--h:26;--d:0.3s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:660;--w:740;--h:732;--d:0.4s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:60;--y:668;--w:700;--h:717;--d:0.4s;--c:#ffffff;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:668;--w:700;--h:104;--d:0.6s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:772;--w:700;--h:102;--d:0.71s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:874;--w:700;--h:102;--d:0.82s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:976;--w:700;--h:102;--d:0.93s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:1078;--w:700;--h:102;--d:1.04s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:1180;--w:700;--h:102;--d:1.15s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:60;--y:1282;--w:700;--h:103;--d:1.26s;"></i></div><figcaption><strong>3. La familia gana tokens.</strong> Por hitos: el mes sin faltas, el perfil completo, una familia referida.</figcaption></figure>
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/07-spend-tokens.png);--base:1.05s;"><img src="pslsc-id/screens/07-spend-tokens.png" alt="Usar el saldo"><i class="ui-l ui-fill" style="--x:40;--y:221;--w:740;--h:1170;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:221;--w:740;--h:26;--d:0.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:268;--w:740;--h:298;--d:0.2s;"></i>
+<i class="ui-l ui-fill" data-fx="in" style="--x:460;--y:332;--w:92;--h:100;--d:0.2s;--c:#ffffff;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:460;--y:332;--w:92;--h:100;--d:0.6s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:591;--w:740;--h:26;--d:0.35s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:638;--w:740;--h:72;--d:0.42s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:726;--w:740;--h:258;--d:0.5s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1000;--w:740;--h:206;--d:0.6s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1225;--w:740;--h:30;--d:0.7s;"></i>
+<i class="ui-l ui-bg" data-fx="pop" style="--x:48;--y:1278;--w:724;--h:112;--d:0.95s;"></i></div><figcaption><strong>4. Los usa en el club.</strong> Una clínica hoy. Después, la tienda y las entradas.</figcaption></figure>
+    </div>
+    <p class="anim" style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">Pantallas ilustrativas en inglés, el idioma del producto. Rangos de edad, packs y precios son de ejemplo hasta que el club los defina.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="6">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="split" style="align-items:start;">
+      <div>
+        <div class="label anim">03 · Cómo lo vive el club</div>
+        <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:16px;">Cinco pantallas y cero planillas.</h2>
+        <p class="anim" style="margin-bottom:18px;">La coordinadora crea las actividades una vez. Los cobros entran solos. El coach abre la lista en el teléfono y marca presentes en 30 segundos.</p>
+        <div class="moments anim">
+          <div class="moment"><i data-lucide="calendar-plus"></i><span><strong>Actividades.</strong> Grupos, horarios, sedes, coach y cupos.</span></div>
+          <div class="moment"><i data-lucide="users"></i><span><strong>Socios.</strong> Cada familia, sus hijos y lo que tienen activo.</span></div>
+          <div class="moment"><i data-lucide="list-checks"></i><span><strong>Asistencia.</strong> La lista del día, con contacto y notas médicas.</span></div>
+          <div class="moment"><i data-lucide="gift"></i><span><strong>Hitos.</strong> Qué acciones regalan tokens y cuánto.</span></div>
+          <div class="moment"><i data-lucide="receipt"></i><span><strong>Movimientos.</strong> Cobros y compras, con cierre diario.</span></div>
+        </div>
+      </div>
+      <div class="anim">
+        <figure class="shot shot--side"><img src="pslsc-id/screens/11-admin-attendance-checkin.png" alt="Panel del club: asistencia y check-in"><figcaption><strong>El panel del club.</strong> La lista de quiénes asisten y el coach marcando presentes desde el teléfono.</figcaption></figure>
+        <div class="foot-note" style="margin-top:22px;"><i data-lucide="landmark"></i><span>El club es dueño de la relación y de la plata: los cobros entran a nombre del club y los datos son del club.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="7">
+  <div class="slide-content">
+    <div class="label anim">04 · Las etapas</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:36px;">De la School al estadio en cuatro etapas.</h2>
+    <div class="roadmap roadmap--4 anim" style="margin-bottom:28px;">
+      <div class="rm-rail"></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Diciembre 2026 a marzo 2027</div><div class="rm-month">1 · La School</div><p class="rm-desc"><strong>Entran las familias.</strong> Inscripción, mensualidad, clínicas, asistencia, progreso y carnet.</p><span class="rm-tag">Foco de hoy</span></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Abril a julio 2027</div><div class="rm-month">2 · El hincha</div><p class="rm-desc"><strong>Entran los hinchas.</strong> Noticias, tienda con saldo, entradas a eventos propios, versión bilingüe.</p><span class="rm-tag">Plan</span></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">Agosto a diciembre 2027</div><div class="rm-month">3 · La app</div><p class="rm-desc"><strong>Entra la ciudad.</strong> App en las tiendas, avisos en el teléfono, comercios amigos, ticketing de la USL.</p><span class="rm-tag">Visión</span></div>
+      <div class="rm-item"><span class="rm-dot"></span><div class="rm-date">2028</div><div class="rm-month">4 · El estadio</div><p class="rm-desc"><strong>Entra el día de partido.</strong> Acceso con el carnet, abonos, locales que cobran con el saldo.</p><span class="rm-tag">Visión</span></div>
+    </div>
+    <div class="foot-note anim" style="margin-top:0;"><i data-lucide="layers"></i><span>Cada etapa funciona sola. La School sin tienda ya sirve; la tienda sin estadio ya sirve. Ninguna depende de la siguiente para dar valor.</span></div>
+    <div class="aside-note anim" style="margin-top:16px; max-width:900px;"><i data-lucide="calendar-range"></i><span>Fechas estimadas: ordenan el trabajo y se ajustan con las definiciones de la School. El detalle baja con la distancia: la Etapa 1 está definida, las siguientes se terminan de definir cuando la anterior esté andando.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="8">
+  <div class="slide-content">
+    <div class="label anim">04 · Etapa 1 · Diciembre 2026 a marzo 2027 (estimado)</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:26px;">Etapa 1: la School funciona.</h2>
+    <div class="split split--wide anim" style="align-items:stretch; gap:20px;">
+      <div class="card card--sm card--accent-1">
+        <div class="card-sub">Qué entra</div>
+        <ul class="dot-list">
+          <li>Cuenta del adulto, con un perfil por hijo</li>
+          <li>Mensualidad a la tarjeta, por hijo</li>
+          <li>Saldo en tokens para clínicas y lo suelto</li>
+          <li>Actividades, cupos y lista de asistencia</li>
+          <li>Progreso del chico: racha, insignias e hitos</li>
+          <li>Carnet con QR y panel del club</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="card card--sm">
+          <div class="card-sub">Qué queda afuera a propósito</div>
+          <ul class="dot-list">
+            <li>La tienda</li>
+            <li>Los partidos y las entradas</li>
+            <li>La app en las tiendas</li>
+          </ul>
+        </div>
+        <div class="card card--sm card--highlight" style="flex:1;">
+          <div class="card-sub">Cómo termina</div>
+          <p class="card-body" style="color:var(--text-primary); font-size:1.05rem;">Piloto en marzo y apertura de la School sobre la plataforma.</p>
+          <div class="card-note"><i data-lucide="check"></i><span>Para el club: cobros automáticos, asistencia en el teléfono y todo en un solo lugar.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="9">
+  <div class="slide-content" style="max-width:1180px;">
+    <div class="label anim">04 · Etapa 2 · Abril a julio 2027 (estimado)</div>
+    <h2 class="shimmer-text anim" style="font-size:2rem; margin-bottom:22px;">Etapa 2: la misma cuenta sirve para el hincha.</h2>
+    <div class="phones anim">
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/14-fan-home.png);--base:0.0s;"><img src="pslsc-id/screens/14-fan-home.png" alt="Home de hincha"><i class="ui-l ui-fill" style="--x:40;--y:212;--w:740;--h:1272;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:212;--w:740;--h:394;--d:0.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:622;--w:740;--h:160;--d:0.22s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:807;--w:740;--h:26;--d:0.32s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:854;--w:740;--h:334;--d:0.4s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1213;--w:740;--h:26;--d:0.5s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1260;--w:740;--h:222;--d:0.58s;"></i></div><figcaption><strong>Home de hincha.</strong> Próximo partido, noticias, saldo y carnet. Si tenés hijos en la School, ellos van arriba.</figcaption></figure>
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/15-store.png);--base:0.3s;"><img src="pslsc-id/screens/15-store.png" alt="Tienda"><i class="ui-l ui-fill" style="--x:40;--y:212;--w:740;--h:888;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:212;--w:740;--h:342;--d:0.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:566;--w:740;--h:342;--d:0.24s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:924;--w:740;--h:176;--d:0.38s;"></i></div><figcaption><strong>Tienda.</strong> Los productos del club dentro de PSLSC ID. Se paga con saldo o con tarjeta.</figcaption></figure>
+      <figure class="phone"><div class="ui" style="--src:url(pslsc-id/screens/16-tickets.png);--base:0.6s;"><img src="pslsc-id/screens/16-tickets.png" alt="Entradas"><i class="ui-l ui-fill" style="--x:40;--y:204;--w:740;--h:1116;--c:#f3f5f5;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:204;--w:740;--h:498;--d:0.1s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:718;--w:740;--h:436;--d:0.26s;"></i>
+<i class="ui-l ui-bg" data-fx="in" style="--x:40;--y:1170;--w:740;--h:148;--d:0.42s;"></i></div><figcaption><strong>Entradas.</strong> Los eventos propios del club, con un QR en la cuenta.</figcaption></figure>
+    </div>
+    <p class="anim" style="font-size:0.82rem; color:var(--text-secondary); margin-top:12px;">También en esta etapa: la School a fondo (lista de espera, eventos exclusivos, reportes), la versión bilingüe y los avisos.</p>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="10">
+  <div class="slide-content">
+    <div class="label anim">04 · Etapas 3 y 4 · Agosto 2027 a 2028 (estimado)</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:26px;">Después: la app y el estadio.</h2>
+    <div class="grid-2x2">
+      <div class="card card--accent-3 anim" style="padding:30px;">
+        <div class="card-sub">Etapa 3 · Agosto a diciembre 2027</div>
+        <h4 style="font-size:1.5rem; margin-bottom:12px;">La app y la ciudad</h4>
+        <ul class="dot-list">
+          <li>La app en App Store y Google Play</li>
+          <li>Avisos en el teléfono, en el momento justo</li>
+          <li>Comercios amigos, en piloto</li>
+          <li>El ticketing de la USL, conectado</li>
+        </ul>
+      </div>
+      <div class="card card--accent-4 anim" style="padding:30px;">
+        <div class="card-sub">Etapa 4 · 2028</div>
+        <h4 style="font-size:1.5rem; margin-bottom:12px;">El estadio</h4>
+        <ul class="dot-list">
+          <li>Entradas y abonos en la cuenta</li>
+          <li>Acceso al estadio con el carnet</li>
+          <li>Locales que cobran con el saldo</li>
+          <li>El día de partido: estacionamiento, mapa, menús</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note anim" style="margin-top:24px;"><i data-lucide="telescope"></i><span>Es la visión, no un alcance cerrado. Lo que se construye en la Etapa 1 ya está pensado para llegar hasta acá: nada se rehace.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="11">
+  <div class="slide-content">
+    <div class="label anim">05 · Lo que definimos juntos</div>
+    <h2 class="shimmer-text anim" style="font-size:2.2rem; margin-bottom:12px;">La plataforma es nuestra parte. Qué se vende lo define el club.</h2>
+    <p class="anim" style="max-width:820px; margin-bottom:22px;">Para no arrancar de cero, llevamos una propuesta de partida en cada punto. El club la confirma o la corrige.</p>
+    <div class="def-table anim">
+      <div class="def-row def-row--head"><div>Tema</div><div>Qué falta definir</div><div>Nuestra propuesta de partida</div></div>
+      <div class="def-row"><h4>La School</h4><p data-label="Qué falta definir">Rangos de edad, packs (días, horarios, sedes), cupos y valor de la mensualidad.</p><p class="def-ours" data-label="Propuesta de partida">Una mensualidad por hijo, a la tarjeta, con packs por categoría.</p></div>
+      <div class="def-row"><h4>Lo suelto</h4><p data-label="Qué falta definir">Qué es una clínica, cada cuánto, a qué precio y si es abierta a no inscriptos. Si hay daycare.</p><p class="def-ours" data-label="Propuesta de partida">Se paga con saldo, por fecha y con cupo.</p></div>
+      <div class="def-row"><h4>Los números</h4><p data-label="Qué falta definir">Cuánto bonifica cada pack y cuánto se regala por cada hito.</p><p class="def-ours" data-label="Propuesta de partida">Packs de 50, 100 y 250 tokens con bono en los grandes. Hitos con tope, regulables desde el panel.</p></div>
+      <div class="def-row"><h4>La operación</h4><p data-label="Qué falta definir">Quién coordina, la cuenta de cobro del club y la coordinación con IT.</p><p class="def-ours" data-label="Propuesta de partida">Cobros a nombre del club. Una coordinadora carga las actividades. IT del club revisa y es dueño de los accesos.</p></div>
+    </div>
+    <div class="foot-note anim" style="margin-top:20px;"><i data-lucide="box"></i><span>La plataforma es la misma cualquiera sea la respuesta. Estas definiciones la llenan de contenido.</span></div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide" data-slide="12">
+  <div class="slide-content">
+    <div class="split">
+      <div>
+        <div class="label anim">06 · Próximos pasos</div>
+        <h2 class="shimmer-text anim" style="font-size:2.4rem; margin-bottom:20px;">Dos pasos para empezar a probarlo.</h2>
+        <p class="anim lead">Es una idea para probar con la School. Si funciona ahí, el resto del recorrido ya tiene base.</p>
+      </div>
+      <div class="anim" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card card--sm card--accent-1"><div class="card-sub">Paso 1</div><h4 style="font-size:1.35rem; margin-bottom:8px;">Validar el enfoque</h4><p class="card-body">Una cuenta única para todo lo que el club vende, que empieza por la School.</p></div>
+        <div class="card card--sm card--accent-2"><div class="card-sub">Paso 2</div><h4 style="font-size:1.35rem; margin-bottom:8px;">Trabajar juntos las definiciones de la School</h4><p class="card-body">La oferta, lo suelto, los números y la operación, sobre nuestra propuesta de partida.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="brand-bar"><span>yacare.io</span><span>Port St. Lucie SC · Confidencial</span></div>
+</section>
+
+<section class="slide slide--thanks" data-slide="13">
+  <div class="blob blob--purple" style="top:-150px; right:-100px;"></div>
+  <div class="blob blob--magenta" style="bottom:-150px; left:-100px;"></div>
+  <div class="slide-content" style="position:relative; z-index:1;">
+    <img src="../yacare-logotipo-horizontal-blanco.svg" alt="Yacaré" class="cover-logo anim">
+    <h2 class="shimmer-text anim">Let's build PSLSC ID.</h2>
+    <p class="anim" style="color:var(--text-secondary); font-size:1.1rem; margin-top:8px; max-width:640px; margin-left:auto; margin-right:auto;">La cuenta del club. Para la School hoy, para todo el club mañana.</p>
+    <div class="anim" style="margin-top:28px;"><a class="club-chip annex-link" href="pslsc-id-bases-del-producto.html">El detalle completo: las bases del producto <i data-lucide="arrow-right"></i></a></div>
+    <p class="anim" style="font-size:0.82rem; color:var(--text-muted); margin-top:12px; max-width:560px; margin-left:auto; margin-right:auto;">Arquitectura, reglas completas de los tokens, notificaciones, pantallas y alcance por etapa.</p>
+    <div class="contact-row anim">
+      <div class="contact-item"><i data-lucide="globe" style="width:16px; height:16px;"></i> yacare.io</div>
+      <div class="contact-item"><i data-lucide="mail" style="width:16px; height:16px;"></i> contact@yacare.io</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide--chat" data-slide="14">
+  <div class="slide-content" style="display:flex; flex-direction:column; height:100%; max-height:600px;">
+    <div class="anim" style="text-align:center; margin-bottom:24px;">
+      <h2 style="font-size:1.8rem; margin-bottom:8px;">¿Tenés alguna duda sobre PSLSC ID?</h2>
+      <p style="font-size:0.95rem; max-width:600px; margin:0 auto;">Preguntale lo que quieras al asistente. Tiene acceso al contenido completo de esta presentación.</p>
+    </div>
+    <div id="chat-container" class="anim" style="flex:1; display:flex; flex-direction:column; max-width:700px; width:100%; margin:0 auto; border:1px solid var(--border-subtle); border-radius:20px; background:rgba(255,255,255,0.02); overflow:hidden;">
+      <div id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div id="chat-suggestions" style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button class="chat-chip" onclick="askSuggestion(this)">Resumime la idea</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué es PSLSC ID?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cómo funciona el saldo?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Cuáles son las etapas?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué entra en la Etapa 1?</button>
+          <button class="chat-chip" onclick="askSuggestion(this)">¿Qué tiene que definir el club?</button>
+        </div>
+      </div>
+      <div style="padding:16px; border-top:1px solid var(--border-subtle); display:flex; gap:12px; align-items:center;">
+        <input id="chat-input" type="text" placeholder="Escribí tu pregunta..." style="flex:1; background:transparent; border:1px solid var(--border-medium); border-radius:999px; padding:12px 20px; color:var(--text-primary); font-family:var(--font-body); font-size:0.9rem; outline:none;" onkeydown="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()" style="background:var(--text-primary); color:#000; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="send" style="width:18px; height:18px;"></i></button>
+      </div>
+    </div>
+    <p class="anim" style="text-align:center; font-size:0.7rem; color:var(--text-muted); margin-top:12px;">Este asistente responde exclusivamente sobre el contenido de esta presentación. Puede cometer errores. Para consultas formales, escribí a contact@yacare.io.</p>
+  </div>
+</section>
+
+</div><!-- end .deck -->
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const deck = document.getElementById('deck');
+const slides = Array.from(deck.querySelectorAll('.slide'));
+const totalSlides = slides.length;
+const counterEl = document.getElementById('slide-counter');
+// Same breakpoint as the MOBILE block in the CSS
+const isMobile = window.matchMedia('(max-width: 768px), (max-height: 500px) and (orientation: landscape)').matches;
+
+// Current slide: the last one whose top has passed the upper 35% of the screen.
+// Uses real slide positions, so it still works if a slide is taller than the screen.
+function currentIndex() {
+  const pos = deck.scrollTop + deck.clientHeight * 0.35;
+  let idx = 0;
+  slides.forEach(function(s, i) { if (s.offsetTop <= pos) idx = i; });
+  return idx;
+}
+
+function goToSlide(i) {
+  deck.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+// ═══════════════════════════════════════
+// SCROLL HINT — hide after first scroll
+// ═══════════════════════════════════════
+const hint = document.getElementById('scroll-hint');
+let hintHidden = false;
+deck.addEventListener('scroll', () => {
+  if (!hintHidden && deck.scrollTop > 50) {
+    hintHidden = true;
+    hint.classList.add('hidden');
+  }
+}, { passive: true });
+
+// ═══════════════════════════════════════
+// SLIDE COUNTER (hidden on mobile via CSS)
+// ═══════════════════════════════════════
+function updateCounter() {
+  counterEl.textContent = (currentIndex() + 1) + ' / ' + totalSlides;
+}
+
+deck.addEventListener('scroll', updateCounter, { passive: true });
+updateCounter();
+
+// ═══════════════════════════════════════
+// KEYBOARD NAVIGATION
+// ═══════════════════════════════════════
+document.addEventListener('keydown', function(e) {
+  // Don't intercept if user is typing in the chat input
+  if (e.target.id === 'chat-input') return;
+
+  const vh = deck.clientHeight;
+  const i = currentIndex();
+  const s = slides[i];
+
+  switch (e.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+    case ' ':
+    case 'PageDown': {
+      e.preventDefault();
+      const slideBottom = s.offsetTop + s.offsetHeight;
+      if (slideBottom - (deck.scrollTop + vh) > 4) {
+        // Slide taller than the screen: show the rest of it first
+        deck.scrollTo({ top: Math.min(deck.scrollTop + vh * 0.85, slideBottom - vh), behavior: 'smooth' });
+      } else if (i < totalSlides - 1) {
+        goToSlide(i + 1);
+      }
+      break;
+    }
+    case 'ArrowUp':
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      if (deck.scrollTop - s.offsetTop > 4) {
+        deck.scrollTo({ top: Math.max(s.offsetTop, deck.scrollTop - vh * 0.85), behavior: 'smooth' });
+      } else if (i > 0) {
+        goToSlide(i - 1);
+      }
+      break;
+    case 'Home':
+      e.preventDefault();
+      goToSlide(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      goToSlide(totalSlides - 1);
+      break;
+  }
+});
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER — Animate .anim
+// (on mobile the CSS keeps content visible with no animation)
+// ═══════════════════════════════════════
+const animObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    const anims = entry.target.querySelectorAll('.anim');
+    anims.forEach(function(el) {
+      el.classList.toggle('anim--visible', entry.isIntersecting);
+    });
+  });
+}, { threshold: 0.3 });
+
+slides.forEach(function(slide) {
+  animObserver.observe(slide);
+});
+
+// ═══════════════════════════════════════
+// TOOLBAR ACTIONS
+// ═══════════════════════════════════════
+function printPDF() {
+  window.print();
+}
+
+function goToChat() {
+  if (isMobile) {
+    const chatSection = document.getElementById('chat-container');
+    if (chatSection) chatSection.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    goToSlide(totalSlides - 1);
+  }
+  setTimeout(function() { document.getElementById('chat-input')?.focus(); }, 400);
+}
+
+// ═══════════════════════════════════════
+// PANTALLAS ANIMADAS: se reproducen cada vez que entran en pantalla
+// ═══════════════════════════════════════
+const uiObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    entry.target.classList.toggle('is-on', entry.isIntersecting);
+  });
+}, { threshold: 0.35 });
+document.querySelectorAll('.ui').forEach(function(el) { uiObserver.observe(el); });
+
+// ═══════════════════════════════════════
+// CHAT — Local Q&A (no API dependency)
+// ═══════════════════════════════════════
+
+const QA_ENTRIES = [
+  // Conversational
+  {
+    keywords: ['hola', 'hello', 'buenas', 'buen día', 'buen dia', 'buenos días', 'buenos dias', 'hey', 'qué tal', 'que tal'],
+    answer: '¡Hola! Soy el asistente de esta presentación. Podés preguntarme qué es PSLSC ID, cómo funciona el saldo, cuáles son las etapas, qué entra en la Etapa 1 o qué tiene que definir el club.'
+  },
+  {
+    keywords: ['gracias', 'thanks', 'thank', 'genial', 'perfecto', 'excelente', 'buenísimo', 'buenisimo', 'copado', 'dale'],
+    answer: '¡De nada! Si te surge otra duda sobre PSLSC ID, estoy acá. También podés escribir a contact@yacare.io para hablar con el equipo.'
+  },
+  {
+    keywords: ['chau', 'adiós', 'adios', 'nos vemos', 'bye', 'hasta luego'],
+    answer: '¡Hasta luego! Cualquier duda que te surja después, podés volver a consultar acá o escribir a contact@yacare.io.'
+  },
+  {
+    keywords: ['resumen', 'resúmen', 'resumime', 'resumir', 'la idea', 'de qué se trata', 'de que se trata', 'qué es esto', 'que es esto', 'explicame', 'explícame', 'en pocas palabras'],
+    answer: 'PSLSC ID es una sola cuenta para todo lo que el club vende. Tiene tres piezas: la cuenta del adulto con un perfil por hijo, un saldo en tokens del club y un carnet con QR. Empieza por la School (inscripción, mensualidad, clínicas, asistencia y progreso) y crece en cuatro etapas: la School, el hincha, la app y el estadio. Cada etapa funciona sola. Lo que falta para avanzar son definiciones del club sobre qué vende la School.'
+  },
+  {
+    keywords: ['qué puedo preguntar', 'que puedo preguntar', 'ayuda', 'help', 'qué sabés', 'que sabes', 'opciones'],
+    answer: 'Podés preguntarme sobre: qué es PSLSC ID y por qué una cuenta única, cómo funciona el saldo en tokens, cómo lo vive una familia y cómo lo vive el club, las cuatro etapas, qué entra en la Etapa 1, qué tiene que definir el club y cuáles son los próximos pasos.'
+  },
+  // Content
+  {
+    keywords: ['qué es pslsc id', 'que es pslsc id', 'pslsc id', 'tres piezas', 'piezas', 'en qué consiste', 'en que consiste', 'producto'],
+    answer: 'PSLSC ID es la cuenta del club. Tiene tres piezas. La cuenta: del padre o la madre, con ingreso por email y sin contraseñas, y un perfil por hijo. El saldo: los tokens del club, que pagan lo suelto. El carnet: el PSLSC ID de la familia en el teléfono, con escudo, nombre, estado y un QR. A eso se suman los hitos, que premian con insignias al chico y con tokens de regalo a la familia.'
+  },
+  {
+    keywords: ['por qué', 'por que', 'para qué sirve', 'para que sirve', 'problema', 'una sola cuenta', 'cuenta única', 'cuenta unica', 'sistemas separados', 'ventaja', 'beneficio'],
+    answer: 'El club va a vender muchas cosas: la School, la tienda, las entradas y el estadio. Si cada una nace con su propio sistema, la familia termina con cuatro registros y cuatro formas de pagar, y el club con los datos repartidos en cuatro lugares. PSLSC ID propone una sola cuenta, un saldo y un carnet que crecen con el club.'
+  },
+  {
+    keywords: ['saldo', 'cómo funciona el saldo', 'como funciona el saldo', 'token', 'tokens', 'moneda', 'cargar', 'carga', 'packs de tokens', 'bono', 'wallet'],
+    answer: 'El saldo son los tokens del club. Se carga con tarjeta, en packs, y los packs grandes suman un bono. Se usa en lo suelto del club: una clínica, una sesión, un evento, y después la tienda y las entradas. Y premia a quien vuelve: los hitos regalan tokens. Cuatro reglas: un token es un dólar, no vence, solo sirve en el club, y no se transfiere ni se cambia por plata.'
+  },
+  {
+    keywords: ['transferir', 'se pueden transferir', 'transferir los tokens', 'transferencia', 'transferencias', 'pasar tokens', 'regalar tokens', 'cambiar por plata', 'cambiar por dinero', 'retirar', 'cash', 'legal', 'cripto', 'vence', 'vencen', 'vencimiento', 'reglas'],
+    answer: 'Los tokens no se transfieren de una cuenta a otra ni se cambian por plata. Es un saldo cerrado del club, definido así por lo legal. Tampoco vencen, ni los cargados ni los de regalo, y un token vale siempre un dólar. No son cripto: son un saldo que solo sirve en el club.'
+  },
+  {
+    keywords: ['mensualidad', 'suscripción', 'suscripcion', 'tarjeta', 'cómo se paga', 'como se paga', 'pagar el mes', 'cuota', 'cobro', 'cobros'],
+    answer: 'La mensualidad de la School no pasa por el saldo: va directo a la tarjeta, por hijo, como cualquier suscripción. Nadie necesita entender los tokens para inscribirse. Los cobros entran a nombre del club.'
+  },
+  {
+    keywords: ['hito', 'hitos', 'insignia', 'insignias', 'racha', 'progreso', 'premio', 'premios', 'premia', 'regalo', 'referir', 'referido', 'asistencia perfecta'],
+    answer: 'Los hitos son el motor que hace volver. Cuando el hijo no falta en todo el mes, la familia completa su perfil o trae a otra familia, el chico gana una insignia y la cuenta gana tokens de regalo. Qué hitos pagan y cuánto lo decide el club desde su panel.'
+  },
+  {
+    keywords: ['familia', 'familias', 'padre', 'madre', 'cómo lo vive una familia', 'como lo vive una familia', 'inscribir', 'inscripción', 'inscripcion', 'hijo', 'hijos', 'chico', 'chicos'],
+    answer: 'Una familia lo vive en cuatro pasos. Uno: se inscribe, elige el pack de cada hijo y paga el mes con tarjeta. Dos: el hijo entrena y progresa, el coach marca presente y suman la racha y las insignias. Tres: la familia gana tokens por hitos. Cuatro: los usa en el club, hoy en una clínica y después en la tienda y las entradas. La cuenta es del adulto y el progreso es del chico.'
+  },
+  {
+    keywords: ['cómo lo vive el club', 'como lo vive el club', 'panel', 'coordinadora', 'coach', 'planillas', 'cinco pantallas', 'actividades', 'socios', 'asistencia', 'movimientos', 'check-in', 'presentes'],
+    answer: 'El club lo maneja con cinco pantallas y cero planillas. Actividades: grupos, horarios, sedes, coach y cupos. Socios: cada familia, sus hijos y lo que tienen activo. Asistencia: la lista del día, con contacto y notas médicas. Hitos: qué acciones regalan tokens y cuánto. Movimientos: cobros y compras, con cierre diario. La coordinadora crea las actividades una vez, los cobros entran solos y el coach marca presentes desde el teléfono.'
+  },
+  {
+    keywords: ['dueño', 'dueno', 'datos', 'de quién es', 'de quien es', 'plata', 'fondos', 'stripe', 'privacidad'],
+    answer: 'El club es dueño de la relación y de la plata. Los cobros entran a nombre del club y los datos son del club. Yacaré construye y opera la plataforma, no retiene fondos.'
+  },
+  {
+    keywords: ['etapa', 'etapas', 'cuáles son las etapas', 'cuales son las etapas', 'roadmap', 'recorrido', 'cuatro etapas', 'plan', 'orden'],
+    answer: 'Son cuatro etapas y en cada una entra un público nuevo. Etapa 1, la School: entran las familias. Etapa 2, el hincha: noticias, tienda con saldo y entradas a eventos propios. Etapa 3, la app: app en las tiendas, avisos en el teléfono y comercios amigos. Etapa 4, el estadio: acceso con el carnet, abonos y locales que cobran con el saldo. Cada etapa funciona sola: ninguna depende de la siguiente para dar valor.'
+  },
+  {
+    keywords: ['etapa 1', 'qué entra en la etapa 1', 'que entra en la etapa 1', 'primera etapa', 'school', 'escuela', 'piloto', 'apertura'],
+    answer: 'La Etapa 1 es la School funcionando. Entra: la cuenta del adulto con un perfil por hijo, la mensualidad a la tarjeta, el saldo en tokens para clínicas y lo suelto, las actividades con cupos y lista de asistencia, el progreso del chico (racha, insignias e hitos), el carnet con QR y el panel del club. Queda afuera a propósito: la tienda, los partidos y las entradas, y la app en las tiendas. Termina con un piloto en marzo y la apertura de la School sobre la plataforma.'
+  },
+  {
+    keywords: ['etapa 2', 'segunda etapa', 'hincha', 'hinchas', 'fan', 'tienda', 'shop', 'entradas', 'tickets', 'noticias', 'bilingüe', 'bilingue'],
+    answer: 'En la Etapa 2 la misma cuenta sirve para el hincha: un home con el próximo partido, noticias, saldo y carnet; la tienda del club dentro de PSLSC ID, que se paga con saldo o con tarjeta; y entradas a eventos propios con un QR en la cuenta. También entra la School a fondo (lista de espera, eventos exclusivos, reportes), la versión bilingüe y los avisos.'
+  },
+  {
+    keywords: ['etapa 3', 'etapa 4', 'tercera etapa', 'cuarta etapa', 'app', 'aplicación', 'aplicacion', 'app store', 'google play', 'estadio', 'comercios', 'abonos', 'acceso', 'visión', 'vision', 'futuro'],
+    answer: 'Las etapas 3 y 4 son la visión. Etapa 3, la app y la ciudad: la app en App Store y Google Play, avisos en el teléfono, comercios amigos en piloto y el ticketing de la USL conectado. Etapa 4, el estadio: entradas y abonos en la cuenta, acceso con el carnet, locales que cobran con el saldo y el día de partido. No es un alcance cerrado, pero lo que se construye en la Etapa 1 ya está pensado para llegar hasta ahí.'
+  },
+  {
+    keywords: ['fecha', 'fechas', 'cuándo', 'cuando', 'plazo', 'plazos', 'calendario', 'cronograma', 'marzo', '2027', '2028'],
+    answer: 'Las fechas son estimadas: ordenan el trabajo y se ajustan con las definiciones de la School. Etapa 1 de diciembre 2026 a marzo 2027, con piloto en marzo. Etapa 2 de abril a julio 2027. Etapa 3 de agosto a diciembre 2027. Etapa 4 en 2028.'
+  },
+  {
+    keywords: ['definir', 'definiciones', 'qué tiene que definir', 'que tiene que definir', 'qué falta', 'que falta', 'pendiente', 'pendientes', 'depende', 'clínica', 'clinica', 'clínicas', 'clinicas', 'daycare', 'rangos de edad', 'packs'],
+    answer: 'La plataforma es nuestra parte; qué se vende lo define el club. Faltan cuatro definiciones. La School: rangos de edad, packs, cupos y valor de la mensualidad. Lo suelto: qué es una clínica, cada cuánto, a qué precio, si es abierta, y si hay daycare. Los números: cuánto bonifica cada pack y cuánto se regala por hito. La operación: quién coordina, la cuenta de cobro del club y la coordinación con IT. Para cada punto llevamos una propuesta de partida que el club confirma o corrige.'
+  },
+  {
+    keywords: ['propuesta de partida', 'supuesto', 'supuestos', 'qué proponen', 'que proponen', 'punto de partida'],
+    answer: 'Nuestra propuesta de partida: una mensualidad por hijo, a la tarjeta, con packs por categoría; lo suelto se paga con saldo, por fecha y con cupo; packs de 50, 100 y 250 tokens con bono en los grandes e hitos con tope, regulables desde el panel; cobros a nombre del club, una coordinadora que carga las actividades y el IT del club como revisor y dueño de los accesos.'
+  },
+  {
+    keywords: ['próximos pasos', 'proximos pasos', 'siguiente paso', 'cómo seguimos', 'como seguimos', 'arrancar', 'empezar', 'comenzar', 'validar'],
+    answer: 'Son dos pasos. Uno: validar el enfoque, una cuenta única para todo lo que el club vende, que empieza por la School. Dos: trabajar juntos las definiciones de la School sobre nuestra propuesta de partida. Es una idea para probar con la School; si funciona ahí, el resto del recorrido ya tiene base.'
+  },
+  {
+    keywords: ['carnet', 'qr', 'credencial', 'identificación', 'identificacion'],
+    answer: 'El carnet es el PSLSC ID de la familia en el teléfono: escudo, nombre, estado y un QR. Hoy identifica en la School. Más adelante lo puede leer un comercio amigo o el acceso del estadio.'
+  },
+  {
+    keywords: ['detalle', 'arquitectura', 'técnico', 'tecnico', 'tecnología', 'tecnologia', 'notificaciones', 'push', 'bases del producto', 'anexo', 'más información', 'mas informacion'],
+    answer: 'Esta presentación es la versión corta. El detalle completo (arquitectura, reglas de los tokens, notificaciones, todas las pantallas y el alcance por etapa) está en el deck Las bases del producto, enlazado en la lámina de cierre.'
+  },
+  {
+    keywords: ['precio', 'precios', 'cuánto cuesta', 'cuanto cuesta', 'cuánto sale', 'cuanto sale', 'costo', 'costos', 'inversión', 'inversion', 'presupuesto', 'honorarios'],
+    answer: 'Esta presentación no incluye el costo del proyecto ni los precios de la School. Los valores de la mensualidad y de las clínicas son definiciones del club. Para la conversación comercial, escribí a contact@yacare.io.'
+  },
+  {
+    keywords: ['yacaré', 'yacare', 'estudio', 'quiénes', 'quienes', 'quién construye', 'quien construye', 'contacto', 'equipo'],
+    answer: 'Yacaré (yacare.io) diseña y propone construir PSLSC ID, con el IT del club como revisor y dueño de los accesos. Las decisiones son del club. Para consultas podés escribir a contact@yacare.io.'
+  }
+];
+
+const FALLBACK_ANSWER = 'No tengo una respuesta específica para eso en el contenido de esta presentación. Podés reformular la pregunta o consultarlo directamente con el equipo en contact@yacare.io. También podés preguntarme qué es PSLSC ID, cómo funciona el saldo, cuáles son las etapas, qué entra en la Etapa 1 o qué tiene que definir el club.';
+
+function findBestAnswer(question) {
+  const q = question.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[¿?¡!.,;:]/g, '');
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const entry of QA_ENTRIES) {
+    let score = 0;
+    for (const kw of entry.keywords) {
+      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (q.includes(kwNorm)) {
+        score += kwNorm.length;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = entry;
+    }
+  }
+
+  return bestScore >= 2 ? bestMatch.answer : FALLBACK_ANSWER;
+}
+
+function askSuggestion(btn) {
+  const suggestions = document.getElementById('chat-suggestions');
+  if (suggestions) suggestions.style.display = 'none';
+  document.getElementById('chat-input').value = btn.textContent;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-msg chat-msg--user';
+  userMsg.innerHTML = '<p>' + escapeHtml(text) + '</p>';
+  messages.appendChild(userMsg);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  const typing = document.createElement('div');
+  typing.className = 'chat-typing';
+  typing.textContent = 'Pensando';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(function() {
+    typing.remove();
+
+    const reply = findBestAnswer(text);
+
+    const assistantMsg = document.createElement('div');
+    assistantMsg.className = 'chat-msg chat-msg--assistant';
+    assistantMsg.innerHTML = '<p>' + escapeHtml(reply) + '</p>';
+    messages.appendChild(assistantMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
